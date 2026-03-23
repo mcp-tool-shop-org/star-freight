@@ -285,6 +285,38 @@ SLICE_STATIONS: dict[str, Station] = {
         sector="compact",
         x=3, y=2,
     ),
+
+    # --- 7C: Shortages, Sanctions, and Convoys ---
+
+    "queue_of_flags": Station(
+        id="queue_of_flags",
+        name="Queue of Flags",
+        civilization="orryn",
+        description="A relief-choked transfer port where ships wait under ration priority, "
+                    "convoy assignment, and public shortage scrutiny. The Orryn manage it "
+                    "because nobody trusts anyone else to be neutral. Every docking bay "
+                    "has a queue number. Every queue number has a politics.",
+        services=["market", "fuel", "contracts", "crew_hire"],
+        docking_fee=15,
+        repair_cost_per_point=3,
+        fuel_cost_per_day=25,  # scarcity premium
+        cultural_greeting="A queue drone assigns you a number. The display board shows "
+                        "seventeen ships ahead of you. Some have been here for days. "
+                        "The Orryn scheduler glances at your manifest before your hold.",
+        cultural_restriction="Priority access requires Orryn knowledge level 1 or active relief "
+                            "contract. Without it, you wait. Jumping queue is socially visible "
+                            "and remembered by every captain watching.",
+        cultural_opportunity="Ilen crew unlocks convoy scheduling insight. The Telling can be "
+                            "used to negotiate priority. Relief contractors get immediate access "
+                            "and better fuel rates.",
+        knowledge_required_for_restricted=1,
+        produces=["orryn_data", "orryn_brokered_goods"],
+        demands=["ration_grain", "medical_supplies", "coolant_ampoules"],
+        contraband=["ancestor_tech"],
+        fragment_sources=["dry_ledger_queue_delay"],
+        sector="orryn",
+        x=3, y=6,
+    ),
 }
 
 
@@ -478,6 +510,36 @@ SLICE_LANES: dict[str, SpaceLane] = {
                     "piracy alone — it's being caught between competing legal narratives about "
                     "who authorized what.",
         contraband_risk=0.08,
+    ),
+
+    # --- 7C: Shortages, Sanctions, and Convoys ---
+
+    "mercy_track": SpaceLane(
+        id="mercy_track",
+        station_a="queue_of_flags",
+        station_b="communion_relay",
+        distance_days=2,
+        danger=0.01,
+        controlled_by="orryn",
+        description="A convoy-protected relief lane. Orryn escorts and Keth medical drones "
+                    "patrol it. Almost no pirate risk. Heavy schedule rigidity — you move "
+                    "when the convoy moves. Contraband is suicidal here. Every hold is scanned.",
+        contraband_risk=0.35,  # highest in the system
+    ),
+
+    "red_wake": SpaceLane(
+        id="red_wake",
+        station_a="queue_of_flags",
+        station_b="ironjaw_den",
+        distance_days=3,
+        danger=0.25,
+        controlled_by="reach",
+        terrain="debris_field",
+        description="An improvised bypass used by opportunists, smugglers, and captains "
+                    "moving sanctioned goods under cover of shortage chaos. Not officially "
+                    "a lane. Everyone knows it exists. Nobody polices it. The danger is "
+                    "other captains with the same idea and fewer scruples.",
+        contraband_risk=0.01,  # nobody watching
     ),
 }
 
@@ -680,6 +742,30 @@ SLICE_GOODS: dict[str, TradeGood] = {
                     "but moving it during a shortage without authorization draws scrutiny. "
                     "Moving it with authorization during a shortage is incredibly profitable.",
     ),
+
+    # --- 7C: Shortages, Sanctions, and Convoys ---
+
+    "ration_grain": TradeGood(
+        id="ration_grain",
+        name="Ration Grain",
+        category="provision",
+        base_price=45,
+        description="Basic survival cargo. Low base price, high political volatility. "
+                    "During shortages, demand spikes and everyone watches who moves it. "
+                    "Late delivery is worse than damaged delivery. Carrying it marks you "
+                    "as either a relief worker or a profiteer — the difference depends on "
+                    "who's asking.",
+    ),
+    "coolant_ampoules": TradeGood(
+        id="coolant_ampoules",
+        name="Coolant Ampoules",
+        category="commodity",
+        base_price=130,
+        description="Critical infrastructure and medical cooling supply. Reactor maintenance, "
+                    "bio-storage, and surgical cooling all depend on these. Shortages cascade: "
+                    "stations without coolant shut down medical bays and reactor cycling. "
+                    "Carrying them during a shortage changes your convoy priority and route value.",
+    ),
 }
 
 
@@ -828,6 +914,46 @@ def create_nera() -> CrewMember:
             "carelessness": -9,
             "institutional_respect": 5,
             "violence": -4,
+        },
+    )
+
+
+# --- 7C: Shortages, Sanctions, and Convoys ---
+
+def create_ilen() -> CrewMember:
+    """Ilen Marr — convoy scheduler and supply politics expert.
+
+    Different from Sera (cargo law) and Nera (institutional power).
+    Ilen understands supply politics: ration priority, emergency allotment
+    logic, convoy scheduling, and who quietly gets rerouted around the rules.
+
+    Proves:
+    - Crew dependency: Ilen is WHY you can read convoy priority and supply politics
+    - Cultural logic: Orryn logistics culture becomes navigable, not opaque
+    - Investigation: opens Dry Ledger thread (manufactured scarcity)
+    - Economy: changes what the player understands about shortage pricing
+    """
+    return CrewMember(
+        id="ilen_marr",
+        name="Ilen",
+        civilization=Civilization.ORRYN,
+        role=CrewRole.TECH,
+        hp=65,
+        hp_max=65,
+        speed=3,
+        abilities=["priority_read", "convoy_schedule", "shortage_forecast"],
+        ship_skill="priority_override",
+        morale=50,
+        loyalty_tier=LoyaltyTier.STRANGER,
+        loyalty_points=0,
+        pay_rate=60,
+        narrative_hooks=["supply_chain_guilt", "convoy_reroute_secret"],
+        opinions={
+            "fairness": 7,
+            "profiteering": -8,
+            "efficiency": 6,
+            "waste": -6,
+            "orryn_customs": 5,
         },
     )
 
@@ -982,6 +1108,43 @@ SLICE_CONTRACTS: dict[str, ContractTemplate] = {
         consequence_on_failure="reputation_claim_lost",
         proves="plot + economy — legal claims change who owns what. Late delivery means "
                "the wrong truth becomes official. Nera crew dependency is critical.",
+    ),
+
+    # --- 7C: Shortages, Sanctions, and Convoys ---
+
+    "priority_relief": ContractTemplate(
+        id="priority_relief",
+        name="Priority Relief",
+        family="delivery",
+        description="Deliver ration-critical cargo under time pressure where lateness is "
+                    "worse than damage. Convoy priority if you have it. Queue waiting if you "
+                    "don't. Ilen crew makes scheduling navigable. Without supply politics "
+                    "knowledge, you're guessing which lane and which timing won't strand you.",
+        payout_range=(250, 500),
+        deadline_days=4,
+        risk_type="economic",
+        consequence_on_success="reputation_relief_positive",
+        consequence_on_failure="reputation_relief_failure",
+        proves="economy + crew — time pressure meets supply politics. Ilen changes whether "
+               "the deadline is survivable or a trap.",
+    ),
+
+    "embargo_slip": ContractTemplate(
+        id="embargo_slip",
+        name="Embargo Slip",
+        family="delivery",
+        description="Move something technically forbidden but socially necessary. The moral "
+                    "case and the legal case diverge. A station needs coolant ampoules but "
+                    "the embargo says no. Somebody hired you to make it happen anyway. "
+                    "If caught: legal consequence. If completed: lives saved, standing complex.",
+        payout_range=(400, 900),
+        deadline_days=6,
+        risk_type="political",
+        consequence_on_success="reputation_embargo_delivered",
+        consequence_on_failure="reputation_embargo_caught",
+        proves="culture + economy + plot — the moral and legal cases diverge. "
+               "Every system truth is in tension: crew interprets differently, "
+               "combat changes if caught, cultural standing shifts unpredictably.",
     ),
 }
 
@@ -1188,6 +1351,34 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
                           "+2 Reach standing. -15 Compact standing. Wanted status likely.",
         defeat_consequence="Cargo seized. Credits fined. Ship held for 'inspection period' (days lost). "
                          "But standing damage is moderate — you cooperated, which is noted.",
+    ),
+
+    # --- 7C: Shortages, Sanctions, and Convoys ---
+
+    "convoy_refusal": EncounterArchetype(
+        id="convoy_refusal",
+        name="Convoy Refusal",
+        civilization="orryn",
+        description="You're denied passage, bumped in priority, or accused of exploiting "
+                    "shortage routing. Not an attack — a bureaucratic confrontation at "
+                    "convoy speed. The escort won't fire first, but they won't move either. "
+                    "Your schedule is bleeding. Your cargo may spoil. Other captains are watching.",
+        ship_hull=2500,
+        ship_shield=400,
+        ship_damage=100,
+        ship_speed=2,
+        behavior="defensive",  # will not attack first
+        cultural_option="Orryn knowledge level 1: understand the priority system. "
+                       "Level 2: invoke The Telling to negotiate rescheduling. "
+                       "Ilen crew: read the actual priority queue and find the gap. "
+                       "Without any of these: wait, reroute, or force your way through.",
+        retreat_consequence="Rerouting costs time and fuel. Ration cargo may spoil. "
+                          "Other captains see you bumped — standing as reliable hauler drops.",
+        victory_consequence="Forcing through a convoy refusal is technically possible but "
+                          "marks you as a priority violator. Orryn standing drops. "
+                          "Convoy access restricted for future runs.",
+        defeat_consequence="You wait. Days pass. Cargo value drops. But your record stays clean "
+                         "and the Orryn note your patience. Small standing gain for compliance.",
     ),
 }
 

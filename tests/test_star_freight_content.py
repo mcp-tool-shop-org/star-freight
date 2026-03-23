@@ -22,6 +22,7 @@ from portlight.content.star_freight import (
     create_varek,
     create_sera,
     create_nera,
+    create_ilen,
     # Contracts
     SLICE_CONTRACTS,
     ContractTemplate,
@@ -610,3 +611,120 @@ class TestHousesAuditsSeizures:
 def wc_risk() -> float:
     """Helper: get White Corridor contraband risk."""
     return SLICE_LANES["white_corridor"].contraband_risk
+
+
+# ---------------------------------------------------------------------------
+# 6. Phase 7C: Shortages, Sanctions, and Convoys
+# ---------------------------------------------------------------------------
+
+class TestShortagesSanctionsConvoys:
+    """Validate that 7C units express managed scarcity through existing truths."""
+
+    def test_queue_of_flags_exists(self):
+        assert "queue_of_flags" in SLICE_STATIONS
+        qf = SLICE_STATIONS["queue_of_flags"]
+        assert qf.civilization == "orryn"
+
+    def test_queue_of_flags_is_relief_choked(self):
+        qf = SLICE_STATIONS["queue_of_flags"]
+        assert "queue" in qf.cultural_greeting.lower() or "priority" in qf.cultural_restriction.lower()
+        assert qf.fuel_cost_per_day > 20  # scarcity premium
+
+    def test_queue_of_flags_differs_from_grand_drift(self):
+        """Two Orryn stations must feel different."""
+        qf = SLICE_STATIONS["queue_of_flags"]
+        gd = SLICE_STATIONS["grand_drift"]
+        assert qf.cultural_greeting != gd.cultural_greeting
+        assert qf.fuel_cost_per_day != gd.fuel_cost_per_day
+
+    def test_mercy_track_is_convoy_protected(self):
+        mt = SLICE_LANES["mercy_track"]
+        assert mt.danger <= 0.02  # almost no pirate risk
+        assert mt.contraband_risk >= 0.30  # extreme scrutiny
+
+    def test_red_wake_is_unpoliced(self):
+        rw = SLICE_LANES["red_wake"]
+        assert rw.danger >= 0.20  # dangerous
+        assert rw.contraband_risk <= 0.02  # nobody watching
+        assert rw.terrain == "debris_field"
+
+    def test_mercy_and_red_wake_are_opposite(self):
+        """Convoy lane vs chaos lane — opposite pressure profiles."""
+        mt = SLICE_LANES["mercy_track"]
+        rw = SLICE_LANES["red_wake"]
+        assert mt.danger < rw.danger
+        assert mt.contraband_risk > rw.contraband_risk
+
+    def test_ration_grain_is_political(self):
+        rg = SLICE_GOODS["ration_grain"]
+        assert "political" in rg.description.lower() or "profiteer" in rg.description.lower()
+
+    def test_coolant_ampoules_cascade(self):
+        ca = SLICE_GOODS["coolant_ampoules"]
+        assert "cascade" in ca.description.lower() or "shortage" in ca.description.lower()
+
+    def test_ilen_proves_all_four_truths(self):
+        ilen = create_ilen()
+        roster = CrewRosterState()
+        recruit(roster, ilen)
+        base = {}
+        report = crew_impact_report(roster, base)
+        assert len(report["ship_abilities_active"]) == 1
+        assert report["cultural_access"]["orryn"]["level"] >= 1
+        assert report["combat_abilities_available"] >= 2
+        assert len(report["narrative_hooks"]) == 1
+
+    def test_ilen_differs_from_sera_and_nera(self):
+        """Ilen is supply politics. Sera is cargo law. Nera is institutional power."""
+        ilen = create_ilen()
+        sera = create_sera()
+        nera = create_nera()
+        assert ilen.role != sera.role
+        assert ilen.role != nera.role
+        assert ilen.civilization != sera.civilization  # Ilen is Orryn
+        assert ilen.ship_skill != sera.ship_skill
+        assert ilen.ship_skill != nera.ship_skill
+
+    def test_priority_relief_is_time_pressure(self):
+        pr = SLICE_CONTRACTS["priority_relief"]
+        assert pr.deadline_days <= 5
+        assert pr.risk_type == "economic"
+
+    def test_embargo_slip_is_moral_divergence(self):
+        es = SLICE_CONTRACTS["embargo_slip"]
+        assert "moral" in es.description.lower() or "forbidden" in es.description.lower()
+        assert es.risk_type == "political"
+
+    def test_convoy_refusal_is_bureaucratic_not_predatory(self):
+        cr = SLICE_ENCOUNTERS["convoy_refusal"]
+        assert cr.behavior == "defensive"
+        assert cr.civilization == "orryn"
+        assert "priority" in cr.cultural_option.lower() or "schedule" in cr.cultural_option.lower()
+
+    def test_dry_ledger_thread_exists(self):
+        from portlight.engine.investigation import create_dry_ledger_thread
+        thread = create_dry_ledger_thread()
+        assert thread.id == "dry_ledger"
+        assert len(thread.sources) >= 4
+
+    def test_dry_ledger_differs_from_other_threads(self):
+        from portlight.engine.investigation import (
+            create_dry_ledger_thread, create_ghost_tonnage_thread, create_paper_fleet_thread,
+        )
+        dl = create_dry_ledger_thread()
+        gt = create_ghost_tonnage_thread()
+        pf = create_paper_fleet_thread()
+        assert dl.premise != gt.premise
+        assert dl.premise != pf.premise
+        assert dl.delay_consequence_tag != gt.delay_consequence_tag
+        assert dl.delay_consequence_tag != pf.delay_consequence_tag
+
+    def test_dry_ledger_requires_ilen(self):
+        from portlight.engine.investigation import create_dry_ledger_thread
+        thread = create_dry_ledger_thread()
+        crew_sources = {s.crew_required for s in thread.sources if s.crew_required}
+        assert "ilen_marr" in crew_sources
+
+    def test_all_7c_content_validates(self):
+        errors = validate_slice_content()
+        assert errors == [], f"Validation errors: {errors}"

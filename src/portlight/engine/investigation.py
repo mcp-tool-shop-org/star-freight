@@ -925,3 +925,146 @@ def get_paper_fleet_fragments() -> dict[str, Fragment]:
             crew_interpreter="sera_vale",
         ),
     }
+
+
+# ---------------------------------------------------------------------------
+# 7C: Dry Ledger thread
+# ---------------------------------------------------------------------------
+
+def create_dry_ledger_thread() -> InvestigationThread:
+    """Dry Ledger — manufactured scarcity.
+
+    Different from Ghost Tonnage (logistics fraud) and Paper Fleet
+    (institutional disappearance). Dry Ledger is about shortages being
+    amplified on paper and in scheduling, not just caused by weather
+    or conflict. Someone is manufacturing desperation.
+
+    This deepens the conspiracy: the same institutional machinery that
+    makes ships disappear (Paper Fleet) and skims cargo (Ghost Tonnage)
+    is also engineering the conditions that make those operations invisible.
+
+    Can be discovered through:
+    - Trade: ration prices at Queue of Flags don't match actual supply
+    - Combat: convoy manifest shows rerouted cargo that never arrived
+    - Cultural: Orryn crew interprets scheduling patterns as deliberate
+    - Crew: Ilen recognizes the priority manipulation from inside
+    - Station: queue delays at Queue of Flags follow political patterns
+    """
+    return InvestigationThread(
+        id="dry_ledger",
+        title="Dry Ledger",
+        premise="Shortages are being amplified on paper and in convoy scheduling. "
+                "Real supply exists but is being routed around the stations that need it. "
+                "Someone is manufacturing desperation — and profiting from the emergency response.",
+        resolution_threshold=10,
+        fragments_required=3,
+        max_delay_days=35,
+        delay_consequence_tag="dry_ledger_shortage_worsens",
+        sources=[
+            LeadSource(
+                fragment_id="dry_ledger_price_mismatch",
+                source_type=SourceType.TRADE,
+                trigger="trade_ration_queue",
+                description="Ration prices at Queue of Flags don't match the supply ships in dock",
+            ),
+            LeadSource(
+                fragment_id="dry_ledger_convoy_reroute",
+                source_type=SourceType.COMBAT,
+                trigger="salvage_convoy_manifest",
+                description="A convoy manifest shows cargo rerouted to a station not on any shortage list",
+            ),
+            LeadSource(
+                fragment_id="dry_ledger_schedule_pattern",
+                source_type=SourceType.CULTURAL,
+                trigger="orryn_schedule_analysis",
+                crew_required="ilen_marr",
+                civ_knowledge_required="orryn",
+                knowledge_level_required=1,
+                description="Ilen reads the convoy schedule and finds deliberate bottlenecking",
+            ),
+            LeadSource(
+                fragment_id="dry_ledger_priority_manipulation",
+                source_type=SourceType.CREW,
+                trigger="ilen_priority_reveal",
+                crew_required="ilen_marr",
+                description="Ilen reveals they've seen this pattern before — priority slots sold, not earned",
+            ),
+            LeadSource(
+                fragment_id="dry_ledger_queue_delay",
+                source_type=SourceType.STATION,
+                trigger="station_queue_of_flags_query",
+                description="Queue delays at Queue of Flags follow political patterns, not supply ones",
+            ),
+        ],
+    )
+
+
+def get_dry_ledger_fragments() -> dict[str, Fragment]:
+    """Pre-defined fragments for the Dry Ledger thread."""
+    return {
+        "dry_ledger_price_mismatch": Fragment(
+            id="dry_ledger_price_mismatch",
+            thread_id="dry_ledger",
+            content="Ration grain is priced at shortage rates, but there are three full supply "
+                    "ships in the docking queue. The supply exists. The price says it doesn't. "
+                    "Someone is holding cargo until the emergency premium peaks.",
+            source_type="trade",
+            source_detail="Price observation at Queue of Flags",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["dry_ledger_schedule_pattern", "dry_ledger_priority_manipulation"],
+        ),
+        "dry_ledger_convoy_reroute": Fragment(
+            id="dry_ledger_convoy_reroute",
+            thread_id="dry_ledger",
+            content="This convoy was supposed to deliver coolant ampoules to Communion Relay. "
+                    "The manifest shows it was rerouted to a Compact military depot that isn't "
+                    "on any shortage list. The reroute was authorized by 'emergency priority.'",
+            source_type="combat",
+            source_detail="Manifest from salvaged convoy escort vessel",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["dry_ledger_price_mismatch"],
+        ),
+        "dry_ledger_schedule_pattern": Fragment(
+            id="dry_ledger_schedule_pattern",
+            thread_id="dry_ledger",
+            content="Ilen says: 'The bottleneck isn't capacity. It's scheduling. Someone is "
+                    "inserting holds into the convoy queue that delay civilian relief while "
+                    "priority cargo moves through the same lanes at full speed. "
+                    "The holds are authorized. The authorization is circular.'",
+            source_type="cultural",
+            source_detail="Ilen Marr's convoy schedule analysis",
+            grade=EvidenceGrade.CORROBORATED,
+            day_acquired=0,
+            connections=["dry_ledger_price_mismatch", "dry_ledger_priority_manipulation"],
+            crew_interpreter="ilen_marr",
+        ),
+        "dry_ledger_priority_manipulation": Fragment(
+            id="dry_ledger_priority_manipulation",
+            thread_id="dry_ledger",
+            content="Ilen reveals: 'Priority slots are being sold. Not openly — through "
+                    "intermediary contracts that look like emergency allotments. The same "
+                    "broker network that reroutes relief cargo sells priority access to "
+                    "whoever pays. I know because I used to schedule for them.'",
+            source_type="crew",
+            source_detail="Ilen Marr's personal revelation",
+            grade=EvidenceGrade.ACTIONABLE,
+            day_acquired=0,
+            connections=["dry_ledger_schedule_pattern", "dry_ledger_queue_delay"],
+            crew_interpreter="ilen_marr",
+        ),
+        "dry_ledger_queue_delay": Fragment(
+            id="dry_ledger_queue_delay",
+            thread_id="dry_ledger",
+            content="The queue delays follow a pattern. Ships carrying relief cargo for Keth "
+                    "stations wait longest. Ships carrying Compact-flagged cargo move first. "
+                    "The Orryn running the queue say it's 'protocol.' But the protocol "
+                    "changed three months ago, and nobody voted on it.",
+            source_type="station",
+            source_detail="Queue pattern observation at Queue of Flags",
+            grade=EvidenceGrade.RUMOR,
+            day_acquired=0,
+            connections=["dry_ledger_price_mismatch"],
+        ),
+    }
