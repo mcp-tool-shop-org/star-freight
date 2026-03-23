@@ -125,9 +125,9 @@ RELIEF_PROFILE = StrategyProfile(
 
 GRAY_PROFILE = StrategyProfile(
     posture=CaptainPosture.GRAY,
-    preferred_stations=["registry_spindle", "grand_drift", "meridian_exchange"],
+    preferred_stations=["registry_spindle", "grand_drift", "meridian_exchange", "communion_relay"],
     avoided_stations=["drashan_citadel"],
-    preferred_goods=["bond_plate", "orryn_data", "compact_alloys", "reserve_grain"],
+    preferred_goods=["bond_plate", "orryn_data", "compact_alloys", "reserve_grain", "orryn_brokered_goods"],
     preferred_contracts=["claim_courier", "bonded_relief_run", "witness_run", "embargo_slip"],
     combat_strategy="retreat",
     risk_tolerance=0.6,
@@ -137,9 +137,9 @@ GRAY_PROFILE = StrategyProfile(
 
 HONOR_PROFILE = StrategyProfile(
     posture=CaptainPosture.HONOR,
-    preferred_stations=["drashan_citadel", "ironjaw_den", "meridian_exchange"],
+    preferred_stations=["drashan_citadel", "ironjaw_den", "communion_relay"],
     avoided_stations=["queue_of_flags"],
-    preferred_goods=["veshan_weapons", "black_seal_resin", "compact_alloys"],
+    preferred_goods=["veshan_weapons", "veshan_minerals", "black_seal_resin", "compact_alloys"],
     preferred_contracts=["bounty_contract", "cultural_cargo", "witness_run"],
     combat_strategy="aggressive",
     risk_tolerance=0.8,
@@ -194,6 +194,23 @@ def pick_destination(state: CampaignState, profile: StrategyProfile) -> str | No
         if dest in profile.avoided_stations:
             score -= 5.0
 
+        # Cargo-aware routing: if carrying goods, prefer stations that demand them
+        dest_station = SLICE_STATIONS.get(dest)
+        cargo_urgency = len(state.ship_cargo) / max(1, state.ship_cargo_capacity)  # 0-1
+        if dest_station and state.ship_cargo:
+            for good_id in set(state.ship_cargo):
+                count = state.ship_cargo.count(good_id)
+                if good_id in dest_station.demands:
+                    score += 5.0 * count * (0.5 + cargo_urgency)  # very strong pull
+                elif good_id not in dest_station.produces:
+                    score += 2.0 * count * (0.5 + cargo_urgency)  # decent pull
+
+        # If cargo hold is empty or light, prefer source stations for restocking
+        if len(state.ship_cargo) < state.ship_cargo_capacity // 2 and dest_station:
+            for good_id in profile.preferred_goods:
+                if good_id in dest_station.produces:
+                    score += 2.0
+
         # Risk tolerance affects dangerous lane preference
         if lane.danger > 0.15:
             score += (profile.risk_tolerance - 0.5) * 2
@@ -218,25 +235,38 @@ def pick_destination(state: CampaignState, profile: StrategyProfile) -> str | No
 
 
 def pick_trade_action(state: CampaignState, profile: StrategyProfile) -> list[dict]:
-    """Decide what to buy/sell at current station."""
+    """Decide what to buy/sell at current station.
+
+    Strategy: sell cargo where it's demanded (best price) or where it wasn't
+    produced (decent price). Buy preferred goods at source stations.
+    A competent captain sells before buying.
+    """
     station = SLICE_STATIONS.get(state.current_station)
     if station is None:
         return []
 
     actions = []
 
-    # Sell anything we're carrying that's demanded here
+    # Sell first — always sell before buying
     for good_id in set(state.ship_cargo):
-        if good_id in station.demands:
-            count = state.ship_cargo.count(good_id)
-            actions.append({"action": "sell", "good": good_id, "qty": count})
+        count = state.ship_cargo.count(good_id)
+        if count <= 0:
+            continue
 
-    # Buy preferred goods that are produced here
+        # Best case: station demands this good (premium price)
+        if good_id in station.demands:
+            actions.append({"action": "sell", "good": good_id, "qty": count})
+        # Good case: station doesn't produce this (base price, still profit if bought at source)
+        elif good_id not in station.produces:
+            actions.append({"action": "sell", "good": good_id, "qty": count})
+        # Else: we're at the source — hold for a better destination
+
+    # Buy preferred goods that are produced here (source discount)
     for good_id in profile.preferred_goods:
         if good_id in station.produces and good_id in SLICE_GOODS:
             good = SLICE_GOODS[good_id]
             if state.credits >= good.base_price and len(state.ship_cargo) < state.ship_cargo_capacity:
-                qty = min(2, state.ship_cargo_capacity - len(state.ship_cargo))
+                qty = min(3, state.ship_cargo_capacity - len(state.ship_cargo))
                 if qty > 0:
                     actions.append({"action": "buy", "good": good_id, "qty": qty})
 

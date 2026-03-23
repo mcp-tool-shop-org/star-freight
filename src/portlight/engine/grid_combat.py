@@ -733,7 +733,7 @@ def resolve_combat(
         # Salvage credits based on enemy size
         for c in state.combatants.values():
             if c.team == Team.ENEMY:
-                credits += c.hp_max // 5  # rough salvage value
+                credits += c.hp_max // 3  # salvage value — fighting should pay
 
         # Reputation: positive with your faction, negative with enemy's
         if encounter_faction:

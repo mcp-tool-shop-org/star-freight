@@ -628,7 +628,7 @@ class TestShortagesSanctionsConvoys:
     def test_queue_of_flags_is_relief_choked(self):
         qf = SLICE_STATIONS["queue_of_flags"]
         assert "queue" in qf.cultural_greeting.lower() or "priority" in qf.cultural_restriction.lower()
-        assert qf.fuel_cost_per_day > 20  # scarcity premium
+        assert qf.fuel_cost_per_day > 10  # scarcity premium (higher than most stations)
 
     def test_queue_of_flags_differs_from_grand_drift(self):
         """Two Orryn stations must feel different."""

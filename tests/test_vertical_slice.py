@@ -252,11 +252,11 @@ class TestEconomyProof:
     """Pressure remains meaningful. Choices hurt."""
 
     def test_starting_credits_are_tight(self):
-        """500₡ starting with 125₡/month crew cost = ~4 months runway."""
+        """500₡ starting with ~80₡/month crew cost = ~6 months runway. Tight but survivable."""
         state = fresh_campaign()
         summary = get_campaign_summary(state)
         months_runway = state.credits / max(1, summary["monthly_cost"])
-        assert months_runway < 5  # tight, not comfortable
+        assert months_runway < 8  # tight, not comfortable — but survivable
 
     def test_trade_route_creates_profit(self):
         """Buy low at source, sell high at destination."""

@@ -99,9 +99,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "regulated markets, bureaucratic friction. Your disgrace follows you here — "
                     "officials are cold, prices carry a surcharge, and military decks are off-limits.",
         services=["market", "repair", "fuel", "contracts", "shipyard"],
-        docking_fee=25,
+        docking_fee=10,
         repair_cost_per_point=3,
-        fuel_cost_per_day=20,
+        fuel_cost_per_day=12,
         cultural_greeting="Automated docking clearance. Your file flags. An extra security scan.",
         cultural_restriction="Military contracts and premium cargo permits require rehabilitation.",
         cultural_opportunity="Cleared standing opens the most stable, highest-volume trade in the system.",
@@ -123,9 +123,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "Trade here follows the biological calendar. During harvest, the market overflows. "
                     "During spawning, outsiders are confined to the outer ring.",
         services=["market", "repair", "fuel", "cultural_event", "crew_hire"],
-        docking_fee=15,
+        docking_fee=5,
         repair_cost_per_point=2,  # organic repair is cheaper
-        fuel_cost_per_day=12,
+        fuel_cost_per_day=8,
         cultural_greeting="The docking elder tests your scent. Not hostile — curious.",
         cultural_restriction="Inner market access requires knowledge level 1. Spawning season "
                             "restricts all outsiders to outer ring regardless of standing.",
@@ -149,9 +149,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "the training yards. Trade is conducted face-to-face, with eye contact, and "
                     "the Debt Ledger is displayed on the wall of the trade hall for all to see.",
         services=["market", "repair", "fuel", "contracts", "crew_hire"],
-        docking_fee=20,
+        docking_fee=10,
         repair_cost_per_point=2,
-        fuel_cost_per_day=18,
+        fuel_cost_per_day=12,
         cultural_greeting="A Drashan guard meets you at the airlock. They size you up. "
                         "If you've fought recently, they nod. If not, they're unimpressed.",
         cultural_restriction="Weapons market restricted without house standing. Proxy war contracts "
@@ -176,9 +176,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "crossing trade lanes from every sector. Everyone comes here to deal — "
                     "but the Orryn take a cut of everything, and they remember who cut them out.",
         services=["market", "fuel", "contracts", "crew_hire", "black_market"],
-        docking_fee=10,  # cheap — they make money on the spread
+        docking_fee=5,  # cheap — they make money on the spread
         repair_cost_per_point=4,  # expensive — they're brokers, not mechanics
-        fuel_cost_per_day=10,
+        fuel_cost_per_day=8,
         cultural_greeting="An Orryn broker appears before your ramp is down. They already know "
                         "what you're carrying and what it's worth at three stations.",
         cultural_restriction="The Telling (Orryn negotiation ritual) requires knowledge level 1 "
@@ -203,9 +203,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "lit by stolen reactor glow. No law. No customs. No refunds. "
                     "The only rule: don't start what you can't finish.",
         services=["market", "repair", "fuel", "contracts", "black_market", "crew_hire"],
-        docking_fee=5,  # cheap — they want you here
+        docking_fee=3,  # cheap — they want you here
         repair_cost_per_point=1,  # cheapest repairs in the system (stolen parts)
-        fuel_cost_per_day=8,
+        fuel_cost_per_day=5,
         cultural_greeting="Nobody greets you. A drone scans your hull. If you're armed, "
                         "it backs off. If not, someone will try to sell you a weapon before "
                         "you reach the market.",
@@ -234,9 +234,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "The market trades in harvest compounds, brood-silk, and memory tinctures — "
                     "goods that carry emotional weight the Communion takes seriously.",
         services=["market", "repair", "fuel", "cultural_event", "crew_hire"],
-        docking_fee=10,
+        docking_fee=5,
         repair_cost_per_point=1,  # cheapest repair in the system — care is the point
-        fuel_cost_per_day=10,
+        fuel_cost_per_day=6,
         cultural_greeting="A healer-drone approaches your airlock before you've powered down. "
                         "It checks your hull scars, not your cargo manifest.",
         cultural_restriction="Impatient trading worsens prices. Pushing deals during convalescence "
@@ -265,9 +265,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "issued, and delayed cargo becomes political. Everything here is recorded. "
                     "Sloppy captains feel small. Prepared captains feel powerful.",
         services=["market", "fuel", "contracts"],
-        docking_fee=30,  # administrative overhead
+        docking_fee=15,  # administrative overhead
         repair_cost_per_point=4,  # expensive — this is not a shipyard
-        fuel_cost_per_day=22,
+        fuel_cost_per_day=15,
         cultural_greeting="Automated docking. Your ship ID is logged before you're through the "
                         "airlock. A registry clerk appears with a manifest reconciliation request "
                         "before you've asked for anything.",
@@ -297,9 +297,9 @@ SLICE_STATIONS: dict[str, Station] = {
                     "because nobody trusts anyone else to be neutral. Every docking bay "
                     "has a queue number. Every queue number has a politics.",
         services=["market", "fuel", "contracts", "crew_hire"],
-        docking_fee=15,
+        docking_fee=8,
         repair_cost_per_point=3,
-        fuel_cost_per_day=25,  # scarcity premium
+        fuel_cost_per_day=15,  # scarcity premium
         cultural_greeting="A queue drone assigns you a number. The display board shows "
                         "seventeen ships ahead of you. Some have been here for days. "
                         "The Orryn scheduler glances at your manifest before your hold.",
@@ -795,7 +795,7 @@ def create_thal() -> CrewMember:
         morale=45,
         loyalty_tier=LoyaltyTier.STRANGER,
         loyalty_points=0,
-        pay_rate=55,
+        pay_rate=35,
         narrative_hooks=["keth_medical_debt", "communion_exile"],
         opinions={
             "violence": -5,
@@ -829,7 +829,7 @@ def create_varek() -> CrewMember:
         morale=50,
         loyalty_tier=LoyaltyTier.STRANGER,
         loyalty_points=0,
-        pay_rate=70,
+        pay_rate=45,
         narrative_hooks=["house_drashan_exile", "veshan_honor_debt"],
         opinions={
             "honor": 10,
@@ -865,7 +865,7 @@ def create_sera() -> CrewMember:
         morale=50,
         loyalty_tier=LoyaltyTier.STRANGER,
         loyalty_points=0,
-        pay_rate=65,
+        pay_rate=40,
         narrative_hooks=["buried_ledger", "former_employer"],
         opinions={
             "honesty": 6,
@@ -906,7 +906,7 @@ def create_nera() -> CrewMember:
         morale=55,
         loyalty_tier=LoyaltyTier.STRANGER,
         loyalty_points=0,
-        pay_rate=75,  # expensive — institutional knowledge costs
+        pay_rate=50,  # expensive — institutional knowledge costs
         narrative_hooks=["falsified_seizure", "registry_ghost"],
         opinions={
             "precision": 9,
@@ -946,7 +946,7 @@ def create_ilen() -> CrewMember:
         morale=50,
         loyalty_tier=LoyaltyTier.STRANGER,
         loyalty_points=0,
-        pay_rate=60,
+        pay_rate=38,
         narrative_hooks=["supply_chain_guilt", "convoy_reroute_secret"],
         opinions={
             "fairness": 7,
@@ -1253,9 +1253,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
         civilization="compact",
         description="A Compact patrol stops you for inspection. If you're carrying contraband, "
                     "this becomes a fight. If not, it's a reputation check.",
-        ship_hull=3000,
-        ship_shield=500,
-        ship_damage=150,
+        ship_hull=1200,
+        ship_shield=200,
+        ship_damage=120,
         ship_speed=2,
         behavior="defensive",
         cultural_option="Compact knowledge level 2: present permits to avoid inspection entirely.",
@@ -1270,9 +1270,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
         civilization="reach",
         description="A Reach pirate attacks for your cargo. No negotiation without knowledge. "
                     "With knowledge, you might buy them off or invoke faction politics.",
-        ship_hull=1500,
-        ship_shield=200,
-        ship_damage=180,
+        ship_hull=800,
+        ship_shield=100,
+        ship_damage=130,
         ship_speed=3,
         behavior="aggressive",
         cultural_option="Reach knowledge level 1: identify their faction. Level 2: negotiate or bluff.",
@@ -1287,9 +1287,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
         civilization="veshan",
         description="A Veshan warrior challenges you. Refusing is catastrophic for Veshan standing. "
                     "Accepting is dangerous but earns respect. Debt Ledger may apply.",
-        ship_hull=4000,
-        ship_shield=300,
-        ship_damage=250,
+        ship_hull=1500,
+        ship_shield=200,
+        ship_damage=150,
         ship_speed=2,
         behavior="honor",
         cultural_option="Veshan knowledge level 1: understand the challenge terms. "
@@ -1309,9 +1309,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
                     "This is not piracy — it is status, witness, insult, and expectation. "
                     "Can become duel, skirmish, negotiated withdrawal, or disaster depending "
                     "on cultural knowledge and crew.",
-        ship_hull=3500,
-        ship_shield=400,
-        ship_damage=200,
+        ship_hull=1300,
+        ship_shield=200,
+        ship_damage=140,
         ship_speed=2,
         behavior="honor",
         cultural_option="Veshan knowledge level 1: understand the accusation terms. "
@@ -1336,9 +1336,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
                     "This is institutional violence — paperwork that can escalate to force. "
                     "The right crew and documents can make it dissolve. The wrong reaction "
                     "converts a clerical problem into a criminal one.",
-        ship_hull=3500,
-        ship_shield=600,
-        ship_damage=140,
+        ship_hull=1400,
+        ship_shield=300,
+        ship_damage=110,
         ship_speed=2,
         behavior="defensive",  # they don't attack first — they wait for you to resist
         cultural_option="Compact knowledge level 1: understand the claim. Level 2: contest it "
@@ -1363,9 +1363,9 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
                     "shortage routing. Not an attack — a bureaucratic confrontation at "
                     "convoy speed. The escort won't fire first, but they won't move either. "
                     "Your schedule is bleeding. Your cargo may spoil. Other captains are watching.",
-        ship_hull=2500,
-        ship_shield=400,
-        ship_damage=100,
+        ship_hull=1000,
+        ship_shield=200,
+        ship_damage=80,
         ship_speed=2,
         behavior="defensive",  # will not attack first
         cultural_option="Orryn knowledge level 1: understand the priority system. "

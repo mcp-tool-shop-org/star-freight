@@ -127,7 +127,7 @@ class CampaignState:
     ship_fuel: int = 8
     ship_cargo: list[str] = field(default_factory=list)
     ship_cargo_capacity: int = 8
-    ship_weapon_power: int = 100
+    ship_weapon_power: int = 150
     ship_speed: int = 2
     reputation: dict[str, int] = field(default_factory=lambda: {
         "compact": -25, "keth": 0, "veshan.drashan": 0,
@@ -285,9 +285,9 @@ def execute_trade(state: CampaignState, good_id: str, action: str, quantity: int
 
     base_price = good.base_price
     if good_id in station.produces:
-        base_price = int(base_price * 0.8)
+        base_price = int(base_price * 0.65)   # 35% discount at source
     elif good_id in station.demands:
-        base_price = int(base_price * 1.3)
+        base_price = int(base_price * 1.5)    # 50% premium at demand
     price = max(1, int(base_price * (1.0 + price_mod)))
 
     if action == "buy":
