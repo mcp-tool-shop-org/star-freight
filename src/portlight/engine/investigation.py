@@ -785,3 +785,143 @@ def get_ghost_tonnage_fragments() -> dict[str, Fragment]:
             connections=["ghost_weight_mismatch"],
         ),
     }
+
+
+# ---------------------------------------------------------------------------
+# 7B: Paper Fleet thread
+# ---------------------------------------------------------------------------
+
+def create_paper_fleet_thread() -> InvestigationThread:
+    """Paper Fleet — ships disappearing through layered legal claims.
+
+    Different from Ghost Tonnage (logistics fraud) and Medical Shipment
+    (tech smuggling). Paper Fleet is about institutional disappearance:
+    ships and cargo vanishing through emergency reallocations, sealed
+    transfers, and claims that look valid from any one angle.
+
+    Deepens the conspiracy: someone is using Compact legal machinery
+    to make assets disappear without anyone technically breaking a law.
+
+    Can be discovered through:
+    - Trade: bond plate irregularities at Registry Spindle
+    - Combat: seized ship's registry doesn't match any active claim
+    - Cultural: Compact crew interprets the claim chain
+    - Crew: Nera recognizes the filing pattern from her registry days
+    - Station: overheard at Registry Spindle about missing fleet entries
+    """
+    return InvestigationThread(
+        id="paper_fleet",
+        title="Paper Fleet",
+        premise="Ships are disappearing through layered claims, emergency reallocations, "
+                "and sealed transfers. Each step looks legal from one angle. "
+                "Together, they add up to institutionalized theft.",
+        resolution_threshold=12,
+        fragments_required=3,
+        max_delay_days=50,
+        delay_consequence_tag="paper_fleet_records_sealed",
+        sources=[
+            LeadSource(
+                fragment_id="paper_fleet_registry_flag",
+                source_type=SourceType.STATION,
+                trigger="station_registry_spindle_query",
+                description="Query the registry at Registry Spindle and notice missing entries",
+            ),
+            LeadSource(
+                fragment_id="paper_fleet_bond_irregularity",
+                source_type=SourceType.TRADE,
+                trigger="trade_bond_plate_registry",
+                description="Bond plate serial numbers at Registry Spindle don't match the manifest chain",
+            ),
+            LeadSource(
+                fragment_id="paper_fleet_seized_mismatch",
+                source_type=SourceType.COMBAT,
+                trigger="salvage_seized_ship",
+                description="A seized ship's registry data doesn't match any active claim on file",
+            ),
+            LeadSource(
+                fragment_id="paper_fleet_filing_pattern",
+                source_type=SourceType.CREW,
+                trigger="nera_filing_analysis",
+                crew_required="nera_quill",
+                description="Nera recognizes the claim filing pattern from her registry days",
+            ),
+            LeadSource(
+                fragment_id="paper_fleet_compact_interpretation",
+                source_type=SourceType.CULTURAL,
+                trigger="compact_legal_analysis",
+                crew_required="sera_vale",
+                civ_knowledge_required="compact",
+                knowledge_level_required=2,
+                description="Sera interprets the legal chain and finds the authorization loop",
+            ),
+        ],
+    )
+
+
+def get_paper_fleet_fragments() -> dict[str, Fragment]:
+    """Pre-defined fragments for the Paper Fleet thread."""
+    return {
+        "paper_fleet_registry_flag": Fragment(
+            id="paper_fleet_registry_flag",
+            thread_id="paper_fleet",
+            content="Three ships registered to independent captains were transferred to a "
+                    "Compact holding entity last quarter. The transfer orders are sealed. "
+                    "The holding entity has no public trade record.",
+            source_type="station",
+            source_detail="Registry Spindle public records query",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["paper_fleet_bond_irregularity", "paper_fleet_filing_pattern"],
+        ),
+        "paper_fleet_bond_irregularity": Fragment(
+            id="paper_fleet_bond_irregularity",
+            thread_id="paper_fleet",
+            content="The bond plates on this cargo were issued six months ago but reference "
+                    "a manifest that was filed yesterday. Someone backdated the legitimacy chain.",
+            source_type="trade",
+            source_detail="Bond plate audit at Registry Spindle",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["paper_fleet_registry_flag", "paper_fleet_compact_interpretation"],
+        ),
+        "paper_fleet_seized_mismatch": Fragment(
+            id="paper_fleet_seized_mismatch",
+            thread_id="paper_fleet",
+            content="This ship was supposedly seized under emergency reallocation. "
+                    "But the reallocation order references a shortage that ended two weeks "
+                    "before the seizure was filed. The timeline doesn't survive inspection.",
+            source_type="combat",
+            source_detail="Registry data from salvaged Compact-flagged vessel",
+            grade=EvidenceGrade.CORROBORATED,
+            day_acquired=0,
+            connections=["paper_fleet_registry_flag", "paper_fleet_filing_pattern"],
+        ),
+        "paper_fleet_filing_pattern": Fragment(
+            id="paper_fleet_filing_pattern",
+            thread_id="paper_fleet",
+            content="Nera says: 'I've seen this pattern. Emergency reallocation, sealed transfer, "
+                    "holding entity, dormant registry. It's how the Compact makes things disappear "
+                    "without anyone technically breaking a law. I signed three of these before I "
+                    "understood what I was looking at.'",
+            source_type="crew",
+            source_detail="Nera Quill's institutional analysis",
+            grade=EvidenceGrade.ACTIONABLE,
+            day_acquired=0,
+            connections=["paper_fleet_registry_flag", "paper_fleet_compact_interpretation"],
+            crew_interpreter="nera_quill",
+        ),
+        "paper_fleet_compact_interpretation": Fragment(
+            id="paper_fleet_compact_interpretation",
+            thread_id="paper_fleet",
+            content="Sera traced the authorization chain. Every transfer was approved by the "
+                    "same three-person committee. Two of them sit on the corporate board. "
+                    "The third is the officer who processed your discharge. "
+                    "The Paper Fleet isn't a theft ring. It's a procurement channel.",
+            source_type="cultural",
+            source_detail="Sera Vale's legal chain analysis",
+            grade=EvidenceGrade.ACTIONABLE,
+            day_acquired=0,
+            connections=["paper_fleet_bond_irregularity", "paper_fleet_filing_pattern"],
+            crew_interpreter="sera_vale",
+        ),
+    }

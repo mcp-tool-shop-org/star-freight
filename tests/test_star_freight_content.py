@@ -21,6 +21,7 @@ from portlight.content.star_freight import (
     create_thal,
     create_varek,
     create_sera,
+    create_nera,
     # Contracts
     SLICE_CONTRACTS,
     ContractTemplate,
@@ -472,3 +473,140 @@ class TestWorkingLives:
         """All content including 7A passes the structural validator."""
         errors = validate_slice_content()
         assert errors == [], f"Validation errors: {errors}"
+
+
+# ---------------------------------------------------------------------------
+# 5. Phase 7B: Houses, Audits, and Seizures
+# ---------------------------------------------------------------------------
+
+class TestHousesAuditsSeizures:
+    """Validate that 7B units express institutional pressure through existing truths."""
+
+    def test_registry_spindle_exists(self):
+        assert "registry_spindle" in SLICE_STATIONS
+        rs = SLICE_STATIONS["registry_spindle"]
+        assert rs.civilization == "compact"
+
+    def test_registry_spindle_is_jurisdiction_not_market(self):
+        """Registry Spindle should feel like a jurisdiction, not another shop."""
+        rs = SLICE_STATIONS["registry_spindle"]
+        assert "jurisdiction" in rs.description.lower() or "administrative" in rs.description.lower()
+        assert rs.docking_fee > SLICE_STATIONS["meridian_exchange"].docking_fee  # more expensive
+        assert rs.knowledge_required_for_restricted >= 2
+
+    def test_registry_spindle_differs_from_meridian_exchange(self):
+        """Two Compact stations must feel fundamentally different."""
+        rs = SLICE_STATIONS["registry_spindle"]
+        me = SLICE_STATIONS["meridian_exchange"]
+        assert rs.cultural_greeting != me.cultural_greeting
+        assert rs.description != me.description
+        assert set(rs.produces) != set(me.produces)
+
+    def test_white_corridor_is_monitored(self):
+        wc = SLICE_LANES["white_corridor"]
+        assert wc.danger < 0.05  # very safe from pirates
+        assert wc.contraband_risk >= 0.25  # heavily monitored
+
+    def test_grain_eclipse_is_ambiguous(self):
+        ge = SLICE_LANES["grain_eclipse"]
+        assert ge.terrain == "nebula"  # cover for ambiguity
+        assert ge.danger > 0.10  # some danger
+        assert ge.contraband_risk < wc_risk()  # less monitored than White Corridor
+
+    def test_bond_plate_makes_legitimacy_portable(self):
+        bp = SLICE_GOODS["bond_plate"]
+        assert bp.origin_civ == "compact"
+        assert "legitimacy" in bp.description.lower() or "certification" in bp.description.lower()
+
+    def test_reserve_grain_is_politically_governed(self):
+        rg = SLICE_GOODS["reserve_grain"]
+        assert "politically" in rg.description.lower() or "authorization" in rg.description.lower()
+
+    def test_nera_proves_all_four_truths(self):
+        nera = create_nera()
+        roster = CrewRosterState()
+        recruit(roster, nera)
+        base = {}
+
+        report = crew_impact_report(roster, base)
+
+        # Ship ability
+        assert len(report["ship_abilities_active"]) == 1
+
+        # Cultural: Compact knowledge
+        assert report["cultural_access"]["compact"]["level"] >= 1
+
+        # Combat: has abilities
+        assert report["combat_abilities_available"] >= 2
+
+        # Narrative: has hooks
+        assert len(report["narrative_hooks"]) == 1
+        assert "falsified_seizure" in report["narrative_hooks"][0]["hooks"]
+
+    def test_nera_differs_from_sera(self):
+        """Nera is institutional power. Sera is cargo law. Must be distinct."""
+        nera = create_nera()
+        sera = create_sera()
+        assert nera.role != sera.role
+        assert nera.ship_skill != sera.ship_skill
+        assert set(nera.abilities) != set(sera.abilities)
+        assert nera.narrative_hooks != sera.narrative_hooks
+        assert nera.pay_rate != sera.pay_rate  # different value proposition
+
+    def test_bonded_relief_run_is_administratively_fragile(self):
+        br = SLICE_CONTRACTS["bonded_relief_run"]
+        assert br.risk_type == "political"
+        assert "fragility" in br.description.lower() or "seal" in br.description.lower()
+
+    def test_claim_courier_is_legal_race(self):
+        cc = SLICE_CONTRACTS["claim_courier"]
+        assert cc.deadline_days <= 5  # tight deadline
+        assert "arrival order" in cc.description.lower() or "truth" in cc.description.lower()
+
+    def test_seizure_notice_is_defensive_encounter(self):
+        """Seizure Notice should be institutional, not predatory."""
+        sn = SLICE_ENCOUNTERS["seizure_notice"]
+        assert sn.behavior == "defensive"  # they wait for you to resist
+        assert sn.civilization == "compact"
+        assert "paperwork" in sn.description.lower() or "institutional" in sn.description.lower()
+
+    def test_seizure_notice_has_crew_dependent_options(self):
+        sn = SLICE_ENCOUNTERS["seizure_notice"]
+        assert "nera" in sn.cultural_option.lower() or "sera" in sn.cultural_option.lower()
+
+    def test_paper_fleet_thread_exists(self):
+        from portlight.engine.investigation import create_paper_fleet_thread
+        thread = create_paper_fleet_thread()
+        assert thread.id == "paper_fleet"
+        assert len(thread.sources) >= 4
+
+    def test_paper_fleet_differs_from_ghost_tonnage(self):
+        from portlight.engine.investigation import create_paper_fleet_thread, create_ghost_tonnage_thread
+        pf = create_paper_fleet_thread()
+        gt = create_ghost_tonnage_thread()
+        assert pf.premise != gt.premise
+        assert pf.delay_consequence_tag != gt.delay_consequence_tag
+
+    def test_paper_fleet_requires_nera(self):
+        """Paper Fleet should benefit from Nera's institutional knowledge."""
+        from portlight.engine.investigation import create_paper_fleet_thread
+        thread = create_paper_fleet_thread()
+        crew_sources = {s.crew_required for s in thread.sources if s.crew_required}
+        assert "nera_quill" in crew_sources
+
+    def test_paper_fleet_connects_to_disgrace(self):
+        """Paper Fleet should tie back to the player's discharge."""
+        from portlight.engine.investigation import get_paper_fleet_fragments
+        frags = get_paper_fleet_fragments()
+        # At least one fragment should reference the player's discharge
+        discharge_refs = [f for f in frags.values() if "discharge" in f.content.lower()]
+        assert len(discharge_refs) >= 1
+
+    def test_all_7b_content_validates(self):
+        errors = validate_slice_content()
+        assert errors == [], f"Validation errors: {errors}"
+
+
+def wc_risk() -> float:
+    """Helper: get White Corridor contraband risk."""
+    return SLICE_LANES["white_corridor"].contraband_risk

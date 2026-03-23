@@ -253,6 +253,38 @@ SLICE_STATIONS: dict[str, Station] = {
         sector="keth",
         x=6, y=0,
     ),
+
+    # --- 7B: Houses, Audits, and Seizures ---
+
+    "registry_spindle": Station(
+        id="registry_spindle",
+        name="Registry Spindle",
+        civilization="compact",
+        description="Not a market. A jurisdiction. The Compact's administrative nerve center "
+                    "where manifests are reconciled, claims are filed, emergency liens are "
+                    "issued, and delayed cargo becomes political. Everything here is recorded. "
+                    "Sloppy captains feel small. Prepared captains feel powerful.",
+        services=["market", "fuel", "contracts"],
+        docking_fee=30,  # administrative overhead
+        repair_cost_per_point=4,  # expensive — this is not a shipyard
+        fuel_cost_per_day=22,
+        cultural_greeting="Automated docking. Your ship ID is logged before you're through the "
+                        "airlock. A registry clerk appears with a manifest reconciliation request "
+                        "before you've asked for anything.",
+        cultural_restriction="Without Compact knowledge level 2, you cannot file or contest claims. "
+                            "Without proper seals, bonded freight is flagged for hold. "
+                            "Unresolved liens from any Compact station are enforced here.",
+        cultural_opportunity="Sera or Nera crew make this station navigable. With the right documents, "
+                            "you can clear liens, file counter-claims, establish bonded freight status, "
+                            "or access priority contracts that pay well for legitimate captains.",
+        knowledge_required_for_restricted=2,
+        produces=["bond_plate", "compact_alloys"],
+        demands=["reserve_grain", "medical_supplies"],
+        contraband=["ancestor_tech", "reach_contraband", "unsealed_weapons", "keth_bioweapons"],
+        fragment_sources=["paper_fleet_registry_flag"],
+        sector="compact",
+        x=3, y=2,
+    ),
 }
 
 
@@ -416,6 +448,36 @@ SLICE_LANES: dict[str, SpaceLane] = {
                     "opportunistic raiders. Faster than safe routes but hull-punishing. "
                     "Good for smuggling, salvage, and people who don't want to be found.",
         contraband_risk=0.03,  # low scrutiny — nobody's watching
+    ),
+
+    # --- 7B: Houses, Audits, and Seizures ---
+
+    "white_corridor": SpaceLane(
+        id="white_corridor",
+        station_a="meridian_exchange",
+        station_b="registry_spindle",
+        distance_days=2,
+        danger=0.02,
+        controlled_by="compact",
+        description="The priority route. Bonded freight, official delegations, and high-legitimacy "
+                    "movement. Safer from pirates. Riskier for contraband, false manifests, or "
+                    "unresolved claims. The danger here is being seen too clearly.",
+        contraband_risk=0.30,  # highest inspection rate in the system
+    ),
+
+    "grain_eclipse": SpaceLane(
+        id="grain_eclipse",
+        station_a="registry_spindle",
+        station_b="communion_relay",
+        distance_days=3,
+        danger=0.12,
+        controlled_by="disputed",
+        terrain="nebula",
+        description="A semi-legal bypass used during shortages, sanctions, and unofficial "
+                    "redistribution. Tempting margin. Ambiguous legitimacy. The danger is not "
+                    "piracy alone — it's being caught between competing legal narratives about "
+                    "who authorized what.",
+        contraband_risk=0.08,
     ),
 }
 
@@ -594,6 +656,30 @@ SLICE_GOODS: dict[str, TradeGood] = {
                     "high-status house work. Buyers pay for status, not volume. Diverted "
                     "resin may imply military preparation or false-house operations.",
     ),
+
+    # --- 7B: Houses, Audits, and Seizures ---
+
+    "bond_plate": TradeGood(
+        id="bond_plate",
+        name="Bond Plate",
+        category="commodity",
+        base_price=90,
+        origin_civ="compact",
+        description="A legal certification plate embedded in bonded freight. Without it, "
+                    "sensitive cargo is flagged at every Compact checkpoint. With it, you move "
+                    "faster — but the plate is registered, tracked, and revocable. "
+                    "Legitimacy made portable.",
+    ),
+    "reserve_grain": TradeGood(
+        id="reserve_grain",
+        name="Reserve Grain",
+        category="provision",
+        base_price=70,
+        description="Politically sensitive relief cargo whose value changes with shortage, "
+                    "standing, and route legitimacy. Not technically contraband anywhere, "
+                    "but moving it during a shortage without authorization draws scrutiny. "
+                    "Moving it with authorization during a shortage is incredibly profitable.",
+    ),
 }
 
 
@@ -701,6 +787,47 @@ def create_sera() -> CrewMember:
             "deception": -4,
             "professionalism": 7,
             "violence": -3,
+        },
+    )
+
+
+# --- 7B: Houses, Audits, and Seizures ---
+
+def create_nera() -> CrewMember:
+    """Nera Quill — former house registrar. Institutional violence expert.
+
+    Different from Sera: Sera is cargo law and manifest intelligence.
+    Nera is institutional power in polite language. She knows how
+    claims are filed, how seizures are authorized, how liens are
+    weaponized, and how legitimate disappearance is documented.
+
+    Proves:
+    - Crew dependency: Nera is WHY you can parse or resist administrative coercion
+    - Cultural logic: Compact interactions become about legitimacy, not just permits
+    - Investigation: opens Paper Fleet thread (institutional disappearance)
+    - Combat: Claim Freeze ability can delay or prevent seizures
+    """
+    return CrewMember(
+        id="nera_quill",
+        name="Nera",
+        civilization=Civilization.COMPACT,
+        role=CrewRole.FACE,
+        hp=60,
+        hp_max=60,
+        speed=2,
+        abilities=["claim_review", "seal_authentication", "lien_challenge"],
+        ship_skill="claim_freeze",
+        morale=55,
+        loyalty_tier=LoyaltyTier.STRANGER,
+        loyalty_points=0,
+        pay_rate=75,  # expensive — institutional knowledge costs
+        narrative_hooks=["falsified_seizure", "registry_ghost"],
+        opinions={
+            "precision": 9,
+            "improvisation": -7,
+            "carelessness": -9,
+            "institutional_respect": 5,
+            "violence": -4,
         },
     )
 
@@ -817,6 +944,44 @@ SLICE_CONTRACTS: dict[str, ContractTemplate] = {
         consequence_on_failure="reputation_sacred_catastrophe",
         proves="culture + economy — time pressure meets cultural obligation, "
                "crew changes whether sacred cargo survives the run",
+    ),
+
+    # --- 7B: Houses, Audits, and Seizures ---
+
+    "bonded_relief_run": ContractTemplate(
+        id="bonded_relief_run",
+        name="Bonded Relief Run",
+        family="delivery",
+        description="Move shortage-sensitive supplies under partial immunity, but only if "
+                    "delivered under seal and on time. Looks safe. Is actually full of "
+                    "administrative fragility. One delay turns protected cargo into contested "
+                    "cargo. One broken seal turns legitimacy into liability.",
+        payout_range=(300, 600),
+        deadline_days=6,
+        reputation_required={"compact": 0},
+        risk_type="political",
+        consequence_on_success="reputation_bonded_positive",
+        consequence_on_failure="reputation_bonded_violation",
+        proves="economy + culture — administrative fragility creates drama from timing, "
+               "not combat. Bond Plate cargo + deadline + seal integrity = real pressure",
+    ),
+
+    "claim_courier": ContractTemplate(
+        id="claim_courier",
+        name="Claim Courier",
+        family="delivery",
+        description="Deliver a sealed legal claim to a station before a rival filing lands. "
+                    "The cargo is paper, not bulk. The stakes are enormous anyway. "
+                    "Arrival order matters. Combat, delay, or cultural offense can alter "
+                    "which claim becomes 'truth.' Nera Quill crew makes this dramatically safer.",
+        payout_range=(350, 800),
+        deadline_days=4,
+        reputation_required={"compact": -10},  # even disgraced captains can courier claims
+        risk_type="political",
+        consequence_on_success="reputation_claim_filed",
+        consequence_on_failure="reputation_claim_lost",
+        proves="plot + economy — legal claims change who owns what. Late delivery means "
+               "the wrong truth becomes official. Nera crew dependency is critical.",
     ),
 }
 
@@ -995,6 +1160,34 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
                           "But wider faction heat possible if the house has allies.",
         defeat_consequence="Respectful if fought well — minor standing loss. If fled mid-fight, "
                          "treated as cowardice. Cargo may be claimed as 'compensation.'",
+    ),
+
+    # --- 7B: Houses, Audits, and Seizures ---
+
+    "seizure_notice": EncounterArchetype(
+        id="seizure_notice",
+        name="Seizure Notice",
+        civilization="compact",
+        description="A patrol or house escort stops you not for contraband, but because your "
+                    "cargo, ship, or route standing has been flagged for provisional hold. "
+                    "This is institutional violence — paperwork that can escalate to force. "
+                    "The right crew and documents can make it dissolve. The wrong reaction "
+                    "converts a clerical problem into a criminal one.",
+        ship_hull=3500,
+        ship_shield=600,
+        ship_damage=140,
+        ship_speed=2,
+        behavior="defensive",  # they don't attack first — they wait for you to resist
+        cultural_option="Compact knowledge level 1: understand the claim. Level 2: contest it "
+                       "formally. Nera crew: challenge the legal basis. Sera crew: present "
+                       "counter-documentation. Without either: comply or flee.",
+        retreat_consequence="Fleeing a seizure notice converts it to a warrant. Compact standing "
+                          "drops hard. Ship flagged in every Compact-controlled lane. "
+                          "The paperwork problem became a criminal one.",
+        victory_consequence="Resisting seizure by force is possible but catastrophic diplomatically. "
+                          "+2 Reach standing. -15 Compact standing. Wanted status likely.",
+        defeat_consequence="Cargo seized. Credits fined. Ship held for 'inspection period' (days lost). "
+                         "But standing damage is moderate — you cooperated, which is noted.",
     ),
 }
 
