@@ -1,0 +1,1019 @@
+{
+  "wave": 1,
+  "build": "v0.1.0-dogfood",
+  "runs": [
+    {
+      "scenario_id": "gray_baseline_90d_s42",
+      "scenario_class": "baseline",
+      "path": "gray",
+      "seed": 42,
+      "days_target": 90,
+      "days_actual": 91,
+      "final_credits": -1205,
+      "credits_history": [
+        475,
+        350,
+        -25,
+        -225,
+        -600,
+        -800,
+        -1175,
+        -1205
+      ],
+      "stations_visited": {
+        "meridian_exchange": 14,
+        "grand_drift": 3,
+        "communion_relay": 2,
+        "registry_spindle": 12
+      },
+      "dominant_stations": [
+        "meridian_exchange",
+        "registry_spindle",
+        "grand_drift"
+      ],
+      "lanes_used": {
+        "meridian_drift": 1,
+        "communion_drift": 2,
+        "white_corridor": 1
+      },
+      "dominant_lanes": [
+        "communion_drift",
+        "meridian_drift",
+        "white_corridor"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 6,
+        "sell_compact_alloys": 3,
+        "buy_orryn_data": 6,
+        "sell_orryn_data": 4,
+        "buy_bond_plate": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 3,
+        "compact_patrol": 1
+      },
+      "encounter_outcomes": {
+        "retreat": 4
+      },
+      "combat_count": 4,
+      "retreats": 4,
+      "crew_injuries": 0,
+      "crew_departures": 0,
+      "repairs_needed": 3,
+      "delays": 28,
+      "seizures": 0,
+      "pay_missed": 2,
+      "investigation_sources": {},
+      "final_reputation": {
+        "compact": -27,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": -4,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned"
+      ],
+      "captain_identity": "Paper leverage. Timing abuse. Institutional risk. Faster plot entanglement. [evasive, stable]",
+      "main_pressure": "time and access",
+      "feared": "direct confrontation",
+      "cared_about": [
+        "meridian_exchange",
+        "registry_spindle"
+      ]
+    },
+    {
+      "scenario_id": "gray_seizure_60d_s17",
+      "scenario_class": "stress",
+      "path": "gray",
+      "seed": 17,
+      "days_target": 60,
+      "days_actual": 61,
+      "final_credits": -630,
+      "credits_history": [
+        475,
+        350,
+        -25,
+        -225,
+        -600,
+        -630
+      ],
+      "stations_visited": {
+        "meridian_exchange": 9,
+        "grand_drift": 3,
+        "communion_relay": 2,
+        "registry_spindle": 7
+      },
+      "dominant_stations": [
+        "meridian_exchange",
+        "registry_spindle",
+        "grand_drift"
+      ],
+      "lanes_used": {
+        "meridian_drift": 1,
+        "communion_drift": 2,
+        "white_corridor": 1
+      },
+      "dominant_lanes": [
+        "communion_drift",
+        "meridian_drift",
+        "white_corridor"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 6,
+        "sell_compact_alloys": 3,
+        "buy_orryn_data": 6,
+        "sell_orryn_data": 4,
+        "buy_bond_plate": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 3,
+        "compact_patrol": 1
+      },
+      "encounter_outcomes": {
+        "retreat": 4
+      },
+      "combat_count": 4,
+      "retreats": 4,
+      "crew_injuries": 0,
+      "crew_departures": 0,
+      "repairs_needed": 3,
+      "delays": 18,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {},
+      "final_reputation": {
+        "compact": -27,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": -4,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned"
+      ],
+      "captain_identity": "Paper leverage. Timing abuse. Institutional risk. Faster plot entanglement. [evasive, stable]",
+      "main_pressure": "time and access",
+      "feared": "direct confrontation",
+      "cared_about": [
+        "meridian_exchange",
+        "registry_spindle"
+      ]
+    },
+    {
+      "scenario_id": "honor_baseline_90d_s42",
+      "scenario_class": "baseline",
+      "path": "honor",
+      "seed": 42,
+      "days_target": 90,
+      "days_actual": 91,
+      "final_credits": -1143,
+      "credits_history": [
+        475,
+        7,
+        -263,
+        -418,
+        -688,
+        -843,
+        -1113,
+        -1143
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "drashan_citadel": 2,
+        "ironjaw_den": 2,
+        "grand_drift": 14,
+        "communion_relay": 14
+      },
+      "dominant_stations": [
+        "grand_drift",
+        "communion_relay",
+        "drashan_citadel"
+      ],
+      "lanes_used": {
+        "meridian_drashan": 1,
+        "drashan_ironjaw": 3
+      },
+      "dominant_lanes": [
+        "drashan_ironjaw",
+        "meridian_drashan"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 2,
+        "buy_veshan_weapons": 4
+      },
+      "encounters_by_type": {
+        "reach_pirate": 4
+      },
+      "encounter_outcomes": {
+        "victory": 1,
+        "defeat": 3
+      },
+      "combat_count": 4,
+      "retreats": 0,
+      "crew_injuries": 2,
+      "crew_departures": 0,
+      "repairs_needed": 4,
+      "delays": 28,
+      "seizures": 0,
+      "pay_missed": 2,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -32,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 1,
+      "consequence_tags": [
+        "heavy_damage",
+        "combat_victory",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Direct confrontation. House politics. Reputation volatility. Tactical exposure. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "grand_drift",
+        "communion_relay"
+      ]
+    },
+    {
+      "scenario_id": "honor_escalation_60d_s17",
+      "scenario_class": "stress",
+      "path": "honor",
+      "seed": 17,
+      "days_target": 60,
+      "days_actual": 61,
+      "final_credits": -714,
+      "credits_history": [
+        475,
+        11,
+        -259,
+        -414,
+        -684,
+        -714
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "drashan_citadel": 2,
+        "ironjaw_den": 2,
+        "grand_drift": 9,
+        "communion_relay": 9
+      },
+      "dominant_stations": [
+        "grand_drift",
+        "communion_relay",
+        "drashan_citadel"
+      ],
+      "lanes_used": {
+        "meridian_drashan": 1,
+        "drashan_ironjaw": 3
+      },
+      "dominant_lanes": [
+        "drashan_ironjaw",
+        "meridian_drashan"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 2,
+        "buy_veshan_weapons": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 4
+      },
+      "encounter_outcomes": {
+        "defeat": 4
+      },
+      "combat_count": 4,
+      "retreats": 0,
+      "crew_injuries": 3,
+      "crew_departures": 0,
+      "repairs_needed": 4,
+      "delays": 18,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -37,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Direct confrontation. House politics. Reputation volatility. Tactical exposure. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "grand_drift",
+        "communion_relay"
+      ]
+    },
+    {
+      "scenario_id": "recovery_broke_hull_45d_s99",
+      "scenario_class": "recovery",
+      "path": "gray",
+      "seed": 99,
+      "days_target": 45,
+      "days_actual": 46,
+      "final_credits": -340,
+      "credits_history": [
+        475,
+        350,
+        -25,
+        -225,
+        -340
+      ],
+      "stations_visited": {
+        "meridian_exchange": 7,
+        "grand_drift": 3,
+        "communion_relay": 2,
+        "registry_spindle": 4
+      },
+      "dominant_stations": [
+        "meridian_exchange",
+        "registry_spindle",
+        "grand_drift"
+      ],
+      "lanes_used": {
+        "meridian_drift": 1,
+        "communion_drift": 2,
+        "white_corridor": 1
+      },
+      "dominant_lanes": [
+        "communion_drift",
+        "meridian_drift",
+        "white_corridor"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 6,
+        "sell_compact_alloys": 3,
+        "buy_orryn_data": 6,
+        "sell_orryn_data": 4,
+        "buy_bond_plate": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 3,
+        "compact_patrol": 1
+      },
+      "encounter_outcomes": {
+        "retreat": 4
+      },
+      "combat_count": 4,
+      "retreats": 4,
+      "crew_injuries": 0,
+      "crew_departures": 0,
+      "repairs_needed": 3,
+      "delays": 13,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {},
+      "final_reputation": {
+        "compact": -27,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": -4,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned"
+      ],
+      "captain_identity": "Paper leverage. Timing abuse. Institutional risk. Faster plot entanglement. [evasive, stable]",
+      "main_pressure": "time and access",
+      "feared": "direct confrontation",
+      "cared_about": [
+        "meridian_exchange",
+        "registry_spindle"
+      ]
+    },
+    {
+      "scenario_id": "recovery_burned_rep_45d_s99",
+      "scenario_class": "recovery",
+      "path": "honor",
+      "seed": 99,
+      "days_target": 45,
+      "days_actual": 46,
+      "final_credits": -503,
+      "credits_history": [
+        475,
+        7,
+        -263,
+        -418,
+        -503
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "drashan_citadel": 2,
+        "ironjaw_den": 2,
+        "grand_drift": 7,
+        "communion_relay": 6
+      },
+      "dominant_stations": [
+        "grand_drift",
+        "communion_relay",
+        "drashan_citadel"
+      ],
+      "lanes_used": {
+        "meridian_drashan": 1,
+        "drashan_ironjaw": 3
+      },
+      "dominant_lanes": [
+        "drashan_ironjaw",
+        "meridian_drashan"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 2,
+        "buy_veshan_weapons": 4
+      },
+      "encounters_by_type": {
+        "reach_pirate": 4
+      },
+      "encounter_outcomes": {
+        "victory": 1,
+        "defeat": 3
+      },
+      "combat_count": 4,
+      "retreats": 0,
+      "crew_injuries": 3,
+      "crew_departures": 0,
+      "repairs_needed": 4,
+      "delays": 13,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -32,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 1,
+      "consequence_tags": [
+        "heavy_damage",
+        "combat_victory",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Direct confrontation. House politics. Reputation volatility. Tactical exposure. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "grand_drift",
+        "communion_relay"
+      ]
+    },
+    {
+      "scenario_id": "recovery_injured_crew_45d_s99",
+      "scenario_class": "recovery",
+      "path": "relief",
+      "seed": 99,
+      "days_target": 45,
+      "days_actual": 46,
+      "final_credits": -504,
+      "credits_history": [
+        475,
+        -4,
+        -264,
+        -419,
+        -504
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "communion_relay": 8,
+        "mourning_quay": 8
+      },
+      "dominant_stations": [
+        "communion_relay",
+        "mourning_quay",
+        "meridian_exchange"
+      ],
+      "lanes_used": {
+        "meridian_communion": 1,
+        "pilgrims_ribbon": 1
+      },
+      "dominant_lanes": [
+        "meridian_communion",
+        "pilgrims_ribbon"
+      ],
+      "goods_traded": {
+        "buy_medical_supplies": 2,
+        "buy_keth_organics": 4
+      },
+      "encounters_by_type": {
+        "compact_patrol": 1,
+        "reach_pirate": 1
+      },
+      "encounter_outcomes": {
+        "defeat": 2
+      },
+      "combat_count": 2,
+      "retreats": 0,
+      "crew_injuries": 0,
+      "crew_departures": 0,
+      "repairs_needed": 2,
+      "delays": 13,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -31,
+        "keth": 3,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Legitimacy-leaning. Convoy discipline. Trust-based access. Public consequence. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "communion_relay",
+        "mourning_quay"
+      ]
+    },
+    {
+      "scenario_id": "relief_baseline_90d_s42",
+      "scenario_class": "baseline",
+      "path": "relief",
+      "seed": 42,
+      "days_target": 90,
+      "days_actual": 91,
+      "final_credits": -1144,
+      "credits_history": [
+        475,
+        -4,
+        -264,
+        -419,
+        -689,
+        -844,
+        -1114,
+        -1144
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "communion_relay": 16,
+        "mourning_quay": 15
+      },
+      "dominant_stations": [
+        "communion_relay",
+        "mourning_quay",
+        "meridian_exchange"
+      ],
+      "lanes_used": {
+        "meridian_communion": 1,
+        "pilgrims_ribbon": 1
+      },
+      "dominant_lanes": [
+        "meridian_communion",
+        "pilgrims_ribbon"
+      ],
+      "goods_traded": {
+        "buy_medical_supplies": 2,
+        "buy_keth_organics": 4
+      },
+      "encounters_by_type": {
+        "compact_patrol": 1,
+        "reach_pirate": 1
+      },
+      "encounter_outcomes": {
+        "defeat": 2
+      },
+      "combat_count": 2,
+      "retreats": 0,
+      "crew_injuries": 3,
+      "crew_departures": 0,
+      "repairs_needed": 2,
+      "delays": 28,
+      "seizures": 0,
+      "pay_missed": 2,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -31,
+        "keth": 3,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Legitimacy-leaning. Convoy discipline. Trust-based access. Public consequence. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "communion_relay",
+        "mourning_quay"
+      ]
+    },
+    {
+      "scenario_id": "relief_shortage_60d_s17",
+      "scenario_class": "stress",
+      "path": "relief",
+      "seed": 17,
+      "days_target": 60,
+      "days_actual": 61,
+      "final_credits": -719,
+      "credits_history": [
+        475,
+        -4,
+        -264,
+        -419,
+        -689,
+        -719
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "communion_relay": 11,
+        "mourning_quay": 10
+      },
+      "dominant_stations": [
+        "communion_relay",
+        "mourning_quay",
+        "meridian_exchange"
+      ],
+      "lanes_used": {
+        "meridian_communion": 1,
+        "pilgrims_ribbon": 1
+      },
+      "dominant_lanes": [
+        "meridian_communion",
+        "pilgrims_ribbon"
+      ],
+      "goods_traded": {
+        "buy_medical_supplies": 2,
+        "buy_keth_organics": 4
+      },
+      "encounters_by_type": {
+        "compact_patrol": 1,
+        "reach_pirate": 1
+      },
+      "encounter_outcomes": {
+        "defeat": 2
+      },
+      "combat_count": 2,
+      "retreats": 0,
+      "crew_injuries": 1,
+      "crew_departures": 0,
+      "repairs_needed": 2,
+      "delays": 18,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -31,
+        "keth": 3,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Legitimacy-leaning. Convoy discipline. Trust-based access. Public consequence. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "communion_relay",
+        "mourning_quay"
+      ]
+    },
+    {
+      "scenario_id": "tui_combat_heavy_s01",
+      "scenario_class": "tui",
+      "path": "honor",
+      "seed": 1,
+      "days_target": 30,
+      "days_actual": 31,
+      "final_credits": -289,
+      "credits_history": [
+        475,
+        11,
+        -259,
+        -289
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "drashan_citadel": 2,
+        "ironjaw_den": 2,
+        "grand_drift": 4,
+        "communion_relay": 4
+      },
+      "dominant_stations": [
+        "grand_drift",
+        "communion_relay",
+        "drashan_citadel"
+      ],
+      "lanes_used": {
+        "meridian_drashan": 1,
+        "drashan_ironjaw": 3
+      },
+      "dominant_lanes": [
+        "drashan_ironjaw",
+        "meridian_drashan"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 2,
+        "buy_veshan_weapons": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 4
+      },
+      "encounter_outcomes": {
+        "defeat": 4
+      },
+      "combat_count": 4,
+      "retreats": 0,
+      "crew_injuries": 1,
+      "crew_departures": 0,
+      "repairs_needed": 4,
+      "delays": 8,
+      "seizures": 0,
+      "pay_missed": 0,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -37,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Direct confrontation. House politics. Reputation volatility. Tactical exposure. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "grand_drift",
+        "communion_relay"
+      ]
+    },
+    {
+      "scenario_id": "tui_first_hour_s01",
+      "scenario_class": "tui",
+      "path": "relief",
+      "seed": 1,
+      "days_target": 30,
+      "days_actual": 31,
+      "final_credits": -294,
+      "credits_history": [
+        475,
+        -4,
+        -264,
+        -294
+      ],
+      "stations_visited": {
+        "meridian_exchange": 1,
+        "communion_relay": 6,
+        "mourning_quay": 5
+      },
+      "dominant_stations": [
+        "communion_relay",
+        "mourning_quay",
+        "meridian_exchange"
+      ],
+      "lanes_used": {
+        "meridian_communion": 1,
+        "pilgrims_ribbon": 1
+      },
+      "dominant_lanes": [
+        "meridian_communion",
+        "pilgrims_ribbon"
+      ],
+      "goods_traded": {
+        "buy_medical_supplies": 2,
+        "buy_keth_organics": 4
+      },
+      "encounters_by_type": {
+        "compact_patrol": 1,
+        "reach_pirate": 1
+      },
+      "encounter_outcomes": {
+        "defeat": 2
+      },
+      "combat_count": 2,
+      "retreats": 0,
+      "crew_injuries": 2,
+      "crew_departures": 0,
+      "repairs_needed": 2,
+      "delays": 8,
+      "seizures": 0,
+      "pay_missed": 0,
+      "investigation_sources": {
+        "station": 1
+      },
+      "final_reputation": {
+        "compact": -31,
+        "keth": 3,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": 0,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_defeat",
+        "cargo_seized",
+        "combat_defeat",
+        "cargo_seized"
+      ],
+      "captain_identity": "Legitimacy-leaning. Convoy discipline. Trust-based access. Public consequence. [cautious, stable]",
+      "main_pressure": "time and access",
+      "feared": "being stuck in someone else's queue",
+      "cared_about": [
+        "communion_relay",
+        "mourning_quay"
+      ]
+    },
+    {
+      "scenario_id": "tui_investigation_s01",
+      "scenario_class": "tui",
+      "path": "gray",
+      "seed": 1,
+      "days_target": 45,
+      "days_actual": 46,
+      "final_credits": -340,
+      "credits_history": [
+        475,
+        350,
+        -25,
+        -225,
+        -340
+      ],
+      "stations_visited": {
+        "meridian_exchange": 7,
+        "grand_drift": 3,
+        "communion_relay": 2,
+        "registry_spindle": 4
+      },
+      "dominant_stations": [
+        "meridian_exchange",
+        "registry_spindle",
+        "grand_drift"
+      ],
+      "lanes_used": {
+        "meridian_drift": 1,
+        "communion_drift": 2,
+        "white_corridor": 1
+      },
+      "dominant_lanes": [
+        "communion_drift",
+        "meridian_drift",
+        "white_corridor"
+      ],
+      "goods_traded": {
+        "buy_compact_alloys": 6,
+        "sell_compact_alloys": 3,
+        "buy_orryn_data": 6,
+        "sell_orryn_data": 4,
+        "buy_bond_plate": 2
+      },
+      "encounters_by_type": {
+        "reach_pirate": 3,
+        "compact_patrol": 1
+      },
+      "encounter_outcomes": {
+        "retreat": 4
+      },
+      "combat_count": 4,
+      "retreats": 4,
+      "crew_injuries": 0,
+      "crew_departures": 0,
+      "repairs_needed": 3,
+      "delays": 13,
+      "seizures": 0,
+      "pay_missed": 1,
+      "investigation_sources": {},
+      "final_reputation": {
+        "compact": -27,
+        "keth": 0,
+        "veshan.drashan": 0,
+        "veshan.vekhari": 0,
+        "orryn": -4,
+        "reach.ironjaw": 0
+      },
+      "final_investigation_progress": 0,
+      "consequence_tags": [
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned",
+        "combat_retreat",
+        "cargo_jettisoned"
+      ],
+      "captain_identity": "Paper leverage. Timing abuse. Institutional risk. Faster plot entanglement. [evasive, stable]",
+      "main_pressure": "time and access",
+      "feared": "direct confrontation",
+      "cared_about": [
+        "meridian_exchange",
+        "registry_spindle"
+      ]
+    }
+  ],
+  "divergence": {
+    "baseline_count": 3,
+    "station_divergence": 1.0,
+    "lane_divergence": 1.0,
+    "credit_spread": 62,
+    "unique_identities": 3,
+    "unique_fears": 2,
+    "paths": [
+      "gray",
+      "honor",
+      "relief"
+    ]
+  }
+}
