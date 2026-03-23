@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="Star Freight — Trade. Decide. Survive." width="480">
+</p>
+
 # Star Freight
 
 You were a military pilot. Then you were a disgrace. Now you are a captain with a bad ship, no standing, and a star system that was already moving before you got here.
