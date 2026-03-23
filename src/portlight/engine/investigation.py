@@ -649,3 +649,139 @@ def get_medical_cargo_fragments() -> dict[str, Fragment]:
             connections=["med_manifest", "med_personal_connection"],
         ),
     }
+
+
+# ---------------------------------------------------------------------------
+# 7A: Ghost Tonnage thread
+# ---------------------------------------------------------------------------
+
+def create_ghost_tonnage_thread() -> InvestigationThread:
+    """Ghost Tonnage — aid and harvest shipments arriving underweight.
+
+    Logistics fraud disguised as weather loss and lane hazards. Someone is
+    skimming aid, harvest, and memorial shipments on paper-clean routes.
+    Different from Medical Shipment (which is tech smuggling disguised as
+    medical cargo). Ghost Tonnage is about systemic theft from vulnerable
+    supply chains.
+
+    Can be discovered through:
+    - Trade: manifest weight mismatches when buying/selling at Keth stations
+    - Combat: pirate cargo that doesn't match their stolen paperwork
+    - Cultural: Keth crew recognizes shortage patterns as unnatural
+    - Crew: Sera Vale reads the document trail
+    - Station: dockworkers at Mourning Quay mention missing deliveries
+    """
+    return InvestigationThread(
+        id="ghost_tonnage",
+        title="Ghost Tonnage",
+        premise="Aid, harvest, and memorial shipments keep arriving underweight. "
+                "Losses are blamed on weather and lane hazards, but only on "
+                "paper-clean routes. Someone is skimming.",
+        resolution_threshold=10,
+        fragments_required=3,
+        max_delay_days=40,
+        delay_consequence_tag="ghost_tonnage_covered_up",
+        sources=[
+            LeadSource(
+                fragment_id="ghost_weight_mismatch",
+                source_type=SourceType.TRADE,
+                trigger="trade_at_mourning_quay",
+                description="Notice manifest weight mismatches when trading at Mourning Quay",
+            ),
+            LeadSource(
+                fragment_id="ghost_pirate_paperwork",
+                source_type=SourceType.COMBAT,
+                trigger="salvage_pirate_cargo",
+                description="Salvaged pirate cargo doesn't match the paperwork they stole",
+            ),
+            LeadSource(
+                fragment_id="ghost_shortage_pattern",
+                source_type=SourceType.CULTURAL,
+                trigger="keth_shortage_analysis",
+                crew_required="thal_communion",
+                civ_knowledge_required="keth",
+                knowledge_level_required=1,
+                description="Thal recognizes the shortage pattern as unnatural for this season",
+            ),
+            LeadSource(
+                fragment_id="ghost_document_trail",
+                source_type=SourceType.CREW,
+                trigger="sera_manifest_analysis",
+                crew_required="sera_vale",
+                description="Sera reads the document trail and finds the same audit signature",
+            ),
+            LeadSource(
+                fragment_id="ghost_dock_complaint",
+                source_type=SourceType.STATION,
+                trigger="station_rumor_keth_medical",
+                description="Dockworkers at Mourning Quay complain about missing deliveries",
+            ),
+        ],
+    )
+
+
+def get_ghost_tonnage_fragments() -> dict[str, Fragment]:
+    """Pre-defined fragments for the Ghost Tonnage thread."""
+    return {
+        "ghost_weight_mismatch": Fragment(
+            id="ghost_weight_mismatch",
+            thread_id="ghost_tonnage",
+            content="The manifest says 40 tonnes of harvest compound. The scale says 31. "
+                    "The difference is too consistent to be spillage.",
+            source_type="trade",
+            source_detail="Weight discrepancy at Mourning Quay loading dock",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["ghost_shortage_pattern", "ghost_document_trail"],
+        ),
+        "ghost_pirate_paperwork": Fragment(
+            id="ghost_pirate_paperwork",
+            thread_id="ghost_tonnage",
+            content="The raider was carrying harvest compounds — but their forged manifest "
+                    "lists medical supplies. Someone gave them the wrong cover story. "
+                    "Or the cargo was swapped before it reached the lane.",
+            source_type="combat",
+            source_detail="Salvaged manifest from defeated pirate vessel",
+            grade=EvidenceGrade.CLUE,
+            day_acquired=0,
+            connections=["ghost_weight_mismatch"],
+        ),
+        "ghost_shortage_pattern": Fragment(
+            id="ghost_shortage_pattern",
+            thread_id="ghost_tonnage",
+            content="Thal says the shortages follow a pattern that matches audit cycles, "
+                    "not weather or lane loss. Someone is timing the skim to arrive "
+                    "between inspections.",
+            source_type="cultural",
+            source_detail="Thal's analysis of Communion supply records",
+            grade=EvidenceGrade.CORROBORATED,
+            day_acquired=0,
+            connections=["ghost_weight_mismatch", "ghost_document_trail"],
+            crew_interpreter="thal_communion",
+        ),
+        "ghost_document_trail": Fragment(
+            id="ghost_document_trail",
+            thread_id="ghost_tonnage",
+            content="The same audit signature appears on every clean manifest that later "
+                    "shows a weight discrepancy. Sera says the signature belongs to a "
+                    "Compact logistics officer who was reassigned after your discharge.",
+            source_type="crew",
+            source_detail="Sera Vale's document analysis",
+            grade=EvidenceGrade.ACTIONABLE,
+            day_acquired=0,
+            connections=["ghost_shortage_pattern", "ghost_weight_mismatch"],
+            crew_interpreter="sera_vale",
+        ),
+        "ghost_dock_complaint": Fragment(
+            id="ghost_dock_complaint",
+            thread_id="ghost_tonnage",
+            content="The dock elder says three memorial shipments arrived light this season. "
+                    "Families are angry. The Communion is investigating internally. "
+                    "Nobody outside has asked about it — until you.",
+            source_type="station",
+            source_detail="Mourning Quay dock elder conversation",
+            grade=EvidenceGrade.RUMOR,
+            day_acquired=0,
+            connections=["ghost_weight_mismatch"],
+        ),
+    }

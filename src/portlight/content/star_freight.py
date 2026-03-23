@@ -10,6 +10,7 @@ This replaces Portlight's maritime content. No medieval language,
 no ocean references, no sailing terminology.
 
 Slice scope: 5 stations, 8 lanes, 5 goods, 2 crew, 3 contracts, 3 ship classes.
+7A Working Lives: +1 station, +2 lanes, +2 goods, +1 crew, +2 contracts, +1 encounter, +1 thread.
 Full scope: 20 stations, 40 lanes, 20 goods, 7 crew, 7+ contracts, 5 ship classes.
 """
 
@@ -221,6 +222,37 @@ SLICE_STATIONS: dict[str, Station] = {
         sector="reach",
         x=1, y=6,
     ),
+
+    # --- 7A: Working Lives ---
+
+    "mourning_quay": Station(
+        id="mourning_quay",
+        name="Mourning Quay",
+        civilization="keth",
+        description="A hospice-port grown from living coral around a thermal vent. Ships arrive "
+                    "damaged, crews arrive grieving, and commerce moves at the pace of recovery. "
+                    "The market trades in harvest compounds, brood-silk, and memory tinctures — "
+                    "goods that carry emotional weight the Communion takes seriously.",
+        services=["market", "repair", "fuel", "cultural_event", "crew_hire"],
+        docking_fee=10,
+        repair_cost_per_point=1,  # cheapest repair in the system — care is the point
+        fuel_cost_per_day=10,
+        cultural_greeting="A healer-drone approaches your airlock before you've powered down. "
+                        "It checks your hull scars, not your cargo manifest.",
+        cultural_restriction="Impatient trading worsens prices. Pushing deals during convalescence "
+                            "rituals is treated as cruelty, not rudeness. Inner hospice requires "
+                            "Keth knowledge level 2.",
+        cultural_opportunity="Patient captains who honor the cadence earn trust that opens elder "
+                            "council markets. Injured crew recover faster here. Gifts of medical "
+                            "supplies during harvest carry triple weight.",
+        knowledge_required_for_restricted=2,
+        produces=["keth_organics", "brood_silk"],
+        demands=["compact_alloys", "medical_supplies"],
+        contraband=["keth_bioweapons", "ancestor_tech"],
+        fragment_sources=["ghost_tonnage_shortage", "med_seasonal_mismatch"],
+        sector="keth",
+        x=6, y=0,
+    ),
 }
 
 
@@ -355,6 +387,35 @@ SLICE_LANES: dict[str, SpaceLane] = {
                     "The Reach dares you to cross it. The most dangerous lane in the slice — "
                     "and the most profitable if you're carrying the right cargo.",
         contraband_risk=0.25,
+    ),
+
+    # --- 7A: Working Lives ---
+
+    "pilgrims_ribbon": SpaceLane(
+        id="pilgrims_ribbon",
+        station_a="communion_relay",
+        station_b="mourning_quay",
+        distance_days=2,
+        danger=0.02,
+        controlled_by="keth",
+        description="A ceremonial lane used by families, shrine delegations, and memorial "
+                    "caravans. Safe, slow, and socially scrutinized. Fighting here carries "
+                    "heavy long-tail consequences. Contraband is conspicuous.",
+        contraband_risk=0.20,  # high scrutiny despite low danger
+    ),
+
+    "cinder_span": SpaceLane(
+        id="cinder_span",
+        station_a="drashan_citadel",
+        station_b="mourning_quay",
+        distance_days=3,
+        danger=0.22,
+        controlled_by="disputed",
+        terrain="debris_field",
+        description="A broken mineral lane full of debris shadow, salvage traps, and "
+                    "opportunistic raiders. Faster than safe routes but hull-punishing. "
+                    "Good for smuggling, salvage, and people who don't want to be found.",
+        contraband_risk=0.03,  # low scrutiny — nobody's watching
     ),
 }
 
@@ -505,6 +566,34 @@ SLICE_GOODS: dict[str, TradeGood] = {
         description="Weapons without a Veshan house seal. Illegal in Veshan space — "
                     "carrying unsealed arms insults the houses. The Reach doesn't care.",
     ),
+
+    # --- 7A: Working Lives ---
+
+    "brood_silk": TradeGood(
+        id="brood_silk",
+        name="Brood Silk",
+        category="luxury",
+        base_price=220,
+        origin_civ="keth",
+        cultural_restriction="Requires Keth knowledge level 1. Mishandling or reselling at "
+                            "non-Keth stations without context is remembered.",
+        description="Keth ceremonial and medical textile grown from larval secretions. "
+                    "Used in healing wraps, mourning shrouds, and kinship gifts. "
+                    "Profitable but socially loaded — gifting it well earns deep trust, "
+                    "selling it carelessly earns lasting contempt.",
+    ),
+    "black_seal_resin": TradeGood(
+        id="black_seal_resin",
+        name="Black Seal Resin",
+        category="luxury",
+        base_price=280,
+        origin_civ="veshan",
+        cultural_restriction="Requires Veshan knowledge level 1. Selling to non-Veshan buyers "
+                            "without house authorization is a political act.",
+        description="Veshan contract resin used in oath-marking, military maintenance, and "
+                    "high-status house work. Buyers pay for status, not volume. Diverted "
+                    "resin may imply military preparation or false-house operations.",
+    ),
 }
 
 
@@ -576,6 +665,42 @@ def create_varek() -> CrewMember:
             "deception": -10,
             "cowardice": -8,
             "keth_customs": -2,
+        },
+    )
+
+
+# --- 7A: Working Lives ---
+
+def create_sera() -> CrewMember:
+    """Sera Vale — Compact quartermaster. Document expert and legal finesse.
+
+    Proves:
+    - Crew dependency: Sera is WHY you can read manifests and navigate customs
+    - Cultural logic: Compact interactions become tactical instead of blunt
+    - Investigation: opens document-based angles (Ghost Tonnage thread)
+    - Combat: manifest scrub ability reduces scan exposure
+    """
+    return CrewMember(
+        id="sera_vale",
+        name="Sera",
+        civilization=Civilization.COMPACT,
+        role=CrewRole.BROKER,
+        hp=70,
+        hp_max=70,
+        speed=2,
+        abilities=["manifest_audit", "customs_protocol", "document_forge"],
+        ship_skill="manifest_scrub",
+        morale=50,
+        loyalty_tier=LoyaltyTier.STRANGER,
+        loyalty_points=0,
+        pay_rate=65,
+        narrative_hooks=["buried_ledger", "former_employer"],
+        opinions={
+            "honesty": 6,
+            "carelessness": -8,
+            "deception": -4,
+            "professionalism": 7,
+            "violence": -3,
         },
     )
 
@@ -655,6 +780,43 @@ SLICE_CONTRACTS: dict[str, ContractTemplate] = {
         consequence_on_failure="reputation_combat_negative",
         proves="combat consequence + crew dependency — who you bring determines "
                "what you can do when you find the target",
+    ),
+
+    # --- 7A: Working Lives ---
+
+    "witness_run": ContractTemplate(
+        id="witness_run",
+        name="Witness Run",
+        family="escort",
+        description="Transport a neutral observer to a disputed station or lane crossing. "
+                    "Modest payout but high reputation leverage. Different civilizations "
+                    "interpret 'neutral witness' differently. The witness may notice "
+                    "something they should not.",
+        payout_range=(150, 350),
+        deadline_days=7,
+        risk_type="political",
+        consequence_on_success="reputation_diplomatic_positive",
+        consequence_on_failure="reputation_diplomatic_catastrophe",
+        proves="culture + plot — witness presence changes encounter grammar, "
+               "observer may branch into investigation",
+    ),
+
+    "cold_lantern_freight": ContractTemplate(
+        id="cold_lantern_freight",
+        name="Cold Lantern Freight",
+        family="delivery",
+        description="Deliver fragile mourning lamps or memory vessels before a seasonal "
+                    "observance closes. Time-pressured sacred cargo. Mishandling is worse "
+                    "than normal failure — it's social catastrophe. Keth or culturally "
+                    "adjacent crew improve outcomes.",
+        payout_range=(200, 450),
+        deadline_days=5,
+        cultural_knowledge_required={"keth": 1},
+        risk_type="political",
+        consequence_on_success="reputation_sacred_positive",
+        consequence_on_failure="reputation_sacred_catastrophe",
+        proves="culture + economy — time pressure meets cultural obligation, "
+               "crew changes whether sacred cargo survives the run",
     ),
 }
 
@@ -808,6 +970,32 @@ SLICE_ENCOUNTERS: dict[str, EncounterArchetype] = {
         victory_consequence="Major respect. +5 Veshan standing. Possible debt created in your favor.",
         defeat_consequence="Respectful defeat. Minor standing loss. Cargo and ship intact if fought honorably.",
     ),
+
+    # --- 7A: Working Lives ---
+
+    "hearth_right": EncounterArchetype(
+        id="hearth_right",
+        name="Hearth Right Challenge",
+        civilization="veshan",
+        description="A Veshan house escort accuses you of lane disrespect or improper passage. "
+                    "This is not piracy — it is status, witness, insult, and expectation. "
+                    "Can become duel, skirmish, negotiated withdrawal, or disaster depending "
+                    "on cultural knowledge and crew.",
+        ship_hull=3500,
+        ship_shield=400,
+        ship_damage=200,
+        ship_speed=2,
+        behavior="honor",
+        cultural_option="Veshan knowledge level 1: understand the accusation terms. "
+                       "Level 2: invoke witness protocol or offer formal compensation. "
+                       "Veshan crew member can open honor-preserving resolution.",
+        retreat_consequence="Short-term survival, long-term social damage. -10 Veshan standing. "
+                          "Lane passage rights questioned at future crossings.",
+        victory_consequence="Honor standing up. +3 Veshan standing. May create debt in your favor. "
+                          "But wider faction heat possible if the house has allies.",
+        defeat_consequence="Respectful if fought well — minor standing loss. If fled mid-fight, "
+                         "treated as cowardice. Cargo may be claimed as 'compensation.'",
+    ),
 }
 
 
@@ -835,12 +1023,12 @@ def validate_slice_content() -> list[str]:
             if good_id not in SLICE_GOODS:
                 errors.append(f"Station {station_id}: good '{good_id}' not found")
 
-    # Each civ must have exactly 1 station in slice
+    # Each civ must have at least 1 station
     civs = [s.civilization for s in SLICE_STATIONS.values()]
     for civ in ["compact", "keth", "veshan", "orryn", "reach"]:
         count = civs.count(civ)
-        if count != 1:
-            errors.append(f"Civ {civ}: expected 1 station, got {count}")
+        if count < 1:
+            errors.append(f"Civ {civ}: expected at least 1 station, got {count}")
 
     # Each station must have at least 1 produce and 1 demand
     for station_id, station in SLICE_STATIONS.items():
