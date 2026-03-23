@@ -1,0 +1,64 @@
+{
+  "wave": 2,
+  "build": "post-P0-economy-fix",
+  "pass_a": {
+    "divergence": {
+      "route_divergence": 1.0,
+      "lane_divergence": 1.0,
+      "economic_divergence": 2.0799867241951544,
+      "combat_divergence": 1.0,
+      "reputation_divergence": 5.833333333333333,
+      "failure_divergence": 1.3333333333333333,
+      "trade_divergence": 1.0,
+      "overall_divergence": 1.892379055837403
+    },
+    "credits": {
+      "relief": 4585,
+      "gray": 407,
+      "honor": 1034
+    },
+    "all_survive": true
+  },
+  "pass_b": {
+    "relief": {
+      "sources": {
+        "station": 1
+      },
+      "fragments_total": 1,
+      "source_types": [
+        "station"
+      ]
+    },
+    "gray": {
+      "sources": {},
+      "fragments_total": 0,
+      "source_types": []
+    },
+    "honor": {
+      "sources": {
+        "station": 1
+      },
+      "fragments_total": 1,
+      "source_types": [
+        "station"
+      ]
+    }
+  },
+  "pass_c": {
+    "gray_seizure_60d_s17": {
+      "credits": 922,
+      "pressure": "time and access",
+      "fear": "direct confrontation"
+    },
+    "relief_shortage_60d_s17": {
+      "credits": 4505,
+      "pressure": "time and access",
+      "fear": "being stuck in someone else's queue"
+    },
+    "honor_escalation_60d_s17": {
+      "credits": 3195,
+      "pressure": "time and access",
+      "fear": "being stuck in someone else's queue"
+    }
+  }
+}

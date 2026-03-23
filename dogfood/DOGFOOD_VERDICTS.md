@@ -5,6 +5,26 @@
 
 ---
 
+## Wave 2 — Post-P0 Economy Fix
+
+**Overall: PASS with P1 items**
+
+Economy viable. All captains survive. Divergence preserved (1.00 across all dimensions).
+
+Three findings:
+1. Relief dominates (11x credit ratio — target 3-5x)
+2. Honor escalation is comfortable, not stressful (combat = income)
+3. Fear classifier still coarse (2/3 unique fears)
+4. Investigation sources still station-only (harness issue, not game issue)
+
+| Pass | Result | Key Finding |
+|---|---|---|
+| A: Baselines | PASS/WARN | All survive. Relief 4585, Gray 407, Honor 1034. 11x ratio too wide. |
+| B: Investigation | FAIL | Station sources only. Harness doesn't emit trade/combat events. |
+| C: Stress | PASS | All survive stress. Honor thrives under escalation (too comfortable). |
+
+---
+
 ## Wave 1 — v0.1.0-dogfood
 
 **Overall: WARN (economy blocks PASS)**
@@ -36,3 +56,6 @@ Architecture holds. Divergence is real (1.00 station, 1.00 lane). 3/3 unique ide
 | 2026-03-23 | Wave 1 | Fear classifier too coarse (2/3 unique) | P1: Add fear dimensions | PENDING |
 | 2026-03-23 | Wave 1 | Investigation only from station sources | P2: Broaden trigger matching | PENDING |
 | 2026-03-23 | Wave 1 | Reputation barely moves | P3: Increase rep velocity | PENDING |
+| 2026-03-23 | Wave 2 | Relief dominates (11x ratio) | P1: Narrow margin gap to 3-5x | PENDING |
+| 2026-03-23 | Wave 2 | Honor escalation too comfortable | P1: Make escalation stress real | PENDING |
+| 2026-03-23 | Wave 2 | Investigation only station sources | P2: Fix harness event emission | PENDING |
