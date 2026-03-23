@@ -1,0 +1,19 @@
+{
+  "id": "honor_baseline_90d_s42",
+  "class": "baseline",
+  "path": "honor",
+  "description": "Honor / Frontier baseline. Direct confrontation, house politics, Veshan/Keth doors.",
+  "seed": 42,
+  "days": 90,
+  "crew": ["varek_drashan", "thal_communion"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "meridian_exchange"
+  },
+  "world_pressure": {},
+  "pass_focus": ["divergence", "loop_clarity", "captain_divergence"]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "gray_seizure_60d_s17",
+  "class": "stress",
+  "path": "gray",
+  "description": "Compact seizure flag active from day 1. Does paper leverage survive institutional scrutiny?",
+  "seed": 17,
+  "days": 60,
+  "crew": ["sera_vale", "nera_quill"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "meridian_exchange"
+  },
+  "world_pressure": {
+    "seizure_flag": true,
+    "compact_inspection_rate_multiplier": 2.0
+  },
+  "pass_focus": ["pressure_fairness", "recovery_viability", "consequence_credibility"]
+}

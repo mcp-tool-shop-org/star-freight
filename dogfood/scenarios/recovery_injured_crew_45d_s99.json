@@ -1,0 +1,23 @@
+{
+  "id": "recovery_injured_crew_45d_s99",
+  "class": "recovery",
+  "path": "relief",
+  "description": "Thal injured (5d), Varek morale 20. Can you rebuild capability with one crew member down?",
+  "seed": 99,
+  "days": 45,
+  "crew": ["thal_communion", "varek_drashan"],
+  "starting_state": {
+    "credits": 350,
+    "hull": 1500,
+    "hull_max": 2000,
+    "shield": 150,
+    "fuel": 6,
+    "station": "communion_relay",
+    "crew_overrides": {
+      "thal_communion": {"injured": true, "injury_days": 5},
+      "varek_drashan": {"morale": 20}
+    }
+  },
+  "world_pressure": {},
+  "pass_focus": ["recovery_viability", "consequence_credibility", "pressure_fairness"]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "relief_shortage_60d_s17",
+  "class": "stress",
+  "path": "relief",
+  "description": "Shortage prices active, convoy delays doubled. Does relief work stay viable?",
+  "seed": 17,
+  "days": 60,
+  "crew": ["thal_communion", "ilen_marr"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "queue_of_flags"
+  },
+  "world_pressure": {
+    "shortage_active": true,
+    "convoy_delay_multiplier": 2.0,
+    "ration_price_multiplier": 1.8
+  },
+  "pass_focus": ["pressure_fairness", "loop_clarity", "content_freshness"]
+}

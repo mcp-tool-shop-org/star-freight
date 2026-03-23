@@ -1,0 +1,22 @@
+{
+  "id": "tui_combat_heavy_s01",
+  "class": "tui",
+  "path": "honor",
+  "description": "Combat legibility under pressure. Can you read grid, abilities, retreat, aftermath?",
+  "seed": 1,
+  "days": 30,
+  "crew": ["varek_drashan", "thal_communion"],
+  "starting_state": {
+    "credits": 400,
+    "hull": 1600,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "drashan_citadel"
+  },
+  "world_pressure": {
+    "encounter_rate_multiplier": 2.0
+  },
+  "pass_focus": ["tui_legibility", "consequence_credibility"],
+  "tui_focus": "Can the player read: whose turn, what abilities exist, why one is unavailable, what retreat costs, what aftermath changed?"
+}

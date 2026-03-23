@@ -1,0 +1,24 @@
+{
+  "id": "recovery_broke_hull_45d_s99",
+  "class": "recovery",
+  "path": "gray",
+  "description": "Credits 50, hull 800/2000, pay missed once. Can you climb out of poverty without dead time?",
+  "seed": 99,
+  "days": 45,
+  "crew": ["sera_vale", "nera_quill"],
+  "starting_state": {
+    "credits": 50,
+    "hull": 800,
+    "hull_max": 2000,
+    "shield": 50,
+    "fuel": 3,
+    "station": "grand_drift",
+    "crew_overrides": {
+      "sera_vale": {"morale": 30},
+      "nera_quill": {"morale": 35}
+    },
+    "last_pay_day_offset": -28
+  },
+  "world_pressure": {},
+  "pass_focus": ["recovery_viability", "loop_clarity", "pressure_fairness"]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "relief_baseline_90d_s42",
+  "class": "baseline",
+  "path": "relief",
+  "description": "Relief / Legitimacy baseline. Convoy discipline, trust access, Keth/Orryn cultural doors.",
+  "seed": 42,
+  "days": 90,
+  "crew": ["thal_communion", "ilen_marr"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "meridian_exchange"
+  },
+  "world_pressure": {},
+  "pass_focus": ["divergence", "loop_clarity", "pressure_fairness"]
+}

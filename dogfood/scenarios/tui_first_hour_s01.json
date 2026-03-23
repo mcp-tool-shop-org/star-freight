@@ -1,0 +1,20 @@
+{
+  "id": "tui_first_hour_s01",
+  "class": "tui",
+  "path": "relief",
+  "description": "First-time player experience. Does the player know what to do, where to go, what matters?",
+  "seed": 1,
+  "days": 30,
+  "crew": ["thal_communion"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "meridian_exchange"
+  },
+  "world_pressure": {},
+  "pass_focus": ["tui_legibility", "loop_clarity"],
+  "tui_focus": "Does the player understand: where they are, what to do first, how to trade, how to travel, what crew does?"
+}

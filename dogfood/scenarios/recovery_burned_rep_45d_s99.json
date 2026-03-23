@@ -1,0 +1,24 @@
+{
+  "id": "recovery_burned_rep_45d_s99",
+  "class": "recovery",
+  "path": "honor",
+  "description": "Compact -50, Keth -25, investigation delayed 30 days. Can you operate when doors are closing?",
+  "seed": 99,
+  "days": 45,
+  "crew": ["varek_drashan", "thal_communion"],
+  "starting_state": {
+    "credits": 300,
+    "hull": 1400,
+    "hull_max": 2000,
+    "shield": 100,
+    "fuel": 5,
+    "station": "ironjaw_den",
+    "reputation_overrides": {
+      "compact": -50,
+      "keth": -25
+    },
+    "investigation_delay_days": 30
+  },
+  "world_pressure": {},
+  "pass_focus": ["recovery_viability", "captain_divergence", "consequence_credibility"]
+}

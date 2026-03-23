@@ -1,0 +1,20 @@
+{
+  "id": "tui_investigation_s01",
+  "class": "tui",
+  "path": "gray",
+  "description": "Journal and consequence clarity. Do fragments surface clearly? Do consequences show?",
+  "seed": 1,
+  "days": 45,
+  "crew": ["sera_vale", "thal_communion"],
+  "starting_state": {
+    "credits": 500,
+    "hull": 1800,
+    "hull_max": 2000,
+    "shield": 200,
+    "fuel": 8,
+    "station": "communion_relay"
+  },
+  "world_pressure": {},
+  "pass_focus": ["tui_legibility", "content_freshness"],
+  "tui_focus": "Do investigation fragments appear naturally? Does the journal show source and grade? Do consequence tags surface in aftermath? Does the player feel they learned something through work?"
+}
