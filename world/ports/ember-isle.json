@@ -1,0 +1,326 @@
+{
+  "id": "portlight-ember-isle",
+  "name": "Ember Isle",
+  "description": "Volcanic island with obsidian beaches, rich in rare minerals and medicinal plants. The Ember Keepers — herbalists and healers who know the volcanic plants — produce medicines unmatched anywhere in the Known World. The volcano never fully sleeps. Visitors place a stone at its base to appease the mountain. The islanders aren't worried when it grumbles — they say it always does before a good harvest.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["volcanic", "healing", "primal"],
+  "difficulty": "intermediate",
+  "narratorTone": "Black sand crunches under your boots. Steam rises from hot springs near the dock. Above the harbor, Ember Peak trails a thin plume of smoke against a blue sky — a navigator's beacon visible from fifty leagues. The air tastes of sulfur and green things growing. Ember Isle heals. But the mountain beneath your feet has a temper.",
+  "mode": "district",
+
+  "map": {
+    "id": "ember-isle-map",
+    "name": "Ember Isle",
+    "description": "A volcanic island with black sand beaches and a smoldering peak. The harbor sits in a natural bay formed by an ancient lava flow. The Ember Keepers' village climbs the lower slopes. Hot springs steam between the buildings. The volcano watches everything.",
+    "gridWidth": 48,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "obsidian-dock",
+      "name": "The Obsidian Dock",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "A dock built from volcanic basalt on a black sand beach. The water is warm — heated by volcanic vents beneath the bay. Harbor Keeper Tane guides ships through the lava rock formations that guard the entrance. He is calm, brown-skinned, and speaks with the cadence of a man who has never hurried in his life. The dock smells of sulfur and salt.",
+      "gridX": 14, "gridY": 32,
+      "gridWidth": 16, "gridHeight": 6,
+      "neighbors": ["hot-springs", "medicine-garden", "stone-circle"],
+      "exits": [],
+      "light": 9, "noise": 4,
+      "hazards": ["sharp obsidian rocks at waterline"],
+      "interactables": [
+        { "name": "Black Sand Beach", "type": "inspect", "description": "Fine volcanic sand, black as night. The beach radiates warmth from the vents below. Footprints disappear quickly — the wind off the mountain smooths the sand between visitors." },
+        { "name": "Lava Rock Channel", "type": "inspect", "description": "Natural basalt formations that create a narrow channel into the harbor. Ships must follow the channel precisely — the rocks are sharp enough to open a hull." },
+        { "name": "Offering Stones", "type": "use", "description": "A pile of smooth stones at the dock's landward end. Visitors place a stone to appease the mountain. The pile grows between eruptions. After an eruption, it starts again." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "hot-springs",
+      "name": "The Hot Springs",
+      "tags": ["landmark", "healing", "natural"],
+      "description": "Natural hot springs that cascade down the lower slope into stone-lined pools. The Ember Keepers use them for healing — different pools at different temperatures for different ailments. Healer Manu oversees the springs with the quiet authority of a man who has cured more fevers than any physician in the Known World. The steam smells of minerals and wild herbs. Bathing is therapeutic. It is also mandatory for anyone who wants to trade — the Keepers say clean bodies make honest deals.",
+      "gridX": 4, "gridY": 22,
+      "gridWidth": 10, "gridHeight": 10,
+      "neighbors": ["obsidian-dock", "keeper-village"],
+      "exits": [],
+      "light": 8, "noise": 3,
+      "hazards": ["some pools dangerously hot"],
+      "interactables": [
+        { "name": "Healing Pool", "type": "use", "description": "A stone-lined pool at precise temperature — hot enough to soothe muscles and draw out fever, cool enough not to scald. Manu tests the temperature with his elbow before allowing anyone in." },
+        { "name": "Mineral Cascade", "type": "inspect", "description": "Water flowing down the slope, each level a different mineral color — orange iron, blue copper, white sulfur. The Keepers harvest minerals from the cascade for their medicines." },
+        { "name": "Herb Drying Racks", "type": "inspect", "description": "Bamboo racks near the springs where volcanic herbs are dried in the steam. The heat is perfect — not enough to cook, enough to preserve. The dried herbs are worth more than gold at Dragon's Gate." }
+      ],
+      "parentDistrictId": "keeper-grounds"
+    },
+    {
+      "id": "medicine-garden",
+      "name": "The Medicine Garden",
+      "tags": ["craft", "medicine", "sacred"],
+      "description": "Terraced gardens on the volcanic slope where the Ember Keepers cultivate medicinal plants that grow nowhere else. The volcanic soil, mineral-rich water, and constant warmth produce plants of extraordinary potency. Head Keeper Leilani tends the gardens with the reverence of a priestess and the precision of a chemist. She knows every plant by name, use, and dosage. She refused to share her recipes with the Iron Pact. 'The mountain teaches us. It didn't teach you.'",
+      "gridX": 18, "gridY": 16,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["obsidian-dock", "keeper-village", "dye-cavern"],
+      "exits": [],
+      "light": 9, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Fever Bark Grove", "type": "inspect", "description": "A grove of volcanic ash trees whose bark reduces fever within hours. The trees grow only in volcanic soil. The Keepers harvest bark in rotation — never more than a third from any tree." },
+        { "name": "Anti-Venom Patch", "type": "inspect", "description": "A bed of sharp-leafed plants that produce anti-venom for sea snake bites. Leilani processes the leaves with volcanic water to activate the compounds. The preparation is a guarded secret." },
+        { "name": "Poultice Bench", "type": "use", "description": "A stone bench where Leilani mixes wound poultices from volcanic herbs and mineral paste. She works with mortar and pestle, adding ingredients by feel and smell. Each batch is slightly different — she adjusts for the patient." }
+      ],
+      "parentDistrictId": "keeper-grounds"
+    },
+    {
+      "id": "keeper-village",
+      "name": "The Keepers' Village",
+      "tags": ["residential", "faction", "sacred"],
+      "description": "A village of stone-and-thatch buildings on the lower slope, home to the Ember Keepers. The buildings are built to flex with tremors — the islanders have lived with the volcano for generations. Elder Keeper Aroha leads the community. She is the oldest living Keeper, her skin weathered to volcanic stone. She speaks to the mountain. Some say it answers.",
+      "gridX": 6, "gridY": 10,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["hot-springs", "medicine-garden", "ember-peak-path"],
+      "exits": [],
+      "light": 8, "noise": 3,
+      "hazards": ["occasional tremors"],
+      "interactables": [
+        { "name": "Elder Aroha's House", "type": "inspect", "description": "The largest building in the village — still modest. Volcanic stone walls, palm thatch roof, an open doorway that always faces the peak. Aroha says the mountain likes to see her. She is not joking." },
+        { "name": "Community Fire", "type": "inspect", "description": "A permanent fire at the village center, fed by volcanic vents. It has never been lit by human hands and has never gone out. The Keepers say it is the mountain's gift." },
+        { "name": "Trade Post", "type": "use", "description": "A simple table where Keeper medicines are sold to visiting captains. Prices are set by Elder Aroha based on need — captains bound for dangerous waters pay less. She says the mountain's gifts should go where they're needed most." }
+      ],
+      "parentDistrictId": "keeper-grounds"
+    },
+    {
+      "id": "dye-cavern",
+      "name": "The Dye Cavern",
+      "tags": ["craft", "industry", "mineral"],
+      "description": "A natural cave system where volcanic pigments are harvested and processed. The minerals produce dyes of extraordinary intensity — volcanic reds, deep blacks, sulfur yellows. Dye Harvester Kai works the caverns with a team of three, chipping pigment from the walls and grinding it to powder. The colors are unique to Ember Isle and fetch premium prices, especially in Silk Haven.",
+      "gridX": 32, "gridY": 14,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["medicine-garden", "trading-beach"],
+      "exits": [],
+      "light": 3, "noise": 4,
+      "hazards": ["toxic mineral dust — cover your mouth"],
+      "interactables": [
+        { "name": "Pigment Walls", "type": "inspect", "description": "Cave walls streaked with mineral color — iron red, copper blue, sulfur yellow. Kai chips the brightest veins with careful strokes. A careless blow releases toxic dust." },
+        { "name": "Grinding Station", "type": "use", "description": "Stone mortars where raw mineral is ground to fine powder. The powder is sealed in clay jars with wax stoppers. Each jar is labeled with the color and harvest date." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "trading-beach",
+      "name": "The Trading Beach",
+      "tags": ["market", "commerce", "casual"],
+      "description": "A stretch of black sand beach east of the dock where trade goods are laid out on palm mats. No formal stalls — the Keepers trade medicines and dyes in the open air. Iron, grain, timber, and weapons are accepted in exchange. Trader Hemi handles most transactions — a gregarious young Keeper who enjoys bargaining almost as much as he enjoys the surprise on captains' faces when they taste his grandmother's smoked fish.",
+      "gridX": 32, "gridY": 28,
+      "gridWidth": 10, "gridHeight": 6,
+      "neighbors": ["dye-cavern", "obsidian-dock"],
+      "exits": [],
+      "light": 10, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Medicine Mats", "type": "use", "description": "Palm mats displaying bottled tinctures, dried bark bundles, poultice packs, and anti-venom vials. Each labeled with symptoms and dosage in the Keepers' script." },
+        { "name": "Dye Display", "type": "use", "description": "Clay jars of volcanic pigment arranged by color. Hemi opens each jar with a flourish, letting the color speak for itself. The volcanic reds are the most prized." },
+        { "name": "Smoked Fish Basket", "type": "use", "description": "Hemi's grandmother's smoked fish, offered free to traders as a goodwill gesture. The fish is extraordinary. The gesture usually leads to better deals. Hemi learned negotiation from his grandmother." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "ember-peak-path",
+      "name": "The Peak Path",
+      "tags": ["passage", "sacred", "overlook"],
+      "description": "A winding path up the lower slopes of Ember Peak. The ground is warm underfoot. Steam vents hiss from cracks in the lava rock. The path leads to a lookout point where the whole island — and fifty leagues of ocean — is visible. The Keepers walk this path for meditation and to read the mountain's mood. Visitors are welcome but warned: the mountain decides who reaches the top.",
+      "gridX": 12, "gridY": 2,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["keeper-village"],
+      "exits": [],
+      "light": 10, "noise": 2,
+      "hazards": ["steam vents", "loose volcanic rock"],
+      "interactables": [
+        { "name": "Steam Vents", "type": "inspect", "description": "Cracks in the lava rock that hiss with superheated steam. The Keepers read the steam patterns — pressure, temperature, sulfur content — to gauge the mountain's mood. Today it grumbles softly." },
+        { "name": "Summit Overlook", "type": "inspect", "description": "A flat rock at the path's highest point. The view encompasses the entire island, the harbor, and the ocean to every horizon. Ember Peak's smoke trail rises behind you. The Keepers say this is where the mountain's voice is clearest." },
+        { "name": "Stone Cairn", "type": "use", "description": "A cairn of volcanic stones placed by Keepers and visitors. Each stone represents a prayer or a memory. The cairn has been rebuilt many times — eruptions scatter it, and people rebuild it. The rebuilding is the point." }
+      ],
+      "parentDistrictId": "keeper-grounds"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "obsidian-dock", "toZoneId": "hot-springs", "bidirectional": true, "kind": "road", "label": "Spring Path" },
+    { "fromZoneId": "obsidian-dock", "toZoneId": "medicine-garden", "bidirectional": true, "kind": "stairs", "label": "Garden Steps" },
+    { "fromZoneId": "obsidian-dock", "toZoneId": "stone-circle", "bidirectional": false, "kind": "road" },
+    { "fromZoneId": "obsidian-dock", "toZoneId": "trading-beach", "bidirectional": true, "kind": "road", "label": "East Beach" },
+    { "fromZoneId": "hot-springs", "toZoneId": "keeper-village", "bidirectional": true, "kind": "road", "label": "Village Path" },
+    { "fromZoneId": "medicine-garden", "toZoneId": "keeper-village", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "medicine-garden", "toZoneId": "dye-cavern", "bidirectional": true, "kind": "passage", "label": "Cavern Entrance" },
+    { "fromZoneId": "dye-cavern", "toZoneId": "trading-beach", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "keeper-village", "toZoneId": "ember-peak-path", "bidirectional": true, "kind": "stairs", "label": "Peak Trail" }
+  ],
+
+  "districts": [
+    {
+      "id": "shore",
+      "name": "The Shore",
+      "zoneIds": ["obsidian-dock", "dye-cavern", "trading-beach"],
+      "tags": ["harbor", "commerce", "natural"],
+      "baseMetrics": { "commerce": 65, "morale": 75, "safety": 60, "stability": 65 },
+      "economyProfile": { "supplyCategories": ["medicines", "dyes", "iron"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    },
+    {
+      "id": "keeper-grounds",
+      "name": "The Keeper Grounds",
+      "zoneIds": ["hot-springs", "medicine-garden", "keeper-village", "ember-peak-path"],
+      "tags": ["sacred", "healing", "residential"],
+      "baseMetrics": { "commerce": 40, "morale": 90, "safety": 75, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["medicines"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "ember-peak", "name": "Ember Peak", "zoneId": "ember-peak-path", "gridX": 16, "gridY": 4, "description": "The smoldering volcano — a navigator's beacon visible from fifty leagues. Its smoke trail marks Ember Isle on every horizon. The mountain never fully sleeps. The Keepers say it dreams." },
+    { "id": "healing-springs", "name": "The Healing Springs", "zoneId": "hot-springs", "gridX": 8, "gridY": 26, "description": "Natural hot springs cascading down the volcanic slope into stone-lined pools. Different temperatures for different ailments. The Keepers have healed here for generations." },
+    { "id": "community-fire", "name": "The Eternal Fire", "zoneId": "keeper-village", "gridX": 10, "gridY": 14, "description": "A permanent fire at the village center, fed by volcanic vents. Never lit by human hands, never gone out. The mountain's gift to its people." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "obsidian-dock", "gridX": 20, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "harbor-keeper-tane", "name": "Harbor Keeper Tane", "zoneId": "obsidian-dock", "role": "npc", "dialogueId": "tane-greeting", "tags": ["harbor-master", "calm", "unhurried"] },
+    { "entityId": "healer-manu", "name": "Healer Manu", "zoneId": "hot-springs", "role": "npc", "dialogueId": "manu-greeting", "tags": ["healer", "springs", "quiet-authority"] },
+    { "entityId": "head-keeper-leilani", "name": "Head Keeper Leilani", "zoneId": "medicine-garden", "role": "quest-giver", "dialogueId": "leilani-greeting", "tags": ["head-keeper", "herbalist", "fierce"] },
+    { "entityId": "elder-aroha", "name": "Elder Keeper Aroha", "zoneId": "keeper-village", "role": "quest-giver", "dialogueId": "aroha-greeting", "tags": ["elder", "spiritual", "mountain-speaker"] },
+    { "entityId": "dye-harvester-kai", "name": "Dye Harvester Kai", "zoneId": "dye-cavern", "role": "merchant", "dialogueId": "kai-greeting", "tags": ["harvester", "dyes", "careful"] },
+    { "entityId": "trader-hemi", "name": "Trader Hemi", "zoneId": "trading-beach", "role": "merchant", "dialogueId": "hemi-greeting", "tags": ["merchant", "gregarious", "smoked-fish"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "tane-greeting",
+      "speakers": ["tane"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tane", "text": "Easy through the channel, Captain. Follow my hand signals. The rocks are sharp. Your hull is not. Welcome to Ember Isle. Place a stone for the mountain before you do anything else.", "choices": [
+          { "id": "c1", "text": "What's the mountain like today?", "nextNodeId": "mountain" },
+          { "id": "c2", "text": "Where do I trade?", "nextNodeId": "trade" }
+        ]},
+        "mountain": { "id": "mountain", "speaker": "tane", "text": "Grumbling. But softly. The Keepers say it's a good sign — the plants grow best after a grumble. If the mountain was quiet, I'd worry. A quiet volcano is a thinking volcano.", "choices": [] },
+        "trade": { "id": "trade", "speaker": "tane", "text": "Trading beach for general goods. The Keepers' village for medicines — talk to Elder Aroha or Head Keeper Leilani. Dye Cavern if you want volcanic pigments. And visit the hot springs. The Keepers insist — clean body, honest trade.", "choices": [] }
+      }
+    },
+    {
+      "id": "manu-greeting",
+      "speakers": ["manu"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "manu", "text": "The springs will take what ails you. Every pool is a different temperature, a different mineral, a different medicine. Tell me your symptoms and I'll choose the right pool. Or tell me nothing and sit in the warm one. It helps everything.", "choices": [
+          { "id": "c1", "text": "How do the springs heal?", "nextNodeId": "healing" },
+          { "id": "c2", "text": "My crew has fever.", "nextNodeId": "fever" }
+        ]},
+        "healing": { "id": "healing", "speaker": "manu", "text": "The mountain heats the water. The water carries minerals. The minerals enter through the skin. I've studied it for thirty years and the explanation is longer than the cure. Sit in the pool. Get better. That's the important part.", "choices": [] },
+        "fever": { "id": "fever", "speaker": "manu", "text": "The iron pool — hot but not scalding. Twenty minutes, then fever bark tea from Leilani's garden. Your crew will be well by morning. The mountain's medicine is fast when you listen to it.", "choices": [] }
+      }
+    },
+    {
+      "id": "leilani-greeting",
+      "speakers": ["leilani"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "leilani", "text": "Captain. These gardens produce medicines that grow nowhere else in the world. The volcanic soil, the mineral water, the mountain's heat — together they create what no laboratory can replicate. What does your ship need?", "choices": [
+          { "id": "c1", "text": "Fever bark and wound poultice.", "nextNodeId": "standard" },
+          { "id": "c2", "text": "Anti-venom.", "nextNodeId": "antivenom" },
+          { "id": "c3", "text": "Will you share your recipes?", "nextNodeId": "recipes" }
+        ]},
+        "standard": { "id": "standard", "speaker": "leilani", "text": "Fever bark — ten silver per bundle. Wound poultice — eight silver per jar. Both proven over generations. The bark reduces fever within hours. The poultice prevents infection in cuts and gashes. I prepare each batch personally.", "choices": [] },
+        "antivenom": { "id": "antivenom", "speaker": "leilani", "text": "Anti-venom for sea snakes — twenty silver per vial. Expensive because the preparation is complex and the plants are rare. But a single vial saves a life. Dragon's Gate pays double for this. Their garrison needs it badly.", "choices": [] },
+        "recipes": { "id": "recipes", "speaker": "leilani", "text": "No. The Iron Pact asked. I told them: the mountain teaches us. It didn't teach you. These recipes belong to the Ember Keepers and the island that grows the plants. Buy the medicine. Don't ask for the knowledge.", "choices": [] }
+      }
+    },
+    {
+      "id": "aroha-greeting",
+      "speakers": ["aroha"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "aroha", "text": "Captain. I am Aroha, Elder Keeper. Did you place your stone? Good. The mountain notes such things. What brings you to our island — medicine, trade, or something the sea couldn't heal?", "choices": [
+          { "id": "c1", "text": "I need medicines for a dangerous voyage.", "nextNodeId": "voyage" },
+          { "id": "c2", "text": "I've brought grain and iron.", "nextNodeId": "imports" }
+        ]},
+        "voyage": { "id": "voyage", "speaker": "aroha", "text": "Then Leilani will prepare what you need. Captains bound for dangerous waters pay less — the mountain's gifts should go where they're needed most. Tell me your route and I'll have the right medicines ready.", "choices": [] },
+        "imports": { "id": "imports", "speaker": "aroha", "text": "Grain and iron — we need both. The island grows medicine, not food. And we need tools. Your cargo is welcome. Hemi on the trading beach will give you a fair exchange. If he doesn't, tell me. I'll correct him.", "choices": [] }
+      }
+    },
+    {
+      "id": "kai-greeting",
+      "speakers": ["kai"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kai", "text": "Cover your mouth before you come deeper. The mineral dust is beautiful but it'll wreck your lungs. I harvest volcanic pigments — reds, blacks, yellows. Silk Haven pays premium for the red. Want to see?", "choices": [
+          { "id": "c1", "text": "Show me the volcanic reds.", "nextNodeId": "reds" },
+          { "id": "c2", "text": "How much for a full set of pigments?", "nextNodeId": "full-set" }
+        ]},
+        "reds": { "id": "reds", "speaker": "kai", "text": "Iron oxide from the deep veins. The color is darker and richer than any plant dye. One jar stains silk a crimson that never fades. Silk Haven's crimson sails use our pigment. Fifteen silver per jar.", "choices": [] },
+        "full-set": { "id": "full-set", "speaker": "kai", "text": "Red, black, yellow, and a blue-green copper pigment I found last month — forty silver for the set. Each jar sealed with wax. The pigments keep indefinitely if they stay dry. Take them to any dye market and double your money.", "choices": [] }
+      }
+    },
+    {
+      "id": "hemi-greeting",
+      "speakers": ["hemi"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hemi", "text": "Captain! Welcome to the trading beach! Try a piece of smoked fish — my grandmother's recipe. Free of charge. Now, while you're enjoying that, let me show you what Ember Isle has to offer.", "choices": [
+          { "id": "c1", "text": "What do you have?", "nextNodeId": "goods" },
+          { "id": "c2", "text": "What do you need from the outside?", "nextNodeId": "needs" }
+        ]},
+        "goods": { "id": "goods", "speaker": "hemi", "text": "Medicines — the best in the world. Volcanic dyes — the richest colors you'll find. And the fish — well, the fish is a gift. Everything else is priced fairly. Elder Aroha sets the rates based on need. Yours and ours.", "choices": [] },
+        "needs": { "id": "needs", "speaker": "hemi", "text": "Grain — we can't grow it on lava. Timber — our trees are medicinal, not structural. Weapons — the Crown requires us to maintain a garrison. And honestly? Anything from the outside world. We're an island that heals. We can't do everything.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "dock-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader at the volcanic island.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "keeper-friend", "name": "Friend of the Keepers", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "coral-crown" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

@@ -1,0 +1,273 @@
+{
+  "id": "portlight-sun-harbor",
+  "name": "Sun Harbor",
+  "description": "Voice of the Gold Coast Compact. A West African trading port where the first deal of the day is blessed by an elder and cotton bales rise higher than the rooftops. The Cotton Steps — wide stone stairs where bolts are displayed for auction — dominate the waterfront. Sun Harbor is warm in every sense: the climate, the welcome, and the negotiations. Generosity comes first here. Commerce follows naturally.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["warm", "communal", "prosperous"],
+  "difficulty": "beginner",
+  "narratorTone": "The harbor is a wall of color — indigo cloth draped over wooden frames, cotton stacks catching the equatorial sun, dockworkers singing in rhythms that make the loading feel like choreography. Sun Harbor doesn't shout its wealth. It sings it.",
+  "mode": "district",
+
+  "map": {
+    "id": "sun-harbor-map",
+    "name": "Sun Harbor",
+    "description": "A broad, sunlit harbor on the Gold Coast. The Cotton Steps rise from the waterfront to a sprawling market. Behind the market: the Weighers' Hall, dye workshops, and the arms bazaar. The town spreads outward under shade trees and canvas awnings.",
+    "gridWidth": 52,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "sun-harbor-docks",
+      "name": "The Sun Docks",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "A wide harbor with wooden piers extending into warm turquoise water. Dockworkers move cotton bales in singing teams — the rhythm coordinates the lifting. The harbor master greets arrivals with a handshake and a question: 'What do you bring?' Not hostile — curious. Sun Harbor wants to know what you carry because it wants to trade, not inspect.",
+      "gridX": 14, "gridY": 30,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["cotton-steps", "dye-quarter"],
+      "exits": [],
+      "light": 10, "noise": 8,
+      "hazards": [],
+      "interactables": [
+        { "name": "Singing Dock", "type": "inspect", "description": "Dockworkers move bales in teams of four, singing call-and-response work songs. The rhythm coordinates the lifting. Outsiders who try to join in earn laughs — and respect." },
+        { "name": "Harbor Shade", "type": "inspect", "description": "Canvas awnings stretched between poles along the dock. Shade is a courtesy in Sun Harbor — nobody does business in direct sun. Even negotiations happen in the cool." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "cotton-steps",
+      "name": "The Cotton Steps",
+      "tags": ["market", "landmark", "commerce", "institution"],
+      "description": "Wide stone stairs climbing from the harbor, where cotton bolts are displayed for auction. Each step holds a different grade — raw cotton at the bottom, finished cloth at the top. Buyers walk the steps, touching and comparing. The elder blesses the first sale of the day by sprinkling water from the harbor. Smart captains arrive early.",
+      "gridX": 16, "gridY": 20,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["sun-harbor-docks", "weighers-hall", "adaeze-bazaar", "kolo-yard"],
+      "exits": [],
+      "light": 10, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Grade Steps", "type": "inspect", "description": "Each step displays a different cotton grade — raw, combed, spun, dyed. The progression from bottom to top mirrors the progression from harvest to finished cloth. Walking the steps is an education." },
+        { "name": "Elder's Basin", "type": "use", "description": "A stone basin at the top of the steps where the elder keeps harbor water. The first trade of the day is blessed — water sprinkled over cotton and coins alike. Missing the blessing means bad luck. Or bad timing." },
+        { "name": "Auction Circle", "type": "inspect", "description": "A cleared space at the steps' midpoint where competitive bidding happens. Bidders raise fingers — each finger means ten silver more. The auctioneer watches hands, not mouths." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "weighers-hall",
+      "name": "The Weighers' Hall",
+      "tags": ["institution", "governance", "commerce"],
+      "description": "A stone building at the top of the Cotton Steps where the Weighers — Sun Harbor's governing council — meet. They're called Weighers because they originally set cotton grades by weight. Now they weigh everything: trade agreements, political alliances, the reputation of captains. The Hall is open-walled — proceedings are public. Nothing in Sun Harbor happens behind closed doors.",
+      "gridX": 22, "gridY": 10,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["cotton-steps", "sun-tavern"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Weighing Table", "type": "inspect", "description": "A massive table where cotton grades are verified. The same table is used for council meetings — the Weighers deliberate surrounded by the product that built their port." },
+        { "name": "Open Walls", "type": "inspect", "description": "The Hall has no walls on two sides. Anyone can listen. Anyone can petition. Transparency is Sun Harbor's constitution. The Compact starts here." }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "dye-quarter",
+      "name": "The Dye Quarter",
+      "tags": ["industry", "craft", "colorful"],
+      "description": "A neighborhood of indigo and dye workshops east of the harbor. Vats of color stain the cobblestones blue, red, and yellow. The dyers' hands are permanently stained — they wear their craft on their skin. Indigo from Sun Harbor is prized throughout the Mediterranean. The technique is generations old and fiercely guarded.",
+      "gridX": 36, "gridY": 24,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["sun-harbor-docks", "cotton-steps"],
+      "exits": [],
+      "light": 9, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Indigo Vats", "type": "inspect", "description": "Stone vats bubbling with indigo paste. The dyers work in teams, dipping cloth and wringing it in perfect unison. The cobblestones around the vats are permanently blue." },
+        { "name": "Color Wall", "type": "inspect", "description": "A wall of finished fabric samples — every shade the quarter produces. From midnight blue to sky pale. Buyers point at a shade and the dyers match it exactly." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "adaeze-bazaar",
+      "name": "Adaeze's Arms Bazaar",
+      "tags": ["shop", "weapons", "armor", "merchant-npc"],
+      "description": "A weapon stall that grew into a bazaar. Adaeze inherited her father's cloth stall, sold the cloth, bought blades, and built the largest arms market on the Gold Coast. She's charming, relentless, and tests every weapon she sells. Her bazaar is a riot of hanging blades, stacked armor, and her constant sales patter. She claims everything is 'the best in the harbor.' She's usually right.",
+      "gridX": 8, "gridY": 14,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["cotton-steps", "kolo-yard"],
+      "exits": [],
+      "light": 8, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Adaeze's Counter", "type": "use", "description": "'Welcome, captain! Everything you see is the best in the harbor. I should know — I tested it myself.' She demonstrates a cutlass swing between sales. The customers duck." },
+        { "name": "Armor Rack", "type": "use", "description": "Leather vests, brigandines, padded coats. Adaeze slaps each one as she describes it. 'This brigandine stopped a boarding axe last week. The captain who wore it bought two more.'" }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "kolo-yard",
+      "name": "Kolo's Training Yard",
+      "tags": ["training", "fighting-style", "dambe"],
+      "description": "An open-air training ground behind the Cotton Steps where Kolo the Fist teaches Dambe — the West African martial art built around the devastating leg sweep. Kolo is massive, calm, and fights with one arm wrapped in rope (tradition). His students spar barefoot on packed earth. The leg sweep is his signature: a low strike that catches the opponent's ankle and sends them sprawling. Sixty silver for six days.",
+      "gridX": 4, "gridY": 6,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["cotton-steps", "adaeze-bazaar"],
+      "exits": [],
+      "light": 10, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Training Circle", "type": "use", "description": "A circle of packed earth where students spar. Kolo watches from the shade of a baobab tree, correcting form with single words. 'Lower.' 'Faster.' 'Again.'" },
+        { "name": "Rope Wrapping", "type": "inspect", "description": "Students wrap their lead hand in coarse rope before sparring — Dambe tradition. The rope protects the knuckles and adds weight to strikes. Kolo wraps his own hand every morning, even when he's not fighting." }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "sun-tavern",
+      "name": "The Golden Shade",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A tavern built around a courtyard with a massive shade tree at its center. The tree is so old that the tavern was literally constructed around it — the roof has a hole for the trunk. Drinks are served in gourds. Music is live — drums, a stringed instrument, and singing that shifts from work songs to love songs as the evening deepens. Rumors flow as freely as the palm wine.",
+      "gridX": 34, "gridY": 8,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["weighers-hall"],
+      "exits": [],
+      "light": 6, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Shade Tree", "type": "inspect", "description": "A baobab so old the tavern was built around it. The trunk is wider than three men can embrace. Names carved into the bark go back further than the port's records." },
+        { "name": "Musician's Corner", "type": "inspect", "description": "Three musicians play every evening — drums, a kora, and voice. The songs start as work rhythms and end as something older. Visitors who clap along are welcomed. Those who sing along are family." },
+        { "name": "Palm Wine Gourd", "type": "use", "description": "Palm wine served in hollowed gourds. Sweet, slightly fermented, deceptively strong. The tavern keeper says one gourd is friendship, two is truth, three is tomorrow's regret." }
+      ],
+      "parentDistrictId": "upper-town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "sun-harbor-docks", "toZoneId": "cotton-steps", "bidirectional": true, "kind": "stairs", "label": "The Cotton Steps" },
+    { "fromZoneId": "sun-harbor-docks", "toZoneId": "dye-quarter", "bidirectional": true, "kind": "road", "label": "Dyers' Lane" },
+    { "fromZoneId": "cotton-steps", "toZoneId": "weighers-hall", "bidirectional": true, "kind": "stairs", "label": "Council Steps" },
+    { "fromZoneId": "cotton-steps", "toZoneId": "adaeze-bazaar", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "cotton-steps", "toZoneId": "kolo-yard", "bidirectional": true, "kind": "road", "label": "Training Path" },
+    { "fromZoneId": "adaeze-bazaar", "toZoneId": "kolo-yard", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "weighers-hall", "toZoneId": "sun-tavern", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "waterfront",
+      "name": "The Waterfront",
+      "zoneIds": ["sun-harbor-docks", "cotton-steps", "dye-quarter"],
+      "tags": ["harbor", "commerce", "craft"],
+      "baseMetrics": { "commerce": 85, "morale": 80, "safety": 70, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["cotton", "dyes", "iron"], "scarcityDefaults": {} },
+      "controllingFaction": "gold-coast-compact"
+    },
+    {
+      "id": "upper-town",
+      "name": "The Upper Town",
+      "zoneIds": ["weighers-hall", "adaeze-bazaar", "kolo-yard", "sun-tavern"],
+      "tags": ["governance", "training", "social"],
+      "baseMetrics": { "commerce": 65, "morale": 85, "safety": 80, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["arms", "provisions"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "cotton-steps-landmark", "name": "The Cotton Steps", "zoneId": "cotton-steps", "gridX": 24, "gridY": 24, "description": "Wide stone stairs where cotton grades are displayed from raw to finished. The elder blesses the first sale at dawn. The steps are Sun Harbor's identity — commerce ascending toward quality." },
+    { "id": "shade-tree", "name": "The Great Shade Tree", "zoneId": "sun-tavern", "gridX": 38, "gridY": 12, "description": "A baobab so old the tavern was built around it. Names carved in the bark predate the port's written records. The roof has a hole for the trunk." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "sun-harbor-docks", "gridX": 24, "gridY": 34, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "sun-harbor-master", "name": "Harbor Master", "zoneId": "sun-harbor-docks", "role": "npc", "dialogueId": "shm-greeting", "tags": ["harbor-master", "warm", "curious"] },
+    { "entityId": "cotton-elder", "name": "The Elder", "zoneId": "cotton-steps", "role": "npc", "dialogueId": "elder-greeting", "tags": ["elder", "blessing", "tradition"] },
+    { "entityId": "adaeze-arms", "name": "Adaeze", "zoneId": "adaeze-bazaar", "role": "merchant", "dialogueId": "adaeze-greeting", "tags": ["merchant", "charming", "arms-dealer"] },
+    { "entityId": "kolo-the-fist", "name": "Kolo the Fist", "zoneId": "kolo-yard", "role": "npc", "dialogueId": "kolo-greeting", "tags": ["trainer", "dambe", "calm"] },
+    { "entityId": "tavern-keeper-sun", "name": "Tavern Keeper", "zoneId": "sun-tavern", "role": "npc", "dialogueId": "golden-greeting", "tags": ["tavern-keeper", "music", "palm-wine"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "shm-greeting", "speakers": ["hm"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hm", "text": "Welcome, Captain! What do you bring us today? Sun Harbor is always hungry for new goods and new stories. The Cotton Steps are open, the dyers are working, and the elder will bless the first trade if you're quick.", "choices": [
+          { "id": "c1", "text": "I have cotton from the north.", "nextNodeId": "cotton" },
+          { "id": "c2", "text": "I'm buying, not selling.", "nextNodeId": "buying" }
+        ]},
+        "cotton": { "id": "cotton", "speaker": "hm", "text": "Northern cotton! The dyers will want to see it — if the fiber's long enough, they'll pay well. Head to the Steps. And arrive early tomorrow for the blessing. Blessed cotton sells for ten percent more. Everyone knows that.", "choices": [] },
+        "buying": { "id": "buying", "speaker": "hm", "text": "Then you'll want the Steps for cotton and dyes, Adaeze's bazaar for blades and armor, and the Golden Shade for palm wine and rumors. Welcome to Sun Harbor, Captain. Spend freely — generosity is remembered here.", "choices": [] }
+      }
+    },
+    {
+      "id": "elder-greeting", "speakers": ["elder"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "elder", "text": "Captain. You come at the right time. The water is drawn, the blessing is ready. The first trade of the day belongs to the sea — we return a little of what it gives us. Are you ready to begin?", "choices": [
+          { "id": "c1", "text": "I am ready.", "nextNodeId": "blessing" }
+        ]},
+        "blessing": { "id": "blessing", "speaker": "elder", "text": "[The elder sprinkles harbor water over the Steps.] The sea gives, the land receives, the merchant carries between. May your cargo be honest and your return swift. Trade well, Captain.", "choices": [] }
+      }
+    },
+    {
+      "id": "adaeze-greeting", "speakers": ["adaeze"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "adaeze", "text": "Welcome, captain! Everything you see is the best in the harbor. I should know — I tested it myself. My father sold cloth from this stall. I sold the cloth, bought blades, and here we are. What do you need?", "choices": [
+          { "id": "c1", "text": "Weapons.", "nextNodeId": "weapons" },
+          { "id": "c2", "text": "Armor.", "nextNodeId": "armor" }
+        ]},
+        "weapons": { "id": "weapons", "speaker": "adaeze", "text": "Cutlasses, slings, throwing knives — all Gold Coast sourced, all tested by me. I also carry pistol shot from the Mediterranean. You want range? I have range. You want close work? I have that too.", "choices": [] },
+        "armor": { "id": "armor", "speaker": "adaeze", "text": "Leather vests from Palm Cove — Kofi's work, the best on the coast. Brigandines imported from the East. I don't sell chain — it rusts in this climate. Leather breathes. Leather lives. Chain dies.", "choices": [] }
+      }
+    },
+    {
+      "id": "kolo-greeting", "speakers": ["kolo"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kolo", "text": "You want to learn Dambe. I can see it in how you stand — weight on your back foot, arms too high. Dambe will fix that. The leg sweep starts from the ground. Everything starts from the ground.", "choices": [
+          { "id": "c1", "text": "Teach me.", "nextNodeId": "teach" },
+          { "id": "c2", "text": "What is Dambe?", "nextNodeId": "what" }
+        ]},
+        "teach": { "id": "teach", "speaker": "kolo", "text": "Sixty silver. Six days. We train barefoot on earth, not stone. Your feet must feel the ground before your hands can fight. The leg sweep will come on day four. By day six, you will know it in your sleep.", "choices": [] },
+        "what": { "id": "what", "speaker": "kolo", "text": "Dambe is the art of the West African warrior. One hand strikes. One hand defends. The legs do both. The leg sweep catches your opponent's ankle and sends them to the ground. From the ground, they look up at you. That is the moment. Dambe teaches you what to do with that moment.", "choices": [] }
+      }
+    },
+    {
+      "id": "golden-greeting", "speakers": ["keeper"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "keeper", "text": "Welcome to the Golden Shade! Sit under the tree, drink from the gourd. One gourd is friendship. Two is truth. Three is tomorrow's regret. Which will it be?", "choices": [
+          { "id": "c1", "text": "Friendship, for now. Any rumors?", "nextNodeId": "rumors" },
+          { "id": "c2", "text": "Truth. What should I know?", "nextNodeId": "truth" }
+        ]},
+        "rumors": { "id": "rumors", "speaker": "keeper", "text": "A ship arrived carrying empty crates, paid in full. The harbor master looked away. The Weighers didn't. They're discussing it now — open walls, remember? Everyone knows. Nobody says it out loud.", "choices": [] },
+        "truth": { "id": "truth", "speaker": "keeper", "text": "The Iron Pact's mining consortium tried to buy Iron Point last year. The Compact blocked it. Iron Point voted with the Compact, but there are miners who dream of selling direct to the east. Watch the iron trade. If prices shift, it means someone is negotiating behind the Weighers' backs.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "dock-arrival",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader on the Gold Coast.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["trader"], "progressionTreeId": "compact-path", "grantedVerbs": ["trade", "negotiate"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "compact-path", "name": "Compact Path", "currency": "standing",
+    "nodes": [
+      { "id": "compact-friend", "name": "Compact Friend", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "compact-friend" } }] },
+      { "id": "weigher-respect", "name": "Weigher's Respect", "cost": 15, "requires": ["compact-friend"], "effects": [{ "type": "grant-tag", "params": { "tag": "weigher-respected" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}

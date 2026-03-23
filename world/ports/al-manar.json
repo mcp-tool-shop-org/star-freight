@@ -1,0 +1,402 @@
+{
+  "id": "portlight-al-manar",
+  "name": "Al-Manar",
+  "description": "Soul of the Exchange Alliance. A luxury port where cinnamon and cardamom perfume every negotiation and bargaining begins with tea. The Spice Bazaar — a covered market of a hundred aromas — is the true seat of power. Merchant Princess Nadia Khoury rules from her palace above, but the real authority belongs to Yasmin al-Nadir, the Spice Mother, who can name every spice by taste alone.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["luxury", "intrigue", "aromatic"],
+  "difficulty": "beginner",
+  "narratorTone": "The air changes before you see the port. Cinnamon first, then cardamom, then something deeper — saffron, perhaps, or old money. Al-Manar doesn't announce itself with bells. It seduces you with scent.",
+  "mode": "district",
+
+  "map": {
+    "id": "al-manar-map",
+    "name": "Al-Manar",
+    "description": "A tiered port climbing a sandstone bluff above a deep-water harbor. The bazaar sprawls across the middle terrace, shaded by silk awnings. The Khoury Palace crowns the bluff. Below, the harbor curves between two stone breakwaters.",
+    "gridWidth": 56,
+    "gridHeight": 52,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "harbor-of-arrivals",
+      "name": "The Harbor of Arrivals",
+      "tags": ["harbor", "docks", "arrival", "ceremonial"],
+      "description": "A deep-water harbor between two stone breakwaters, ancient enough that no one remembers who built them. Harbor Master Khalil al-Rashid stands at the end of the main pier in embroidered robes, greeting every ship with a formal welcome. It is ceremony, not bureaucracy — but woe to the captain who doesn't respond in kind. The water here is impossibly blue.",
+      "gridX": 16, "gridY": 38,
+      "gridWidth": 24, "gridHeight": 8,
+      "neighbors": ["spice-bazaar", "scales-of-truth", "apothecary-house"],
+      "exits": [],
+      "light": 10, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Greeting Stone", "type": "use", "description": "A flat stone at the pier's end where captains receive al-Rashid's formal welcome. Tradition requires a bow and an offered gift — even a coin will do. Refusing the greeting insults the port." },
+        { "name": "Breakwater Carvings", "type": "inspect", "description": "Ancient carved figures on the breakwater stones. Worn nearly smooth by centuries of salt spray. Scholars argue about who carved them. Sailors don't care — they're good luck." }
+      ],
+      "parentDistrictId": "harbor-terrace"
+    },
+    {
+      "id": "spice-bazaar",
+      "name": "The Spice Bazaar",
+      "tags": ["market", "landmark", "luxury", "institution"],
+      "description": "The beating heart of Al-Manar — a covered market stretching across the entire middle terrace. Silk awnings in saffron and indigo shade a labyrinth of stalls. Every spice known to the world is sold here, measured on brass scales polished to mirrors. The Spice Mother, Yasmin al-Nadir, holds court at the bazaar's center — a raised platform where she tastes samples and sets the day's prices. Bargaining begins with tea. Refusing the first cup insults the seller. Accepting the third means you've agreed to their price.",
+      "gridX": 10, "gridY": 24,
+      "gridWidth": 28, "gridHeight": 10,
+      "neighbors": ["harbor-of-arrivals", "tea-house", "broker-alcove", "fatima-workshop"],
+      "exits": [],
+      "light": 7, "noise": 9,
+      "hazards": [],
+      "interactables": [
+        { "name": "Yasmin's Platform", "type": "use", "description": "A raised cedar platform at the bazaar's center. The Spice Mother sits here on cushions, tasting samples from brass trays. She knows every spice by touch and taste. Her prices are not negotiable." },
+        { "name": "Brass Scales", "type": "inspect", "description": "Hundreds of scales throughout the bazaar, each polished to a mirror shine. The Spice Mother inspects them weekly. A scale found wanting is destroyed publicly." },
+        { "name": "Tea Service", "type": "use", "description": "Every stall offers tea before business. Mint, cardamom, or plain — your choice signals your intentions. Mint means browsing. Cardamom means buying. Plain means you're in a hurry, which offends." }
+      ],
+      "parentDistrictId": "bazaar-terrace"
+    },
+    {
+      "id": "tea-house",
+      "name": "The Amber Glass",
+      "tags": ["tavern", "social", "rumors", "philosophical"],
+      "description": "Not a tavern — Al-Manar would never call it that. A tea house on the bazaar's western edge, run by Old Farouk, an ex-navigator who sailed every route twice and now collects stories instead of charts. The interior is dim, warm, and smells of cardamom. Brass lamps throw amber light on tiled walls. Captains come here after the bazaar closes to trade rumors and plan routes. Farouk listens to everything and forgets nothing.",
+      "gridX": 4, "gridY": 20,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["spice-bazaar", "fatima-workshop"],
+      "exits": [],
+      "light": 5, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Farouk's Corner", "type": "use", "description": "Old Farouk's seat — a cushioned alcove by the window. He pours tea without asking and listens with the patience of a man who has heard every lie the sea can tell." },
+        { "name": "Story Tiles", "type": "inspect", "description": "Painted tiles on the walls depicting great voyages. Farouk says each one is a true story. Some tiles are suspiciously recent." },
+        { "name": "Route Board", "type": "inspect", "description": "A cork board where captains pin route reports — weather, pirate sightings, port conditions. Farouk curates it. Liars get their pins removed." }
+      ],
+      "parentDistrictId": "bazaar-terrace"
+    },
+    {
+      "id": "scales-of-truth",
+      "name": "The Scales of Truth",
+      "tags": ["institution", "law", "customs"],
+      "description": "Al-Manar's customs house, built into the cliff face between harbor and bazaar. Inspector Zara Osman was poached from Porto Novo's customs service — she knows every smuggling trick because she learned them by catching Salva's failures. The building's name comes from a pair of enormous stone scales flanking the entrance. The left pan holds a carved stone hand. The right holds a carved stone eye. The meaning is clear.",
+      "gridX": 40, "gridY": 34,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["harbor-of-arrivals", "spice-bazaar"],
+      "exits": [],
+      "light": 7, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Stone Scales", "type": "inspect", "description": "Two massive stone scales flanking the entrance. The left holds a carved hand (what you carry). The right holds a carved eye (what we see). Al-Manar sees everything." },
+        { "name": "Inspection Hall", "type": "inspect", "description": "A long stone hall where cargo is weighed and counted. Every sack opened. Every manifest cross-referenced. Zara Osman misses nothing." }
+      ],
+      "parentDistrictId": "harbor-terrace"
+    },
+    {
+      "id": "apothecary-house",
+      "name": "The Apothecary House",
+      "tags": ["shop", "medicine", "institution"],
+      "description": "A cool stone building near the harbor where Hakim al-Nadir — the Spice Mother's nephew — prepares medicines from the bazaar's ingredients. Unlike his aunt, Hakim is gentle and fair-priced. He grinds medicines by hand in a marble mortar, muttering recipes passed down through seven generations. Sailors with injuries or illness come here first. Hakim treats everyone, even captains his aunt has blacklisted.",
+      "gridX": 42, "gridY": 42,
+      "gridWidth": 7, "gridHeight": 6,
+      "neighbors": ["harbor-of-arrivals"],
+      "exits": [],
+      "light": 6, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Medicine Counter", "type": "use", "description": "Hakim's workspace. Marble mortar, brass measuring cups, ceramic jars labeled in three scripts. He grinds remedies while humming old songs." },
+        { "name": "Herb Drying Racks", "type": "inspect", "description": "Bundles of dried herbs hanging from ceiling hooks. The room smells of mint, clove, and something bitter Hakim won't name." }
+      ],
+      "parentDistrictId": "harbor-terrace"
+    },
+    {
+      "id": "broker-alcove",
+      "name": "The Broker's Alcove",
+      "tags": ["commerce", "contracts", "ambitious"],
+      "description": "A small but richly appointed office tucked into an archway off the bazaar. Tariq Sayed is the youngest Senior Broker in Al-Manar's history — ambitious, polished, and quietly courting the Silk Circle for trade advantages the Exchange Alliance would disapprove of. His alcove is decorated with silk cushions and a single exquisite porcelain vase from Jade Port. A gift, he says. From whom, he doesn't say.",
+      "gridX": 38, "gridY": 22,
+      "gridWidth": 6, "gridHeight": 6,
+      "neighbors": ["spice-bazaar", "khoury-palace"],
+      "exits": [],
+      "light": 6, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tariq's Desk", "type": "use", "description": "Polished mahogany. Contracts are presented on embossed paper with the Alliance seal. Tariq pours tea from a jade teapot — pointedly not a brass one." },
+        { "name": "Jade Vase", "type": "inspect", "description": "A single porcelain vase from Jade Port, worth more than most captains earn in a season. 'A gift from an admirer,' Tariq says. The vase has the Silk Circle's mark on its base." }
+      ],
+      "parentDistrictId": "bazaar-terrace"
+    },
+    {
+      "id": "fatima-workshop",
+      "name": "Fatima's Armorworks",
+      "tags": ["shop", "armor", "merchant-npc"],
+      "description": "A workshop at the bazaar's edge where Fatima crafts chain mail and leather armor. She is shrewd, direct, and entirely unimpressed by rank. Her chain is the tightest in the Mediterranean — she learned from a Northern smith and improved on his technique. The workshop smells of hot metal and leather oil. Fatima tests every piece herself, wearing it through a full day of hammering. If she can work in it, you can fight in it.",
+      "gridX": 4, "gridY": 14,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["tea-house", "spice-bazaar", "senora-vega-courtyard"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Armor Display", "type": "use", "description": "Chain shirts and leather vests on wooden forms. Fatima insists you try before you buy. 'Protection costs. But so does a funeral,' she says." },
+        { "name": "Testing Post", "type": "inspect", "description": "A scarred wooden post where Fatima demonstrates her chain's quality by striking it with a blade. The chain never breaks. The blade sometimes does." }
+      ],
+      "parentDistrictId": "bazaar-terrace"
+    },
+    {
+      "id": "senora-vega-courtyard",
+      "name": "Senora Vega's Courtyard",
+      "tags": ["training", "fighting-style", "la-destreza"],
+      "description": "A secluded courtyard behind the bazaar's western wall, shaded by a fig tree older than the port. Senora Vega teaches La Destreza here — the same art Maestro Luciano teaches in Porto Novo, but Vega learned from a different lineage. Where Luciano emphasizes geometry, Vega emphasizes timing. Her students practice in bare feet on warm tile. She is older than she looks, faster than she should be, and brooks no disrespect to the blade.",
+      "gridX": 2, "gridY": 6,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["fatima-workshop"],
+      "exits": [],
+      "light": 8, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Fig Tree", "type": "inspect", "description": "An ancient fig tree at the courtyard's center. Vega's students rest in its shade between drills. She says the tree was here before the port. The port was built around it." },
+        { "name": "Practice Circle", "type": "use", "description": "A circle of inlaid tile beneath the fig tree. Students spar barefoot. Vega watches from a stone bench, correcting footwork with a tap of her walking stick." }
+      ],
+      "parentDistrictId": "upper-terrace"
+    },
+    {
+      "id": "khoury-palace",
+      "name": "The Khoury Palace",
+      "tags": ["institution", "authority", "luxury", "intrigue"],
+      "description": "A sandstone palace at the bluff's summit, surrounded by fountained gardens and guarded by silent men in indigo. Merchant Princess Nadia Khoury rules Al-Manar from here — regal, hereditary, absolute. Her family has controlled the port for twelve generations. The palace interior is cool, dim, and adorned with silk tapestries depicting every Khoury who held the title. A secret correspondence with the Silk Circle is whispered about but never proven. Nadia receives visitors on a terrace overlooking the entire bazaar — she watches her domain from above, like a hawk watching a garden.",
+      "gridX": 20, "gridY": 2,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["broker-alcove", "senora-vega-courtyard"],
+      "exits": [],
+      "light": 9, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tapestry Hall", "type": "inspect", "description": "Twelve silk tapestries, one for each Khoury generation. The earliest shows a woman standing in an empty harbor. The latest shows Nadia on her terrace. The weaving style changes but the expression doesn't — pride tempered by calculation." },
+        { "name": "Viewing Terrace", "type": "inspect", "description": "A marble terrace overlooking the entire bazaar and harbor. Nadia takes morning tea here. She says she can tell the health of the port by watching the bazaar's rhythm from above." },
+        { "name": "Fountain Garden", "type": "inspect", "description": "Three tiered fountains in the palace courtyard. The water comes from a spring in the bluff — the original reason the port was founded here. The fountains never stop." }
+      ],
+      "parentDistrictId": "upper-terrace"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "harbor-of-arrivals", "toZoneId": "spice-bazaar", "bidirectional": true, "kind": "stairs", "label": "Bazaar Steps" },
+    { "fromZoneId": "harbor-of-arrivals", "toZoneId": "scales-of-truth", "bidirectional": true, "kind": "road", "label": "Customs Ramp" },
+    { "fromZoneId": "harbor-of-arrivals", "toZoneId": "apothecary-house", "bidirectional": true, "kind": "road", "label": "Harbor Walk" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "tea-house", "bidirectional": true, "kind": "passage", "label": "West Arch" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "broker-alcove", "bidirectional": true, "kind": "passage", "label": "East Arch" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "fatima-workshop", "bidirectional": true, "kind": "road", "label": "Armorer's Lane" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "scales-of-truth", "bidirectional": true, "kind": "stairs" },
+    { "fromZoneId": "tea-house", "toZoneId": "fatima-workshop", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "fatima-workshop", "toZoneId": "senora-vega-courtyard", "bidirectional": true, "kind": "passage", "label": "Garden Gate" },
+    { "fromZoneId": "broker-alcove", "toZoneId": "khoury-palace", "bidirectional": true, "kind": "stairs", "label": "Palace Road" },
+    { "fromZoneId": "senora-vega-courtyard", "toZoneId": "khoury-palace", "bidirectional": true, "kind": "passage", "label": "West Path" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor-terrace",
+      "name": "The Harbor Terrace",
+      "zoneIds": ["harbor-of-arrivals", "scales-of-truth", "apothecary-house"],
+      "tags": ["harbor", "customs", "medicine"],
+      "baseMetrics": { "commerce": 70, "morale": 65, "safety": 75, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["spice", "medicines"], "scarcityDefaults": {} },
+      "controllingFaction": "exchange-alliance"
+    },
+    {
+      "id": "bazaar-terrace",
+      "name": "The Bazaar Terrace",
+      "zoneIds": ["spice-bazaar", "tea-house", "broker-alcove", "fatima-workshop"],
+      "tags": ["commerce", "luxury", "social"],
+      "baseMetrics": { "commerce": 95, "morale": 70, "safety": 65, "stability": 75 },
+      "economyProfile": { "supplyCategories": ["spice", "silk", "luxury-goods"], "scarcityDefaults": {} }
+    },
+    {
+      "id": "upper-terrace",
+      "name": "The Upper Terrace",
+      "zoneIds": ["khoury-palace", "senora-vega-courtyard"],
+      "tags": ["authority", "training", "elite"],
+      "baseMetrics": { "commerce": 20, "morale": 85, "safety": 95, "stability": 90 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "bazaar-canopy", "name": "The Silk Canopy", "zoneId": "spice-bazaar", "gridX": 24, "gridY": 28, "description": "Saffron and indigo silk awnings stretching across the entire bazaar. They billow in the sea breeze like the sails of a grounded fleet. Some are generations old — repaired but never replaced." },
+    { "id": "stone-scales", "name": "The Stone Scales", "zoneId": "scales-of-truth", "gridX": 44, "gridY": 38, "description": "Two enormous stone scales flanking the customs entrance. Left pan: a carved hand. Right pan: a carved eye. Truth is weighed here." },
+    { "id": "palace-fountains", "name": "The Palace Fountains", "zoneId": "khoury-palace", "gridX": 28, "gridY": 6, "description": "Three tiered fountains fed by a natural spring in the bluff. They have run without stopping for longer than anyone can remember. The water is sweet." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-arrival", "zoneId": "harbor-of-arrivals", "gridX": 28, "gridY": 42, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "khalil-al-rashid", "name": "Harbor Master Khalil al-Rashid", "zoneId": "harbor-of-arrivals", "role": "npc", "dialogueId": "khalil-greeting", "tags": ["authority", "harbor-master", "ceremonial"] },
+    { "entityId": "yasmin-al-nadir", "name": "The Spice Mother Yasmin al-Nadir", "zoneId": "spice-bazaar", "role": "quest-giver", "dialogueId": "yasmin-greeting", "tags": ["authority", "spice-mother", "imperious"] },
+    { "entityId": "old-farouk", "name": "Old Farouk", "zoneId": "tea-house", "role": "npc", "dialogueId": "farouk-greeting", "tags": ["tavern-keeper", "ex-navigator", "philosophical"] },
+    { "entityId": "zara-osman", "name": "Inspector Zara Osman", "zoneId": "scales-of-truth", "role": "npc", "dialogueId": "zara-greeting", "tags": ["law", "customs", "precise"] },
+    { "entityId": "hakim-al-nadir", "name": "Apothecary Master Hakim al-Nadir", "zoneId": "apothecary-house", "role": "npc", "dialogueId": "hakim-greeting", "tags": ["medicine", "gentle", "fair"] },
+    { "entityId": "tariq-sayed", "name": "Senior Broker Tariq Sayed", "zoneId": "broker-alcove", "role": "quest-giver", "dialogueId": "tariq-greeting", "tags": ["broker", "ambitious", "silk-circle-contact"] },
+    { "entityId": "fatima-armorer", "name": "Fatima the Armorer", "zoneId": "fatima-workshop", "role": "merchant", "dialogueId": "fatima-greeting", "tags": ["armorer", "shrewd", "merchant"] },
+    { "entityId": "senora-vega", "name": "Senora Vega", "zoneId": "senora-vega-courtyard", "role": "npc", "dialogueId": "vega-greeting", "tags": ["trainer", "la-destreza", "precise"] },
+    { "entityId": "nadia-khoury", "name": "Merchant Princess Nadia Khoury", "zoneId": "khoury-palace", "role": "npc", "dialogueId": "nadia-greeting", "tags": ["ruler", "regal", "hereditary"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "khalil-greeting",
+      "speakers": ["khalil"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "khalil", "text": "Peace be upon you, Captain. You have arrived at Al-Manar, jewel of the southern sea. I am Khalil al-Rashid, keeper of this harbor. May I offer you welcome?", "choices": [
+          { "id": "c1", "text": "Thank you, Harbor Master. I am honored.", "nextNodeId": "honored" },
+          { "id": "c2", "text": "I'm in a hurry. Where do I dock?", "nextNodeId": "hurry" }
+        ]},
+        "honored": { "id": "honored", "speaker": "khalil", "text": "The honor is ours. Your berth is prepared. The bazaar opens at sunrise, the customs house before that. May your trade be fair and your return swift.", "choices": [] },
+        "hurry": { "id": "hurry", "speaker": "khalil", "text": "A captain in haste... misses much. But as you wish. Berth seven is available. The customs house requires your manifest before you may trade. And Captain — we remember our manners here, even when others forget theirs.", "choices": [] }
+      }
+    },
+    {
+      "id": "yasmin-greeting",
+      "speakers": ["yasmin"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "yasmin", "text": "You come to the Spice Mother's market. Good. Today's prices are fair — because I say they are. What do you seek?", "choices": [
+          { "id": "c1", "text": "I want to buy spice.", "nextNodeId": "buy-spice" },
+          { "id": "c2", "text": "What's rare today?", "nextNodeId": "rare" },
+          { "id": "c3", "text": "I have goods to sell.", "nextNodeId": "sell" }
+        ]},
+        "buy-spice": { "id": "buy-spice", "speaker": "yasmin", "text": "Sit. Take tea. First cup is mine. Then we discuss quantity, quality, and destination. Rush me and you pay double. Patience, and you pay... what I decide.", "choices": [] },
+        "rare": { "id": "rare", "speaker": "yasmin", "text": "Saffron from the eastern hills — three weeks left in the season. Cardamom is plentiful but the quality varies. I have separated the finest into its own basket. It costs more. It should.", "choices": [] },
+        "sell": { "id": "sell", "speaker": "yasmin", "text": "I buy grain and cotton from the west. Medicines, if they are genuine — I will taste them myself. Bring me silk and I will tell you whether it was woven by masters or children. I can taste the difference.", "choices": [] }
+      }
+    },
+    {
+      "id": "farouk-greeting",
+      "speakers": ["farouk"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "farouk", "text": "Sit. Tea? Of course tea. Nobody enters the Amber Glass without tea. Tell me — where have you sailed from? Every route has a story, and I collect them all.", "choices": [
+          { "id": "c1", "text": "From Porto Novo.", "nextNodeId": "porto-novo" },
+          { "id": "c2", "text": "From the east.", "nextNodeId": "east" },
+          { "id": "c3", "text": "Any rumors worth hearing?", "nextNodeId": "rumor" }
+        ]},
+        "porto-novo": { "id": "porto-novo", "speaker": "farouk", "text": "Ah, the grain harbor. Honest people, honest prices, honest food. Boring food, but honest. The Cotton Crossing from Sun Harbor is where the real margin lives — if the monsoon doesn't eat you first.", "choices": [] },
+        "east": { "id": "east", "speaker": "farouk", "text": "The Silk Road by Sea. I sailed it nine times. Jade Port's porcelain, Monsoon Reach's shipyards... and Spice Narrows, if you have the nerve. The Narrows has a second market in the deeper cliffs. I never found the entrance. Some say that's why I lived.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "farouk", "text": "A merchant arrived last week claiming to know an uncharted spice island. He's buying rum and dried meat in quantity. Says nothing else. But I notice he asks about currents south of the Coral Throne. Draw your own conclusions.", "choices": [] }
+      }
+    },
+    {
+      "id": "zara-greeting",
+      "speakers": ["zara"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "zara", "text": "Inspector Zara Osman. Manifest, please. I was trained in Porto Novo by Inspector Salva. I learned everything he knows. Then I learned what he doesn't know. You may proceed when I am satisfied.", "choices": [
+          { "id": "c1", "text": "Here's my manifest. Everything is legitimate.", "nextNodeId": "clean" },
+          { "id": "c2", "text": "Salva trained you? He's thorough.", "nextNodeId": "salva" }
+        ]},
+        "clean": { "id": "clean", "speaker": "zara", "text": "We shall see. Grain, cotton, dyes... all consistent with southern routes. Very well. But I will verify weights against your waterline. Captains who ride too high for their declared cargo interest me.", "choices": [] },
+        "salva": { "id": "salva", "speaker": "zara", "text": "Thorough, yes. But predictable. He looks at manifests. I look at captains. A man carrying legal cargo doesn't sweat when I read his papers. You're sweating. Why?", "choices": [] }
+      }
+    },
+    {
+      "id": "hakim-greeting",
+      "speakers": ["hakim"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hakim", "text": "Welcome, Captain. Are you injured, or in need of medicines for the voyage? I prepare remedies from the finest ingredients in my aunt's bazaar. My prices are fair — she charges what she charges, but I charge what is right.", "choices": [
+          { "id": "c1", "text": "I need medicines for the voyage.", "nextNodeId": "medicines" },
+          { "id": "c2", "text": "Can you treat injuries?", "nextNodeId": "treat" }
+        ]},
+        "medicines": { "id": "medicines", "speaker": "hakim", "text": "I can prepare fever remedies, wound salves, and sea-sickness tinctures. Medicines in your hold also halve healing time for injuries — the body heals faster when it has the right ingredients.", "choices": [] },
+        "treat": { "id": "treat", "speaker": "hakim", "text": "Show me. I treat all who come — my aunt's disputes are not mine. If you are hurt, you are hurt. The body does not care about politics.", "choices": [] }
+      }
+    },
+    {
+      "id": "tariq-greeting",
+      "speakers": ["tariq"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tariq", "text": "Captain. Tariq Sayed, Senior Broker. Please, sit. The tea is Silk Haven blend — a gift from a colleague. I have contracts that require... discretion. And captains who appreciate that the Exchange Alliance's rules are guidelines, not chains.", "choices": [
+          { "id": "c1", "text": "What kind of contracts?", "nextNodeId": "contracts" },
+          { "id": "c2", "text": "You sound like you're selling something besides contracts.", "nextNodeId": "ambition" }
+        ]},
+        "contracts": { "id": "contracts", "speaker": "tariq", "text": "Luxury procurement — silk, porcelain, spice from the eastern routes. The Alliance handles grain and cotton. I handle... everything else. Higher margins, higher expectations.", "choices": [] },
+        "ambition": { "id": "ambition", "speaker": "tariq", "text": "I'm selling the future, Captain. Al-Manar has been the Alliance's jewel for twelve generations. But jewels are polished by those who hold them. The Silk Circle understands trade in ways Porto Novo never will. I simply... build bridges.", "choices": [] }
+      }
+    },
+    {
+      "id": "fatima-greeting",
+      "speakers": ["fatima"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "fatima", "text": "You want protection? Protection costs. But so does a funeral. I learned chain-making from a Northern smith and improved his technique. His chain stopped a sword. Mine stops the sword and the arm holding it.", "choices": [
+          { "id": "c1", "text": "Show me your armor.", "nextNodeId": "armor" },
+          { "id": "c2", "text": "Do you sell weapons too?", "nextNodeId": "weapons" }
+        ]},
+        "armor": { "id": "armor", "speaker": "fatima", "text": "Leather vests for those who value speed. Chain shirts for those who value living. I wear every piece I sell through a full day of hammering before I sell it. If I can work in it, you can fight in it.", "choices": [] },
+        "weapons": { "id": "weapons", "speaker": "fatima", "text": "Blades, yes. I don't forge them — that's Marco's business in Porto Novo. But I source good steel from reliable smiths. A cutlass or a kris, depending on where you're sailing. The blade should match the waters.", "choices": [] }
+      }
+    },
+    {
+      "id": "vega-greeting",
+      "speakers": ["vega"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "vega", "text": "You come to learn the art. Good. Remove your boots. In this courtyard, we feel the ground with our feet. The sword follows the body, the body follows the ground. Luciano teaches geometry. I teach timing. Both are correct. Mine is more practical.", "choices": [
+          { "id": "c1", "text": "I want to learn La Destreza.", "nextNodeId": "learn" },
+          { "id": "c2", "text": "How are you different from Luciano?", "nextNodeId": "difference" }
+        ]},
+        "learn": { "id": "learn", "speaker": "vega", "text": "Five days. Eighty silver. You will learn the estocada from a different angle than Luciano's students — mine arrive faster. His arrive more precisely. In a real fight, both kill. Choose your lineage.", "choices": [] },
+        "difference": { "id": "difference", "speaker": "vega", "text": "Luciano learned from a Castilian tradition. I learned from an Aragonese one. He draws circles on the floor. I plant a fig tree and teach in its shade. His students think. My students feel. Both approaches produce dead opponents.", "choices": [] }
+      }
+    },
+    {
+      "id": "nadia-greeting",
+      "speakers": ["nadia"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "nadia", "text": "Captain. You have been granted audience with the Khoury household. This is not a common occurrence. My family has governed Al-Manar for twelve generations. We do not grant audiences to common traders. You are here because someone vouched for you. Do not waste their reputation.", "choices": [
+          { "id": "c1", "text": "I'm honored, Merchant Princess.", "nextNodeId": "honored" },
+          { "id": "c2", "text": "I have business that requires your attention.", "nextNodeId": "business" }
+        ]},
+        "honored": { "id": "honored", "speaker": "nadia", "text": "Honor is earned, Captain. Prove yourself in our bazaar, keep your contracts, and deal fairly. Then we will speak of honor. For now, you may trade. That privilege is enough.", "choices": [] },
+        "business": { "id": "business", "speaker": "nadia", "text": "Business. Yes. Porto Novo thinks it leads the Alliance because it has the headquarters. Al-Manar knows it leads the Alliance because it has the harbor, the bazaar, and the Khoury name. Whatever your business, know that it happens here on my sufferance.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-arrival",
+    "tags": ["captain", "visitor"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader seeking fortune in Al-Manar's spice markets.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["trader"], "progressionTreeId": "spice-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "spice-path", "name": "Spice Trader's Path", "currency": "standing",
+    "nodes": [
+      { "id": "bazaar-access", "name": "Bazaar Standing", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "bazaar-known" } }] },
+      { "id": "khoury-audience", "name": "Khoury Audience", "cost": 15, "requires": ["bazaar-access"], "effects": [{ "type": "grant-tag", "params": { "tag": "khoury-favor" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

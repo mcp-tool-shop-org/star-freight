@@ -1,0 +1,414 @@
+{
+  "id": "portlight-jade-port",
+  "name": "Jade Port",
+  "description": "Elder seat of the Silk Circle and heart of the Eastern porcelain trade. The Kiln Masters have shaped trade policy for a thousand years. Their guild marks are more valued than the clay itself. Porcelain workshops line the waterfront — kilns burning day and night, smoke threading between pagoda rooftops. Iron and grain are worth their weight in gold here. A fingerprint on porcelain voids a sale. A dropped bowl banned a family for three generations.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["ancient", "refined", "exacting"],
+  "difficulty": "intermediate",
+  "narratorTone": "Smoke rises from the kiln quarter — white plumes against a jade-colored sky. The harbor smells of fired clay and jasmine tea. Jade Port moves at its own pace. It has done so for a thousand years. The masters do not hurry. The masters do not need to.",
+  "mode": "district",
+
+  "map": {
+    "id": "jade-port-map",
+    "name": "Jade Port",
+    "description": "A deep natural harbor flanked by terraced hills. Bamboo cranes line the waterfront. The Porcelain Quarter climbs the eastern hillside — kilns visible from the harbor like rows of glowing eyes. The Guild Hall crowns the ridge above.",
+    "gridWidth": 56,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "porcelain-wharf",
+      "name": "The Porcelain Wharf",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "Bamboo cranes lift straw-padded crates from junks onto the stone wharf. Guild markers — men with magnifying lenses and silk gloves — inspect every piece before it leaves the dock. The cranes creak in rhythm. Workers speak in murmurs. A dropped crate here would end a career. The wharf stones are worn smooth by a thousand years of careful feet.",
+      "gridX": 16, "gridY": 30,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["inspection-yard", "tea-house-dock", "kiln-quarter"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Bamboo Crane", "type": "inspect", "description": "A counterweighted bamboo crane lifting a straw-padded crate. The operator adjusts tension by feel — too fast and the porcelain inside becomes expensive gravel." },
+        { "name": "Guild Marker's Table", "type": "inspect", "description": "A low table with silk cloth, magnifying lenses, and a stamp press. Each piece receives a guild mark — a tiny character pressed into the base. Forgery is punishable by exile." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "inspection-yard",
+      "name": "The Inspection Yard",
+      "tags": ["institution", "customs", "law"],
+      "description": "An open-air courtyard where every arriving cargo is laid out on silk mats for inspection. Chief Inspector Lian Wei oversees the process with the patience of a cat watching mice. Weapons are identified, catalogued, and confiscated with quiet efficiency. Appeals go to the Guild Hall. Appeals are rarely successful.",
+      "gridX": 38, "gridY": 32,
+      "gridWidth": 10, "gridHeight": 6,
+      "neighbors": ["porcelain-wharf", "tea-house-dock"],
+      "exits": [],
+      "light": 9, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Silk Inspection Mats", "type": "inspect", "description": "Cargo is laid out on pale silk for examination. Every grain sack is probed, every crate opened. Inspector Wei says the silk shows dust that wood does not." },
+        { "name": "Confiscation Cabinet", "type": "inspect", "description": "A locked lacquered cabinet for seized contraband. Mostly weapons. The cabinet is always nearly full." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "tea-house-dock",
+      "name": "The Dockside Tea House",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A pavilion built on stilts over the harbor's edge, where captains wait during inspection. Mama Chen runs it — a former sailor's wife who knows every trade route by the taste of the tea she serves. Green tea is free. Jasmine costs silver. The quality of your welcome depends on Mama Chen's first impression. She has never revised one.",
+      "gridX": 40, "gridY": 24,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["porcelain-wharf", "inspection-yard", "merchant-lane"],
+      "exits": [],
+      "light": 7, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Mama Chen's Counter", "type": "use", "description": "A polished teak counter where Mama Chen pours tea and takes measure of your character. The quality of your cup tells you what she thinks of you." },
+        { "name": "Harbor View Balcony", "type": "inspect", "description": "A bamboo balcony extending over the water. From here you can watch the inspection yard, count ships in harbor, and listen to the dock workers' songs." },
+        { "name": "Route Map", "type": "inspect", "description": "A painted silk scroll showing trade routes radiating from Jade Port. Mama Chen marks profitable runs with a red dot. She charges for the information, of course." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "kiln-quarter",
+      "name": "The Porcelain Quarter",
+      "tags": ["craft", "industry", "landmark"],
+      "description": "Workshops climb the eastern hillside in terraces. Kilns glow orange at every level — beehive-shaped brick ovens tended day and night. The air is thick with woodsmoke and the mineral tang of fired clay. Master potters work in open-sided pavilions, shaping vessels on wheels that spin on jade bearings. Apprentices mix glazes from secret recipes. The oldest kiln has burned continuously for four hundred years. Nobody dares let it go out.",
+      "gridX": 4, "gridY": 18,
+      "gridWidth": 14, "gridHeight": 12,
+      "neighbors": ["porcelain-wharf", "guild-hall", "glazer-workshop"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": ["extreme heat near kilns"],
+      "interactables": [
+        { "name": "The Eternal Kiln", "type": "inspect", "description": "The oldest kiln in Jade Port — four hundred years of continuous fire. The brickwork is glazed smooth from centuries of heat. Apprentices tend it in shifts. Letting it die would shame the guild for a generation." },
+        { "name": "Potter's Wheel", "type": "inspect", "description": "A jade-bearing wheel spinning with eerie smoothness. The master shapes a bowl with hands that move like water — no wasted motion, no hesitation." },
+        { "name": "Cooling Racks", "type": "inspect", "description": "Rows of freshly fired porcelain cooling on bamboo racks. Each piece glows faintly. Touch one and you'll lose your hand — to the heat first, to the potter second." }
+      ],
+      "parentDistrictId": "kiln-district"
+    },
+    {
+      "id": "glazer-workshop",
+      "name": "Master Shen's Glaze Workshop",
+      "tags": ["shop", "craft", "merchant-npc"],
+      "description": "Master Shen Yaozu's workshop sits at the highest terrace of the kiln quarter. He is the foremost glazer in the East — his celadon glaze is said to be indistinguishable from jade. He sells finished pieces to captains who can afford them, and occasionally accepts commissions. His prices are legendary. His work justifies every coin.",
+      "gridX": 2, "gridY": 10,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["kiln-quarter", "guild-hall"],
+      "exits": [],
+      "light": 6, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Display Shelves", "type": "use", "description": "Celadon bowls, vases, and tea sets arranged on black lacquer shelves. Each piece catches the light differently. Master Shen watches your eyes, not your hands — he knows what you want before you do." },
+        { "name": "Glaze Mixing Table", "type": "inspect", "description": "Mortars and pestles, mineral powders in labeled jars, a notebook written in a cipher only Shen can read. The recipes are worth as much as the porcelain." }
+      ],
+      "parentDistrictId": "kiln-district"
+    },
+    {
+      "id": "guild-hall",
+      "name": "The Kiln Masters' Guild Hall",
+      "tags": ["institution", "authority", "faction"],
+      "description": "A grand pagoda at the ridge crest, built of dark timber and jade-green tile. The Guild Council of Seven meets here — the oldest potters who set trade policy, resolve disputes, and maintain standards that have not changed in a millennium. The entrance hall displays a single porcelain bowl of such perfection that merchants have wept at the sight of it. Guild Elder Bao Zhiming presides. He is ninety-three. His hands still throw perfect vessels.",
+      "gridX": 10, "gridY": 2,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["kiln-quarter", "glazer-workshop", "scholar-garden"],
+      "exits": [],
+      "light": 8, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Perfect Bowl", "type": "inspect", "description": "A single celadon bowl on a black pedestal in the entrance hall. No cracks, no variation in glaze, no imperfection visible to any lens. Three hundred years old. The guild says it is the standard to which all work is measured." },
+        { "name": "Council Chamber Door", "type": "inspect", "description": "Carved wooden doors depicting the founding of the guild — seven potters and a single kiln. The doors are opened only for council sessions and visiting dignitaries." },
+        { "name": "Guild Registry", "type": "inspect", "description": "A wall of lacquered tablets listing every master potter for a thousand years. The most recent names are at the bottom. There is always room for more." }
+      ],
+      "parentDistrictId": "guild-heights"
+    },
+    {
+      "id": "scholar-garden",
+      "name": "The Scholar's Garden",
+      "tags": ["social", "peaceful", "overlook"],
+      "description": "A walled garden behind the Guild Hall where visiting merchants and scholars are received. Dwarf pines, raked gravel, a fish pond fed by a bamboo water clock. The garden overlooks the harbor far below. Trade agreements are negotiated here, among the stones. Guild Elder Bao says the garden teaches patience. Most merchants need the lesson.",
+      "gridX": 26, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["guild-hall", "merchant-lane"],
+      "exits": [],
+      "light": 9, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Bamboo Water Clock", "type": "inspect", "description": "A chain of bamboo tubes that fills and tips in sequence, marking time with soft clacks. It feeds the fish pond. The sound is the only clock Jade Port needs." },
+        { "name": "Harbor Overlook", "type": "inspect", "description": "A stone bench at the garden's edge with a view of the entire harbor. From here, the kilns' smoke looks like incense. Every ship is visible. Every departure noted." }
+      ],
+      "parentDistrictId": "guild-heights"
+    },
+    {
+      "id": "merchant-lane",
+      "name": "Merchant's Lane",
+      "tags": ["commerce", "market", "trade"],
+      "description": "A stepped stone lane connecting the waterfront to the guild heights. Tea merchants, silk dealers, and grain brokers occupy narrow shopfronts on both sides. Iron is sold from a single fortified shop — Jade Port's only iron dealer, who charges double and never apologizes. The lane smells of incense, dried tea, and money.",
+      "gridX": 28, "gridY": 14,
+      "gridWidth": 6, "gridHeight": 10,
+      "neighbors": ["tea-house-dock", "scholar-garden", "iron-shop"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tea Merchant's Stall", "type": "use", "description": "Bins of loose tea — green, jasmine, oolong, and a rare white tea that costs more per ounce than silver. The merchant weighs with brass scales and judges your palate with a glance." },
+        { "name": "Silk Display", "type": "inspect", "description": "Bolts of silk from Silk Haven, displayed folded (never rolled). The patterns are exquisite but the Jade Port merchants sell them as secondary goods — porcelain is king here." }
+      ],
+      "parentDistrictId": "mid-town"
+    },
+    {
+      "id": "iron-shop",
+      "name": "Kang's Iron & Provisions",
+      "tags": ["shop", "merchant-npc", "scarce-goods"],
+      "description": "The only iron dealer in Jade Port. Kang Jun-ho operates from a stone-walled shop with iron bars on the windows — appropriate, given his inventory. He imports iron from the West at great expense and sells it at greater profit. Grain, rope, and provisions fill the back shelves. Kang is polite, firm, and completely immune to haggling. His prices are his prices.",
+      "gridX": 36, "gridY": 16,
+      "gridWidth": 7, "gridHeight": 6,
+      "neighbors": ["merchant-lane"],
+      "exits": [],
+      "light": 6, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Iron Stock", "type": "use", "description": "Ingots, nails, tools, and fittings — all imported, all expensive. Kang weighs each sale on a scale calibrated weekly. He does not round down." },
+        { "name": "Provisions Shelf", "type": "use", "description": "Rice, dried fish, rope, lamp oil. Practical goods at practical prices. Kang saves his markup for the iron." }
+      ],
+      "parentDistrictId": "mid-town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "porcelain-wharf", "toZoneId": "inspection-yard", "bidirectional": true, "kind": "road", "label": "East Wharf" },
+    { "fromZoneId": "porcelain-wharf", "toZoneId": "tea-house-dock", "bidirectional": true, "kind": "road", "label": "Dock Walk" },
+    { "fromZoneId": "porcelain-wharf", "toZoneId": "kiln-quarter", "bidirectional": true, "kind": "stairs", "label": "Kiln Steps" },
+    { "fromZoneId": "inspection-yard", "toZoneId": "tea-house-dock", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "tea-house-dock", "toZoneId": "merchant-lane", "bidirectional": true, "kind": "stairs", "label": "Merchant Steps" },
+    { "fromZoneId": "kiln-quarter", "toZoneId": "glazer-workshop", "bidirectional": true, "kind": "stairs", "label": "Upper Terrace" },
+    { "fromZoneId": "kiln-quarter", "toZoneId": "guild-hall", "bidirectional": true, "kind": "stairs", "label": "Ridge Path" },
+    { "fromZoneId": "glazer-workshop", "toZoneId": "guild-hall", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "guild-hall", "toZoneId": "scholar-garden", "bidirectional": true, "kind": "passage", "label": "Garden Gate" },
+    { "fromZoneId": "scholar-garden", "toZoneId": "merchant-lane", "bidirectional": true, "kind": "stairs", "label": "Garden Descent" },
+    { "fromZoneId": "merchant-lane", "toZoneId": "iron-shop", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "waterfront",
+      "name": "The Waterfront",
+      "zoneIds": ["porcelain-wharf", "inspection-yard", "tea-house-dock"],
+      "tags": ["harbor", "commerce", "inspection"],
+      "baseMetrics": { "commerce": 85, "morale": 60, "safety": 80, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["porcelain", "tea", "silk"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "kiln-district",
+      "name": "The Kiln District",
+      "zoneIds": ["kiln-quarter", "glazer-workshop"],
+      "tags": ["craft", "industry", "guild"],
+      "baseMetrics": { "commerce": 70, "morale": 75, "safety": 85, "stability": 95 },
+      "economyProfile": { "supplyCategories": ["porcelain"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "guild-heights",
+      "name": "The Guild Heights",
+      "zoneIds": ["guild-hall", "scholar-garden"],
+      "tags": ["authority", "faction", "elite"],
+      "baseMetrics": { "commerce": 30, "morale": 85, "safety": 95, "stability": 95 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "mid-town",
+      "name": "The Mid-Town",
+      "zoneIds": ["merchant-lane", "iron-shop"],
+      "tags": ["commerce", "trade", "provisions"],
+      "baseMetrics": { "commerce": 75, "morale": 65, "safety": 75, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["iron", "grain", "tea", "provisions"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "eternal-kiln", "name": "The Eternal Kiln", "zoneId": "kiln-quarter", "gridX": 10, "gridY": 22, "description": "A beehive kiln that has burned continuously for four hundred years. Its bricks are glazed smooth from centuries of heat. The apprentices who tend it consider it the highest honor. Letting it die would shame the guild for a generation." },
+    { "id": "perfect-bowl", "name": "The Perfect Bowl", "zoneId": "guild-hall", "gridX": 16, "gridY": 5, "description": "A single celadon bowl displayed on a black pedestal in the Guild Hall entrance. Three hundred years old. No cracks, no variation, no imperfection. The standard against which all porcelain is measured." },
+    { "id": "bamboo-cranes", "name": "The Bamboo Cranes", "zoneId": "porcelain-wharf", "gridX": 24, "gridY": 33, "description": "A row of counterweighted bamboo cranes that lift straw-padded crates from ships to dock. They creak in rhythm — the sound of Jade Port's commerce." }
+  ],
+
+  "spawnPoints": [
+    { "id": "wharf-arrival", "zoneId": "porcelain-wharf", "gridX": 24, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "lian-wei", "name": "Chief Inspector Lian Wei", "zoneId": "inspection-yard", "role": "npc", "dialogueId": "lian-greeting", "tags": ["authority", "customs", "patient", "thorough"] },
+    { "entityId": "mama-chen", "name": "Mama Chen", "zoneId": "tea-house-dock", "role": "npc", "dialogueId": "chen-greeting", "tags": ["tavern-keeper", "shrewd", "tea-master"] },
+    { "entityId": "bao-zhiming", "name": "Guild Elder Bao Zhiming", "zoneId": "guild-hall", "role": "quest-giver", "dialogueId": "bao-greeting", "tags": ["elder", "authority", "kiln-master", "ancient"] },
+    { "entityId": "shen-yaozu", "name": "Master Glazer Shen Yaozu", "zoneId": "glazer-workshop", "role": "merchant", "dialogueId": "shen-greeting", "tags": ["craftsman", "glazer", "perfectionist", "merchant"] },
+    { "entityId": "kang-junho", "name": "Kang Jun-ho", "zoneId": "iron-shop", "role": "merchant", "dialogueId": "kang-greeting", "tags": ["merchant", "iron-dealer", "firm", "polite"] },
+    { "entityId": "dock-foreman-wu", "name": "Dock Foreman Wu", "zoneId": "porcelain-wharf", "role": "npc", "dialogueId": "wu-greeting", "tags": ["dock-worker", "careful", "veteran"] },
+    { "entityId": "guild-scribe-mei", "name": "Guild Scribe Mei", "zoneId": "guild-hall", "role": "npc", "dialogueId": "mei-greeting", "tags": ["scribe", "records", "quiet"] },
+    { "entityId": "tea-merchant-zhao", "name": "Tea Merchant Zhao", "zoneId": "merchant-lane", "role": "merchant", "dialogueId": "zhao-greeting", "tags": ["merchant", "tea", "refined"] },
+    { "entityId": "garden-keeper-lin", "name": "Garden Keeper Lin", "zoneId": "scholar-garden", "role": "npc", "dialogueId": "lin-greeting", "tags": ["keeper", "garden", "philosophical"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "lian-greeting",
+      "speakers": ["lian"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "lian", "text": "Captain. Cargo on the mats, if you please. We inspect everything at Jade Port. Not suspicion — tradition. The guild requires it.", "choices": [
+          { "id": "c1", "text": "Of course, Inspector.", "nextNodeId": "compliant" },
+          { "id": "c2", "text": "Is this necessary for every ship?", "nextNodeId": "necessary" }
+        ]},
+        "compliant": { "id": "compliant", "speaker": "lian", "text": "Good. Grain, cotton, provisions — all welcome. Iron is taxed but legal. Weapons, however... the guild confiscates those. No exceptions, no appeals worth making.", "choices": [] },
+        "necessary": { "id": "necessary", "speaker": "lian", "text": "Every ship. Every cargo. For a thousand years. The last captain who tried to skip inspection was banned from Silk Circle ports for five years. Take your time on the mats.", "choices": [] }
+      }
+    },
+    {
+      "id": "chen-greeting",
+      "speakers": ["chen"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "chen", "text": "Sit. Green tea while you wait — free. Jasmine if you want something better — three silver. I can tell by your hands whether you're worth the jasmine. Let me see.", "choices": [
+          { "id": "c1", "text": "What's the trade like here?", "nextNodeId": "trade-talk" },
+          { "id": "c2", "text": "Tell me about the Kiln Masters.", "nextNodeId": "kiln-talk" },
+          { "id": "c3", "text": "Any rumors?", "nextNodeId": "rumor" }
+        ]},
+        "trade-talk": { "id": "trade-talk", "speaker": "chen", "text": "Porcelain goes out. Iron and grain come in. Simple. The margin is in knowing which kilns are firing — when a master completes a set, the price drops for a day. I know the firing schedules. That's why the jasmine costs three silver.", "choices": [] },
+        "kiln-talk": { "id": "kiln-talk", "speaker": "chen", "text": "The Kiln Masters have run this port since before your ancestors could spell 'commerce.' Elder Bao is ninety-three and throws bowls that make young potters weep. Don't insult their work. Don't touch their work. Don't breathe on their work.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "chen", "text": "Master Shen smashed his entire year's output last month. Found a flaw in the glaze — invisible to anyone else. The guild praised him. A whole year of work, gone. They called it integrity. I call it terrifying.", "choices": [] }
+      }
+    },
+    {
+      "id": "bao-greeting",
+      "speakers": ["bao"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "bao", "text": "You seek the Guild Elder. I am Bao Zhiming. What you see on these shelves took a thousand years to perfect. What can I do for a captain in... how long are you staying? A day? We measure time differently here.", "choices": [
+          { "id": "c1", "text": "I want to trade for porcelain.", "nextNodeId": "trade" },
+          { "id": "c2", "text": "I've brought iron and grain.", "nextNodeId": "imports" },
+          { "id": "c3", "text": "I hear there's a rivalry with Silk Haven.", "nextNodeId": "rivalry" }
+        ]},
+        "trade": { "id": "trade", "speaker": "bao", "text": "Porcelain is sold at the wharf by guild-marked weight. But if you want the finest pieces — Master Shen's celadon — you come to me first. I decide who is worthy of his work. Bring me iron. Then we'll discuss worthiness.", "choices": [] },
+        "imports": { "id": "imports", "speaker": "bao", "text": "Iron and grain. The two things we cannot shape from clay. You are welcome here, Captain. The guild remembers those who bring what we need. Deliver reliably, and doors open that are closed to others.", "choices": [] },
+        "rivalry": { "id": "rivalry", "speaker": "bao", "text": "Silk Haven calls their thread an art. I have seen their tapestry — the one depicting our ancestors as monkeys. It hangs in their loom quarter still. We have not forgotten. But we do not lower ourselves to reply. Our porcelain speaks for us. It always has.", "choices": [] }
+      }
+    },
+    {
+      "id": "shen-greeting",
+      "speakers": ["shen"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "shen", "text": "Silk gloves. Put them on before you look. These pieces are not handled. They are witnessed.", "choices": [
+          { "id": "c1", "text": "Show me your finest work.", "nextNodeId": "finest" },
+          { "id": "c2", "text": "Do you take commissions?", "nextNodeId": "commission" }
+        ]},
+        "finest": { "id": "finest", "speaker": "shen", "text": "This celadon vase. The glaze is twenty-seven layers. Each layer fired separately. The color is jade — not green, not blue. Jade. It took me four months. The price is two hundred silver. I have turned down higher offers from men I didn't respect.", "choices": [] },
+        "commission": { "id": "commission", "speaker": "shen", "text": "Commissions require Elder Bao's approval and a deposit of fifty silver. I choose the form. You choose the size. The glaze is mine alone. Completion in three months. I do not rush. The kiln does not rush. Neither will I.", "choices": [] }
+      }
+    },
+    {
+      "id": "kang-greeting",
+      "speakers": ["kang"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kang", "text": "Welcome. Iron, grain, provisions, rope — I have what Jade Port cannot shape from clay. My prices reflect the cost of importing to a port that values beauty over practicality. I do not haggle. I do not need to.", "choices": [
+          { "id": "c1", "text": "Show me your iron stock.", "nextNodeId": "iron" },
+          { "id": "c2", "text": "I need provisions for my ship.", "nextNodeId": "provisions" }
+        ]},
+        "iron": { "id": "iron", "speaker": "kang", "text": "Ingots from Ironhaven, nails from Stormwall, fittings from Iron Point. All tested, all weighed on calibrated scales. The price is double what you'd pay in the West. The convenience of not sailing back for it is included.", "choices": [] },
+        "provisions": { "id": "provisions", "speaker": "kang", "text": "Rice, dried fish, lamp oil, rope. Fair prices on provisions — I save my margins for the iron. A captain needs to eat before he needs to build.", "choices": [] }
+      }
+    },
+    {
+      "id": "wu-greeting",
+      "speakers": ["wu"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "wu", "text": "Easy. Easy with those crates. You drop porcelain on my wharf, you pay for it and you swim home. Welcome to Jade Port. Tie up at berth three — it's padded.", "choices": [
+          { "id": "c1", "text": "Padded berths?", "nextNodeId": "padded" }
+        ]},
+        "padded": { "id": "padded", "speaker": "wu", "text": "Bamboo cushions on the bollards. Ships knock against them — less shock, less breakage. I lost a season's pay when a sloop bounced against the wharf and cracked forty bowls in the hold next to it. Never again.", "choices": [] }
+      }
+    },
+    {
+      "id": "mei-greeting",
+      "speakers": ["mei"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "mei", "text": "The Guild Registry records every transaction, every master, every mark. If you need to verify a piece's authenticity, I can check the records. Forgeries appear more often now. We find them all.", "choices": [
+          { "id": "c1", "text": "How do you spot forgeries?", "nextNodeId": "forgeries" }
+        ]},
+        "forgeries": { "id": "forgeries", "speaker": "mei", "text": "The guild mark is pressed into wet clay before firing. Each master's hand is unique — the depth, the angle. I have studied ten thousand marks. A forgery looks right. But it doesn't feel right. And feeling is everything in porcelain.", "choices": [] }
+      }
+    },
+    {
+      "id": "zhao-greeting",
+      "speakers": ["zhao"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "zhao", "text": "Captain. You look like a green tea drinker, but I suspect you could appreciate oolong. Try this — leaves from the mountain above the port. The mist does something to them that I cannot explain and would not try.", "choices": [
+          { "id": "c1", "text": "What's your best tea?", "nextNodeId": "best-tea" },
+          { "id": "c2", "text": "What sells well from here?", "nextNodeId": "trade-advice" }
+        ]},
+        "best-tea": { "id": "best-tea", "speaker": "zhao", "text": "White tea. Picked at dawn, dried in shade, touched by no metal. Forty silver per ounce. A captain bought a chest of it last season and sold it in Stormwall for triple. But you didn't hear that from me.", "choices": [] },
+        "trade-advice": { "id": "trade-advice", "speaker": "zhao", "text": "Tea and porcelain move everywhere. But the real profit is in the return — bring iron or grain. Jade Port drinks tea and shapes clay. It cannot eat either.", "choices": [] }
+      }
+    },
+    {
+      "id": "lin-greeting",
+      "speakers": ["lin"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "lin", "text": "The garden is open to visitors who walk softly. The gravel is raked each morning. The fish are fed at noon. Everything here has a rhythm. Including you, if you sit long enough to find it.", "choices": [
+          { "id": "c1", "text": "This place is beautiful.", "nextNodeId": "beauty" }
+        ]},
+        "beauty": { "id": "beauty", "speaker": "lin", "text": "Elder Bao says the garden is the guild's truest creation — more difficult than porcelain because it is never finished. I have tended it for forty years. He is correct.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "wharf-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A legitimate trader navigating Silk Circle customs.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "silk-circle-friend", "name": "Friend of the Circle", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "silk-circle" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

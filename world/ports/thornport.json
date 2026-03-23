@@ -1,0 +1,237 @@
+{
+  "id": "portlight-thornport",
+  "name": "Thornport",
+  "description": "A Free Port whaling town on the North Atlantic coast where tea is offered before negotiation and tobacco shared after deals close. The Whale Arch — a jawbone spanning the harbor entrance — bleaches in the salt wind like the skeleton of a forgotten god. Thornport doesn't do politics. It does tea, tobacco, and timber. The simplicity is the point.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["rustic", "practical", "independent"],
+  "difficulty": "beginner",
+  "narratorTone": "The Whale Arch frames the harbor like a cathedral door made of bone. Beyond it: wood smoke, drying fish, the clatter of tobacco curing racks. Thornport is what a port looks like when nobody tries to impress anyone. It just works.",
+  "mode": "district",
+
+  "map": {
+    "id": "thornport-map",
+    "name": "Thornport",
+    "description": "A small harbor town built around a whaling station. The Whale Arch marks the harbor entrance. The town climbs a gentle hill — the harbor, the market, and the bladesmith's workshop at the top. Everything is wood, bone, and salt-crusted practicality.",
+    "gridWidth": 44,
+    "gridHeight": 40,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "whale-arch-harbor",
+      "name": "The Whale Arch Harbor",
+      "tags": ["harbor", "docks", "arrival", "landmark"],
+      "description": "A sheltered harbor framed by the Whale Arch — the jawbone of a great whale, bleached white by decades of salt wind. Fishing boats and merchant vessels share the docks. The harbor smells of drying fish, wood smoke, and the faint sweetness of curing tobacco leaves. Thornport's harbor master is practical to the point of silence — he points at your berth and walks away.",
+      "gridX": 10, "gridY": 26,
+      "gridWidth": 18, "gridHeight": 8,
+      "neighbors": ["whaling-station", "tea-market", "tobacco-sheds"],
+      "exits": [],
+      "light": 8, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Whale Arch", "type": "inspect", "description": "The jawbone of a whale so large that fishing boats pass beneath it. Bleached white by salt and sun. Nobody remembers who killed the whale. The bone remembers everything." },
+        { "name": "Fish Racks", "type": "inspect", "description": "Rows of wooden racks where fish dry in the salt wind. The smell is powerful but honest. Thornport wastes nothing from the sea." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "whaling-station",
+      "name": "The Whaling Station",
+      "tags": ["industry", "fishing"],
+      "description": "A stone platform and wooden derricks where whale carcasses were once processed. The great whaling days are fading — the whales swim further north each year — but the station still operates. Blubber rendered into oil. Bone carved into tools and scrimshaw. The workers are quiet, efficient, and weathered by decades of salt spray.",
+      "gridX": 2, "gridY": 22,
+      "gridWidth": 10, "gridHeight": 10,
+      "neighbors": ["whale-arch-harbor", "thornport-tavern"],
+      "exits": [],
+      "light": 8, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Rendering Vats", "type": "inspect", "description": "Iron vats where blubber becomes lamp oil. The smell is industrial but the product is valuable. Every lighthouse on the northern coast burns Thornport oil." },
+        { "name": "Scrimshaw Table", "type": "inspect", "description": "A carving table where whale bone is turned into art. Needles, combs, buttons, and decorative pieces. The carver works in silence, turning death into beauty." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "tea-market",
+      "name": "The Tea Market",
+      "tags": ["market", "commerce", "social"],
+      "description": "An open-air market where Thornport's two chief exports — tea and tobacco — are traded. Tea is offered before any negotiation. Refusing the first cup is unforgivable. Tobacco is shared after a deal closes — lighting up together seals the agreement. The market is simple: wooden stalls, honest scales, and prices that haven't changed since last season because Thornport doesn't believe in excitement.",
+      "gridX": 16, "gridY": 16,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["whale-arch-harbor", "tobacco-sheds", "thornport-tavern", "hamish-bladesmith"],
+      "exits": [],
+      "light": 8, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tea Stall", "type": "use", "description": "A wooden stall where tea is brewed in iron pots over a small coal fire. The vendor pours without asking. Drink first, then talk. That's how it's done." },
+        { "name": "Market Scales", "type": "inspect", "description": "Brass scales for weighing tea and tobacco. They've been calibrated by the same family for three generations. The weights are carved from whale bone." }
+      ],
+      "parentDistrictId": "town"
+    },
+    {
+      "id": "tobacco-sheds",
+      "name": "The Tobacco Sheds",
+      "tags": ["industry", "agriculture"],
+      "description": "Long wooden sheds on the hill above the harbor where tobacco leaves hang to cure in the salt wind. The scent is sweet and complex — Thornport's tobacco is prized throughout the North Atlantic because the sea air gives it a flavor that inland growers can't replicate. The shed keepers are patient people who understand that good tobacco, like good timber, cannot be rushed.",
+      "gridX": 30, "gridY": 20,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["whale-arch-harbor", "tea-market"],
+      "exits": [],
+      "light": 7, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Curing Racks", "type": "inspect", "description": "Thousands of tobacco leaves hanging in rows, drying in the salt breeze. The shed keeper turns each leaf by hand. Rush the process and the flavor dies." },
+        { "name": "Sample Box", "type": "use", "description": "A small wooden box where visitors can sample this season's cure. The shed keeper watches your face as you smoke. Your reaction tells him more than any words." }
+      ],
+      "parentDistrictId": "town"
+    },
+    {
+      "id": "thornport-tavern",
+      "name": "The Bonefire",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "Thornport's only tavern, built from ship timbers and heated by a whale-oil fire that never goes out. The name comes from the fire's fuel — whale bone burns long and hot. The tavern keeper serves dark ale, darker bread, and stories about whales that may or may not be true. Conversation here is slow, comfortable, and occasionally profound. Nobody rushes in Thornport.",
+      "gridX": 6, "gridY": 12,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["whaling-station", "tea-market", "hamish-bladesmith"],
+      "exits": [],
+      "light": 4, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Bonefire", "type": "inspect", "description": "A fire pit in the tavern's center fed by whale bone and oil. It burns with a pale blue flame that gives the room an eerie, comfortable glow. The fire has burned for seven years without going out." },
+        { "name": "Whaler's Board", "type": "inspect", "description": "A board where whalers post sighting reports. The whales are swimming further north each year. The old whalers say the sea is warming. The young ones say the old ones worry too much." },
+        { "name": "Story Corner", "type": "use", "description": "A corner with deep chairs where old sailors tell stories. Some are true. The best ones aren't. Buying someone a drink here earns you a tale — and sometimes, useful information." }
+      ],
+      "parentDistrictId": "town"
+    },
+    {
+      "id": "hamish-bladesmith",
+      "name": "Hamish's Bladesmith",
+      "tags": ["shop", "weapons", "merchant-npc", "training"],
+      "description": "At the town's crest, where the wind is strongest, Hamish Iron runs his forge and bladesmith shop. He's gruff, direct, and builds weapons the way Thornport builds everything — without ornament, for function. His cutlasses are plain but perfectly balanced. His axes are brutal but reliable. He also teaches — Jarl Solveig, a Norse shieldmaiden who winters here, runs training sessions in the yard behind the forge.",
+      "gridX": 18, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["tea-market", "thornport-tavern"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Hamish's Forge", "type": "use", "description": "'If it's sharp and it swings, I made it. If it's dull, someone else made it.' Hamish forges cutlasses, axes, and daggers. No decoration. No apology." },
+        { "name": "Solveig's Yard", "type": "use", "description": "Behind the forge, Jarl Solveig teaches Highland Broadsword in an open yard. She's a Norse shieldmaiden who fights like the wind — fast, unpredictable, and impossible to ignore. A hundred silver, seven days." }
+      ],
+      "parentDistrictId": "town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "whale-arch-harbor", "toZoneId": "whaling-station", "bidirectional": true, "kind": "road", "label": "Shore Path" },
+    { "fromZoneId": "whale-arch-harbor", "toZoneId": "tea-market", "bidirectional": true, "kind": "stairs", "label": "Market Steps" },
+    { "fromZoneId": "whale-arch-harbor", "toZoneId": "tobacco-sheds", "bidirectional": true, "kind": "road", "label": "Hill Path" },
+    { "fromZoneId": "whaling-station", "toZoneId": "thornport-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "tea-market", "toZoneId": "tobacco-sheds", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "tea-market", "toZoneId": "thornport-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "tea-market", "toZoneId": "hamish-bladesmith", "bidirectional": true, "kind": "stairs", "label": "Crest Road" },
+    { "fromZoneId": "thornport-tavern", "toZoneId": "hamish-bladesmith", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor",
+      "name": "The Harbor",
+      "zoneIds": ["whale-arch-harbor", "whaling-station"],
+      "tags": ["harbor", "fishing", "industry"],
+      "baseMetrics": { "commerce": 60, "morale": 70, "safety": 75, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["tea", "tobacco", "whale-oil"], "scarcityDefaults": {} }
+    },
+    {
+      "id": "town",
+      "name": "The Town",
+      "zoneIds": ["tea-market", "tobacco-sheds", "thornport-tavern", "hamish-bladesmith"],
+      "tags": ["commerce", "craft", "social"],
+      "baseMetrics": { "commerce": 65, "morale": 80, "safety": 80, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["tea", "tobacco", "arms"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "whale-arch", "name": "The Whale Arch", "zoneId": "whale-arch-harbor", "gridX": 18, "gridY": 30, "description": "The jawbone of a whale so large it spans the harbor entrance. Bleached white by salt and time. Nobody remembers who killed the whale, but every captain who passes beneath it feels the weight of the sea's memory." },
+    { "id": "the-bonefire", "name": "The Bonefire", "zoneId": "thornport-tavern", "gridX": 10, "gridY": 16, "description": "A fire that burns whale bone and oil. Pale blue flame, seven years without going out. The heart of Thornport's social life." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-dock", "zoneId": "whale-arch-harbor", "gridX": 18, "gridY": 30, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "thornport-harbor-master", "name": "Harbor Master", "zoneId": "whale-arch-harbor", "role": "npc", "dialogueId": "hm-greeting", "tags": ["harbor-master", "laconic"] },
+    { "entityId": "hamish-iron", "name": "Hamish Iron", "zoneId": "hamish-bladesmith", "role": "merchant", "dialogueId": "hamish-shop-greeting", "tags": ["bladesmith", "gruff", "merchant"] },
+    { "entityId": "jarl-solveig", "name": "Jarl Solveig", "zoneId": "hamish-bladesmith", "role": "npc", "dialogueId": "solveig-greeting", "tags": ["trainer", "highland-broadsword", "shieldmaiden"] },
+    { "entityId": "tavern-keeper", "name": "The Bonefire Keeper", "zoneId": "thornport-tavern", "role": "npc", "dialogueId": "keeper-greeting", "tags": ["tavern-keeper", "storyteller"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "hm-greeting", "speakers": ["hm"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hm", "text": "[Points at berth three. Walks away.]", "choices": [] }
+      }
+    },
+    {
+      "id": "hamish-shop-greeting", "speakers": ["hamish"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hamish", "text": "If it's sharp and it swings, I made it. If it's dull, someone else made it. What do you need?", "choices": [
+          { "id": "c1", "text": "Show me your blades.", "nextNodeId": "blades" },
+          { "id": "c2", "text": "I heard there's a trainer here.", "nextNodeId": "trainer" }
+        ]},
+        "blades": { "id": "blades", "speaker": "hamish", "text": "Cutlasses, daggers, boarding axes. Plain steel, no fancy engraving. I forge for function. Marco in Porto Novo wraps his blades in poetry. I wrap mine in leather and let them speak for themselves.", "choices": [] },
+        "trainer": { "id": "trainer", "speaker": "hamish", "text": "Solveig. Out back. Norse shieldmaiden. Winters here because even she respects a good forge. Hundred silver, seven days. She'll teach you the cleave and leave bruises to remember it by.", "choices": [] }
+      }
+    },
+    {
+      "id": "solveig-greeting", "speakers": ["solveig"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "solveig", "text": "You wish to learn the broadsword? Good. The Highland style is not finesse — it is force applied with intelligence. The cleave breaks guards. The stance roots you to the ground. Seven days, and you will fight like the wind hits these cliffs — hard, relentless, and from every direction.", "choices": [
+          { "id": "c1", "text": "Teach me.", "nextNodeId": "teach" }
+        ]},
+        "teach": { "id": "teach", "speaker": "solveig", "text": "Hundred silver. Seven days. We train at dawn when the wind is coldest. Your muscles will remember the cold long after the bruises fade. That is the point.", "choices": [] }
+      }
+    },
+    {
+      "id": "keeper-greeting", "speakers": ["keeper"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "keeper", "text": "Ale? Tea? Both? Sit by the bonefire. The flame's been burning seven years — whale bone and oil. Some say it's bad luck to let it die. I say it's bad economics — the light brings customers.", "choices": [
+          { "id": "c1", "text": "What's the news?", "nextNodeId": "news" },
+          { "id": "c2", "text": "Tell me about the whales.", "nextNodeId": "whales" }
+        ]},
+        "news": { "id": "news", "speaker": "keeper", "text": "Stormwall tried to tax our tea last year. We stopped selling to soldiers. Tax lasted two weeks. Soldiers without tea are soldiers without patience. The commander learned his lesson.", "choices": [] },
+        "whales": { "id": "whales", "speaker": "keeper", "text": "Swimming further north each year. The old whalers say the sea is warming. The young ones say it's cycles. I say the fire still burns and the ale still pours. The rest is the sea's business, not mine.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "harbor-dock",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in the quiet north.", "statPriorities": { "instinct": 2, "will": 1 }, "startingTags": ["trader"], "progressionTreeId": "trade-path", "grantedVerbs": ["trade"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "trade-path", "name": "Northern Trade Path", "currency": "standing",
+    "nodes": [
+      { "id": "regular", "name": "Regular Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "thornport-regular" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}

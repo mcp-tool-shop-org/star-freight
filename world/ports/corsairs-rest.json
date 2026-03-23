@@ -1,0 +1,314 @@
+{
+  "id": "portlight-corsairs-rest",
+  "name": "Corsair's Rest",
+  "description": "A pirate haven carved into the cliffs south of Porto Novo. The entrance is invisible from open water — a narrow channel between two limestone walls that opens into a hidden cove. The Crimson Tide controls tribute. Mama Lucia controls the peace. Everyone else controls nothing. There are no names here. Every captain is 'friend' until proven otherwise.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["danger", "secrecy", "lawless"],
+  "difficulty": "intermediate",
+  "narratorTone": "The channel narrows until your yardarms nearly scrape stone. Then it opens — a hidden cove, torches guttering on the cliff face, the smell of cheap rum and cheaper decisions. Welcome to Corsair's Rest. Leave your name at the entrance. You won't need it here.",
+  "mode": "district",
+
+  "map": {
+    "id": "corsairs-rest-map",
+    "name": "Corsair's Rest",
+    "description": "A natural cove hidden between limestone cliffs. The settlement clings to the rock face — docks at water level, the Whisper Market carved into alcoves above, Mama Lucia's kitchen in a sea cave, and the Cliff Watch perched at the top. Everything is vertical. Everything is hidden.",
+    "gridWidth": 44,
+    "gridHeight": 52,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "the-cove-mouth",
+      "name": "The Cove Mouth",
+      "tags": ["harbor", "docks", "checkpoint", "danger"],
+      "description": "The narrow channel opens into a torchlit cove. One-Eye Basso sits on a barrel at the dock's edge, a boarding hook across his knees, watching every ship that enters. He lost his eye to a hook just like it. He checks no manifests and asks no questions — but he remembers every hull that passes. The docks are rough timber lashed to iron pitons hammered into the cliff. Ropes creak. The water is black.",
+      "gridX": 12, "gridY": 38,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["whisper-market", "mama-lucias", "cliff-caves"],
+      "exits": [],
+      "light": 4, "noise": 5,
+      "hazards": ["the water is deep and cold — falling in is survivable but embarrassing"],
+      "interactables": [
+        { "name": "Basso's Barrel", "type": "use", "description": "One-Eye Basso sits here with his boarding hook. He doesn't ask your name. He doesn't need to. He's been watching this cove for fifteen years and remembers every ship by its waterline." },
+        { "name": "Iron Pitons", "type": "inspect", "description": "The docks are lashed to iron spikes driven into raw limestone. Nothing here was built to last — but everything has lasted anyway. The pirates of Corsair's Rest are better engineers than they'd admit." }
+      ],
+      "parentDistrictId": "cove"
+    },
+    {
+      "id": "whisper-market",
+      "name": "The Whisper Market",
+      "tags": ["market", "black-market", "contraband", "landmark"],
+      "description": "A series of alcoves carved into the cliff face above the docks, connected by rope ladders and wooden walkways. Goods are displayed on stone shelves lit by tallow candles. The market's keeper is known only as Whisper — a figure in a hooded cloak who sets prices by writing numbers on slate. Nobody has ever heard Whisper's voice. Nobody knows Whisper's face. Prices here are not negotiated. They are accepted or refused in silence.",
+      "gridX": 8, "gridY": 26,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["the-cove-mouth", "crimson-chair", "mama-lucias"],
+      "exits": [],
+      "light": 3, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Whisper's Alcove", "type": "use", "description": "The central alcove where Whisper sits behind a stone counter. A hooded figure who communicates only through chalk on slate. Point at what you want. Whisper writes the price. You nod or leave." },
+        { "name": "Contraband Shelves", "type": "inspect", "description": "Black powder in oiled canvas. Stolen cargo in unmarked crates. Opium in lacquered boxes. Everything displayed openly — there are no laws here to break." },
+        { "name": "Rope Ladder", "type": "use", "description": "Rope ladders connecting the alcove levels. They sway in the updraft from the cove. Newcomers grab the rungs too tight. Regulars climb one-handed, cargo in the other." }
+      ],
+      "parentDistrictId": "cove"
+    },
+    {
+      "id": "crimson-chair",
+      "name": "The Crimson Chair",
+      "tags": ["institution", "authority", "pirate-faction", "tribute"],
+      "description": "A large alcove at the market's highest level where the Crimson Tide collects its tribute. A wooden chair painted red — the Crimson Chair — sits against the back wall. 'No One' occupies it: the Tide's enforcer, a cold figure who takes ten percent of every transaction in the cove. Not as payment. As acknowledgment. The distinction matters to No One. It doesn't matter to anyone else.",
+      "gridX": 26, "gridY": 20,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["whisper-market", "cliff-watch"],
+      "exits": [],
+      "light": 3, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Red Chair", "type": "inspect", "description": "A wooden chair painted Crimson Tide red. Worn smooth by years of sitting. No One occupies it during market hours. The chair is never empty — when No One leaves, the chair is turned to face the wall. That means the Tide is watching from elsewhere." },
+        { "name": "Tribute Ledger", "type": "inspect", "description": "A leather-bound book where No One records every tribute. Names are not used — transactions are logged by ship description and cargo type. The handwriting is precise and beautiful." }
+      ],
+      "parentDistrictId": "cove"
+    },
+    {
+      "id": "mama-lucias",
+      "name": "Mama Lucia's Kitchen",
+      "tags": ["tavern", "safe-zone", "social", "rumors"],
+      "description": "A sea cave at the cove's southern wall, widened and warmed by decades of cooking fires. Mama Lucia runs the only violence-free zone in Corsair's Rest. Her rule is absolute: no weapons drawn, no blood spilled, no voices raised past conversational. Violators are banned — and in a port with no other food, banishment means starvation. Her fish stew is legendary. She uses spices smuggled from Al-Manar and fish caught from the cave mouth at dawn.",
+      "gridX": 4, "gridY": 32,
+      "gridWidth": 10, "gridHeight": 10,
+      "neighbors": ["the-cove-mouth", "whisper-market", "the-surgery"],
+      "exits": [],
+      "light": 4, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Lucia's Hearth", "type": "use", "description": "A massive cooking fire at the cave's center. Lucia tends three iron pots simultaneously. The stew changes daily — the recipe never. She won't share it. 'When I die,' she says, 'the stew dies with me.'" },
+        { "name": "Peace Stone", "type": "inspect", "description": "A flat stone at the cave entrance carved with a knife through a circle. The symbol means: leave your blade here. Everyone does. Even No One." },
+        { "name": "Dark Corner", "type": "use", "description": "The back of the cave where deals happen by firelight. What's said at Lucia's stays at Lucia's — she enforces this with a cleaver and a long memory." }
+      ],
+      "parentDistrictId": "undercove"
+    },
+    {
+      "id": "the-surgery",
+      "name": "The Surgery",
+      "tags": ["medicine", "institution", "neutral"],
+      "description": "A dry cave near Lucia's Kitchen where the Physician — nobody uses another name — treats wounds, sets bones, and asks no questions about how the injuries happened. He's a former navy surgeon who deserted after being ordered to let wounded pirates die untreated. He treats everyone: Crimson Tide, Iron Wolves, independents, even Alliance captains if they find their way here. His instruments are navy-quality. His bedside manner is exhausted.",
+      "gridX": 2, "gridY": 44,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["mama-lucias"],
+      "exits": [],
+      "light": 5, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Surgery Table", "type": "use", "description": "A scarred wooden table. The Physician's instruments — scalpels, bone saws, suturing needles — are navy-issue and immaculately clean. The contrast with the cave is jarring." },
+        { "name": "Medicine Chest", "type": "inspect", "description": "A locked iron chest containing laudanum, catgut, and clean bandages. 'I don't ask where the opium comes from,' the Physician says. 'And you don't ask where the Navy instruments came from.'" }
+      ],
+      "parentDistrictId": "undercove"
+    },
+    {
+      "id": "cliff-caves",
+      "name": "The Cliff Caves",
+      "tags": ["logistics", "smuggling", "hidden"],
+      "description": "A network of caves behind the docks where Ghost — the Crimson Tide's logistics master — manages the loading and unloading of smuggled cargo. Ghost can empty a full ship in two hours using a system of pulleys, counterweights, and runners that would make a navy quartermaster weep with envy. The caves are lit by oil lamps and connected by narrow passages. Getting lost is easy. Getting found is harder.",
+      "gridX": 30, "gridY": 34,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["the-cove-mouth", "cliff-watch"],
+      "exits": [],
+      "light": 2, "noise": 4,
+      "hazards": ["narrow passages — easy to get lost without a guide"],
+      "interactables": [
+        { "name": "Pulley System", "type": "inspect", "description": "An elaborate network of ropes, pulleys, and counterweights that moves cargo from dock level to storage caves fifty feet above. Ghost designed it. It runs silently. That's the point." },
+        { "name": "Hidden Passage", "type": "inspect", "description": "A narrow crack in the limestone that leads deeper into the cliff. Locals say it connects to a second harbor on the other side. Only old pirates know the way. The crack smells of salt and old secrets." }
+      ],
+      "parentDistrictId": "undercove"
+    },
+    {
+      "id": "cliff-watch",
+      "name": "The Cliff Watch",
+      "tags": ["lookout", "security", "danger"],
+      "description": "A platform at the cliff's summit where Little Fish — a fourteen-year-old with sharp eyes and sharper instincts — watches the sea approaches. Little Fish is the most dangerous person in the cove, not because of strength, but because nothing enters these waters without Little Fish seeing it first. The platform is barely large enough for two people. The drop to the cove is fatal.",
+      "gridX": 34, "gridY": 14,
+      "gridWidth": 6, "gridHeight": 6,
+      "neighbors": ["crimson-chair", "cliff-caves"],
+      "exits": [],
+      "light": 10, "noise": 1,
+      "hazards": ["fatal drop to the cove below"],
+      "interactables": [
+        { "name": "Spyglass Post", "type": "inspect", "description": "A brass spyglass mounted on a wooden tripod. Scratches on the lens mount mark compass bearings. Little Fish can identify a ship by its sail shape at five leagues." },
+        { "name": "Signal Flags", "type": "inspect", "description": "Colored flags on short poles. Red means Alliance patrol. Black means Crimson Tide business. White means merchant — possible prize. Little Fish's flag choices decide who lives and who runs." }
+      ],
+      "parentDistrictId": "cove"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "the-cove-mouth", "toZoneId": "whisper-market", "bidirectional": true, "kind": "stairs", "label": "Rope Ladders" },
+    { "fromZoneId": "the-cove-mouth", "toZoneId": "mama-lucias", "bidirectional": true, "kind": "passage", "label": "Cave Mouth" },
+    { "fromZoneId": "the-cove-mouth", "toZoneId": "cliff-caves", "bidirectional": true, "kind": "passage", "label": "Cargo Tunnel" },
+    { "fromZoneId": "whisper-market", "toZoneId": "crimson-chair", "bidirectional": true, "kind": "stairs", "label": "Upper Ledge" },
+    { "fromZoneId": "whisper-market", "toZoneId": "mama-lucias", "bidirectional": true, "kind": "passage" },
+    { "fromZoneId": "mama-lucias", "toZoneId": "the-surgery", "bidirectional": true, "kind": "passage", "label": "Back Cave" },
+    { "fromZoneId": "crimson-chair", "toZoneId": "cliff-watch", "bidirectional": true, "kind": "stairs", "label": "Cliff Stairs" },
+    { "fromZoneId": "cliff-caves", "toZoneId": "cliff-watch", "bidirectional": true, "kind": "secret", "label": "Hidden Stair" }
+  ],
+
+  "districts": [
+    {
+      "id": "cove",
+      "name": "The Cove",
+      "zoneIds": ["the-cove-mouth", "whisper-market", "crimson-chair", "cliff-watch"],
+      "tags": ["harbor", "black-market", "pirate"],
+      "baseMetrics": { "commerce": 80, "morale": 40, "safety": 25, "stability": 50 },
+      "economyProfile": { "supplyCategories": ["contraband", "weapons", "rum"], "scarcityDefaults": {} },
+      "controllingFaction": "crimson-tide"
+    },
+    {
+      "id": "undercove",
+      "name": "The Undercove",
+      "zoneIds": ["mama-lucias", "the-surgery", "cliff-caves"],
+      "tags": ["caves", "refuge", "logistics"],
+      "baseMetrics": { "commerce": 40, "morale": 55, "safety": 45, "stability": 40 },
+      "economyProfile": { "supplyCategories": ["provisions", "medicine"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "cliff-tavern", "name": "The Cliff Tavern", "zoneId": "mama-lucias", "gridX": 8, "gridY": 36, "description": "A sea cave turned kitchen, visible only from the water. Mama Lucia's peace zone — the only place in the cove where weapons are forbidden and violence is punished by starvation." },
+    { "id": "the-crimson-chair-landmark", "name": "The Crimson Chair", "zoneId": "crimson-chair", "gridX": 30, "gridY": 24, "description": "A wooden chair painted Crimson Tide red. When occupied, tribute is collected. When turned to the wall, the Tide watches from the shadows." },
+    { "id": "hidden-passage", "name": "The Hidden Passage", "zoneId": "cliff-caves", "gridX": 38, "gridY": 38, "description": "A narrow crack in the limestone rumored to lead to a second harbor. Finding the entrance is a membership test. Most don't find it." }
+  ],
+
+  "spawnPoints": [
+    { "id": "cove-arrival", "zoneId": "the-cove-mouth", "gridX": 22, "gridY": 42, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "one-eye-basso", "name": "One-Eye Basso", "zoneId": "the-cove-mouth", "role": "npc", "dialogueId": "basso-greeting", "tags": ["security", "watchful", "pirate"] },
+    { "entityId": "whisper", "name": "Whisper", "zoneId": "whisper-market", "role": "merchant", "dialogueId": "whisper-greeting", "tags": ["market-keeper", "secretive", "silent"] },
+    { "entityId": "no-one", "name": "No One", "zoneId": "crimson-chair", "role": "npc", "dialogueId": "no-one-greeting", "tags": ["crimson-tide", "enforcer", "cold"] },
+    { "entityId": "mama-lucia", "name": "Mama Lucia", "zoneId": "mama-lucias", "role": "npc", "dialogueId": "lucia-greeting", "tags": ["tavern-keeper", "fierce", "peacekeeper"] },
+    { "entityId": "the-physician", "name": "The Physician", "zoneId": "the-surgery", "role": "npc", "dialogueId": "physician-greeting", "tags": ["doctor", "weary", "neutral"] },
+    { "entityId": "ghost", "name": "Ghost", "zoneId": "cliff-caves", "role": "npc", "dialogueId": "ghost-greeting", "tags": ["logistics", "crimson-tide", "efficient"] },
+    { "entityId": "little-fish", "name": "Little Fish", "zoneId": "cliff-watch", "role": "npc", "dialogueId": "fish-greeting", "tags": ["lookout", "dangerous", "young"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "basso-greeting", "speakers": ["basso"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "basso", "text": "...", "choices": [
+          { "id": "c1", "text": "I'm looking for the market.", "nextNodeId": "market" },
+          { "id": "c2", "text": "Who runs this place?", "nextNodeId": "runs" }
+        ]},
+        "market": { "id": "market", "speaker": "basso", "text": "Up. Rope ladders. Follow the candles. Don't fall.", "choices": [] },
+        "runs": { "id": "runs", "speaker": "basso", "text": "Nobody runs it. Everybody runs it. The Tide takes their cut. Lucia keeps the peace. Whisper sets the prices. I watch the door. It works.", "choices": [] }
+      }
+    },
+    {
+      "id": "whisper-greeting", "speakers": ["whisper"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "whisper", "text": "[Whisper says nothing. A gloved hand gestures at the shelves. Chalk scrapes on slate: 'POINT. I PRICE.']", "choices": [
+          { "id": "c1", "text": "[Point at the black powder.]", "nextNodeId": "powder" },
+          { "id": "c2", "text": "[Point at the stolen cargo.]", "nextNodeId": "stolen" },
+          { "id": "c3", "text": "Who are you?", "nextNodeId": "who" }
+        ]},
+        "powder": { "id": "powder", "speaker": "whisper", "text": "[Chalk on slate: '65 SILVER. PER BARREL. NOD OR LEAVE.']", "choices": [] },
+        "stolen": { "id": "stolen", "speaker": "whisper", "text": "[Chalk on slate: '40 SILVER. CONTENTS UNKNOWN. THAT IS THE PRICE OF NOT ASKING.']", "choices": [] },
+        "who": { "id": "who", "speaker": "whisper", "text": "[The slate is wiped clean. Then, slowly: 'NO NAMES HERE.' The hooded figure turns back to the shelves. The conversation is over.]", "choices": [] }
+      }
+    },
+    {
+      "id": "no-one-greeting", "speakers": ["no-one"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "no-one", "text": "Ten percent. Of everything. That's the Crimson Tide's arrangement with this cove. Not a tax. An acknowledgment. You're here because we allow it. You trade because we protect you. The math is simple.", "choices": [
+          { "id": "c1", "text": "Understood.", "nextNodeId": "good" },
+          { "id": "c2", "text": "What if I refuse?", "nextNodeId": "refuse" }
+        ]},
+        "good": { "id": "good", "speaker": "no-one", "text": "Then we have no problem. Trade well. Leave cleanly. Come back whenever you like. The cove remembers its friends.", "choices": [] },
+        "refuse": { "id": "refuse", "speaker": "no-one", "text": "Then you leave. Now. And the channel will be... narrower... next time you try to enter. I don't threaten, Captain. I describe consequences.", "choices": [] }
+      }
+    },
+    {
+      "id": "lucia-greeting", "speakers": ["lucia"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "lucia", "text": "Sit down. Eat. The stew is ready and the bread is warm. No weapons in my kitchen — leave them at the stone. That rule is older than the Tide and it will outlast them. Now. What do you want to know?", "choices": [
+          { "id": "c1", "text": "Tell me about the Crimson Tide.", "nextNodeId": "tide" },
+          { "id": "c2", "text": "Is the second harbor real?", "nextNodeId": "second-harbor" },
+          { "id": "c3", "text": "Just the stew, please.", "nextNodeId": "stew" }
+        ]},
+        "tide": { "id": "tide", "speaker": "lucia", "text": "Scarlet Ana is reasonable — she prefers gold to blood. The Butcher is not reasonable — he prefers blood to everything. Stay on Ana's side. If the Butcher comes in, eat your stew quietly and don't make eye contact.", "choices": [] },
+        "second-harbor": { "id": "second-harbor", "speaker": "lucia", "text": "There is a passage through the cliffs. I've seen the entrance. I will not tell you where it is. That knowledge is earned, not given. Old pirates know the way. Ask one — if you can find one who trusts you.", "choices": [] },
+        "stew": { "id": "stew", "speaker": "lucia", "text": "Smart choice. The recipe dies with me. My mother taught me, and her mother taught her. The secret is the spice — smuggled from Al-Manar. Don't tell Inspector Salva.", "choices": [] }
+      }
+    },
+    {
+      "id": "physician-greeting", "speakers": ["physician"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "physician", "text": "Show me. I don't need your name, your story, or your reasons. I need to see the wound. That's all that matters here.", "choices": [
+          { "id": "c1", "text": "I'm injured. Can you help?", "nextNodeId": "help" },
+          { "id": "c2", "text": "You were navy?", "nextNodeId": "navy" }
+        ]},
+        "help": { "id": "help", "speaker": "physician", "text": "I can set bones, clean wounds, and stitch cuts. What I can't do is undo stupidity. If you got hurt doing something foolish, I'll fix you, but I'll make sure the stitching hurts.", "choices": [] },
+        "navy": { "id": "navy", "speaker": "physician", "text": "Was. They ordered me to let wounded pirates die on the deck. I said no. They called it insubordination. I called it medicine. I left that night. Took my instruments. They're good instruments. Navy quality.", "choices": [] }
+      }
+    },
+    {
+      "id": "ghost-greeting", "speakers": ["ghost"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "ghost", "text": "You need cargo moved? Up, down, or out — I handle it all. Two hours for a full ship. My system runs on pulleys, counterweights, and people who don't ask questions. Which one are you?", "choices": [
+          { "id": "c1", "text": "I have cargo to store.", "nextNodeId": "store" },
+          { "id": "c2", "text": "How does your system work?", "nextNodeId": "system" }
+        ]},
+        "store": { "id": "store", "speaker": "ghost", "text": "Cave three is available. Dry, dark, and lockable. The Tide takes their ten percent of storage too. I don't make the rules. I just move the boxes.", "choices": [] },
+        "system": { "id": "system", "speaker": "ghost", "text": "You don't need to know how it works. You need to know that it works. Silently. That's why they call me Ghost — because your cargo disappears from the dock and appears in the cave, and nobody saw anything.", "choices": [] }
+      }
+    },
+    {
+      "id": "fish-greeting", "speakers": ["fish"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "fish", "text": "You're not supposed to be up here. Only three people are allowed on the Watch. I'm one. You're not one of the other two.", "choices": [
+          { "id": "c1", "text": "I wanted to see the view.", "nextNodeId": "view" },
+          { "id": "c2", "text": "Who are the other two?", "nextNodeId": "others" }
+        ]},
+        "view": { "id": "view", "speaker": "fish", "text": "The view is mine. I see every ship that enters these waters. I decide what the flags say. Red means run. Black means the Tide has business. White means merchant — which means you. Go back down before I decide you're interesting.", "choices": [] },
+        "others": { "id": "others", "speaker": "fish", "text": "Wouldn't you like to know. Go back down, Captain. The Watch watches. That's all you need to understand.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "shadow-trader",
+    "baseStats": { "vigor": 3, "instinct": 4, "will": 2 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "cove-arrival",
+    "tags": ["captain", "outsider"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "shadow-trader", "name": "Shadow Trader", "description": "A captain who trades where others won't.", "statPriorities": { "instinct": 2, "vigor": 1 }, "startingTags": ["smuggler"], "progressionTreeId": "shadow-path", "grantedVerbs": ["trade", "bribe"] }
+    ],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "shadow-path", "name": "Shadow Path", "currency": "reputation",
+    "nodes": [
+      { "id": "cove-known", "name": "Cove Regular", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "cove-known" } }] },
+      { "id": "tide-trusted", "name": "Tide Trusted", "cost": 15, "requires": ["cove-known"], "effects": [{ "type": "grant-tag", "params": { "tag": "crimson-tide-trusted" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

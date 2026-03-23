@@ -1,0 +1,375 @@
+{
+  "id": "portlight-monsoon-reach",
+  "name": "Monsoon Reach",
+  "description": "A Free Port crossroads where seasonal winds funnel the spice trade through a headland harbor. The Wind Temple monks track the monsoon with uncanny accuracy — their forecasts guide every departure. Monsoon Reach trades with everyone and judges no one. Ships here have deeper keels and stronger masts. The monsoon demands it.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["spiritual", "crossroads", "windswept"],
+  "difficulty": "intermediate",
+  "narratorTone": "Wind chimes ring from the temple pagoda — a cascade of bronze and bamboo that reads the air. The harbor curves around a headland where monks stand at the cliff edge, watching the horizon. They know what's coming. They always do. Monsoon Reach is where the winds meet, and where wise captains listen before they sail.",
+  "mode": "district",
+
+  "map": {
+    "id": "monsoon-reach-map",
+    "name": "Monsoon Reach",
+    "description": "A harbor carved around a rocky headland. The Wind Temple pagoda crowns the point. Shipyards line the western shore. The trading quarter fills the sheltered bay between. Ships moor in deep water — the currents are strong and the bottom drops fast.",
+    "gridWidth": 52,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "deep-anchorage",
+      "name": "The Deep Anchorage",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "A deep-water harbor where ships moor to iron chains set into the cliff face. The water is dark blue-black — the bottom drops away fast. Harbor Warden Priya assigns berths from a stone booth carved into the headland. She knows every current, every rock, every anchor point. Ships that ignore her guidance tend to drag anchor in the night. She does not offer guidance twice.",
+      "gridX": 14, "gridY": 30,
+      "gridWidth": 18, "gridHeight": 8,
+      "neighbors": ["ship-temple-yard", "spice-bazaar", "wind-temple-steps"],
+      "exits": [],
+      "light": 9, "noise": 6,
+      "hazards": ["strong currents at tide change"],
+      "interactables": [
+        { "name": "Iron Mooring Chains", "type": "inspect", "description": "Heavy iron chains bolted into the cliff. Rope won't hold here — the currents at tide change would snap hemp like thread. The chains are maintained by temple acolytes as a devotion." },
+        { "name": "Warden's Booth", "type": "use", "description": "A stone booth where Harbor Warden Priya assigns berths. A wind chart on the wall shows today's conditions. She taps a berth number without looking up. Trust it." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "ship-temple-yard",
+      "name": "The Temple Shipyard",
+      "tags": ["shipyard", "craft", "industry", "sacred"],
+      "description": "A shipyard where monks and shipwrights work side by side. The monks bless the timber. The wrights shape it. Every keel is consecrated before it touches water. Master Shipwright Ravi Anand builds vessels designed for monsoon waters — deeper keels, reinforced masts, hulls that flex instead of crack. He says the monks' prayers help. He also says good timber helps more.",
+      "gridX": 2, "gridY": 24,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["deep-anchorage", "monks-quarters"],
+      "exits": [],
+      "light": 8, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Blessed Timber Racks", "type": "inspect", "description": "Teak and ironwood seasoned for two years, each plank marked with a temple seal. The monks say blessed wood resists the monsoon. Ravi says properly seasoned wood resists anything." },
+        { "name": "Keel Cradle", "type": "inspect", "description": "A half-finished hull on blocks. The keel is deeper than standard — Ravi's monsoon design. A monk sits cross-legged beside it, chanting softly. Neither man acknowledges the other's contribution." },
+        { "name": "Repair Dock", "type": "use", "description": "A sheltered slip where storm-damaged ships are hauled and mended. Ravi charges fairly — he says overcharging a captain who survived a typhoon is bad karma." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "spice-bazaar",
+      "name": "The Spice Bazaar",
+      "tags": ["market", "commerce", "landmark"],
+      "description": "An open-air market in the sheltered bay where spice traders from every region converge. The air is thick with cinnamon, cardamom, clove, and pepper. Stalls are canvas-roofed against the sun and rain. Prices change with the wind — literally. When the monsoon shifts, routes open or close, and the bazaar adjusts within hours. Bazaar Master Deepak Nair mediates disputes with the calm of a man who has seen every trick twice.",
+      "gridX": 20, "gridY": 18,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["deep-anchorage", "wind-temple-steps", "provisions-house", "chai-veranda"],
+      "exits": [],
+      "light": 8, "noise": 8,
+      "hazards": [],
+      "interactables": [
+        { "name": "Spice Stalls", "type": "use", "description": "Rows of canvas-topped stalls heaped with spice. Cinnamon bark in bundles, pepper in sacks, cardamom in clay pots. The merchants shout in five languages. The prices are shouted in only one — silver." },
+        { "name": "Wind Price Board", "type": "inspect", "description": "A large slate board where prices are chalked and updated based on wind conditions. When the monsoon blows east, western spice prices rise. When it shifts, so does the board. The chalk dust never settles." },
+        { "name": "Deepak's Mediation Table", "type": "inspect", "description": "A stone table under a banyan tree where Bazaar Master Deepak settles disputes. He weighs both arguments like spice — carefully, and in front of witnesses." }
+      ],
+      "parentDistrictId": "bazaar-quarter"
+    },
+    {
+      "id": "chai-veranda",
+      "name": "The Chai Veranda",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A long veranda overlooking the bazaar where captains drink spiced chai and trade information. Run by Grandmother Lakshmi — a tiny woman with silver hair and ears that miss nothing. She serves chai in copper cups and news in whispers. Her grandson Arjun carries messages between ships for a copper coin. Nothing happens in Monsoon Reach that Lakshmi doesn't know first.",
+      "gridX": 36, "gridY": 20,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["spice-bazaar", "provisions-house"],
+      "exits": [],
+      "light": 7, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Lakshmi's Counter", "type": "use", "description": "Grandmother Lakshmi pours chai from a copper kettle that never seems to empty. The chai is heavily spiced — cardamom, ginger, black pepper. She says it keeps captains honest. It certainly keeps them awake." },
+        { "name": "Captain's Corner", "type": "inspect", "description": "A row of cushioned benches where captains sit with their backs to the wall. Route maps are sketched on napkins, deals struck over refills. The corner has seen more trade agreements than the bazaar below." },
+        { "name": "Message Board", "type": "inspect", "description": "A cork board where Arjun pins notes between ships. Crew wanted, cargo offered, route partnerships. Written in whatever language the captain speaks." }
+      ],
+      "parentDistrictId": "bazaar-quarter"
+    },
+    {
+      "id": "provisions-house",
+      "name": "Kamala's Provisions",
+      "tags": ["shop", "merchant-npc", "supplies"],
+      "description": "A stone warehouse at the bazaar's edge where Kamala stocks everything a ship needs for a monsoon crossing. Cotton, timber, rope, dried provisions — all tested against the damp that ruins lesser stores. Kamala wraps every purchase in oilcloth without being asked. She has survived four monsoon seasons as a provisioner. The ones who didn't wrap in oilcloth did not survive one.",
+      "gridX": 36, "gridY": 12,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["spice-bazaar", "chai-veranda"],
+      "exits": [],
+      "light": 6, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Provisions Stock", "type": "use", "description": "Dried rice, salted fish, hardtack, lamp oil — all sealed against monsoon damp. Kamala checks every seal personally. She has a nose for rot." },
+        { "name": "Cotton & Timber Rack", "type": "use", "description": "Trade goods stored on raised platforms away from the damp floor. Cotton bales in oilcloth, timber planks in wax-sealed bundles." }
+      ],
+      "parentDistrictId": "bazaar-quarter"
+    },
+    {
+      "id": "wind-temple-steps",
+      "name": "The Temple Steps",
+      "tags": ["passage", "sacred", "transition"],
+      "description": "Three hundred stone steps climbing from the harbor to the Wind Temple on the headland. Wind chimes hang from iron brackets at every tenth step — bronze, bamboo, glass. Each set is tuned differently. The monks say the chimes tell them which wind is blowing before they reach the top. Captains climb these steps before every departure to hear the forecast. The climb is part of the ritual. If you're not willing to climb, you're not serious about the wind.",
+      "gridX": 10, "gridY": 12,
+      "gridWidth": 6, "gridHeight": 10,
+      "neighbors": ["deep-anchorage", "spice-bazaar", "wind-temple"],
+      "exits": [],
+      "light": 9, "noise": 3,
+      "hazards": ["steep — watch your footing in rain"],
+      "interactables": [
+        { "name": "Wind Chimes", "type": "inspect", "description": "Cascading chimes of bronze, bamboo, and glass. Each set tuned to resonate with a different wind direction. The sound shifts as you climb — a musical forecast." },
+        { "name": "Step Counter", "type": "inspect", "description": "Every tenth step is carved with a number. Three hundred total. Halfway up, a stone bench offers rest and a view of the harbor. Most captains stop here. The monks never do." }
+      ],
+      "parentDistrictId": "temple-heights"
+    },
+    {
+      "id": "wind-temple",
+      "name": "The Wind Temple",
+      "tags": ["institution", "sacred", "landmark", "faction"],
+      "description": "A pagoda of dark timber and copper on the headland's crown. Wind instruments cover every surface — anemometers, weather vanes, silk streamers, pressure tubes. The monks move between them taking readings, recording data in leather journals that date back centuries. Head Monk Sanjay stands at the cliff edge each dawn, reading the horizon with eyes that see weather three days ahead. His forecasts have never been wrong. He says the wind tells him. The wind says nothing to anyone else.",
+      "gridX": 6, "gridY": 2,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["wind-temple-steps", "monks-quarters"],
+      "exits": [],
+      "light": 10, "noise": 2,
+      "hazards": ["exposed to high winds"],
+      "interactables": [
+        { "name": "Weather Instruments", "type": "inspect", "description": "Copper anemometers spinning on the pagoda corners. Silk streamers reading wind direction. Glass tubes measuring pressure. The monks read them like scripture — patterns in the data reveal what's coming." },
+        { "name": "Forecast Board", "type": "inspect", "description": "A slate board at the temple entrance where today's forecast is chalked in three languages. Wind direction, speed, storm probability, recommended departure windows. Updated at dawn and dusk." },
+        { "name": "Century Journals", "type": "inspect", "description": "Leather-bound journals stacked in alcoves. Three hundred years of wind data. The monks cross-reference today's readings with historical patterns. They say the monsoon repeats, but never exactly." }
+      ],
+      "parentDistrictId": "temple-heights"
+    },
+    {
+      "id": "monks-quarters",
+      "name": "The Monks' Quarters",
+      "tags": ["residential", "sacred", "peaceful"],
+      "description": "Simple stone cells behind the temple where the Monsoon Brotherhood lives. Eighteen monks, each sworn to read the wind and serve all captains equally. They eat rice, drink water, and sleep on bamboo mats. They own nothing. They know everything about the weather. Brother Amir handles visitors — a young monk with a quick smile who translates the Head Monk's forecasts into practical sailing advice.",
+      "gridX": 2, "gridY": 6,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["wind-temple", "ship-temple-yard"],
+      "exits": [],
+      "light": 7, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Prayer Bells", "type": "inspect", "description": "Small brass bells outside each cell. The monks ring them at wind-shift — a cascade of sound that carries down to the harbor. Captains learn to listen for the pattern." },
+        { "name": "Offering Bowl", "type": "use", "description": "A stone bowl at the quarters' entrance. Captains leave silver for the monks' maintenance. The amount is voluntary. Most give generously — an accurate forecast is worth more than any fee." }
+      ],
+      "parentDistrictId": "temple-heights"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "deep-anchorage", "toZoneId": "ship-temple-yard", "bidirectional": true, "kind": "road", "label": "West Shore Road" },
+    { "fromZoneId": "deep-anchorage", "toZoneId": "spice-bazaar", "bidirectional": true, "kind": "stairs", "label": "Bazaar Steps" },
+    { "fromZoneId": "deep-anchorage", "toZoneId": "wind-temple-steps", "bidirectional": true, "kind": "stairs", "label": "Temple Approach" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "chai-veranda", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "provisions-house", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "spice-bazaar", "toZoneId": "wind-temple-steps", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "chai-veranda", "toZoneId": "provisions-house", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "wind-temple-steps", "toZoneId": "wind-temple", "bidirectional": true, "kind": "stairs", "label": "Upper Steps" },
+    { "fromZoneId": "wind-temple", "toZoneId": "monks-quarters", "bidirectional": true, "kind": "passage", "label": "Cloister Path" },
+    { "fromZoneId": "monks-quarters", "toZoneId": "ship-temple-yard", "bidirectional": true, "kind": "stairs", "label": "Shore Descent" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor",
+      "name": "The Harbor",
+      "zoneIds": ["deep-anchorage", "ship-temple-yard"],
+      "tags": ["harbor", "shipyard", "industry"],
+      "baseMetrics": { "commerce": 75, "morale": 70, "safety": 65, "stability": 75 },
+      "economyProfile": { "supplyCategories": ["spice", "silk", "ship-repair"], "scarcityDefaults": {} },
+      "controllingFaction": "free-ports"
+    },
+    {
+      "id": "bazaar-quarter",
+      "name": "The Bazaar Quarter",
+      "zoneIds": ["spice-bazaar", "chai-veranda", "provisions-house"],
+      "tags": ["commerce", "social", "crossroads"],
+      "baseMetrics": { "commerce": 90, "morale": 75, "safety": 60, "stability": 65 },
+      "economyProfile": { "supplyCategories": ["spice", "cotton", "timber", "provisions"], "scarcityDefaults": {} },
+      "controllingFaction": "free-ports"
+    },
+    {
+      "id": "temple-heights",
+      "name": "The Temple Heights",
+      "zoneIds": ["wind-temple-steps", "wind-temple", "monks-quarters"],
+      "tags": ["sacred", "institution", "overlook"],
+      "baseMetrics": { "commerce": 10, "morale": 90, "safety": 95, "stability": 95 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} },
+      "controllingFaction": "monsoon-brotherhood"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "wind-temple-pagoda", "name": "The Wind Temple", "zoneId": "wind-temple", "gridX": 12, "gridY": 5, "description": "A dark timber pagoda crowned with copper weather instruments. The monks' headquarters and the most accurate weather station in the Known World. Its silhouette against the sky is the first thing captains see approaching Monsoon Reach." },
+    { "id": "wind-chime-cascade", "name": "The Chime Cascade", "zoneId": "wind-temple-steps", "gridX": 12, "gridY": 16, "description": "Three hundred steps lined with tuned wind chimes — bronze, bamboo, and glass. The cascade produces a different melody for each wind direction, a musical forecast that changes with the weather." },
+    { "id": "bazaar-banyan", "name": "The Banyan Tree", "zoneId": "spice-bazaar", "gridX": 26, "gridY": 22, "description": "An ancient banyan tree at the bazaar's center, its aerial roots forming natural alcoves where deals are struck in shade. Bazaar Master Deepak holds court beneath it." }
+  ],
+
+  "spawnPoints": [
+    { "id": "anchorage-arrival", "zoneId": "deep-anchorage", "gridX": 22, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "priya-warden", "name": "Harbor Warden Priya", "zoneId": "deep-anchorage", "role": "npc", "dialogueId": "priya-greeting", "tags": ["authority", "harbor-master", "no-nonsense"] },
+    { "entityId": "ravi-anand", "name": "Master Shipwright Ravi Anand", "zoneId": "ship-temple-yard", "role": "npc", "dialogueId": "ravi-greeting", "tags": ["shipwright", "practical", "faithful"] },
+    { "entityId": "deepak-nair", "name": "Bazaar Master Deepak Nair", "zoneId": "spice-bazaar", "role": "quest-giver", "dialogueId": "deepak-greeting", "tags": ["authority", "mediator", "calm"] },
+    { "entityId": "grandmother-lakshmi", "name": "Grandmother Lakshmi", "zoneId": "chai-veranda", "role": "npc", "dialogueId": "lakshmi-greeting", "tags": ["tavern-keeper", "wise", "connected"] },
+    { "entityId": "kamala-provisions", "name": "Kamala", "zoneId": "provisions-house", "role": "merchant", "dialogueId": "kamala-greeting", "tags": ["merchant", "practical", "careful"] },
+    { "entityId": "head-monk-sanjay", "name": "Head Monk Sanjay", "zoneId": "wind-temple", "role": "quest-giver", "dialogueId": "sanjay-greeting", "tags": ["monk", "forecast", "mystic", "authority"] },
+    { "entityId": "brother-amir", "name": "Brother Amir", "zoneId": "wind-temple", "role": "npc", "dialogueId": "amir-greeting", "tags": ["monk", "translator", "friendly"] },
+    { "entityId": "arjun-runner", "name": "Arjun", "zoneId": "chai-veranda", "role": "npc", "dialogueId": "arjun-greeting", "tags": ["messenger", "quick", "young"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "priya-greeting",
+      "speakers": ["priya"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "priya", "text": "Berth six. Iron chain, port side. Tie off before the tide turns or you'll drag into the rocks. Welcome to Monsoon Reach.", "choices": [
+          { "id": "c1", "text": "Any weather warnings?", "nextNodeId": "weather" },
+          { "id": "c2", "text": "I need repairs.", "nextNodeId": "repairs" }
+        ]},
+        "weather": { "id": "weather", "speaker": "priya", "text": "The monks posted their forecast at dawn. Check the temple board. I trust their readings more than my own eyes, and my eyes are good. If they say stay in port, you stay in port.", "choices": [] },
+        "repairs": { "id": "repairs", "speaker": "priya", "text": "Ravi Anand's yard, west shore. He builds for monsoon water — deep keels, flex hulls. His prices are fair and his monks bless every plank. Whether that helps is between you and the wind.", "choices": [] }
+      }
+    },
+    {
+      "id": "ravi-greeting",
+      "speakers": ["ravi"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "ravi", "text": "Your keel's too shallow for these waters. I can see it from the dock. You want repairs, or you want a proper monsoon refit?", "choices": [
+          { "id": "c1", "text": "Just repairs.", "nextNodeId": "repairs" },
+          { "id": "c2", "text": "What's a monsoon refit?", "nextNodeId": "refit" }
+        ]},
+        "repairs": { "id": "repairs", "speaker": "ravi", "text": "Standard hull work — two silver a point. The monks bless the timber before I set it. I've stopped arguing with them about it. My ships survive storms. That's what matters.", "choices": [] },
+        "refit": { "id": "refit", "speaker": "ravi", "text": "Deeper keel, reinforced mast step, flex joints in the hull. My design. Takes a week, costs fifty silver. But a ship that flexes in a typhoon comes home. A rigid one becomes part of the Storm Wall at Typhoon Anchorage.", "choices": [] }
+      }
+    },
+    {
+      "id": "deepak-greeting",
+      "speakers": ["deepak"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "deepak", "text": "Captain. The bazaar is open to all flags. That is the only rule I enforce. Buy, sell, trade — peacefully. If you have a dispute, bring it under the banyan tree. I'll hear both sides. I always do.", "choices": [
+          { "id": "c1", "text": "What's trading well?", "nextNodeId": "market" },
+          { "id": "c2", "text": "I'm looking for spice contracts.", "nextNodeId": "contracts" }
+        ]},
+        "market": { "id": "market", "speaker": "deepak", "text": "Spice always moves. The question is direction. Monsoon's blowing east — western spice is scarce, prices up. Bring cotton or timber from the west, take spice east. Simple geometry. The wind draws the map.", "choices": [] },
+        "contracts": { "id": "contracts", "speaker": "deepak", "text": "The bazaar doesn't do formal contracts — we're a Free Port. But if you deliver reliably, the merchants will seek you out. Start with a spice run to Silk Haven or Jade Port. Come back and they'll remember your name.", "choices": [] }
+      }
+    },
+    {
+      "id": "lakshmi-greeting",
+      "speakers": ["lakshmi"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "lakshmi", "text": "Chai, Captain? Spiced with the morning's cardamom. Sit. You look like a man who needs to listen before he sails. Everyone does, but few admit it.", "choices": [
+          { "id": "c1", "text": "What's the news?", "nextNodeId": "news" },
+          { "id": "c2", "text": "Tell me about the monks.", "nextNodeId": "monks" },
+          { "id": "c3", "text": "Any rumors?", "nextNodeId": "rumor" }
+        ]},
+        "news": { "id": "news", "speaker": "lakshmi", "text": "Three ships came in yesterday from the west. One had storm damage — Ravi's already working on her. A Silk Circle junk left at dawn heading for Jade Port. And Arjun says a Monsoon Syndicate scout was asking about cargo manifests. But you didn't hear that from me.", "choices": [] },
+        "monks": { "id": "monks", "speaker": "lakshmi", "text": "The Monsoon Brotherhood. Eighteen monks who read the wind like other men read books. Head Monk Sanjay hasn't been wrong in thirty years. The Silk Circle offered them alliance once. Sanjay said: 'We read the wind, not politics.' The Circle hasn't asked again.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "lakshmi", "text": "The monks say this monsoon season will be the worst in a generation. The shipwrights are quietly raising their prices. If you're planning to cross the open water, do it before summer or don't do it at all.", "choices": [] }
+      }
+    },
+    {
+      "id": "kamala-greeting",
+      "speakers": ["kamala"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kamala", "text": "Everything wrapped in oilcloth. No exceptions. I've seen monsoon rain turn a hold of rice into a hold of paste in two days. What do you need?", "choices": [
+          { "id": "c1", "text": "Provisions for a long voyage.", "nextNodeId": "provisions" },
+          { "id": "c2", "text": "I need cotton and timber.", "nextNodeId": "trade-goods" }
+        ]},
+        "provisions": { "id": "provisions", "speaker": "kamala", "text": "Dried rice, salt fish, hardtack, lamp oil. All sealed. I test every batch in a rain barrel before I sell it. If it leaks in my barrel, it'll leak in your hold. Two silver for a week's supply.", "choices": [] },
+        "trade-goods": { "id": "trade-goods", "speaker": "kamala", "text": "Cotton from the west, timber from the south. Both in wax-sealed bundles. Premium prices because my goods arrive dry. Your customers will notice the difference.", "choices": [] }
+      }
+    },
+    {
+      "id": "sanjay-greeting",
+      "speakers": ["sanjay"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "sanjay", "text": "You climbed the steps. Good. The wind today is east-northeast, fourteen knots, rising. Pressure falling. Rain by evening. Tomorrow — calmer. The day after, I cannot say yet. The wind is still deciding.", "choices": [
+          { "id": "c1", "text": "When should I sail?", "nextNodeId": "forecast" },
+          { "id": "c2", "text": "How do you know the weather so precisely?", "nextNodeId": "method" }
+        ]},
+        "forecast": { "id": "forecast", "speaker": "sanjay", "text": "If you go east, wait two days. If west, leave at dawn tomorrow — the wind will be behind you. If south toward the Coral Crown, go now. The window closes by nightfall and won't reopen for a week.", "choices": [] },
+        "method": { "id": "method", "speaker": "sanjay", "text": "Three hundred years of records. The instruments. The chimes on the steps. And something I cannot teach — a feeling in the air before the wind shifts. The brotherhood trains for ten years before we trust that feeling. Most captains want the answer. Few want the discipline.", "choices": [] }
+      }
+    },
+    {
+      "id": "amir-greeting",
+      "speakers": ["amir"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "amir", "text": "Welcome, Captain! Head Monk Sanjay's forecast is posted on the board — I can explain anything that's unclear. The monks write in technical language. I translate to 'will my ship sink or not.' Most captains prefer my version.", "choices": [
+          { "id": "c1", "text": "What does today's forecast mean for me?", "nextNodeId": "translate" }
+        ]},
+        "translate": { "id": "translate", "speaker": "amir", "text": "Short version: don't sail east today, the wind will fight you the whole way. West is fine — you'll have it at your back. South is now or wait a week. The monks' data says the monsoon is building early this year. Plan accordingly.", "choices": [] }
+      }
+    },
+    {
+      "id": "arjun-greeting",
+      "speakers": ["arjun"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "arjun", "text": "Message for anyone in harbor, Captain? One copper coin. I know every ship, every berth. Grandmother says I'm faster than the wind. The monks say I'm louder.", "choices": [
+          { "id": "c1", "text": "What ships are in harbor?", "nextNodeId": "ships" }
+        ]},
+        "ships": { "id": "ships", "speaker": "arjun", "text": "Fourteen ships. Three western traders, two Silk Circle junks, a Free Port cutter, and eight I don't recognize — probably from the south. The big galleon in berth one has been here a week. Waiting for the wind, Grandmother says. Or hiding from something.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "anchorage-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader navigating the monsoon crossroads.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "wind-friend", "name": "Friend of the Wind", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "monsoon-brotherhood" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

@@ -1,0 +1,411 @@
+{
+  "id": "portlight-porto-novo",
+  "name": "Porto Novo",
+  "description": "Heart of the Exchange Alliance. A Mediterranean trading port where flour dust mixes with sea salt and the clang of the harbor bell marks every arrival. The Grain Exchange dominates the waterfront — a columned hall where prices are read at dawn and fortunes change before breakfast.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["commerce", "tradition", "bustling"],
+  "difficulty": "beginner",
+  "narratorTone": "The harbor bell rings. Grain barges jostle at the quay. Clerks with ink-stained fingers shout numbers across the Exchange floor. This is Porto Novo — where commerce is religion and every silver coin is a prayer.",
+  "mode": "district",
+
+  "map": {
+    "id": "porto-novo-map",
+    "name": "Porto Novo",
+    "description": "A crescent harbor sheltered by limestone cliffs. The port curves around a natural bay, with the Grain Exchange at the waterfront center and the Governor's residence on the hill above.",
+    "gridWidth": 60,
+    "gridHeight": 48,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "the-quay",
+      "name": "The Quay",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "The main stone wharf where ships moor. Bollards worn smooth by a thousand ropes. Stevedores haul grain sacks while customs officers inspect manifests. The harbor bell hangs on a bronze arch at the quay's center — every captain rings it on arrival. Not ringing is bad luck.",
+      "gridX": 20, "gridY": 30,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["grain-exchange", "customs-house", "shipyard-quarter"],
+      "exits": [],
+      "light": 9, "noise": 9,
+      "hazards": [],
+      "interactables": [
+        { "name": "Harbor Bell", "type": "use", "description": "A bronze bell on an iron arch. Every arriving captain rings it. Tradition says those who don't ring will never leave port safely." },
+        { "name": "Mooring Posts", "type": "inspect", "description": "Granite bollards worn to glass by decades of hemp and chain. Names carved into the stone by bored sailors waiting for the tide." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "grain-exchange",
+      "name": "The Grain Exchange",
+      "tags": ["market", "institution", "landmark"],
+      "description": "The columned hall that is Porto Novo's beating heart. Marble pillars support a vaulted ceiling stained amber by centuries of oil lamps. At dawn, the Factor rings a second bell and reads the day's prices from a brass lectern. The floor is a mosaic of wheat sheaves — worn to the stone beneath in the trading pit where merchants stamp and shout.",
+      "gridX": 22, "gridY": 20,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["the-quay", "broker-alley", "governor-hill"],
+      "exits": [],
+      "light": 8, "noise": 8,
+      "hazards": [],
+      "interactables": [
+        { "name": "Price Board", "type": "inspect", "description": "Chalked prices updated hourly. Grain, cotton, dyes, rum — every commodity has a column. Red chalk means scarcity. White means glut." },
+        { "name": "Trading Pit", "type": "inspect", "description": "A sunken oval where merchants stand elbow-to-elbow. The wheat-sheaf mosaic underfoot is nearly worn through from generations of stamping feet." },
+        { "name": "Factor's Lectern", "type": "inspect", "description": "A brass stand where Guild Factor Marta Soares reads the dawn prices. The lectern is older than the building — salvaged from the temple beneath." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "customs-house",
+      "name": "The Customs House",
+      "tags": ["institution", "law"],
+      "description": "A squat stone building at the quay's east end. Inspector Salva runs it with the zeal of a man who believes smuggling is a personal insult. Every cargo manifest passes through here. The walls are lined with confiscated contraband — a warning to the ambitious.",
+      "gridX": 42, "gridY": 32,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["the-quay", "shipyard-quarter"],
+      "exits": [],
+      "light": 7, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Confiscation Shelf", "type": "inspect", "description": "Rows of seized goods behind iron mesh. Opium pipes, powder kegs, forged papers. Salva keeps them as trophies." },
+        { "name": "Manifest Desk", "type": "inspect", "description": "A scarred oak desk where every captain must declare cargo. Ink stains from a hundred reluctant signatures." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "shipyard-quarter",
+      "name": "Andros & Sons Shipyard",
+      "tags": ["shipyard", "craft", "industry"],
+      "description": "Two dry docks and a slipway cut into the western cliff. Dimitri Andros runs it with calloused hands and a strict rule: he builds merchant vessels, not warships. The air is sawdust and tar. Half-finished hulls stand like the ribs of beached whales. Andros himself can be found knee-deep in timber shavings, arguing with his apprentices about keelson angles.",
+      "gridX": 5, "gridY": 28,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["the-quay", "harbor-bell-tavern"],
+      "exits": [],
+      "light": 8, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Dry Dock", "type": "inspect", "description": "A ship rests on blocks, hull scraped clean of barnacles. Workers caulk seams with oakum and hot pitch." },
+        { "name": "Timber Racks", "type": "inspect", "description": "Seasoned oak and pine, graded by Andros himself. He taps each plank with a mallet — hollow ones go to the fire." },
+        { "name": "Ship Plans", "type": "inspect", "description": "Chalk drawings on slate boards. A brigantine in progress. Andros crosses out anyone else's corrections." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "harbor-bell-tavern",
+      "name": "The Harbor Bell",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "Old Enzo's place. A low-ceilinged tavern built into the cliff face behind the shipyard, its walls crusted with salt and old charts. Enzo himself is a barrel-chested ex-pirate who found religion, then lost it again, then found rum instead. He knows every captain who's docked here in thirty years. The fish stew is legendary. The wine is not.",
+      "gridX": 3, "gridY": 20,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["shipyard-quarter", "broker-alley", "grain-exchange"],
+      "exits": [],
+      "light": 5, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Enzo's Bar", "type": "use", "description": "A plank on barrels. Enzo serves from behind it, polishing the same glass he's polished since the war. He'll talk if you buy a bowl of stew." },
+        { "name": "Chart Wall", "type": "inspect", "description": "Old navigation charts pinned with knives. Routes scratched in, some crossed out. One chart has 'HERE BE PROFIT' written in three languages." },
+        { "name": "Corner Booth", "type": "inspect", "description": "The booth where deals happen. Scratched into the table: 'What's said at the Bell stays at the Bell.'" }
+      ],
+      "parentDistrictId": "old-town"
+    },
+    {
+      "id": "broker-alley",
+      "name": "Broker's Alley",
+      "tags": ["commerce", "contracts"],
+      "description": "A narrow cobblestone lane climbing from the Exchange to the upper town. Broker offices line both sides — each marked by a brass plaque and a lantern. Senior Broker Fernanda Reis occupies the finest office, halfway up. She distributes contract opportunities to captains she deems reliable. The cobblestones are worn smooth and slightly sticky — generations of spilled ink.",
+      "gridX": 18, "gridY": 12,
+      "gridWidth": 6, "gridHeight": 8,
+      "neighbors": ["grain-exchange", "harbor-bell-tavern", "governor-hill", "marco-forge"],
+      "exits": [],
+      "light": 6, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Reis Office", "type": "use", "description": "Fernanda Reis's door. Brass plaque reads: 'Reliable Captains Only.' She means it." },
+        { "name": "Contract Board", "type": "inspect", "description": "A public board outside the offices. Delivery requests, procurement needs, route inquiries. Updated daily at noon." }
+      ],
+      "parentDistrictId": "old-town"
+    },
+    {
+      "id": "marco-forge",
+      "name": "Marco's Forge",
+      "tags": ["shop", "weapons", "merchant-npc"],
+      "description": "Marco the Blade's workshop. Blades hang from the ceiling like steel rain. The forge at the back glows orange. Marco is a stocky Genoese smith with oil-stained hands and a talent for making the mundane sound magnificent. He sells cutlasses, rapiers, pistols, and the occasional piece of armor — all with a sales pitch that's half poetry, half con.",
+      "gridX": 26, "gridY": 10,
+      "gridWidth": 7, "gridHeight": 6,
+      "neighbors": ["broker-alley", "governor-hill"],
+      "exits": [],
+      "light": 6, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Blade Display", "type": "use", "description": "Cutlasses, rapiers, daggers. Marco insists on demonstrating each one. 'Feel that balance? That's Genoese steel, my friend.'" },
+        { "name": "The Forge", "type": "inspect", "description": "A coal forge at the back. Marco hammers on an anvil between sales. He says it keeps his prices honest." },
+        { "name": "Ammo Shelf", "type": "use", "description": "Pistol shot, powder, crossbow bolts. Neatly bundled and priced. Marco's handwriting is surprisingly elegant." }
+      ],
+      "parentDistrictId": "old-town"
+    },
+    {
+      "id": "governor-hill",
+      "name": "The Governor's Residence",
+      "tags": ["institution", "authority", "overlook"],
+      "description": "A whitewashed villa on the hill above the harbor, surrounded by lemon trees and guarded by two bored sentries. Senhora Isabela Costa governs from a terrace overlooking the bay. She's a former trader who earned her position through twenty years of clean commerce and strategic marriages. The view from here encompasses the entire crescent harbor — every ship, every dock, every deal.",
+      "gridX": 24, "gridY": 2,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["broker-alley", "marco-forge", "maestro-salle"],
+      "exits": [],
+      "light": 10, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Harbor Overlook", "type": "inspect", "description": "The terrace where the Governor takes morning tea. Every ship in the harbor is visible. She says the view is better than any manifest." },
+        { "name": "Lemon Garden", "type": "inspect", "description": "Lemon and orange trees in terracotta pots. The scent cuts through the port smell. A luxury earned, not inherited." }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "maestro-salle",
+      "name": "Maestro Luciano's Salle",
+      "tags": ["training", "fighting-style", "la-destreza"],
+      "description": "A whitewashed courtyard behind the Governor's villa where Maestro Luciano teaches La Destreza — the Spanish science of the sword. The floor is chalked with geometric circles and half-moon stepping patterns. Wooden practice rapiers hang on pegs. Luciano himself is thin, precise, and patient. He teaches the estocada — a thrust that finds the gap between parry and slash. 80 silver for five days of training. He says it's worth a lifetime.",
+      "gridX": 38, "gridY": 4,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["governor-hill"],
+      "exits": [],
+      "light": 9, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Chalk Circles", "type": "inspect", "description": "Geometric patterns on the stone floor. Luciano's students learn footwork before they touch a blade. 'The sword follows the feet,' he says." },
+        { "name": "Practice Rapiers", "type": "use", "description": "Blunted wooden rapiers. Luciano watches your grip before deciding whether to teach you." }
+      ],
+      "parentDistrictId": "upper-town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "the-quay", "toZoneId": "grain-exchange", "bidirectional": true, "kind": "stairs", "label": "Exchange Steps" },
+    { "fromZoneId": "the-quay", "toZoneId": "customs-house", "bidirectional": true, "kind": "road", "label": "East Wharf" },
+    { "fromZoneId": "the-quay", "toZoneId": "shipyard-quarter", "bidirectional": true, "kind": "road", "label": "West Wharf" },
+    { "fromZoneId": "grain-exchange", "toZoneId": "broker-alley", "bidirectional": true, "kind": "stairs", "label": "Alley Steps" },
+    { "fromZoneId": "grain-exchange", "toZoneId": "harbor-bell-tavern", "bidirectional": true, "kind": "road", "label": "Tavern Lane" },
+    { "fromZoneId": "shipyard-quarter", "toZoneId": "harbor-bell-tavern", "bidirectional": true, "kind": "passage", "label": "Cliff Path" },
+    { "fromZoneId": "broker-alley", "toZoneId": "harbor-bell-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "broker-alley", "toZoneId": "governor-hill", "bidirectional": true, "kind": "stairs", "label": "Hill Road" },
+    { "fromZoneId": "broker-alley", "toZoneId": "marco-forge", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "marco-forge", "toZoneId": "governor-hill", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "governor-hill", "toZoneId": "maestro-salle", "bidirectional": true, "kind": "passage", "label": "Garden Gate" }
+  ],
+
+  "districts": [
+    {
+      "id": "waterfront",
+      "name": "The Waterfront",
+      "zoneIds": ["the-quay", "grain-exchange", "customs-house", "shipyard-quarter"],
+      "tags": ["harbor", "commerce", "industry"],
+      "baseMetrics": { "commerce": 90, "morale": 65, "safety": 70, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["grain", "provisions", "timber"], "scarcityDefaults": {} },
+      "controllingFaction": "exchange-alliance"
+    },
+    {
+      "id": "old-town",
+      "name": "The Old Town",
+      "zoneIds": ["harbor-bell-tavern", "broker-alley", "marco-forge"],
+      "tags": ["residential", "commerce", "social"],
+      "baseMetrics": { "commerce": 70, "morale": 75, "safety": 60, "stability": 70 },
+      "economyProfile": { "supplyCategories": ["arms", "contracts"], "scarcityDefaults": {} }
+    },
+    {
+      "id": "upper-town",
+      "name": "The Upper Town",
+      "zoneIds": ["governor-hill", "maestro-salle"],
+      "tags": ["authority", "training", "elite"],
+      "baseMetrics": { "commerce": 30, "morale": 80, "safety": 95, "stability": 90 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "harbor-bell-landmark", "name": "The Harbor Bell", "zoneId": "the-quay", "gridX": 30, "gridY": 34, "description": "A bronze bell on an iron arch. Every captain rings it on arrival. The sound carries across the harbor — a tradition older than the Exchange itself." },
+    { "id": "exchange-columns", "name": "The Exchange Columns", "zoneId": "grain-exchange", "gridX": 28, "gridY": 24, "description": "Six marble columns supporting the vaulted ceiling. Each column is carved with a different grain motif — wheat, barley, oats, rye, millet, corn. The merchants say the columns hold up more than a roof." },
+    { "id": "andros-slipway", "name": "Andros Slipway", "zoneId": "shipyard-quarter", "gridX": 10, "gridY": 33, "description": "The main slipway where new ships slide into the harbor for the first time. Andros carves his mark into every keel he builds." }
+  ],
+
+  "spawnPoints": [
+    { "id": "quay-arrival", "zoneId": "the-quay", "gridX": 28, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "vasco-da-reira", "name": "Harbor Master Vasco da Reira", "zoneId": "the-quay", "role": "npc", "dialogueId": "vasco-greeting", "tags": ["authority", "harbor-master", "meticulous"] },
+    { "entityId": "marta-soares", "name": "Guild Factor Marta Soares", "zoneId": "grain-exchange", "role": "quest-giver", "dialogueId": "marta-greeting", "tags": ["authority", "exchange", "shrewd"] },
+    { "entityId": "dimitri-andros", "name": "Master Shipwright Dimitri Andros", "zoneId": "shipyard-quarter", "role": "npc", "dialogueId": "dimitri-greeting", "tags": ["craftsman", "shipwright", "gruff"] },
+    { "entityId": "inspector-salva", "name": "Inspector Salva", "zoneId": "customs-house", "role": "npc", "dialogueId": "salva-greeting", "tags": ["law", "customs", "relentless"] },
+    { "entityId": "old-enzo", "name": "Old Enzo", "zoneId": "harbor-bell-tavern", "role": "npc", "dialogueId": "enzo-greeting", "tags": ["tavern-keeper", "ex-pirate", "jovial"] },
+    { "entityId": "fernanda-reis", "name": "Senior Broker Fernanda Reis", "zoneId": "broker-alley", "role": "quest-giver", "dialogueId": "reis-greeting", "tags": ["broker", "calculating", "contracts"] },
+    { "entityId": "marco-the-blade", "name": "Marco the Blade", "zoneId": "marco-forge", "role": "merchant", "dialogueId": "marco-greeting", "tags": ["weaponsmith", "charming", "merchant"] },
+    { "entityId": "senhora-costa", "name": "Port Governor Isabela Costa", "zoneId": "governor-hill", "role": "npc", "dialogueId": "costa-greeting", "tags": ["governor", "diplomatic", "authority"] },
+    { "entityId": "maestro-luciano", "name": "Maestro Luciano", "zoneId": "maestro-salle", "role": "npc", "dialogueId": "luciano-greeting", "tags": ["trainer", "la-destreza", "patient"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "vasco-greeting",
+      "speakers": ["vasco"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "vasco", "text": "Welcome to Porto Novo, Captain. Ring the bell if you haven't already. Papers to the customs house. Berth fee is five silver — paid before you step ashore.", "choices": [
+          { "id": "c1", "text": "I rang it.", "nextNodeId": "good" },
+          { "id": "c2", "text": "What if I don't ring it?", "nextNodeId": "bad-luck" }
+        ]},
+        "good": { "id": "good", "speaker": "vasco", "text": "Good. Then you're welcome here. The Exchange opens at dawn. The shipyard's west. And stay out of Old Enzo's until you've finished your business.", "choices": [] },
+        "bad-luck": { "id": "bad-luck", "speaker": "vasco", "text": "Then I hope you don't plan on leaving. Every captain who didn't ring that bell had trouble on the way out. I've been here thirty-one years. I know what I know.", "choices": [] }
+      }
+    },
+    {
+      "id": "enzo-greeting",
+      "speakers": ["enzo"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "enzo", "text": "Ah, a new face! Sit, sit. The stew is hot and the wine is... well, the stew is hot. What brings you to Porto Novo?", "choices": [
+          { "id": "c1", "text": "Trade. What's moving?", "nextNodeId": "trade-talk" },
+          { "id": "c2", "text": "I heard you were a pirate once.", "nextNodeId": "pirate-past" },
+          { "id": "c3", "text": "Just passing through.", "nextNodeId": "farewell" }
+        ]},
+        "trade-talk": { "id": "trade-talk", "speaker": "enzo", "text": "Grain's always moving. Porto Novo grows it, everyone else eats it. The real money? Cotton from Sun Harbor, sell it here. Or take our grain south — Palm Cove pays well for anything they can't distill.", "choices": [
+          { "id": "c4", "text": "Any rumors?", "nextNodeId": "rumor" }
+        ]},
+        "pirate-past": { "id": "pirate-past", "speaker": "enzo", "text": "Was. Past tense. Found religion, lost it, found rum. Rum's more reliable. But I still know every captain who sails these waters. And some who don't anymore.", "choices": [
+          { "id": "c5", "text": "Tell me about the Crimson Tide.", "nextNodeId": "crimson-tide" }
+        ]},
+        "crimson-tide": { "id": "crimson-tide", "speaker": "enzo", "text": "They run Corsair's Rest, south of here. Scarlet Ana's reasonable if you're polite. The Butcher... isn't. Stay upwind of him.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "enzo", "text": "The Exchange was built on older foundations. Temple ruins, they say. Some clerks swear they hear chanting from below the floor after midnight. I say it's the rats. But I lock the cellar door all the same.", "choices": [] },
+        "farewell": { "id": "farewell", "speaker": "enzo", "text": "Nobody just passes through Porto Novo, friend. The bell called you here for a reason. Have some stew before you figure out what it is.", "choices": [] }
+      }
+    },
+    {
+      "id": "marco-greeting",
+      "speakers": ["marco"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "marco", "text": "Ah, a captain with taste! Come, see what Marco has forged this week. Every blade tells a story, and I tell them all for free.", "choices": [
+          { "id": "c1", "text": "Show me your weapons.", "nextNodeId": "weapons" },
+          { "id": "c2", "text": "I need ammunition.", "nextNodeId": "ammo" }
+        ]},
+        "weapons": { "id": "weapons", "speaker": "marco", "text": "For the discriminating captain — cutlasses for the deck, rapiers for the duel. And if you're heading north, a matchlock pistol. One shot, one chance. Very dramatic. Very Genoese.", "choices": [] },
+        "ammo": { "id": "ammo", "speaker": "marco", "text": "Pistol shot and powder, crossbow bolts. All Mediterranean-sourced. I test every batch myself. Marco does not sell damp powder.", "choices": [] }
+      }
+    },
+    {
+      "id": "marta-greeting",
+      "speakers": ["marta"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "marta", "text": "Captain. Prices are on the board. If you're buying grain, you're early — good. If you're selling grain, you're late — the northern fleet docked yesterday. What do you have?", "choices": [
+          { "id": "c1", "text": "I'm looking for contracts.", "nextNodeId": "contracts" },
+          { "id": "c2", "text": "What's the market like today?", "nextNodeId": "market" }
+        ]},
+        "contracts": { "id": "contracts", "speaker": "marta", "text": "Talk to Fernanda Reis in Broker's Alley. She handles placements. But know this — the Exchange Alliance remembers reliable captains. And unreliable ones.", "choices": [] },
+        "market": { "id": "market", "speaker": "marta", "text": "Grain is steady. Cotton from the south fetches well. Dyes too, if you can find them. Silk? We don't produce it, and Al-Manar's prices are... ambitious. There's always margin for a captain who can find supply.", "choices": [] }
+      }
+    },
+    {
+      "id": "dimitri-greeting",
+      "speakers": ["dimitri"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "dimitri", "text": "You need repairs or you need a ship. Which.", "choices": [
+          { "id": "c1", "text": "Repairs.", "nextNodeId": "repairs" },
+          { "id": "c2", "text": "What ships do you build?", "nextNodeId": "ships" }
+        ]},
+        "repairs": { "id": "repairs", "speaker": "dimitri", "text": "Two silver a hull point. Cheapest in the Mediterranean because I don't charge for what I don't fix. Show me the damage.", "choices": [] },
+        "ships": { "id": "ships", "speaker": "dimitri", "text": "Merchant vessels. Sloops, cutters, brigantines. I don't build warships. Had an admiral ask once. I told him my wood was too good for cannons.", "choices": [] }
+      }
+    },
+    {
+      "id": "salva-greeting",
+      "speakers": ["salva"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "salva", "text": "Manifest. Now.", "choices": [
+          { "id": "c1", "text": "Here you are, Inspector.", "nextNodeId": "check" },
+          { "id": "c2", "text": "Is this really necessary?", "nextNodeId": "necessary" }
+        ]},
+        "check": { "id": "check", "speaker": "salva", "text": "Hmm. Grain. Cotton. Rum. All legal. This time. I'll be watching.", "choices": [] },
+        "necessary": { "id": "necessary", "speaker": "salva", "text": "Yes. I've caught three smugglers this month. Two claimed their opium was 'medicine.' The third didn't claim anything because he ran. He didn't run far.", "choices": [] }
+      }
+    },
+    {
+      "id": "reis-greeting",
+      "speakers": ["reis"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "reis", "text": "Captain. Fernanda Reis, Senior Broker. I place contracts for captains who deliver. Your reputation precedes you — or it doesn't. Which is it?", "choices": [
+          { "id": "c1", "text": "I'm reliable. Show me what you have.", "nextNodeId": "contracts" },
+          { "id": "c2", "text": "I'm new here.", "nextNodeId": "new" }
+        ]},
+        "contracts": { "id": "contracts", "speaker": "reis", "text": "Procurement runs to the south. A shortage contract if you move fast. And one charter that requires... trust. Build your record first. Come back when you've completed three deliveries.", "choices": [] },
+        "new": { "id": "new", "speaker": "reis", "text": "Then start small. A grain run to Silva Bay, or cotton from Sun Harbor. Complete it on time, in full, and I'll have more for you. The Exchange remembers.", "choices": [] }
+      }
+    },
+    {
+      "id": "costa-greeting",
+      "speakers": ["costa"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "costa", "text": "Captain. Welcome to Porto Novo. I trust the harbor master has seen to your berth. This port runs on fair dealing and reliable contracts. If you're here to trade honestly, you'll find friends. If not... Inspector Salva is very thorough.", "choices": [] }
+      }
+    },
+    {
+      "id": "luciano-greeting",
+      "speakers": ["luciano"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "luciano", "text": "You wish to learn La Destreza? The Spanish science of the sword is not strength — it is geometry. The circle, the half-moon, the angle of the wrist. Show me your grip. Then I will decide if I teach you.", "choices": [
+          { "id": "c1", "text": "I want to learn.", "nextNodeId": "learn" },
+          { "id": "c2", "text": "What does it cost?", "nextNodeId": "cost" }
+        ]},
+        "learn": { "id": "learn", "speaker": "luciano", "text": "Five days. Eighty silver. You will ache in muscles you didn't know you had. But when you leave, you will understand the estocada — the thrust that finds the gap between parry and slash. That thrust has saved my life nine times.", "choices": [] },
+        "cost": { "id": "cost", "speaker": "luciano", "text": "Eighty silver and five days of your life. In return, I give you the estocada and the footwork of Carranza. Whether that is a fair trade depends on how many duels are in your future.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "quay-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A legitimate trader with standing in the major ports.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "exchange-member", "name": "Exchange Member", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "exchange-alliance" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

@@ -1,0 +1,308 @@
+{
+  "id": "portlight-silva-bay",
+  "name": "Silva Bay",
+  "description": "Builder of the Exchange Alliance's fleet. A Mediterranean shipwright's town where sawdust falls like snow and the rhythmic strike of adzes sets the tempo of the day. The Master Shipyard dominates the waterfront — three slipways, two dry docks, and Elena Madeira's uncompromising eye for timber. Silva Bay doesn't govern by titles. Seven chairs in Brotherhood Hall make every decision by consensus. No one sits at the head.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["craft", "independence", "honest-labor"],
+  "difficulty": "beginner",
+  "narratorTone": "Sawdust clings to everything — your coat, your hair, your tea. The sound of Silva Bay is the sound of work: the rhythmic chunk of adzes shaping oak, the scrape of planes on pine, the splash of a hull sliding into water for the first time. These people build ships the way monks build prayers — with patience, precision, and no tolerance for shortcuts.",
+  "mode": "district",
+
+  "map": {
+    "id": "silva-bay-map",
+    "name": "Silva Bay",
+    "description": "A sheltered bay between forested headlands. The shipyard occupies the entire western shore. The town climbs a gentle slope behind it — timber yards, workshops, and the Brotherhood Hall at the crest. A small harbor for visiting ships curves to the east.",
+    "gridWidth": 52,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "visitors-harbor",
+      "name": "The Visitors' Harbor",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "A modest stone quay on the bay's eastern curve, separate from the shipyard slipways. Visiting captains dock here. Harbor Master Nuno Ferreira meets every ship — a practical man who lost three fingers to a saw and never mentions it. The harbor is clean, functional, and undecorated. Silva Bay doesn't waste wood on ornament.",
+      "gridX": 34, "gridY": 28,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["master-shipyard", "timber-yard", "customs-shed"],
+      "exits": [],
+      "light": 9, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Ferreira's Post", "type": "use", "description": "A wooden post where Nuno Ferreira leans, watching ships approach. He assesses hull condition before you've even tied up. His three missing fingers tell you he knows wood intimately." },
+        { "name": "Repair Notice Board", "type": "inspect", "description": "A board listing current repair slots and wait times. Silva Bay's shipyard is the best in the Mediterranean — and everyone knows it." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "master-shipyard",
+      "name": "The Master Shipyard",
+      "tags": ["shipyard", "landmark", "craft", "industry"],
+      "description": "Three stone slipways and two dry docks cut into the western shore. The largest dry dock can hold a galleon. A sign carved into the stone lintel reads: 'BUILT TO SAIL, NOT TO SINK.' Master Shipwright Elena Madeira runs it with exacting standards and calloused hands. Half-finished hulls stand like whale ribcages. The air is thick with sawdust, tar, and the singing of woodworkers who've been shaping keels since childhood.",
+      "gridX": 4, "gridY": 22,
+      "gridWidth": 18, "gridHeight": 12,
+      "neighbors": ["visitors-harbor", "timber-yard", "dry-dock-tavern"],
+      "exits": [],
+      "light": 9, "noise": 9,
+      "hazards": [],
+      "interactables": [
+        { "name": "Main Slipway", "type": "inspect", "description": "The largest slipway, angled toward the bay. A brigantine skeleton sits on blocks, ribs exposed to the sky. Workers caulk seams with oakum, their hands black with pitch." },
+        { "name": "Elena's Station", "type": "use", "description": "A workbench at the shipyard's center where Elena Madeira inspects every plank. She taps timber with a mallet — hollow ones go to the fire. Her judgment is final." },
+        { "name": "Carved Lintel", "type": "inspect", "description": "'BUILT TO SAIL, NOT TO SINK.' The shipyard motto, carved into granite. Elena's grandfather carved it. She says she'll carve a second line when someone earns one." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "timber-yard",
+      "name": "The Timber Yard",
+      "tags": ["industry", "resources", "craft"],
+      "description": "A vast open yard between shipyard and town where timber is seasoned, sorted, and graded. Tomas Verdelho manages it with the patience of a man who understands that good timber takes years. Stacks of oak, pine, and teak rise higher than the rooftops. Verdelho grades by sound — tapping each plank with a wooden hammer. The clear ring of good timber is as recognizable to him as birdsong.",
+      "gridX": 20, "gridY": 14,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["master-shipyard", "visitors-harbor", "brotherhood-hall"],
+      "exits": [],
+      "light": 10, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Grading Station", "type": "use", "description": "Verdelho's workspace. A scarred table where he grades timber by tap-testing. Each grade is marked with colored chalk: blue for first quality, red for second, black for firewood." },
+        { "name": "Seasoning Racks", "type": "inspect", "description": "Timber stacked in open frames, air-drying for one to three years. Some planks have dates chalked on them from seasons past. Rushing seasoned timber is blasphemy in Silva Bay." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "customs-shed",
+      "name": "The Customs Shed",
+      "tags": ["institution", "law"],
+      "description": "A small wooden building at the harbor's edge. Customs Officer Pires was assigned here by the Exchange Alliance and would rather be anywhere else. He inspects manifests with the enthusiasm of a man counting down days to transfer. The shed leans slightly seaward. Nobody has fixed it. Nobody will.",
+      "gridX": 44, "gridY": 24,
+      "gridWidth": 6, "gridHeight": 6,
+      "neighbors": ["visitors-harbor"],
+      "exits": [],
+      "light": 6, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Pires' Desk", "type": "use", "description": "A desk covered in forms he's already signed. Pires stamps manifests without reading them unless something smells wrong. He's competent but unenthusiastic." },
+        { "name": "Transfer Request", "type": "inspect", "description": "A half-written request for transfer to Porto Novo, pinned under a coffee cup. It's been there for months. The coffee cup hasn't moved either." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "dry-dock-tavern",
+      "name": "The Dry Dock",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "Rosa Carvalho's tavern, built from the salvaged timbers of her husband's ship — the one that didn't come back from the Smuggler's Run. The insurance paid for the building. Rosa's cooking pays for everything else. The tavern is warm, the cider is local, and the conversation is about wood, weather, and who's hiring crew. No fights in the Dry Dock. Rosa's rule.",
+      "gridX": 6, "gridY": 12,
+      "gridWidth": 10, "gridHeight": 7,
+      "neighbors": ["master-shipyard", "brotherhood-hall", "old-silva-shop"],
+      "exits": [],
+      "light": 5, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Rosa's Bar", "type": "use", "description": "A bar made from the keel timber of her husband's lost ship. She serves behind it with a steady hand and a rule: no fighting. Last person who tried is still paying off the damage." },
+        { "name": "Salvage Wall", "type": "inspect", "description": "One wall is the original hull planking of the lost ship. Names carved into it by the crew who didn't come back. Rosa polishes their names every Sunday." },
+        { "name": "Crew Board", "type": "inspect", "description": "A board where captains post crew openings and workers post availability. Silva Bay's sailors are the best-trained in the Mediterranean — and they know it." }
+      ],
+      "parentDistrictId": "town"
+    },
+    {
+      "id": "brotherhood-hall",
+      "name": "Brotherhood Hall",
+      "tags": ["institution", "authority", "governance"],
+      "description": "A stone building at the town's crest where Silva Bay governs itself. Seven chairs around a round table — no head seat, no chairman, no hierarchy. Decisions by consensus. The Brotherhood of Shipwrights has governed this way since the town's founding. The walls are hung with ship models — one for every vessel built in the yard. There are hundreds.",
+      "gridX": 18, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["timber-yard", "dry-dock-tavern", "old-silva-shop"],
+      "exits": [],
+      "light": 7, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Seven Chairs", "type": "inspect", "description": "Seven identical oak chairs around a round table. No head seat. No rank markers. Silva Bay decides together or not at all. The table has seven sets of worn hand-prints." },
+        { "name": "Ship Models", "type": "inspect", "description": "Hundreds of tiny ship models on shelves along every wall. Each represents a vessel built in the yard. The oldest models are dark with age. The newest still smell of varnish." }
+      ],
+      "parentDistrictId": "town"
+    },
+    {
+      "id": "old-silva-shop",
+      "name": "Old Silva's Outfitter",
+      "tags": ["shop", "weapons", "armor", "merchant-npc"],
+      "description": "A cluttered shop near the Brotherhood Hall where Old Silva sells everything a sailor needs. He's a retired shipwright who decided selling was easier than building. His shop smells of tar and salt. He stocks blades, armor, ammunition, and opinions — all at fair prices. He turned down an offer to relocate to Porto Novo because, he said, 'I can hear the shipyard from here. That's enough.'",
+      "gridX": 30, "gridY": 6,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["brotherhood-hall", "dry-dock-tavern"],
+      "exits": [],
+      "light": 5, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Everything Shelf", "type": "use", "description": "Cutlasses, leather vests, pistol shot, rope, tar, needles, and one very old compass. Old Silva sells it all. 'What do you need. I have it or I don't.'" },
+        { "name": "Broker's Bench", "type": "use", "description": "A bench outside where Ana Sousa, the local broker, meets captains. She turned down Porto Novo's offer too. 'My contracts are honest because my neighbors watch me,' she says." }
+      ],
+      "parentDistrictId": "town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "visitors-harbor", "toZoneId": "master-shipyard", "bidirectional": true, "kind": "road", "label": "Shore Road" },
+    { "fromZoneId": "visitors-harbor", "toZoneId": "timber-yard", "bidirectional": true, "kind": "road", "label": "Timber Lane" },
+    { "fromZoneId": "visitors-harbor", "toZoneId": "customs-shed", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "master-shipyard", "toZoneId": "timber-yard", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "master-shipyard", "toZoneId": "dry-dock-tavern", "bidirectional": true, "kind": "stairs", "label": "Hill Steps" },
+    { "fromZoneId": "timber-yard", "toZoneId": "brotherhood-hall", "bidirectional": true, "kind": "road", "label": "Crest Road" },
+    { "fromZoneId": "dry-dock-tavern", "toZoneId": "brotherhood-hall", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "dry-dock-tavern", "toZoneId": "old-silva-shop", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "brotherhood-hall", "toZoneId": "old-silva-shop", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor-district",
+      "name": "The Harbor",
+      "zoneIds": ["visitors-harbor", "master-shipyard", "timber-yard", "customs-shed"],
+      "tags": ["harbor", "shipyard", "industry"],
+      "baseMetrics": { "commerce": 75, "morale": 70, "safety": 80, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["timber", "iron", "ships"], "scarcityDefaults": {} },
+      "controllingFaction": "exchange-alliance"
+    },
+    {
+      "id": "town",
+      "name": "The Town",
+      "zoneIds": ["dry-dock-tavern", "brotherhood-hall", "old-silva-shop"],
+      "tags": ["residential", "governance", "social"],
+      "baseMetrics": { "commerce": 50, "morale": 85, "safety": 90, "stability": 95 },
+      "economyProfile": { "supplyCategories": ["provisions", "arms"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "shipyard-lintel", "name": "BUILT TO SAIL, NOT TO SINK", "zoneId": "master-shipyard", "gridX": 12, "gridY": 27, "description": "The shipyard motto carved into granite. Three generations of Madeira shipwrights have worked under it. Elena says she'll carve a second line when someone earns one." },
+    { "id": "salvage-wall", "name": "The Salvage Wall", "zoneId": "dry-dock-tavern", "gridX": 10, "gridY": 14, "description": "One wall of Rosa's tavern is the original hull planking of her husband's lost ship. Names carved by the crew who never returned. Polished every Sunday." },
+    { "id": "seven-chairs", "name": "The Seven Chairs", "zoneId": "brotherhood-hall", "gridX": 22, "gridY": 7, "description": "Seven identical oak chairs around a round table. No hierarchy. No head seat. Silva Bay has governed by consensus since its founding." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-dock", "zoneId": "visitors-harbor", "gridX": 40, "gridY": 32, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "nuno-ferreira", "name": "Harbor Master Nuno Ferreira", "zoneId": "visitors-harbor", "role": "npc", "dialogueId": "nuno-greeting", "tags": ["authority", "harbor-master", "practical"] },
+    { "entityId": "elena-madeira", "name": "Master Shipwright Elena Madeira", "zoneId": "master-shipyard", "role": "npc", "dialogueId": "elena-greeting", "tags": ["craftsman", "shipwright", "exacting"] },
+    { "entityId": "tomas-verdelho", "name": "Timber Factor Tomas Verdelho", "zoneId": "timber-yard", "role": "npc", "dialogueId": "tomas-greeting", "tags": ["craftsman", "timber", "patient"] },
+    { "entityId": "officer-pires", "name": "Customs Officer Pires", "zoneId": "customs-shed", "role": "npc", "dialogueId": "pires-greeting", "tags": ["law", "customs", "unenthusiastic"] },
+    { "entityId": "rosa-carvalho", "name": "Rosa Carvalho", "zoneId": "dry-dock-tavern", "role": "npc", "dialogueId": "rosa-greeting", "tags": ["tavern-keeper", "warm", "rules"] },
+    { "entityId": "old-silva-outfitter", "name": "Old Silva", "zoneId": "old-silva-shop", "role": "merchant", "dialogueId": "silva-greeting", "tags": ["merchant", "quiet", "outfitter"] },
+    { "entityId": "ana-sousa", "name": "Broker Ana Sousa", "zoneId": "old-silva-shop", "role": "quest-giver", "dialogueId": "ana-greeting", "tags": ["broker", "earnest", "local-pride"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "nuno-greeting", "speakers": ["nuno"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "nuno", "text": "Captain. Nuno Ferreira, harbor master. Your hull's riding low on the port side — ballast shifted? We can check it in the yard if you need. Berth fee is four silver. Repairs are one silver a point — cheapest you'll find.", "choices": [
+          { "id": "c1", "text": "I need repairs.", "nextNodeId": "repairs" },
+          { "id": "c2", "text": "I want to buy a ship.", "nextNodeId": "ships" }
+        ]},
+        "repairs": { "id": "repairs", "speaker": "nuno", "text": "Elena's yard has two slots open. One silver per hull point. She'll fix it right — she has to, her name's on every repair in this bay.", "choices": [] },
+        "ships": { "id": "ships", "speaker": "nuno", "text": "Talk to Elena directly. She builds what she builds — merchant vessels only. If you want a warship, go to Ironhaven. If you want a ship that sails, stay here.", "choices": [] }
+      }
+    },
+    {
+      "id": "elena-greeting", "speakers": ["elena"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "elena", "text": "If you need something built, tell me what and when. If you're here to watch, stand behind the line. If you're here to give advice, leave.", "choices": [
+          { "id": "c1", "text": "I need hull repairs.", "nextNodeId": "repairs" },
+          { "id": "c2", "text": "What are you building?", "nextNodeId": "building" },
+          { "id": "c3", "text": "Do you build warships?", "nextNodeId": "warships" }
+        ]},
+        "repairs": { "id": "repairs", "speaker": "elena", "text": "Show me the damage. One silver a point. I don't charge for what I don't fix, and I don't fix what doesn't need fixing. Most shipwrights can't say either.", "choices": [] },
+        "building": { "id": "building", "speaker": "elena", "text": "A brigantine for a merchant out of Al-Manar. Good lines, deep keel. She'll handle the monsoon crossing if the captain has sense. If not, that's not my problem — I build the ship, not the sailor.", "choices": [] },
+        "warships": { "id": "warships", "speaker": "elena", "text": "No. An admiral asked once. I told him my wood was too good for cannons. He went to Ironhaven. His ship sank in a storm three years later. Mine don't.", "choices": [] }
+      }
+    },
+    {
+      "id": "tomas-greeting", "speakers": ["tomas"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tomas", "text": "Good timber needs time. I've been telling captains this for twenty years and they still want planks cut yesterday. What can I do for you?", "choices": [
+          { "id": "c1", "text": "I'm buying timber.", "nextNodeId": "buying" },
+          { "id": "c2", "text": "How do you grade wood?", "nextNodeId": "grading" }
+        ]},
+        "buying": { "id": "buying", "speaker": "tomas", "text": "We export the finest seasoned timber in the Mediterranean. Oak for hulls, pine for masts, teak for decks. Prices are fair because I set them — and I protect my forests. Cut a tree before its time and you ruin a ship twenty years from now.", "choices": [] },
+        "grading": { "id": "grading", "speaker": "tomas", "text": "By sound. A wooden hammer and a good ear. Clear ring is first quality — blue chalk. Dull ring is second — red chalk. Dead sound means the wood is dead. Black chalk. Firewood.", "choices": [] }
+      }
+    },
+    {
+      "id": "pires-greeting", "speakers": ["pires"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "pires", "text": "Manifest, please. ...Yes, fine. Timber, iron, cotton. All accounted for. You may proceed. Is there anything else? No? Good.", "choices": [] }
+      }
+    },
+    {
+      "id": "rosa-greeting", "speakers": ["rosa"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "rosa", "text": "Welcome to the Dry Dock, Captain. Cider's local. Stew's today's catch. And no fighting — that's the rule. Last person who forgot is still paying off the damage.", "choices": [
+          { "id": "c1", "text": "Tell me about the wall.", "nextNodeId": "wall" },
+          { "id": "c2", "text": "Who's hiring crew?", "nextNodeId": "crew" },
+          { "id": "c3", "text": "Any news?", "nextNodeId": "rumor" }
+        ]},
+        "wall": { "id": "wall", "speaker": "rosa", "text": "That's the hull of my husband's ship. The one that didn't come back from the Smuggler's Run. Insurance bought the building. His crew's names are carved in the wood. I polish them every Sunday. It's the least.", "choices": [] },
+        "crew": { "id": "crew", "speaker": "rosa", "text": "Check the board. Silva Bay's sailors are shipyard-trained — they know wood, rigging, and weather better than most captains. They cost more. They're worth it.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "rosa", "text": "Elena refused to build for a captain who'd lost two ships to storms. Said it was 'wood-luck' — bad fortune follows bad timber choices. The captain went to Ironhaven instead. I wonder what happened to him.", "choices": [] }
+      }
+    },
+    {
+      "id": "silva-greeting", "speakers": ["silva"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "silva", "text": "What do you need. I have it or I don't.", "choices": [
+          { "id": "c1", "text": "Show me your weapons.", "nextNodeId": "weapons" },
+          { "id": "c2", "text": "Do you have armor?", "nextNodeId": "armor" }
+        ]},
+        "weapons": { "id": "weapons", "speaker": "silva", "text": "Cutlasses, daggers, pistol shot. Nothing fancy. If you want fancy, go to Porto Novo — Marco will talk your ear off. I sell what works.", "choices": [] },
+        "armor": { "id": "armor", "speaker": "silva", "text": "Leather vests, padded coats. Chain if you're heading north. I stock it all at fair prices. Porto Novo offered me a shop on the Exchange. I said no. I can hear the shipyard from here. That's enough.", "choices": [] }
+      }
+    },
+    {
+      "id": "ana-greeting", "speakers": ["ana"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "ana", "text": "Ana Sousa, local broker. I handle contracts for captains who deliver on time and don't cut corners. Porto Novo offered me their brokerage. I said my contracts are honest because my neighbors watch me. Can't say that in a big city.", "choices": [
+          { "id": "c1", "text": "What contracts do you have?", "nextNodeId": "contracts" }
+        ]},
+        "contracts": { "id": "contracts", "speaker": "ana", "text": "Timber runs are steady — everyone needs wood. Iron procurement from Iron Point pays well. And there's always grain from Porto Novo. Simple routes, honest work, reliable pay.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 3, "instinct": 3, "will": 2 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-dock",
+    "tags": ["captain", "visitor"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader visiting Silva Bay for repairs and timber.", "statPriorities": { "vigor": 2, "instinct": 1 }, "startingTags": ["trader"], "progressionTreeId": "builder-path", "grantedVerbs": ["trade", "repair"] }
+    ],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "builder-path", "name": "Builder's Path", "currency": "standing",
+    "nodes": [
+      { "id": "yard-access", "name": "Yard Standing", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "yard-known" } }] },
+      { "id": "brotherhood-respect", "name": "Brotherhood Respect", "cost": 15, "requires": ["yard-access"], "effects": [{ "type": "grant-tag", "params": { "tag": "brotherhood-friend" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

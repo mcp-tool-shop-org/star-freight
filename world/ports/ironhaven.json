@@ -1,0 +1,303 @@
+{
+  "id": "portlight-ironhaven",
+  "name": "Ironhaven",
+  "description": "Industrial heart of the Iron Pact. A grey stone port built around the Great Foundry — a chimney visible twenty leagues out, glowing red at night. The air tastes of coal smoke and ambition. Everything here is forged: iron, weapons, ships, and reputations. The Iron Guild runs the commerce. Sergeant Gruber runs the arsenal. And the foundry never sleeps.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["industrial", "military", "disciplined"],
+  "difficulty": "intermediate",
+  "narratorTone": "You smell Ironhaven before you see it. Coal smoke and hot metal on the north wind. Then the chimney appears — a black pillar against grey sky, the top glowing orange like a lighthouse made of fire. The harbor is stone and iron. The people are too.",
+  "mode": "district",
+
+  "map": {
+    "id": "ironhaven-map",
+    "name": "Ironhaven",
+    "description": "A deep-water port carved from grey granite. The Great Foundry dominates the western bluff, its chimney towering over everything. The shipyard occupies the northern shore. The commercial quarter and guild hall sit between, connected by cobblestone streets stained with coal dust.",
+    "gridWidth": 56,
+    "gridHeight": 48,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "iron-harbor",
+      "name": "The Iron Harbor",
+      "tags": ["harbor", "docks", "arrival", "military"],
+      "description": "A deep-water harbor protected by two granite breakwaters. Iron bollards, iron chains, iron cranes. Harbor Master Bjorn Eriksson greets arrivals with a nod — not words. The north wastes neither. Military patrol boats dock at the eastern pier. Merchant vessels dock west. The distinction is not subtle.",
+      "gridX": 18, "gridY": 34,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["great-foundry", "iron-shipyard", "guild-quarter"],
+      "exits": [],
+      "light": 7, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Eriksson's Post", "type": "use", "description": "Harbor Master Bjorn Eriksson stands at the main pier. He nods. That's the greeting. If you expected more, you're in the wrong port." },
+        { "name": "Iron Cranes", "type": "inspect", "description": "Massive iron cranes for loading ore and finished goods. They run on counterweights and chain drives designed by the Guild. Even the machinery here is forged." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "great-foundry",
+      "name": "The Great Foundry",
+      "tags": ["industry", "landmark", "institution"],
+      "description": "The beating heart of Ironhaven — a foundry complex built into the western bluff. The chimney rises two hundred feet, glowing red at night, visible for twenty leagues. Inside: blast furnaces, rolling mills, and the Master Forger who runs it all with the precision of a clockmaker. The heat is relentless. The workers are proud. The weapons that leave this foundry are the finest in the known world — and Ironhaven makes sure everyone knows it.",
+      "gridX": 2, "gridY": 20,
+      "gridWidth": 14, "gridHeight": 14,
+      "neighbors": ["iron-harbor", "guild-quarter", "the-anvil-tavern"],
+      "exits": [],
+      "light": 6, "noise": 10,
+      "hazards": ["extreme heat near furnaces"],
+      "interactables": [
+        { "name": "Blast Furnace", "type": "inspect", "description": "The main furnace — a stone tower that consumes coal and ore and produces iron ingots. The heat is visible as a shimmer in the air. Workers wear leather aprons blackened by a decade of sparks." },
+        { "name": "Weapons Forge", "type": "inspect", "description": "Where iron becomes steel becomes blade. The Master Forger works here, shaping metal with hammer and precision. Every weapon stamped with the Ironhaven mark — a guarantee of quality." },
+        { "name": "The Chimney", "type": "inspect", "description": "Two hundred feet of brick and iron. At night, the top glows red against the grey sky. Sailors use it as a landmark. The Guild uses it as a statement." }
+      ],
+      "parentDistrictId": "foundry-district"
+    },
+    {
+      "id": "iron-shipyard",
+      "name": "The Northern Shipyard",
+      "tags": ["shipyard", "industry"],
+      "description": "A military-grade shipyard on the harbor's northern shore. Unlike Silva Bay's artisan approach, Ironhaven builds ships like it builds weapons — with industrial efficiency. Iron-reinforced hulls, heavier keelson construction, and cannons mounted during build rather than after. The yard foreman doesn't discuss philosophy. He discusses deadlines.",
+      "gridX": 36, "gridY": 22,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["iron-harbor", "guild-quarter"],
+      "exits": [],
+      "light": 8, "noise": 8,
+      "hazards": [],
+      "interactables": [
+        { "name": "Building Berth", "type": "inspect", "description": "A warship under construction. Iron plates pre-fitted to oak ribs. The hull is heavier than Mediterranean designs — built for northern seas, not southern speed." },
+        { "name": "Repair Dock", "type": "use", "description": "One silver per hull point. The cheapest repairs in the game, because the shipyard has industrial-scale efficiency. They'll have your ship out by morning." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "guild-quarter",
+      "name": "The Guild Quarter",
+      "tags": ["commerce", "institution", "governance"],
+      "description": "A cobblestone square between the foundry and harbor where the Iron Guild conducts business. The Guild Hall — a granite building with iron doors — is where trade agreements are signed and weapons contracts are negotiated. The square smells of coal dust and ambition. Everything is grey stone, black iron, and the occasional splash of guild-banner red.",
+      "gridX": 18, "gridY": 20,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["iron-harbor", "great-foundry", "iron-shipyard", "gruber-arsenal", "the-anvil-tavern"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Guild Hall Doors", "type": "inspect", "description": "Iron doors six inches thick, embossed with the Iron Pact's sigil — a hammer crossing an anchor. They open for business at dawn and close at dusk. The Guild keeps civilized hours." },
+        { "name": "Trade Board", "type": "inspect", "description": "Contracts posted on the Guild Hall's exterior wall. Iron exports, weapons commissions, ore procurement. Everything stamped with the Guild seal." }
+      ],
+      "parentDistrictId": "foundry-district"
+    },
+    {
+      "id": "gruber-arsenal",
+      "name": "Sergeant Gruber's Arsenal",
+      "tags": ["shop", "weapons", "armor", "merchant-npc", "military"],
+      "description": "A fortress-turned-shop where retired dragoon Sergeant Gruber sells military-grade equipment. The shop is organized like a barracks — weapons racked by type, ammunition in sealed crates, armor on wooden mannequins. Gruber doesn't make small talk. He states prices, answers questions about specifications, and dismisses browsers. He sells the best equipment north of Al-Manar and has no interest in your opinion about it.",
+      "gridX": 34, "gridY": 12,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["guild-quarter", "hamish-forge"],
+      "exits": [],
+      "light": 7, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Weapon Racks", "type": "use", "description": "Blades, axes, pistols — all military-grade, all Ironhaven-forged. Gruber knows the specs of every piece by memory. 'State your business. I don't sell to tourists.'" },
+        { "name": "Armor Display", "type": "use", "description": "Chain shirts, cuirasses, padded coats — heavy northern gear. The cuirass is Gruber's pride. 'Steel Cuirass. Northern forge. Takes a blade and laughs at it. Two hundred silver. Worth every coin.'" },
+        { "name": "Ammo Crates", "type": "use", "description": "Sealed crates of pistol shot, powder, and crossbow bolts. Each crate is stamped with the foundry mark and a date. Gruber rotates stock. Old powder is dangerous powder." }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "hamish-forge",
+      "name": "Red Hamish's Forge",
+      "tags": ["training", "fighting-style", "highland-broadsword"],
+      "description": "A stone workshop behind Gruber's Arsenal where Red Hamish teaches Highland Broadsword — the Northern fighting art built around heavy slashing attacks and the devastating cleave. Hamish is a massive Scotsman with red hair, red beard, and red-hot opinions about southern swordplay. His forge doubles as a training hall — students spar between anvils. The heat of the forge keeps muscles warm.",
+      "gridX": 44, "gridY": 6,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["gruber-arsenal"],
+      "exits": [],
+      "light": 6, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Training Floor", "type": "use", "description": "The space between anvils where Hamish teaches the cleave — a wide, heavy slash that breaks through guards. Students use weighted practice swords. 'If it's sharp and it swings, I made it,' Hamish says." },
+        { "name": "Broadsword Rack", "type": "inspect", "description": "Heavy northern blades. Hamish forges practice weapons himself. Real ones too, for students who earn them. Earning one takes a hundred silver and seven days of bruises." }
+      ],
+      "parentDistrictId": "upper-town"
+    },
+    {
+      "id": "the-anvil-tavern",
+      "name": "The Iron Anvil",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A no-nonsense tavern where foundry workers, sailors, and soldiers drink ale that's darker than the coal dust on their faces. The tavern is named for the anvil embedded in the floor near the hearth — a retired foundry piece that weighs as much as a horse. Bartender Helga serves without comment, listens without reaction, and cuts off anyone who's had enough. It's a northern tavern. Expect northern hospitality.",
+      "gridX": 6, "gridY": 10,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["great-foundry", "guild-quarter"],
+      "exits": [],
+      "light": 4, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Anvil", "type": "inspect", "description": "A retired foundry anvil embedded in the stone floor. It weighs as much as a horse. Workers carve their years of service into it. Some marks go back three generations." },
+        { "name": "Helga's Bar", "type": "use", "description": "Dark ale, darker bread, and Helga's complete indifference to your feelings. She pours, she listens, she cuts you off. Northern hospitality." },
+        { "name": "Forge Workers' Table", "type": "inspect", "description": "Where off-shift foundry workers gather. Their conversations are about metal, heat, and wages. Outsiders who sit here are tolerated, not welcomed." }
+      ],
+      "parentDistrictId": "foundry-district"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "iron-harbor", "toZoneId": "great-foundry", "bidirectional": true, "kind": "road", "label": "Foundry Road" },
+    { "fromZoneId": "iron-harbor", "toZoneId": "iron-shipyard", "bidirectional": true, "kind": "road", "label": "North Shore" },
+    { "fromZoneId": "iron-harbor", "toZoneId": "guild-quarter", "bidirectional": true, "kind": "road", "label": "Guild Street" },
+    { "fromZoneId": "great-foundry", "toZoneId": "guild-quarter", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "great-foundry", "toZoneId": "the-anvil-tavern", "bidirectional": true, "kind": "stairs", "label": "Foundry Steps" },
+    { "fromZoneId": "iron-shipyard", "toZoneId": "guild-quarter", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "guild-quarter", "toZoneId": "gruber-arsenal", "bidirectional": true, "kind": "stairs", "label": "Arsenal Hill" },
+    { "fromZoneId": "guild-quarter", "toZoneId": "the-anvil-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "gruber-arsenal", "toZoneId": "hamish-forge", "bidirectional": true, "kind": "passage", "label": "Back Yard" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor-district",
+      "name": "The Harbor",
+      "zoneIds": ["iron-harbor", "iron-shipyard"],
+      "tags": ["harbor", "shipyard", "military"],
+      "baseMetrics": { "commerce": 75, "morale": 60, "safety": 85, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["iron", "weapons", "ships"], "scarcityDefaults": {} },
+      "controllingFaction": "iron-pact"
+    },
+    {
+      "id": "foundry-district",
+      "name": "The Foundry Quarter",
+      "zoneIds": ["great-foundry", "guild-quarter", "the-anvil-tavern"],
+      "tags": ["industry", "governance", "social"],
+      "baseMetrics": { "commerce": 85, "morale": 55, "safety": 75, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["iron", "weapons"], "scarcityDefaults": {} }
+    },
+    {
+      "id": "upper-town",
+      "name": "The Upper Town",
+      "zoneIds": ["gruber-arsenal", "hamish-forge"],
+      "tags": ["military", "training", "commerce"],
+      "baseMetrics": { "commerce": 60, "morale": 65, "safety": 90, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["arms", "armor"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "great-chimney", "name": "The Great Chimney", "zoneId": "great-foundry", "gridX": 8, "gridY": 24, "description": "Two hundred feet of brick and iron. Visible twenty leagues out. Glows red at night. The Iron Guild's statement to the world: we build, we forge, we endure." },
+    { "id": "guild-doors", "name": "The Iron Doors", "zoneId": "guild-quarter", "gridX": 24, "gridY": 24, "description": "Six-inch-thick iron doors embossed with the Iron Pact's hammer-and-anchor sigil. They open at dawn. They close at dusk. The Guild keeps civilized hours." },
+    { "id": "the-anvil-landmark", "name": "The Anvil", "zoneId": "the-anvil-tavern", "gridX": 10, "gridY": 14, "description": "A retired foundry anvil embedded in the tavern floor. Workers carve their years of service into it. Some marks go back three generations." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-dock", "zoneId": "iron-harbor", "gridX": 28, "gridY": 38, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "bjorn-eriksson", "name": "Harbor Master Bjorn Eriksson", "zoneId": "iron-harbor", "role": "npc", "dialogueId": "bjorn-greeting", "tags": ["authority", "harbor-master", "laconic"] },
+    { "entityId": "master-forger", "name": "The Master Forger", "zoneId": "great-foundry", "role": "npc", "dialogueId": "forger-greeting", "tags": ["craftsman", "foundry", "precise"] },
+    { "entityId": "guild-factor", "name": "Guild Factor", "zoneId": "guild-quarter", "role": "quest-giver", "dialogueId": "guild-greeting", "tags": ["authority", "iron-guild", "commerce"] },
+    { "entityId": "sergeant-gruber", "name": "Sergeant Gruber", "zoneId": "gruber-arsenal", "role": "merchant", "dialogueId": "gruber-greeting", "tags": ["military", "merchant", "gruff"] },
+    { "entityId": "red-hamish", "name": "Red Hamish", "zoneId": "hamish-forge", "role": "npc", "dialogueId": "hamish-greeting", "tags": ["trainer", "highland-broadsword", "massive"] },
+    { "entityId": "helga-bartender", "name": "Helga", "zoneId": "the-anvil-tavern", "role": "npc", "dialogueId": "helga-greeting", "tags": ["tavern-keeper", "northern", "no-nonsense"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "bjorn-greeting", "speakers": ["bjorn"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "bjorn", "text": "[Nods.] Berth six. Fee's six silver. Shipyard's north. Foundry's west. Don't touch the cranes.", "choices": [] }
+      }
+    },
+    {
+      "id": "forger-greeting", "speakers": ["forger"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "forger", "text": "If you're buying iron, talk to the Guild. If you're buying weapons, talk to Gruber. If you're here to watch, stand behind the line. The furnace doesn't care about your curiosity.", "choices": [
+          { "id": "c1", "text": "What are you working on?", "nextNodeId": "working" }
+        ]},
+        "working": { "id": "working", "speaker": "forger", "text": "That's between me, the steel, and the fire. But since you asked — a commission. Large. I won't say for whom. The chimney will burn brighter tonight. Draw your own conclusions.", "choices": [] }
+      }
+    },
+    {
+      "id": "guild-greeting", "speakers": ["guild"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "guild", "text": "The Iron Guild welcomes legitimate trade. Iron, weapons, refined steel — we export the finest in the known world. What do you carry, and where did it come from?", "choices": [
+          { "id": "c1", "text": "I have cargo to sell.", "nextNodeId": "sell" },
+          { "id": "c2", "text": "I need contracts.", "nextNodeId": "contracts" }
+        ]},
+        "sell": { "id": "sell", "speaker": "guild", "text": "We buy grain and cotton. Good prices for reliable supply. One condition: the Guild does not trade with captains who deal in Corsair's Rest. Choose your harbors carefully.", "choices": [] },
+        "contracts": { "id": "contracts", "speaker": "guild", "text": "Iron procurement contracts for captains who can guarantee safe delivery. We've had shipments disappear on the Iron Strait — the Iron Wolves are getting bolder. Reliable captains earn Guild standing. Unreliable ones earn a closed door.", "choices": [] }
+      }
+    },
+    {
+      "id": "gruber-greeting", "speakers": ["gruber"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "gruber", "text": "State your business. I don't sell to tourists.", "choices": [
+          { "id": "c1", "text": "I need weapons.", "nextNodeId": "weapons" },
+          { "id": "c2", "text": "What about armor?", "nextNodeId": "armor" },
+          { "id": "c3", "text": "Any ammunition?", "nextNodeId": "ammo" }
+        ]},
+        "weapons": { "id": "weapons", "speaker": "gruber", "text": "Boarding axes. Cutlasses. Wheellock pistols — German engineering, none of that matchlock nonsense. Everything Ironhaven-forged with the Guild stamp. Prices are posted. They're not negotiable.", "choices": [] },
+        "armor": { "id": "armor", "speaker": "gruber", "text": "Steel Cuirass. Northern forge. Two hundred silver. Takes a blade and laughs at it. Chain shirts for those who can't afford proper protection. Leather for those who can't afford chain. I don't judge. I just sell.", "choices": [] },
+        "ammo": { "id": "ammo", "speaker": "gruber", "text": "Pistol shot and powder. Crossbow bolts. Everything dated and rotated. I don't sell old stock. Bad powder kills the man behind the gun, not the one in front.", "choices": [] }
+      }
+    },
+    {
+      "id": "hamish-greeting", "speakers": ["hamish"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hamish", "text": "You want to learn the Highland way? Good. Forget everything those southern fencers taught you. La Destreza is geometry. Highland Broadsword is physics. My blade is heavier, my swing is wider, and my students don't lose fights.", "choices": [
+          { "id": "c1", "text": "Teach me.", "nextNodeId": "teach" },
+          { "id": "c2", "text": "What's the cleave?", "nextNodeId": "cleave" }
+        ]},
+        "teach": { "id": "teach", "speaker": "hamish", "text": "Hundred silver. Seven days. You'll learn the cleave — a heavy overhead slash that breaks through any guard. Your arms will feel like they're falling off after day three. By day seven, they'll feel like hammers.", "choices": [] },
+        "cleave": { "id": "cleave", "speaker": "hamish", "text": "Imagine swinging a boarding axe through a shield. That's the cleave. It beats parry because parry assumes you can redirect the blow. You can't redirect a mountain. The cleave goes through.", "choices": [] }
+      }
+    },
+    {
+      "id": "helga-greeting", "speakers": ["helga"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "helga", "text": "Ale. Dark. Bread. Darker. Sit.", "choices": [
+          { "id": "c1", "text": "What's the news?", "nextNodeId": "news" },
+          { "id": "c2", "text": "Just the ale.", "nextNodeId": "ale" }
+        ]},
+        "news": { "id": "news", "speaker": "helga", "text": "The Foundry Master's buying every scrap of timber in the harbor. Something big in the deep sheds. Nobody talks about it. Which means everybody talks about it, just not loudly.", "choices": [] },
+        "ale": { "id": "ale", "speaker": "helga", "text": "[Pours. Sets down. Walks away. That's Helga's service.]", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 3, "instinct": 2, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-dock",
+    "tags": ["captain", "visitor"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in the industrial north.", "statPriorities": { "vigor": 2, "will": 1 }, "startingTags": ["trader"], "progressionTreeId": "iron-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "iron-path", "name": "Iron Path", "currency": "standing",
+    "nodes": [
+      { "id": "guild-standing", "name": "Guild Standing", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "guild-known" } }] },
+      { "id": "pact-member", "name": "Pact Recognition", "cost": 15, "requires": ["guild-standing"], "effects": [{ "type": "grant-tag", "params": { "tag": "iron-pact-recognized" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

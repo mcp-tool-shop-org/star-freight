@@ -1,0 +1,368 @@
+{
+  "id": "portlight-silk-haven",
+  "name": "Silk Haven",
+  "description": "Premier silk market of the eastern waters. The Silk Weavers' Guild guards family patterns passed down for centuries. Sampans glide between junks with crimson sails. Merchants in silk robes examine bolts with magnifying glasses, judging thread count by touch. Silk is presented folded, never rolled — rolling insults the weaver's art. The most expensive crew in the game. The tapestry depicting Jade Port's ancestors as monkeys hangs in the Loom Quarter to this day.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["elegant", "proud", "artistic"],
+  "difficulty": "intermediate",
+  "narratorTone": "Crimson sails fill the harbor like scattered petals. The air smells of silk dye and orchids. Everything here moves with deliberate grace — the sampans, the merchants, the light itself filtering through silk awnings. Silk Haven doesn't trade. It performs. And every bolt of silk is a standing ovation.",
+  "mode": "district",
+
+  "map": {
+    "id": "silk-haven-map",
+    "name": "Silk Haven",
+    "description": "A sheltered bay surrounded by terraced gardens. The harbor is ringed with silk-draped pavilions. The Loom Quarter occupies the hillside — a maze of workshops connected by covered walkways. The Guild Pavilion floats on pontoons at the harbor's center.",
+    "gridWidth": 52,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "crimson-harbor",
+      "name": "The Crimson Harbor",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "Junks with crimson sails crowd the harbor. Sampans ferry goods between ships and shore — no vessel ties directly to the silk-draped dock. Dock Mistress Hua Lifen manages arrivals with elegant efficiency. She assigns berths by reputation, not by order of arrival. Favored captains get the sheltered inner moorings. Newcomers anchor in the outer bay.",
+      "gridX": 14, "gridY": 30,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["silk-exchange", "dye-market", "orchid-teahouse"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Silk-Draped Dock", "type": "inspect", "description": "The main dock is covered with silk awnings in the guild's crimson and gold. Even the mooring posts are wrapped. Practical? No. Beautiful? Undeniably." },
+        { "name": "Sampan Fleet", "type": "use", "description": "Small boats ferry cargo from ship to shore. Each sampan flies a guild pennant. The boatmen sing as they row — a rhythm that keeps the harbor orderly." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "silk-exchange",
+      "name": "The Silk Exchange",
+      "tags": ["market", "commerce", "institution"],
+      "description": "A floating pavilion anchored at the harbor's center where silk is bought and sold. Bolts are presented folded on lacquered trays — never rolled, never touched without cotton gloves. Guild Factor Mei Xiang presides from an elevated platform, reading prices at dawn. The thread count determines the price. Mei Xiang can estimate thread count by touch alone. She has never been wrong by more than ten threads.",
+      "gridX": 22, "gridY": 20,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["crimson-harbor", "loom-quarter", "dye-market"],
+      "exits": [],
+      "light": 8, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Silk Display Trays", "type": "inspect", "description": "Lacquered trays bearing folded silk in every color. Merchants examine with cotton-gloved hands and magnifying glasses. A single thread out of place lowers the grade — and the price." },
+        { "name": "Price Lectern", "type": "inspect", "description": "Guild Factor Mei Xiang's elevated platform. She reads the day's silk prices with the cadence of a poet. The merchants listen in silence. Interrupting is unthinkable." },
+        { "name": "Thread Count Station", "type": "inspect", "description": "A desk with magnifying lenses where silk quality is verified. The examiner runs cloth between thumb and forefinger — the friction tells the thread count. Disputes are settled here." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "dye-market",
+      "name": "The Dye Market",
+      "tags": ["market", "commerce", "craft"],
+      "description": "An open-air market where dye merchants sell the pigments that color Silk Haven's trade. Indigo from the west, cochineal from the south, saffron from the east — each stall is a riot of color. The dye merchants' hands are permanently stained. Dye Master Fang runs the market — a squat woman with blue fingers and a sharp tongue. Dyes are Silk Haven's second hunger, after rum.",
+      "gridX": 38, "gridY": 26,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["crimson-harbor", "silk-exchange", "orchid-teahouse"],
+      "exits": [],
+      "light": 9, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Dye Stalls", "type": "use", "description": "Barrels and jars of pigment in every shade. Indigo powder, cochineal paste, saffron threads. The smell is intense — mineral and vegetal and chemical all at once." },
+        { "name": "Color Sample Wall", "type": "inspect", "description": "Silk swatches dyed with each pigment, mounted on a bamboo frame. The colors range from blood crimson to ice blue. Each swatch is labeled with its source and price per ounce." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "orchid-teahouse",
+      "name": "The Orchid Teahouse",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A two-story teahouse built on stilts over the harbor's eastern edge. Orchids hang from the rafters in ceramic pots. The owner, Madam Yun, serves tea and rice wine with equal grace. She was a weaver before her eyes weakened — she says she now reads people instead of thread. The teahouse is where deals begin, alliances form, and reputations are made or unmade.",
+      "gridX": 40, "gridY": 18,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["crimson-harbor", "dye-market", "rum-dealer"],
+      "exits": [],
+      "light": 6, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Madam Yun's Table", "type": "use", "description": "A low table where Madam Yun pours tea and takes your measure. Her first cup tells you what she thinks — jasmine for friends, green for strangers, nothing for those she distrusts." },
+        { "name": "Orchid Gallery", "type": "inspect", "description": "The second floor — orchids in ceramic pots hanging from every beam. The scent is intoxicating. Madam Yun says each orchid represents a captain who earned her respect. There are thirty-seven." },
+        { "name": "Harbor View Window", "type": "inspect", "description": "A wide window overlooking the harbor. Crimson sails below, the Loom Quarter above. The best view in Silk Haven, and Madam Yun knows it." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "loom-quarter",
+      "name": "The Loom Quarter",
+      "tags": ["craft", "industry", "landmark", "guild"],
+      "description": "A hillside maze of workshops connected by covered silk-canopied walkways. The rhythmic clack of looms fills the air like wooden rain. Each workshop bears a family mark — patterns passed down for centuries. The eldest weaver, Master Zhao Wenlai, works at the quarter's highest point. He has created a silk that changes color in different light. Three merchants have bid their entire fortunes for a single bolt. He hasn't decided whether to sell.",
+      "gridX": 4, "gridY": 12,
+      "gridWidth": 16, "gridHeight": 12,
+      "neighbors": ["silk-exchange", "guild-pavilion", "pattern-archive"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Working Loom", "type": "inspect", "description": "A wooden loom the size of a room, threads pulled tight as harp strings. The weaver's hands move in patterns memorized since childhood. The rhythm never breaks — a dropped thread would ruin hours of work." },
+        { "name": "Family Mark Plaques", "type": "inspect", "description": "Carved wooden plaques at each workshop entrance. Each mark is unique — a family's identity woven into a symbol. Some marks are six hundred years old. Copying one is punishable by exile." },
+        { "name": "The Monkey Tapestry", "type": "inspect", "description": "The infamous tapestry depicting Jade Port's Kiln Masters' ancestors as monkeys. Woven in exquisite detail with malicious artistry. It hangs in the Loom Quarter's central walkway. The weavers consider it their finest political statement." }
+      ],
+      "parentDistrictId": "loom-district"
+    },
+    {
+      "id": "pattern-archive",
+      "name": "The Pattern Archive",
+      "tags": ["institution", "records", "sacred"],
+      "description": "A climate-controlled vault where the guild stores every pattern ever woven. Bamboo scrolls in cedar cases, humidity managed by charcoal and silk-wrapped stone. Archive Keeper Song guards them with the seriousness of a temple priest. These patterns are Silk Haven's true wealth — not the silk itself, but the knowledge of how to shape it. Copying without permission is exile. Stealing is death.",
+      "gridX": 2, "gridY": 4,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["loom-quarter", "guild-pavilion"],
+      "exits": [],
+      "light": 5, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Pattern Scrolls", "type": "inspect", "description": "Bamboo scrolls in cedar cases. Each scroll describes a weaving pattern — the thread count, the color sequence, the loom settings. Some scrolls are a thousand years old. The ink has faded but the patterns endure." },
+        { "name": "Humidity Stones", "type": "inspect", "description": "Silk-wrapped stones and charcoal trays that regulate the archive's moisture. Too damp and the scrolls rot. Too dry and they crack. Song adjusts them hourly." }
+      ],
+      "parentDistrictId": "loom-district"
+    },
+    {
+      "id": "guild-pavilion",
+      "name": "The Guild Pavilion",
+      "tags": ["institution", "authority", "faction"],
+      "description": "A floating pavilion on the inner harbor where the Silk Weavers' Guild Council meets. The building itself is a demonstration — silk walls stretched over a bamboo frame, waterproofed with lacquer. Guild Master Chen Ying presides. She is the youngest guild master in three centuries — forty-two years old, with hands that have woven since she could grip a shuttle. Her authority is absolute within the guild. Outside it, she is merely the most influential person in Silk Haven.",
+      "gridX": 12, "gridY": 2,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["loom-quarter", "pattern-archive"],
+      "exits": [],
+      "light": 8, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Silk Walls", "type": "inspect", "description": "The pavilion's walls are stretched silk — translucent, waterproof, and beautiful. Light filters through in shifting colors. The engineering is as impressive as the artistry." },
+        { "name": "Council Table", "type": "inspect", "description": "A circular table of polished rosewood where the guild masters sit. No head seat — all masters are equal, though Chen Ying's voice carries the most weight." },
+        { "name": "Color-Shift Bolt", "type": "inspect", "description": "A single bolt of Master Zhao's color-shifting silk, displayed under glass. In lamplight it's crimson. In daylight, gold. At dusk, violet. Three merchants' fortunes have been offered. Zhao remains undecided." }
+      ],
+      "parentDistrictId": "loom-district"
+    },
+    {
+      "id": "rum-dealer",
+      "name": "Old Peng's Rum & Rarities",
+      "tags": ["shop", "merchant-npc", "scarce-goods"],
+      "description": "The only reliable source of rum in Silk Haven. Old Peng imports it from West Africa at enormous expense and sells it at prices that make sailors weep. Rum is Silk Haven's great weakness — the weavers drink it after long shifts at the loom, and the merchants drink it after long negotiations. Peng also stocks iron tools and provisions. He is cheerful, round, and completely unapologetic about his prices.",
+      "gridX": 42, "gridY": 10,
+      "gridWidth": 7, "gridHeight": 6,
+      "neighbors": ["orchid-teahouse"],
+      "exits": [],
+      "light": 6, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Rum Barrels", "type": "use", "description": "Caribbean dark, West African palm, and a house blend Peng won't describe. All expensive. He says the markup is for 'transport across the most dangerous waters in the world.' He's not wrong." },
+        { "name": "Rarities Shelf", "type": "use", "description": "Iron tools, navigation instruments, Western tobacco, and other imports. Everything costs double. Peng shrugs when you notice. 'Supply and demand, Captain. I didn't invent it.'" }
+      ],
+      "parentDistrictId": "waterfront"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "crimson-harbor", "toZoneId": "silk-exchange", "bidirectional": true, "kind": "road", "label": "Sampan Ferry" },
+    { "fromZoneId": "crimson-harbor", "toZoneId": "dye-market", "bidirectional": true, "kind": "road", "label": "East Dock" },
+    { "fromZoneId": "crimson-harbor", "toZoneId": "orchid-teahouse", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "silk-exchange", "toZoneId": "dye-market", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "silk-exchange", "toZoneId": "loom-quarter", "bidirectional": true, "kind": "stairs", "label": "Loom Steps" },
+    { "fromZoneId": "dye-market", "toZoneId": "orchid-teahouse", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "orchid-teahouse", "toZoneId": "rum-dealer", "bidirectional": true, "kind": "road", "label": "Back Lane" },
+    { "fromZoneId": "loom-quarter", "toZoneId": "pattern-archive", "bidirectional": true, "kind": "passage", "label": "Archive Passage" },
+    { "fromZoneId": "loom-quarter", "toZoneId": "guild-pavilion", "bidirectional": true, "kind": "stairs", "label": "Guild Walk" },
+    { "fromZoneId": "pattern-archive", "toZoneId": "guild-pavilion", "bidirectional": true, "kind": "passage" }
+  ],
+
+  "districts": [
+    {
+      "id": "waterfront",
+      "name": "The Waterfront",
+      "zoneIds": ["crimson-harbor", "silk-exchange", "dye-market", "orchid-teahouse", "rum-dealer"],
+      "tags": ["harbor", "commerce", "trade"],
+      "baseMetrics": { "commerce": 90, "morale": 70, "safety": 70, "stability": 80 },
+      "economyProfile": { "supplyCategories": ["silk", "porcelain", "dyes"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "loom-district",
+      "name": "The Loom District",
+      "zoneIds": ["loom-quarter", "pattern-archive", "guild-pavilion"],
+      "tags": ["craft", "guild", "authority"],
+      "baseMetrics": { "commerce": 60, "morale": 85, "safety": 90, "stability": 95 },
+      "economyProfile": { "supplyCategories": ["silk"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "loom-quarter-landmark", "name": "The Loom Quarter", "zoneId": "loom-quarter", "gridX": 10, "gridY": 16, "description": "A hillside maze of workshops where silk has been woven in patterns a thousand years old. The rhythmic clack of looms fills the air. Family marks on every door. The monkey tapestry in the central walkway." },
+    { "id": "color-shift-silk", "name": "The Color-Shift Bolt", "zoneId": "guild-pavilion", "gridX": 18, "gridY": 5, "description": "Master Zhao Wenlai's masterpiece — a bolt of silk that changes color with the light. Crimson in lamplight, gold in sun, violet at dusk. Three fortunes offered, none accepted." },
+    { "id": "crimson-sails", "name": "The Crimson Fleet", "zoneId": "crimson-harbor", "gridX": 22, "gridY": 33, "description": "The harbor filled with crimson-sailed junks — Silk Haven's signature. The sails are dyed with a guild-secret cochineal formula that never fades." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-arrival", "zoneId": "crimson-harbor", "gridX": 22, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "hua-lifen", "name": "Dock Mistress Hua Lifen", "zoneId": "crimson-harbor", "role": "npc", "dialogueId": "hua-greeting", "tags": ["authority", "dock-master", "elegant"] },
+    { "entityId": "mei-xiang", "name": "Guild Factor Mei Xiang", "zoneId": "silk-exchange", "role": "quest-giver", "dialogueId": "mei-xiang-greeting", "tags": ["authority", "exchange", "precise"] },
+    { "entityId": "madam-yun", "name": "Madam Yun", "zoneId": "orchid-teahouse", "role": "npc", "dialogueId": "yun-greeting", "tags": ["tavern-keeper", "perceptive", "former-weaver"] },
+    { "entityId": "chen-ying", "name": "Guild Master Chen Ying", "zoneId": "guild-pavilion", "role": "quest-giver", "dialogueId": "chen-greeting", "tags": ["guild-master", "authority", "young", "decisive"] },
+    { "entityId": "zhao-wenlai", "name": "Master Weaver Zhao Wenlai", "zoneId": "loom-quarter", "role": "npc", "dialogueId": "zhao-wenlai-greeting", "tags": ["master-weaver", "eldest", "genius"] },
+    { "entityId": "dye-master-fang", "name": "Dye Master Fang", "zoneId": "dye-market", "role": "merchant", "dialogueId": "fang-greeting", "tags": ["merchant", "dyes", "blunt"] },
+    { "entityId": "archive-keeper-song", "name": "Archive Keeper Song", "zoneId": "pattern-archive", "role": "npc", "dialogueId": "song-greeting", "tags": ["keeper", "serious", "guardian"] },
+    { "entityId": "old-peng", "name": "Old Peng", "zoneId": "rum-dealer", "role": "merchant", "dialogueId": "peng-greeting", "tags": ["merchant", "rum", "cheerful", "expensive"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "hua-greeting",
+      "speakers": ["hua"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hua", "text": "Welcome to Silk Haven, Captain. Your berth depends on your reputation. New captains anchor in the outer bay. Returning friends get the inner moorings. Which are you?", "choices": [
+          { "id": "c1", "text": "First visit.", "nextNodeId": "newcomer" },
+          { "id": "c2", "text": "I've traded here before.", "nextNodeId": "returning" }
+        ]},
+        "newcomer": { "id": "newcomer", "speaker": "hua", "text": "Outer bay, then. Berth twelve. The sampans will ferry your cargo to the exchange. One rule: silk is presented folded, never rolled. If your crew rolls it, you pay for the insult. The amount depends on the weaver's mood.", "choices": [] },
+        "returning": { "id": "returning", "speaker": "hua", "text": "I remember every captain who docks here. If you've delivered well, the inner moorings are yours. If not... my memory is as long as my dock.", "choices": [] }
+      }
+    },
+    {
+      "id": "mei-xiang-greeting",
+      "speakers": ["mei-xiang"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "mei-xiang", "text": "Captain. Today's silk prices are posted. If you're buying, the grade determines the cost. If you're selling dyes, I'll take every ounce you have. If you're selling rum... talk to Old Peng. The guild doesn't handle rum. We just drink it.", "choices": [
+          { "id": "c1", "text": "I want to buy silk.", "nextNodeId": "buy-silk" },
+          { "id": "c2", "text": "I have dyes to sell.", "nextNodeId": "sell-dyes" }
+        ]},
+        "buy-silk": { "id": "buy-silk", "speaker": "mei-xiang", "text": "Standard weave starts at thirty silver per bolt. Fine weave is sixty. Master weave — if available — starts at one hundred and goes up. Thread count determines everything. I can estimate by touch. You'll want to use the magnifying glass.", "choices": [] },
+        "sell-dyes": { "id": "sell-dyes", "speaker": "mei-xiang", "text": "Indigo, cochineal, saffron — name your pigment and your quantity. Silk Haven consumes more dye than any port in the East. We'll pay well. Especially for cochineal — the crimson sails eat it by the barrel.", "choices": [] }
+      }
+    },
+    {
+      "id": "yun-greeting",
+      "speakers": ["yun"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "yun", "text": "Tea or rice wine? I was a weaver once — my eyes dimmed but my judgment sharpened. I read people now. You look like someone carrying cargo that's worth more than you know.", "choices": [
+          { "id": "c1", "text": "What's the gossip?", "nextNodeId": "gossip" },
+          { "id": "c2", "text": "Tell me about the rivalry with Jade Port.", "nextNodeId": "rivalry" },
+          { "id": "c3", "text": "Any rumors?", "nextNodeId": "rumor" }
+        ]},
+        "gossip": { "id": "gossip", "speaker": "yun", "text": "Guild Master Chen Ying wants to expand exports westward. The elder weavers resist — they say the West doesn't appreciate thread count. She's looking for reliable captains to prove them wrong.", "choices": [] },
+        "rivalry": { "id": "rivalry", "speaker": "yun", "text": "Jade Port called our silk 'decorated thread.' The guild wove the monkey tapestry in response. It hangs in the Loom Quarter — exquisite craftsmanship devoted entirely to insult. Both ports pretend the feud is ancient history. Both ports are lying.", "choices": [] },
+        "rumor": { "id": "rumor", "speaker": "yun", "text": "Master Zhao has created a silk that changes color in different light. Three merchants have offered their entire fortunes for a single bolt. Zhao won't sell. He says the silk isn't finished. I think he enjoys watching them beg.", "choices": [] }
+      }
+    },
+    {
+      "id": "chen-greeting",
+      "speakers": ["chen"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "chen", "text": "Captain. I am Chen Ying, Guild Master. I was elected because I believe Silk Haven's art should reach every port in the world. The elders think I'm too ambitious. I think they're too comfortable. What brings you to the guild?", "choices": [
+          { "id": "c1", "text": "I can carry silk to the West.", "nextNodeId": "western-trade" },
+          { "id": "c2", "text": "I have goods the guild might want.", "nextNodeId": "imports" }
+        ]},
+        "western-trade": { "id": "western-trade", "speaker": "chen", "text": "Then you interest me. Porto Novo, Ironhaven, Stormwall — they know our silk by reputation. I want them to know it by touch. Deliver reliably and the guild will give you exclusive routes. Disappoint me once and the routes go to someone else.", "choices": [] },
+        "imports": { "id": "imports", "speaker": "chen", "text": "Rum. We need rum badly — the weavers' morale depends on it. Dyes, always. Iron tools for the looms. And grain — we import everything we eat. Feed us and clothe the world. That's the arrangement.", "choices": [] }
+      }
+    },
+    {
+      "id": "zhao-wenlai-greeting",
+      "speakers": ["zhao-wenlai"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "zhao-wenlai", "text": "You have come to watch me weave. Everyone does. I am the eldest weaver in Silk Haven. My hands have worked these looms for sixty-two years. What I create cannot be bought. It can only be earned.", "choices": [
+          { "id": "c1", "text": "Tell me about the color-shifting silk.", "nextNodeId": "color-shift" },
+          { "id": "c2", "text": "How do I earn your work?", "nextNodeId": "earn" }
+        ]},
+        "color-shift": { "id": "color-shift", "speaker": "zhao-wenlai", "text": "Twenty-seven dye layers. Each applied at a different temperature. The silk absorbs light differently depending on the angle. Crimson at noon. Gold at dawn. Violet at dusk. Three merchants have offered fortunes. I told them the silk is not finished. Perhaps it never will be.", "choices": [] },
+        "earn": { "id": "earn", "speaker": "zhao-wenlai", "text": "Bring me cochineal from the south and indigo from the west. Not to buy my silk — to prove you understand color. A captain who knows pigment knows value. And I sell only to those who know value.", "choices": [] }
+      }
+    },
+    {
+      "id": "fang-greeting",
+      "speakers": ["fang"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "fang", "text": "Dyes. What have you got. And don't waste my time with diluted pigment — I can spot water-cut indigo from across the market.", "choices": [
+          { "id": "c1", "text": "I have quality dyes.", "nextNodeId": "quality" },
+          { "id": "c2", "text": "What dyes do you need most?", "nextNodeId": "needs" }
+        ]},
+        "quality": { "id": "quality", "speaker": "fang", "text": "Show me. I test every batch — rub, sniff, dissolve. If it holds color in hot water, I'll buy it. If it fades, you're wasting the guild's time and mine. My fingers are blue for a reason — I handle every gram personally.", "choices": [] },
+        "needs": { "id": "needs", "speaker": "fang", "text": "Cochineal, always. The crimson sails consume barrels of it. Indigo for the deep blues. Saffron for the golds, but only genuine — turmeric substitutes get you banned. And any exotic pigment I haven't seen before gets premium prices.", "choices": [] }
+      }
+    },
+    {
+      "id": "song-greeting",
+      "speakers": ["song"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "song", "text": "The archive is not open to visitors. The patterns stored here represent six centuries of the guild's art. However... if the Guild Master has sent you, I will verify.", "choices": [
+          { "id": "c1", "text": "I'm just curious about the history.", "nextNodeId": "history" }
+        ]},
+        "history": { "id": "history", "speaker": "song", "text": "Six hundred years of patterns. Seven thousand scrolls. Every thread count, every color sequence, every variation documented. These scrolls are worth more than the silk they produce. Copying without permission is exile. Stealing is death. I enforce both equally.", "choices": [] }
+      }
+    },
+    {
+      "id": "peng-greeting",
+      "speakers": ["peng"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "peng", "text": "Rum! The weavers' best friend and Silk Haven's scarcest luxury. I import it from across the world and sell it at prices that reflect the journey. Don't look so shocked — you try sailing rum through monsoon waters.", "choices": [
+          { "id": "c1", "text": "Show me your rum.", "nextNodeId": "rum" },
+          { "id": "c2", "text": "I have rum to sell.", "nextNodeId": "sell-rum" }
+        ]},
+        "rum": { "id": "rum", "speaker": "peng", "text": "Dark rum from Palm Cove, spiced from Sun Harbor, and my own house blend — which I will not describe but will happily pour. Prices start at eight silver a bottle. The weavers pay without blinking. You should too.", "choices": [] },
+        "sell-rum": { "id": "sell-rum", "speaker": "peng", "text": "Finally, a captain with sense! Name your volume and I'll name a price that makes you want to sail back for more. Silk Haven drinks more rum per capita than any port in the East. Supply me and we'll both profit.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in the silk waters.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "silk-patron", "name": "Silk Patron", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "silk-circle" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

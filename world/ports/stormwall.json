@@ -1,0 +1,241 @@
+{
+  "id": "portlight-stormwall",
+  "name": "Stormwall",
+  "description": "The Iron Pact's military enforcer. A fortress port on the North Atlantic coast where stone walls meet grey sea and the garrison commander's word is law. The highest port fees in the known world buy you the most thorough inspections and the coldest welcome. Stormwall doesn't trade — it permits trade. The distinction matters to the commander. It doesn't matter to anyone else.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["military", "cold", "austere"],
+  "difficulty": "intermediate",
+  "narratorTone": "Grey walls. Grey sea. Grey sky. Stormwall is what happens when soldiers build a port. The walls are ten feet thick. The welcome is thinner. You're here because the garrison allows it. Remember that, and you'll be fine.",
+  "mode": "district",
+
+  "map": {
+    "id": "stormwall-map",
+    "name": "Stormwall",
+    "description": "A fortified harbor built into a granite headland. The outer wall faces the open Atlantic. The inner harbor is protected by a sea gate that can close in under a minute. The garrison occupies the fortress above. Civilian commerce happens in a narrow strip between wall and water.",
+    "gridWidth": 48,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "sea-gate-harbor",
+      "name": "The Sea Gate Harbor",
+      "tags": ["harbor", "docks", "military", "arrival"],
+      "description": "A narrow harbor behind a massive iron sea gate. The gate can close in under a minute — a fact the garrison demonstrates quarterly. Harbor dues are ten silver — the highest in the known world. Complaining about the price marks you as a southerner. The docks are stone, the bollards are iron, and the patrol boats watch everything.",
+      "gridX": 12, "gridY": 30,
+      "gridWidth": 24, "gridHeight": 8,
+      "neighbors": ["inspection-yard", "garrison-market", "widow-kaels"],
+      "exits": [],
+      "light": 7, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Sea Gate", "type": "inspect", "description": "Two iron doors on chains, each weighing more than a ship's anchor. They close in under a minute. The mechanism is maintained daily by soldiers who take the work personally." },
+        { "name": "Patrol Dock", "type": "inspect", "description": "Three patrol boats moored at the eastern pier. Their crews watch incoming ships with professional interest. If they approach your vessel, do not resist." }
+      ],
+      "parentDistrictId": "harbor-ward"
+    },
+    {
+      "id": "inspection-yard",
+      "name": "The Inspection Yard",
+      "tags": ["institution", "law", "military"],
+      "description": "A stone courtyard behind the harbor where every piece of cargo is inspected. Not most cargo. Every piece. The inspection officer runs it with military precision — manifests checked against waterline, crates opened at random, and any contraband results in immediate confiscation and a fine that hurts. The yard is clean, orderly, and deeply unwelcoming.",
+      "gridX": 38, "gridY": 26,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["sea-gate-harbor", "fortress-gate"],
+      "exits": [],
+      "light": 8, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Inspection Tables", "type": "inspect", "description": "Stone tables where crates are opened and contents verified. Everything is weighed twice. The scales are calibrated weekly. The soldiers watching are calibrated daily." },
+        { "name": "Contraband Lock-Up", "type": "inspect", "description": "An iron cage in the yard's corner where seized goods are held pending tribunal. It's never empty. The padlock has three keys held by three different officers." }
+      ],
+      "parentDistrictId": "harbor-ward"
+    },
+    {
+      "id": "garrison-market",
+      "name": "The Garrison Market",
+      "tags": ["market", "commerce", "military-supply"],
+      "description": "A covered market between the harbor and the fortress wall. It exists because soldiers need supplies and the commander decided private trade was more efficient than military procurement. The market sells provisions, medicines, rum, and tobacco — nothing fancy, nothing contraband. Prices are fair because the commander sets them. Merchants who overcharge are expelled.",
+      "gridX": 12, "gridY": 20,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["sea-gate-harbor", "widow-kaels", "fortress-gate"],
+      "exits": [],
+      "light": 7, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Price Board", "type": "inspect", "description": "Prices posted by the garrison quartermaster. They're fair. They're also non-negotiable. This is a military market, not a bazaar." },
+        { "name": "Supply Stalls", "type": "use", "description": "Provisions, medicines, rum, tobacco. Everything a ship needs, nothing it doesn't. The merchants here are licensed by the garrison. Quality is guaranteed." }
+      ],
+      "parentDistrictId": "harbor-ward"
+    },
+    {
+      "id": "widow-kaels",
+      "name": "Widow Kael's Outfitter",
+      "tags": ["shop", "armor", "merchant-npc"],
+      "description": "A small shop near the market where Widow Kael sells armor, weapons, and ammunition. She inherited the business when her husband didn't come back from the ice. She knows every item by touch — she can identify a chain shirt's quality in the dark. Her prices are fair. Her grief is private. Her shop is immaculate.",
+      "gridX": 4, "gridY": 18,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["sea-gate-harbor", "garrison-market"],
+      "exits": [],
+      "light": 5, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Kael's Counter", "type": "use", "description": "'The wind's picking up. Buy what you need before it gets worse.' She lays items on the counter with careful hands. Each piece cleaned and oiled. She knows where every scratch came from." },
+        { "name": "Husband's Gear", "type": "inspect", "description": "A chain shirt and a boarding axe in a glass case behind the counter. Not for sale. Never for sale. The polish on the chain is fresh. She maintains it weekly." }
+      ],
+      "parentDistrictId": "harbor-ward"
+    },
+    {
+      "id": "fortress-gate",
+      "name": "The Fortress Gate",
+      "tags": ["military", "authority", "restricted"],
+      "description": "The main gate of Stormwall Fortress — two iron-banded oak doors set into ten-foot-thick walls. The garrison commander holds audience here, not inside. He sees visitors in the gatehouse — a stone room with one table, two chairs, and a view of both the harbor and the Atlantic. The message is clear: he sees everything from here.",
+      "gridX": 24, "gridY": 8,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["garrison-market", "inspection-yard", "north-wall-walk"],
+      "exits": [],
+      "light": 7, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Gatehouse Table", "type": "inspect", "description": "A scarred oak table where the commander conducts all business. Two chairs — his and yours. Maps of the Atlantic pinned to the wall behind him. Red pins mark pirate sightings." },
+        { "name": "Commander's View", "type": "inspect", "description": "From the gatehouse window, you can see the entire harbor, the sea gate, and twenty miles of open Atlantic. The commander checks this view before and after every meeting." }
+      ],
+      "parentDistrictId": "fortress"
+    },
+    {
+      "id": "north-wall-walk",
+      "name": "The North Wall Walk",
+      "tags": ["military", "overlook", "atmospheric"],
+      "description": "A walkway along the fortress's north wall, facing the open Atlantic. The wind here never stops. Soldiers pace it in pairs, watching for sails. On clear days you can see the ice at the horizon — a white line that never comes closer but never goes away. The wall walk is where soldiers go to think. And where the commander's daughter used to stand, before she left with a trader from Corsair's Rest.",
+      "gridX": 8, "gridY": 2,
+      "gridWidth": 20, "gridHeight": 4,
+      "neighbors": ["fortress-gate"],
+      "exits": [],
+      "light": 10, "noise": 8,
+      "hazards": ["strong winds — unsecured objects will blow away"],
+      "interactables": [
+        { "name": "Atlantic View", "type": "inspect", "description": "Twenty miles of grey-green water, ending in a white line of ice. The wind carries salt and silence. Soldiers say if you listen long enough, you can hear the ice cracking." },
+        { "name": "Carved Initials", "type": "inspect", "description": "On the inside of the parapet wall, barely visible: two sets of initials inside a heart. The stone around them is scrubbed clean — someone tried to remove them. Someone else carved them deeper." }
+      ],
+      "parentDistrictId": "fortress"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "sea-gate-harbor", "toZoneId": "inspection-yard", "bidirectional": true, "kind": "road", "label": "Customs Gate" },
+    { "fromZoneId": "sea-gate-harbor", "toZoneId": "garrison-market", "bidirectional": true, "kind": "road", "label": "Market Road" },
+    { "fromZoneId": "sea-gate-harbor", "toZoneId": "widow-kaels", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "garrison-market", "toZoneId": "widow-kaels", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "garrison-market", "toZoneId": "fortress-gate", "bidirectional": true, "kind": "stairs", "label": "Fortress Road" },
+    { "fromZoneId": "inspection-yard", "toZoneId": "fortress-gate", "bidirectional": true, "kind": "stairs" },
+    { "fromZoneId": "fortress-gate", "toZoneId": "north-wall-walk", "bidirectional": true, "kind": "passage", "label": "Wall Stairs" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor-ward",
+      "name": "The Harbor Ward",
+      "zoneIds": ["sea-gate-harbor", "inspection-yard", "garrison-market", "widow-kaels"],
+      "tags": ["harbor", "commerce", "military"],
+      "baseMetrics": { "commerce": 55, "morale": 50, "safety": 95, "stability": 95 },
+      "economyProfile": { "supplyCategories": ["provisions", "medicines", "arms"], "scarcityDefaults": {} },
+      "controllingFaction": "iron-pact"
+    },
+    {
+      "id": "fortress",
+      "name": "The Fortress",
+      "zoneIds": ["fortress-gate", "north-wall-walk"],
+      "tags": ["military", "authority", "restricted"],
+      "baseMetrics": { "commerce": 10, "morale": 60, "safety": 100, "stability": 100 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "sea-gate-landmark", "name": "The Sea Gate", "zoneId": "sea-gate-harbor", "gridX": 24, "gridY": 34, "description": "Iron doors on chains that seal the harbor in under a minute. Stormwall's defining feature — protection and control in equal measure." },
+    { "id": "carved-initials", "name": "The Carved Initials", "zoneId": "north-wall-walk", "gridX": 18, "gridY": 3, "description": "Two sets of initials inside a heart, carved into the parapet wall. Scrubbed but recarved. The commander's daughter and the trader from Corsair's Rest. A love story the garrison doesn't tell." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-arrival", "zoneId": "sea-gate-harbor", "gridX": 24, "gridY": 34, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "harbor-officer", "name": "Harbor Officer", "zoneId": "sea-gate-harbor", "role": "npc", "dialogueId": "officer-greeting", "tags": ["military", "harbor", "efficient"] },
+    { "entityId": "inspection-sergeant", "name": "Inspection Sergeant", "zoneId": "inspection-yard", "role": "npc", "dialogueId": "sergeant-greeting", "tags": ["law", "customs", "thorough"] },
+    { "entityId": "widow-kael", "name": "Widow Kael", "zoneId": "widow-kaels", "role": "merchant", "dialogueId": "kael-greeting", "tags": ["merchant", "quiet", "grief"] },
+    { "entityId": "garrison-commander", "name": "The Garrison Commander", "zoneId": "fortress-gate", "role": "npc", "dialogueId": "commander-greeting", "tags": ["authority", "military", "absolute"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "officer-greeting", "speakers": ["officer"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "officer", "text": "Stormwall Harbor. Ten silver docking fee. Manifest to the Inspection Yard before unloading. No exceptions.", "choices": [
+          { "id": "c1", "text": "Ten silver? That's steep.", "nextNodeId": "steep" }
+        ]},
+        "steep": { "id": "steep", "speaker": "officer", "text": "Complaining about the price marks you as a southerner, Captain. The fee pays for the sea gate, the patrols, and the guarantee that nobody raids your ship while you're docked. It's the cheapest insurance you'll ever buy.", "choices": [] }
+      }
+    },
+    {
+      "id": "sergeant-greeting", "speakers": ["sergeant"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "sergeant", "text": "Manifest. Every item declared. Every crate subject to random inspection. This is not Porto Novo — we don't trust your word. We trust your cargo.", "choices": [
+          { "id": "c1", "text": "Here's my manifest.", "nextNodeId": "check" }
+        ]},
+        "check": { "id": "check", "speaker": "sergeant", "text": "Hmm. [Long pause while reading.] This will take time. Wait here. If everything matches your waterline, you'll be cleared by evening. If not, we'll discuss the discrepancy in detail.", "choices": [] }
+      }
+    },
+    {
+      "id": "kael-greeting", "speakers": ["kael"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kael", "text": "The wind's picking up. Buy what you need before it gets worse.", "choices": [
+          { "id": "c1", "text": "Show me armor.", "nextNodeId": "armor" },
+          { "id": "c2", "text": "Weapons?", "nextNodeId": "weapons" },
+          { "id": "c3", "text": "What's in the glass case?", "nextNodeId": "case" }
+        ]},
+        "armor": { "id": "armor", "speaker": "kael", "text": "Chain shirts. Padded coats. Northern make — heavier than southern, but the cold demands it. I clean and oil every piece myself. My husband taught me. I learned well.", "choices": [] },
+        "weapons": { "id": "weapons", "speaker": "kael", "text": "Cutlasses and daggers. Ammunition for pistols. I don't carry heavy weapons — try Gruber in Ironhaven if you need an arsenal. I sell what keeps a sailor alive, not what starts wars.", "choices": [] },
+        "case": { "id": "case", "speaker": "kael", "text": "[Long pause.] My husband's gear. Not for sale. Never for sale. ...Is there anything else you need, Captain?", "choices": [] }
+      }
+    },
+    {
+      "id": "commander-greeting", "speakers": ["commander"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "commander", "text": "Captain. You've been cleared by inspection — good. Stormwall exists to protect legitimate trade on the northern routes. We patrol. We enforce. We do not negotiate with pirates, smugglers, or captains who associate with them. Questions?", "choices": [
+          { "id": "c1", "text": "What's the pirate situation?", "nextNodeId": "pirates" },
+          { "id": "c2", "text": "No questions.", "nextNodeId": "dismissed" }
+        ]},
+        "pirates": { "id": "pirates", "speaker": "commander", "text": "The Iron Wolves are the primary threat. Nomadic, aggressive, well-armed. We've lost two merchant convoys this season. I'm increasing patrols, but the Atlantic is large and the Wolves are cunning. Captains who report sightings earn garrison favor. Those who trade with them earn my attention.", "choices": [] },
+        "dismissed": { "id": "dismissed", "speaker": "commander", "text": "Then trade fairly and leave before the weather turns. The north Atlantic is no place to linger. Dismissed.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 3, "instinct": 2, "will": 3 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "harbor-arrival",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in the fortified north.", "statPriorities": { "will": 2, "vigor": 1 }, "startingTags": ["trader"], "progressionTreeId": "garrison-path", "grantedVerbs": ["trade"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "garrison-path", "name": "Garrison Path", "currency": "standing",
+    "nodes": [
+      { "id": "cleared-trader", "name": "Cleared Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "garrison-cleared" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}

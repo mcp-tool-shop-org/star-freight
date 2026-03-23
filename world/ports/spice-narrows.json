@@ -1,0 +1,360 @@
+{
+  "id": "portlight-spice-narrows",
+  "name": "Spice Narrows",
+  "description": "Hidden anchorage in the spice archipelago. The most concentrated spice market in the world — and the Monsoon Syndicate's base of operations. The Spice Lords control access to the richest spice grounds. Prices are whispered, never spoken aloud. The Hanging Market — stalls suspended on ropes between cliff faces — is where legitimate trade happens. Deeper in the cliffs, a second market trades in things other than spice. Finding the entrance is the first test.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["dangerous", "secretive", "vertical"],
+  "difficulty": "advanced",
+  "narratorTone": "The cliffs close in. Your pilot navigates by memory — there are no charts for the Narrows. Above you, rope bridges sway between cliff faces and the Hanging Market dangles like a spider's web of commerce. Everything here is vertical. Everything here has a price. And everything here is watching you.",
+  "mode": "district",
+
+  "map": {
+    "id": "spice-narrows-map",
+    "name": "Spice Narrows",
+    "description": "A hidden anchorage between volcanic cliffs. The port is built vertically — rope ladders, pulley systems, and suspended platforms connect the water level to the markets above. The deeper passages lead to the Syndicate's territory. Navigation requires a guide.",
+    "gridWidth": 44,
+    "gridHeight": 48,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "hidden-anchorage",
+      "name": "The Hidden Anchorage",
+      "tags": ["harbor", "docks", "arrival", "concealed"],
+      "description": "A narrow channel between volcanic cliffs that opens into a hidden basin. Ships anchor in dark water — the cliffs block the sun for most of the day. Rope ladders drop from the markets above. Harbor Watcher Fen marks arrivals in a book that nobody else reads. She charges no fee. The Spice Lords already know you're here. They knew before you arrived.",
+      "gridX": 12, "gridY": 38,
+      "gridWidth": 16, "gridHeight": 6,
+      "neighbors": ["rope-landing", "smuggler-cove"],
+      "exits": [],
+      "light": 4, "noise": 3,
+      "hazards": ["hidden rocks near entrance", "strong undertow"],
+      "interactables": [
+        { "name": "Cliff Approach", "type": "inspect", "description": "The entrance to the Narrows — a gap in the volcanic cliffs invisible from open water. Pilots navigate by counting rock formations. There are no charts. Charts would be evidence." },
+        { "name": "Rope Ladders", "type": "use", "description": "Hemp ladders dangling from the cliff face above. The only way up from the anchorage. They sway in the wind. The climb is forty feet. Don't look down." },
+        { "name": "Harbor Watcher's Ledge", "type": "inspect", "description": "A natural ledge where Fen sits with her book, watching every arrival through a brass telescope. She doesn't greet. She records. The difference matters." }
+      ],
+      "parentDistrictId": "depths"
+    },
+    {
+      "id": "rope-landing",
+      "name": "The Rope Landing",
+      "tags": ["passage", "vertical", "transition"],
+      "description": "The platform at the top of the rope ladders where the Hanging Market begins. Pulley systems haul cargo up from the ships below — spice goes up, silver comes down. The Landing Boss, a scarred man called Kite, manages the pulleys with a whistle and hand signals. He doesn't speak. He doesn't need to. The pulley crews read his whistles like music.",
+      "gridX": 10, "gridY": 30,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["hidden-anchorage", "hanging-market", "whisper-alley"],
+      "exits": [],
+      "light": 5, "noise": 5,
+      "hazards": ["forty-foot drop"],
+      "interactables": [
+        { "name": "Cargo Pulleys", "type": "inspect", "description": "A system of ropes, pulleys, and counterweights that haul cargo from ships to market. Spice bales rise on one side while silver descends on the other. The pulleys creak constantly." },
+        { "name": "Kite's Whistle Post", "type": "inspect", "description": "A wooden platform where Kite stands, whistling commands to the pulley crews below. Each whistle pattern means a different instruction. The system is faster than speech and harder to eavesdrop." }
+      ],
+      "parentDistrictId": "hanging-district"
+    },
+    {
+      "id": "hanging-market",
+      "name": "The Hanging Market",
+      "tags": ["market", "commerce", "landmark", "vertical"],
+      "description": "Stalls suspended on ropes and platforms between the cliff faces. The air is thick with cinnamon, pepper, clove, and nutmeg. Merchants trade from swaying platforms connected by rope bridges. Prices are whispered — the cliffs carry sound, and the Spice Lords listen. Bazaar Mistress Indrani manages the market from the central platform. She is the only person in the Narrows who speaks at full volume. Nobody tells her not to.",
+      "gridX": 6, "gridY": 20,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["rope-landing", "whisper-alley", "spice-lord-terrace"],
+      "exits": [],
+      "light": 6, "noise": 4,
+      "hazards": ["swaying platforms", "long drops"],
+      "interactables": [
+        { "name": "Spice Stalls", "type": "use", "description": "Suspended platforms heaped with spice — cinnamon bark, pepper in woven bags, clove in jars, nutmeg in silk pouches. Prices are whispered between buyer and seller. Eavesdropping is poor form and worse business." },
+        { "name": "Rope Bridges", "type": "inspect", "description": "Hemp rope bridges connecting platforms between the cliff faces. They sway with every step and every gust. The experienced walk them without looking down. The inexperienced hold the ropes and pray." },
+        { "name": "Central Platform", "type": "inspect", "description": "The largest platform in the market — Indrani's domain. A brass scale, a ledger, and a view of every stall below. She settles disputes by declaring the price herself. Nobody argues twice." }
+      ],
+      "parentDistrictId": "hanging-district"
+    },
+    {
+      "id": "whisper-alley",
+      "name": "Whisper Alley",
+      "tags": ["commerce", "black-market", "shadows"],
+      "description": "A narrow ledge carved into the cliff behind the Hanging Market where the less legitimate trade happens. Stolen cargo, smuggled goods, forged papers. The sellers operate from alcoves cut into the rock. Conversations happen in whispers. Names are not used. Payment is in unmarked silver. The alley has no official existence. The Spice Lords maintain it. The Spice Lords deny it.",
+      "gridX": 24, "gridY": 22,
+      "gridWidth": 6, "gridHeight": 8,
+      "neighbors": ["rope-landing", "hanging-market", "syndicate-den"],
+      "exits": [],
+      "light": 3, "noise": 2,
+      "hazards": ["narrow ledge — one person wide"],
+      "interactables": [
+        { "name": "Shadow Stalls", "type": "use", "description": "Alcoves carved into the cliff where sellers display stolen cargo, smuggled opium, and forged documents. No signs, no names, no receipts. You point, you pay, you leave." },
+        { "name": "Opium Corner", "type": "inspect", "description": "The primary source of opium in the Known World. Wrapped in oilcloth, sold by weight, questions not asked. The smell is sweet and heavy. The Syndicate controls every gram." },
+        { "name": "Forger's Niche", "type": "use", "description": "A cramped alcove where a nameless forger produces cargo manifests, letters of marque, and port clearances. The work is expensive. The quality is excellent. The forger has no face you'd remember." }
+      ],
+      "parentDistrictId": "shadow-district"
+    },
+    {
+      "id": "syndicate-den",
+      "name": "The Syndicate Den",
+      "tags": ["faction", "pirate", "authority"],
+      "description": "The Monsoon Syndicate's headquarters — a cave system behind the cliffs, accessible through a passage in Whisper Alley. The entrance changes location monthly. Inside, Spice Lord Vikram holds court on a throne carved from volcanic rock. The Syndicate's motto: 'Information is currency. We know what you carry before you dock.' They usually do.",
+      "gridX": 30, "gridY": 16,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["whisper-alley"],
+      "exits": [],
+      "light": 3, "noise": 2,
+      "hazards": ["Syndicate guards"],
+      "interactables": [
+        { "name": "Volcanic Throne", "type": "inspect", "description": "A seat carved from black volcanic rock where Spice Lord Vikram receives visitors. The cave is lit by oil lamps that cast shadows on the walls. The shadows move more than Vikram does." },
+        { "name": "Intelligence Board", "type": "inspect", "description": "A wall covered with notes, ship manifests, and route maps — the Syndicate's intelligence network made visible. Every ship in the region is tracked. Every cargo noted. The information is worth more than the spice." },
+        { "name": "Hidden Exit", "type": "inspect", "description": "A second passage leading to a private dock on the far side of the cliffs. The Syndicate's escape route. Only Vikram and his captains know where it leads." }
+      ],
+      "parentDistrictId": "shadow-district"
+    },
+    {
+      "id": "spice-lord-terrace",
+      "name": "The Spice Lord's Terrace",
+      "tags": ["authority", "overlook", "faction"],
+      "description": "An open terrace at the cliff top where the Spice Lords conduct legitimate business. The view encompasses the anchorage below, the Hanging Market, and the open sea beyond. Spice Lord Vikram's lieutenant, a woman called Naga, handles the day-to-day commerce. She is polite, efficient, and will sell you the finest spice at fair prices. She will also have you thrown off the cliff if you threaten the Narrows' operations.",
+      "gridX": 8, "gridY": 6,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["hanging-market", "deep-grotto-tavern"],
+      "exits": [],
+      "light": 9, "noise": 3,
+      "hazards": ["cliff edge — no railing"],
+      "interactables": [
+        { "name": "Terrace Overlook", "type": "inspect", "description": "The highest point in the Narrows. The entire anchorage is visible below — every ship, every cargo, every movement. The Spice Lords chose this location for a reason." },
+        { "name": "Legitimate Ledger", "type": "inspect", "description": "Naga's trade ledger — immaculate, detailed, and entirely legal. The legitimate spice trade alone would make the Narrows wealthy. The other trade makes it powerful." }
+      ],
+      "parentDistrictId": "hanging-district"
+    },
+    {
+      "id": "smuggler-cove",
+      "name": "The Smuggler's Cove",
+      "tags": ["harbor", "hidden", "black-market"],
+      "description": "A second, smaller anchorage accessible through an underwater passage at the base of the cliffs. Ships entering here are not recorded in any book. The cove is used for cargo that cannot be seen — opium shipments, stolen goods, weapons destined for buyers who value discretion. The cove has no keeper. The Syndicate knows who uses it.",
+      "gridX": 32, "gridY": 36,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["hidden-anchorage"],
+      "exits": [],
+      "light": 2, "noise": 1,
+      "hazards": ["underwater passage — dangerous at low tide"],
+      "interactables": [
+        { "name": "Underwater Passage", "type": "inspect", "description": "A submerged gap in the cliff base, navigable at high tide. Ships that know the passage enter unseen. The timing must be precise — low tide grounds you inside." },
+        { "name": "Dark Dock", "type": "inspect", "description": "Rough-cut stone pilings in near-total darkness. No lanterns — light would reveal the cove from outside. Crews unload by touch and memory." }
+      ],
+      "parentDistrictId": "depths"
+    },
+    {
+      "id": "deep-grotto-tavern",
+      "name": "The Deep Grotto",
+      "tags": ["tavern", "social", "rumors", "hidden"],
+      "description": "A tavern carved into a cave at the cliff top, accessible from the terrace. The ceiling drips with stalactites. The bar is a basalt slab. The owner, a giant called Ox, serves rum and a fish curry that burns twice. The Deep Grotto is where Syndicate business is discussed openly — within these walls, whispers are unnecessary. Everyone here is either Syndicate or wishes they were.",
+      "gridX": 22, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 7,
+      "neighbors": ["spice-lord-terrace"],
+      "exits": [],
+      "light": 3, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Ox's Bar", "type": "use", "description": "A slab of black basalt serving as a bar. Ox pours rum that could strip paint. His fish curry is legendary — for the heat, not the fish. He gives no credit and takes no complaints." },
+        { "name": "Stalactite Ceiling", "type": "inspect", "description": "Natural stalactites hanging from the cave ceiling, some carved with Syndicate marks. Each mark represents a captain who earned the Spice Lords' trust. The unmarked stalactites outnumber the marked ones considerably." },
+        { "name": "Information Corner", "type": "inspect", "description": "A dark corner where Syndicate scouts share intelligence. Ship movements, cargo manifests, patrol schedules. The information flows like the rum — freely, within these walls." }
+      ],
+      "parentDistrictId": "shadow-district"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "hidden-anchorage", "toZoneId": "rope-landing", "bidirectional": true, "kind": "stairs", "label": "Rope Ladders" },
+    { "fromZoneId": "hidden-anchorage", "toZoneId": "smuggler-cove", "bidirectional": true, "kind": "passage", "label": "Underwater Passage" },
+    { "fromZoneId": "rope-landing", "toZoneId": "hanging-market", "bidirectional": true, "kind": "passage", "label": "Market Bridge" },
+    { "fromZoneId": "rope-landing", "toZoneId": "whisper-alley", "bidirectional": true, "kind": "passage", "label": "Back Ledge" },
+    { "fromZoneId": "hanging-market", "toZoneId": "whisper-alley", "bidirectional": true, "kind": "passage" },
+    { "fromZoneId": "hanging-market", "toZoneId": "spice-lord-terrace", "bidirectional": true, "kind": "stairs", "label": "Cliff Stairs" },
+    { "fromZoneId": "whisper-alley", "toZoneId": "syndicate-den", "bidirectional": true, "kind": "passage", "label": "Hidden Passage" },
+    { "fromZoneId": "spice-lord-terrace", "toZoneId": "deep-grotto-tavern", "bidirectional": true, "kind": "passage", "label": "Grotto Entrance" }
+  ],
+
+  "districts": [
+    {
+      "id": "depths",
+      "name": "The Depths",
+      "zoneIds": ["hidden-anchorage", "smuggler-cove"],
+      "tags": ["harbor", "concealed", "dangerous"],
+      "baseMetrics": { "commerce": 40, "morale": 50, "safety": 30, "stability": 40 },
+      "economyProfile": { "supplyCategories": ["spice", "contraband"], "scarcityDefaults": {} },
+      "controllingFaction": "monsoon-syndicate"
+    },
+    {
+      "id": "hanging-district",
+      "name": "The Hanging District",
+      "zoneIds": ["rope-landing", "hanging-market", "spice-lord-terrace"],
+      "tags": ["commerce", "vertical", "spice"],
+      "baseMetrics": { "commerce": 95, "morale": 65, "safety": 45, "stability": 55 },
+      "economyProfile": { "supplyCategories": ["spice", "pearls"], "scarcityDefaults": {} },
+      "controllingFaction": "monsoon-syndicate"
+    },
+    {
+      "id": "shadow-district",
+      "name": "The Shadow District",
+      "zoneIds": ["whisper-alley", "syndicate-den", "deep-grotto-tavern"],
+      "tags": ["black-market", "faction", "pirate"],
+      "baseMetrics": { "commerce": 80, "morale": 55, "safety": 25, "stability": 35 },
+      "economyProfile": { "supplyCategories": ["opium", "stolen-cargo", "forged-documents"], "scarcityDefaults": {} },
+      "controllingFaction": "monsoon-syndicate"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "hanging-market-landmark", "name": "The Hanging Market", "zoneId": "hanging-market", "gridX": 12, "gridY": 24, "description": "Stalls suspended on ropes between cliff faces. The world's most concentrated spice market, where prices are whispered and the cliffs carry sound. Rope bridges sway between platforms. Commerce here is vertical." },
+    { "id": "volcanic-throne", "name": "The Volcanic Throne", "zoneId": "syndicate-den", "gridX": 34, "gridY": 19, "description": "Spice Lord Vikram's seat — carved from black volcanic rock in a cave lit by oil lamps. The Monsoon Syndicate's center of power." },
+    { "id": "cliff-entrance", "name": "The Narrows Entrance", "zoneId": "hidden-anchorage", "gridX": 18, "gridY": 42, "description": "The gap in the volcanic cliffs invisible from open water. No charts exist. Pilots navigate by counting rock formations. The entrance to the most profitable and dangerous port in the East." }
+  ],
+
+  "spawnPoints": [
+    { "id": "anchorage-arrival", "zoneId": "hidden-anchorage", "gridX": 18, "gridY": 40, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "harbor-watcher-fen", "name": "Harbor Watcher Fen", "zoneId": "hidden-anchorage", "role": "npc", "dialogueId": "fen-greeting", "tags": ["watcher", "silent", "recording"] },
+    { "entityId": "landing-boss-kite", "name": "Kite", "zoneId": "rope-landing", "role": "npc", "dialogueId": "kite-greeting", "tags": ["boss", "silent", "whistler"] },
+    { "entityId": "bazaar-mistress-indrani", "name": "Bazaar Mistress Indrani", "zoneId": "hanging-market", "role": "quest-giver", "dialogueId": "indrani-greeting", "tags": ["authority", "loud", "spice-merchant"] },
+    { "entityId": "spice-lord-vikram", "name": "Spice Lord Vikram", "zoneId": "syndicate-den", "role": "quest-giver", "dialogueId": "vikram-greeting", "tags": ["spice-lord", "syndicate", "dangerous", "calm"] },
+    { "entityId": "lieutenant-naga", "name": "Naga", "zoneId": "spice-lord-terrace", "role": "merchant", "dialogueId": "naga-greeting", "tags": ["lieutenant", "polite", "lethal"] },
+    { "entityId": "ox-barkeep", "name": "Ox", "zoneId": "deep-grotto-tavern", "role": "npc", "dialogueId": "ox-greeting", "tags": ["tavern-keeper", "giant", "rum"] },
+    { "entityId": "forger-nameless", "name": "The Forger", "zoneId": "whisper-alley", "role": "merchant", "dialogueId": "forger-greeting", "tags": ["forger", "nameless", "excellent"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "fen-greeting",
+      "speakers": ["fen"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "fen", "text": "*scratches something in her book without looking up* Rope ladders. Forty feet. Don't fall.", "choices": [
+          { "id": "c1", "text": "How do I find the market?", "nextNodeId": "directions" }
+        ]},
+        "directions": { "id": "directions", "speaker": "fen", "text": "Up. Everything is up. The Hanging Market is at the top of the ladders. The Spice Lords are above that. The bottom is just water. And rocks. Mostly rocks.", "choices": [] }
+      }
+    },
+    {
+      "id": "kite-greeting",
+      "speakers": ["kite"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kite", "text": "*two short whistles — a pulley crew begins hauling your cargo* *gestures toward the market bridge*", "choices": [
+          { "id": "c1", "text": "You don't talk much.", "nextNodeId": "silence" }
+        ]},
+        "silence": { "id": "silence", "speaker": "kite", "text": "*taps his ear, then points at the cliff walls* *whispers* Sound carries. Whistles are faster. And private.", "choices": [] }
+      }
+    },
+    {
+      "id": "indrani-greeting",
+      "speakers": ["indrani"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "indrani", "text": "Welcome to the Hanging Market! I am the only person in this port who speaks at full volume. Everyone else whispers. I find whispering tiresome. What are you buying?", "choices": [
+          { "id": "c1", "text": "Spice. Best quality.", "nextNodeId": "spice" },
+          { "id": "c2", "text": "I'm looking for something... specific.", "nextNodeId": "specific" },
+          { "id": "c3", "text": "Any trade advice?", "nextNodeId": "advice" }
+        ]},
+        "spice": { "id": "spice", "speaker": "indrani", "text": "The best spice in the world comes from these cliffs. Cinnamon that makes the West weep. Pepper that sells for its weight in copper. My stalls have the legal trade. Prices are fair because I set them. Whisper your bid or shout it — I don't care.", "choices": [] },
+        "specific": { "id": "specific", "speaker": "indrani", "text": "If it's spice, I have it. If it's not spice... Whisper Alley is behind the market. I don't manage it. I don't acknowledge it. And I certainly didn't tell you about it.", "choices": [] },
+        "advice": { "id": "advice", "speaker": "indrani", "text": "Buy spice here, sell it everywhere. That's the simple version. The complicated version involves knowing which spice is in demand where, and that changes with the wind. Literally — ask the monks at Monsoon Reach.", "choices": [] }
+      }
+    },
+    {
+      "id": "vikram-greeting",
+      "speakers": ["vikram"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "vikram", "text": "Captain. I know your name, your ship, your cargo, and the route you took to get here. I knew before you docked. That is the Syndicate's business — information. What is yours?", "choices": [
+          { "id": "c1", "text": "Trade. Legitimate trade.", "nextNodeId": "legitimate" },
+          { "id": "c2", "text": "I have cargo that needs to disappear.", "nextNodeId": "disappear" },
+          { "id": "c3", "text": "What does the Syndicate want?", "nextNodeId": "syndicate-wants" }
+        ]},
+        "legitimate": { "id": "legitimate", "speaker": "vikram", "text": "Then the Hanging Market serves you. The finest spice, fair prices, Indrani's guarantee. The Syndicate does not interfere with legitimate commerce. We protect it. For a modest consideration.", "choices": [] },
+        "disappear": { "id": "disappear", "speaker": "vikram", "text": "Interesting. Cargo disappears in the Narrows every day. The cost depends on the cargo, the risk, and my mood. Whisper Alley handles the details. I handle the arrangement. Sit. Let us discuss terms.", "choices": [] },
+        "syndicate-wants": { "id": "syndicate-wants", "speaker": "vikram", "text": "Information, always. A Jade Port customs agent infiltrated the Narrows last year. We sent him home alive — with every piece of intelligence tattooed on his forehead. We want reliable captains who carry our cargo without questions. The questions are expensive. The silence is free.", "choices": [] }
+      }
+    },
+    {
+      "id": "naga-greeting",
+      "speakers": ["naga"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "naga", "text": "Welcome, Captain. I handle the Spice Lords' legitimate trade from this terrace. The finest spice at fair prices. The view is complimentary. What can I provide?", "choices": [
+          { "id": "c1", "text": "Premium spice for export.", "nextNodeId": "premium" },
+          { "id": "c2", "text": "What makes the Narrows' spice special?", "nextNodeId": "special" }
+        ]},
+        "premium": { "id": "premium", "speaker": "naga", "text": "The volcanic soil produces spice with twice the oil content of inland crops. Cinnamon, pepper, clove — all from these islands. Sealed in oilcloth, weighed to the gram. My prices are fair. The quality eliminates competition.", "choices": [] },
+        "special": { "id": "special", "speaker": "naga", "text": "Volcanic soil, sea mist, and centuries of cultivation. The Spice Lords control the grounds because nobody else can find them. The routes are unmapped. The pilots are Syndicate. The spice is incomparable. That is what makes it special — and expensive.", "choices": [] }
+      }
+    },
+    {
+      "id": "ox-greeting",
+      "speakers": ["ox"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "ox", "text": "Rum. Curry. Sit down.", "choices": [
+          { "id": "c1", "text": "What's the word in the Narrows?", "nextNodeId": "word" },
+          { "id": "c2", "text": "Rum, please.", "nextNodeId": "rum" }
+        ]},
+        "word": { "id": "word", "speaker": "ox", "text": "Jade Port sent another spy. The Syndicate found her in two days. Faster than last time. Vikram's network is getting better. Also, Raj the Quiet sailed south yesterday. When Raj moves, something's happening. Nobody knows what. That's why he's called the Quiet.", "choices": [] },
+        "rum": { "id": "rum", "speaker": "ox", "text": "*pours a dark rum that smells like smoke and danger* Three silver. The curry's free. You'll need it after the rum.", "choices": [] }
+      }
+    },
+    {
+      "id": "forger-greeting",
+      "speakers": ["forger"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "forger", "text": "*whispers* Manifests. Clearances. Letters. Name the port, name the cargo. Twenty silver for standard work. Forty for rush. Quality guaranteed. My name is not.", "choices": [
+          { "id": "c1", "text": "I need a cargo manifest.", "nextNodeId": "manifest" }
+        ]},
+        "manifest": { "id": "manifest", "speaker": "forger", "text": "*whispers* Port of origin, cargo description, quantities. I match the seal, the paper, the ink. Inspector Salva in Porto Novo failed to spot my last three. Twenty silver. Payment now. Delivery in two hours.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "anchorage-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in dangerous waters.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "syndicate-contact", "name": "Syndicate Contact", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "monsoon-syndicate" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

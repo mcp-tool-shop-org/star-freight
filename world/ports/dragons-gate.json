@@ -1,0 +1,362 @@
+{
+  "id": "portlight-dragons-gate",
+  "name": "Dragon's Gate",
+  "description": "Fortress harbor controlling the eastern straits. Twin stone towers flank the passage — chains can close the strait at the commander's word. The Gate Wardens enforce the Silk Circle's law with lacquered armor and absolute authority. Weapons are contraband — declared or confiscated, no third option. The last captain who tried to run the chains is still chained to the seabed. Medicines are worth their weight in gold.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["martial", "controlled", "imposing"],
+  "difficulty": "intermediate",
+  "narratorTone": "The twin towers rise from the water like stone fangs. Between them, chains thick as a man's thigh hang just below the surface — ready to seal the strait at a signal. Soldiers in lacquered armor watch from every parapet. Dragon's Gate does not welcome. It permits. The distinction matters here.",
+  "mode": "district",
+
+  "map": {
+    "id": "dragons-gate-map",
+    "name": "Dragon's Gate",
+    "description": "A narrow strait flanked by twin fortress towers. The port sits in the lee of the eastern tower, built into the cliff face. Stone docks, stone walls, stone discipline. The only color is the red lacquer of the wardens' armor.",
+    "gridWidth": 48,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "chain-harbor",
+      "name": "The Chain Harbor",
+      "tags": ["harbor", "docks", "arrival", "military"],
+      "description": "A stone dock built into the cliff beneath the eastern tower. Ships are guided in by harbor pilots — navigating the chains is mandatory, not optional. Dock Commander Huang assigns berths with military brevity. Every ship is boarded for inspection before the crew steps ashore. The chains are visible beneath the water — a reminder of what happens to those who don't cooperate.",
+      "gridX": 14, "gridY": 30,
+      "gridWidth": 18, "gridHeight": 8,
+      "neighbors": ["inspection-hall", "tea-market", "warden-gate"],
+      "exits": [],
+      "light": 8, "noise": 4,
+      "hazards": ["submerged chains near harbor mouth"],
+      "interactables": [
+        { "name": "The Chains", "type": "inspect", "description": "Massive iron chains stretched between the twin towers, hanging just below the waterline. At the commander's signal, they rise to block the strait. Fifteen Wolf sailors are chained to the seabed as a warning." },
+        { "name": "Harbor Pilot Station", "type": "use", "description": "A stone booth where harbor pilots wait to guide ships through the chain gap. No ship enters without a pilot. The fee is two silver. Refusal means you anchor outside and wait." },
+        { "name": "Boarding Platform", "type": "inspect", "description": "A stone platform where Warden soldiers board every arriving vessel. Weapons are identified here. Cooperation is expected." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "inspection-hall",
+      "name": "The Inspection Hall",
+      "tags": ["institution", "customs", "law", "military"],
+      "description": "A fortress hall where every piece of cargo is examined. Weapons are separated, catalogued, and locked in the armory vault. Chief Warden Sun Yichen runs the inspection with the precision of a surgeon. She misses nothing. Captains who declare weapons honestly receive a receipt and may reclaim them on departure. Those who don't declare... the seabed has room.",
+      "gridX": 34, "gridY": 28,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["chain-harbor", "armory-vault"],
+      "exits": [],
+      "light": 7, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Inspection Tables", "type": "inspect", "description": "Stone tables where cargo is laid out under lantern light. Every crate opened, every barrel tapped, every bundle unwrapped. The wardens work in silence. The efficiency is unnerving." },
+        { "name": "Declaration Desk", "type": "use", "description": "A desk where captains declare weapons voluntarily. Honest declaration earns a stamped receipt. Concealment earns confiscation — and a conversation with the fortress commander." },
+        { "name": "Weapons Sort", "type": "inspect", "description": "A long rack where confiscated weapons are catalogued. Cutlasses, pistols, blades of every kind. Each tagged with the ship's name and the date. Some tags are very old." }
+      ],
+      "parentDistrictId": "harbor-district"
+    },
+    {
+      "id": "armory-vault",
+      "name": "The Armory Vault",
+      "tags": ["military", "storage", "secure"],
+      "description": "A stone vault carved into the cliff where confiscated and declared weapons are stored. Vault Keeper Deng maintains an inventory that matches the declaration desk precisely. He has never lost a weapon and considers the suggestion insulting. Weapons declared honestly are returned on departure. Weapons found undeclared are melted down on the first of each month.",
+      "gridX": 42, "gridY": 20,
+      "gridWidth": 6, "gridHeight": 7,
+      "neighbors": ["inspection-hall", "fortress-command"],
+      "exits": [],
+      "light": 4, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "Vault Racks", "type": "inspect", "description": "Floor-to-ceiling racks of confiscated weapons. Each rack is labelled by ship and date. The organization is meticulous. The quantity is intimidating." },
+        { "name": "Melting Furnace", "type": "inspect", "description": "A small forge at the vault's back where undeclared weapons are melted on the first of each month. The ingots are sold to fund the garrison. The wardens call it 'recycling.' Captains call it theft. Nobody argues to their faces." }
+      ],
+      "parentDistrictId": "fortress-quarter"
+    },
+    {
+      "id": "tea-market",
+      "name": "The Tea Market",
+      "tags": ["market", "commerce", "peaceful"],
+      "description": "A covered market in the shadow of the eastern tower where tea merchants conduct business with quiet civility. Dragon's Gate produces the finest black tea in the East — smoked over applewood, sold by weight. Tea Master Liu presides over the market with the authority of a man whose product is more valuable than weapons. The market is the one place in Dragon's Gate where the wardens' armor doesn't set the tone.",
+      "gridX": 6, "gridY": 18,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["chain-harbor", "medicine-quarter", "iron-crow-teahouse"],
+      "exits": [],
+      "light": 7, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tea Stalls", "type": "use", "description": "Stalls selling black tea by the ounce — smoked, unsmoked, aged, and fresh. The merchants weigh with brass scales and seal purchases in lead-lined tins to preserve the flavor." },
+        { "name": "Tasting Station", "type": "use", "description": "A counter where buyers sample before purchasing. Tea Master Liu insists on proper brewing — water temperature, steeping time, cup material. He refuses sales to those who would mistreat his tea." },
+        { "name": "Porcelain Display", "type": "inspect", "description": "A small display of Jade Port porcelain — teapots, cups, serving trays. Sold alongside the tea. Liu says good tea deserves good porcelain. He's not wrong." }
+      ],
+      "parentDistrictId": "civilian-quarter"
+    },
+    {
+      "id": "medicine-quarter",
+      "name": "The Medicine Quarter",
+      "tags": ["market", "scarce-goods", "essential"],
+      "description": "A cluster of apothecary shops in the fortress's lower level. Dragon's Gate desperately needs medicines — the garrison is large, the climate is damp, and fever runs through the barracks every monsoon season. Apothecary Ma Suri is the port's chief healer and the only person the fortress commander defers to. She pays premium prices for medicine from any source and makes no distinction between friend and enemy when healing.",
+      "gridX": 4, "gridY": 8,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["tea-market", "iron-crow-teahouse"],
+      "exits": [],
+      "light": 5, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Apothecary Shelves", "type": "use", "description": "Jars of dried herbs, ground minerals, tinctures, and poultices. Ma Suri's shelves are always half-empty — medicine is the Gate's greatest need. She buys at premium and sells at cost." },
+        { "name": "Fever Treatment Station", "type": "inspect", "description": "A curtained area where garrison soldiers are treated for monsoon fever. Ma Suri works without rest during the wet season. She says the fortress has survived every attack except disease." }
+      ],
+      "parentDistrictId": "civilian-quarter"
+    },
+    {
+      "id": "iron-crow-teahouse",
+      "name": "The Iron Crow",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "Dragon's Gate's only drinking establishment — a stone-walled teahouse where off-duty wardens and visiting captains share tea and guarded conversation. Run by Old Jian, a retired Gate Warden who lost an arm in the Iron Wolves incident. He serves tea, rice wine, and a cold noodle dish that is the only comfort food in this fortress port. Jian hears everything. He reports nothing. That's why the wardens drink here.",
+      "gridX": 18, "gridY": 10,
+      "gridWidth": 8, "gridHeight": 7,
+      "neighbors": ["tea-market", "medicine-quarter", "warden-gate"],
+      "exits": [],
+      "light": 5, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Jian's Counter", "type": "use", "description": "A stone counter where Old Jian pours tea and rice wine with his remaining arm. He's efficient with one hand. He had to be. His noodles are cold, salty, and perfect." },
+        { "name": "Warden's Corner", "type": "inspect", "description": "A corner table where off-duty wardens sit in their armor and drink tea in silence. They don't speak to outsiders. But they listen to everything." },
+        { "name": "Wolf Tooth", "type": "inspect", "description": "An Iron Wolf pennant nailed above the door — Jian's trophy from the incident. Fifteen Wolves tried to smuggle weapons through the Gate. Fifteen Wolves didn't leave. Jian lost his arm. He considers it a fair trade." }
+      ],
+      "parentDistrictId": "civilian-quarter"
+    },
+    {
+      "id": "warden-gate",
+      "name": "The Warden Gate",
+      "tags": ["military", "passage", "checkpoint"],
+      "description": "The fortified gate between the civilian quarter and the fortress command level. Two wardens in full lacquered armor guard it at all times. Only those with business at the fortress command pass through. The gate is narrow enough for one person at a time — by design. Visitors are escorted. Always.",
+      "gridX": 28, "gridY": 14,
+      "gridWidth": 6, "gridHeight": 6,
+      "neighbors": ["chain-harbor", "iron-crow-teahouse", "fortress-command"],
+      "exits": [],
+      "light": 6, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Warden Guards", "type": "inspect", "description": "Two wardens in red-lacquered armor, standing motionless. They check authorization with a glance at your papers. No papers, no passage. They do not explain. They do not negotiate." },
+        { "name": "Narrow Gate", "type": "inspect", "description": "A stone arch wide enough for one person. The design is ancient and intentional — a bottleneck that turns any rush into a queue. Control through architecture." }
+      ],
+      "parentDistrictId": "fortress-quarter"
+    },
+    {
+      "id": "fortress-command",
+      "name": "The Fortress Command",
+      "tags": ["institution", "authority", "military", "landmark"],
+      "description": "The command center of Dragon's Gate, carved into the eastern tower's upper level. Fortress Commander Zhao Mingzhu controls the strait, the chains, and the garrison from a stone chamber with arrow-slit windows overlooking the passage. She has not lowered the chains in fifteen years. She has not needed to. The threat is sufficient. Commander Zhao is feared, respected, and — by those who know her — quietly admired for her unwavering commitment to the Silk Circle's peace.",
+      "gridX": 30, "gridY": 2,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["warden-gate", "armory-vault"],
+      "exits": [],
+      "light": 7, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Strait Overlook", "type": "inspect", "description": "Arrow-slit windows offering a commanding view of the entire strait. Every ship approaching from either direction is visible. Commander Zhao's desk faces the overlook. She watches the water more than she reads reports." },
+        { "name": "Chain Control", "type": "inspect", "description": "A massive winch mechanism connected to the chains below. Two soldiers can raise the chains in under a minute. The mechanism is tested weekly. It has never failed." },
+        { "name": "Iron Wolf Memorial", "type": "inspect", "description": "A stone tablet listing the names of the fifteen Iron Wolf smugglers chained to the seabed. Not a memorial for the dead — a warning for the living. The tablet is positioned where every visitor sees it first." }
+      ],
+      "parentDistrictId": "fortress-quarter"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "chain-harbor", "toZoneId": "inspection-hall", "bidirectional": true, "kind": "road", "label": "Dock Passage" },
+    { "fromZoneId": "chain-harbor", "toZoneId": "tea-market", "bidirectional": true, "kind": "stairs", "label": "Market Steps" },
+    { "fromZoneId": "chain-harbor", "toZoneId": "warden-gate", "bidirectional": true, "kind": "stairs", "label": "Tower Steps" },
+    { "fromZoneId": "inspection-hall", "toZoneId": "armory-vault", "bidirectional": true, "kind": "passage", "label": "Vault Corridor" },
+    { "fromZoneId": "tea-market", "toZoneId": "medicine-quarter", "bidirectional": true, "kind": "stairs", "label": "Lower Steps" },
+    { "fromZoneId": "tea-market", "toZoneId": "iron-crow-teahouse", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "medicine-quarter", "toZoneId": "iron-crow-teahouse", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "iron-crow-teahouse", "toZoneId": "warden-gate", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "warden-gate", "toZoneId": "fortress-command", "bidirectional": true, "kind": "stairs", "label": "Command Ascent" },
+    { "fromZoneId": "armory-vault", "toZoneId": "fortress-command", "bidirectional": true, "kind": "passage", "label": "Inner Passage" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor-district",
+      "name": "The Harbor",
+      "zoneIds": ["chain-harbor", "inspection-hall"],
+      "tags": ["harbor", "military", "customs"],
+      "baseMetrics": { "commerce": 50, "morale": 55, "safety": 90, "stability": 95 },
+      "economyProfile": { "supplyCategories": ["tea", "porcelain"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "civilian-quarter",
+      "name": "The Civilian Quarter",
+      "zoneIds": ["tea-market", "medicine-quarter", "iron-crow-teahouse"],
+      "tags": ["commerce", "medicine", "social"],
+      "baseMetrics": { "commerce": 65, "morale": 60, "safety": 85, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["tea", "medicines", "porcelain", "iron"], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    },
+    {
+      "id": "fortress-quarter",
+      "name": "The Fortress",
+      "zoneIds": ["armory-vault", "warden-gate", "fortress-command"],
+      "tags": ["military", "authority", "secure"],
+      "baseMetrics": { "commerce": 5, "morale": 70, "safety": 100, "stability": 100 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} },
+      "controllingFaction": "silk-circle"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "twin-towers", "name": "The Twin Towers", "zoneId": "chain-harbor", "gridX": 22, "gridY": 33, "description": "Two stone towers flanking the strait, connected by massive iron chains. The most formidable harbor defense in the East. The chains have not been raised in fifteen years. The threat alone is sufficient." },
+    { "id": "strait-chains", "name": "The Strait Chains", "zoneId": "chain-harbor", "gridX": 18, "gridY": 36, "description": "Iron chains thick as a man's thigh, hanging just below the waterline between the twin towers. They can seal the strait in under a minute. Fifteen Iron Wolf sailors are chained to the seabed as a permanent warning." },
+    { "id": "fortress-overlook", "name": "The Commander's Overlook", "zoneId": "fortress-command", "gridX": 36, "gridY": 5, "description": "Arrow-slit windows in the eastern tower offering a commanding view of the entire strait. Commander Zhao Mingzhu watches every approach. Nothing passes unseen." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-arrival", "zoneId": "chain-harbor", "gridX": 22, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "dock-commander-huang", "name": "Dock Commander Huang", "zoneId": "chain-harbor", "role": "npc", "dialogueId": "huang-greeting", "tags": ["military", "dock-master", "brief"] },
+    { "entityId": "chief-warden-sun", "name": "Chief Warden Sun Yichen", "zoneId": "inspection-hall", "role": "npc", "dialogueId": "sun-greeting", "tags": ["authority", "customs", "meticulous", "feared"] },
+    { "entityId": "vault-keeper-deng", "name": "Vault Keeper Deng", "zoneId": "armory-vault", "role": "npc", "dialogueId": "deng-greeting", "tags": ["keeper", "precise", "insulted-by-doubt"] },
+    { "entityId": "tea-master-liu", "name": "Tea Master Liu", "zoneId": "tea-market", "role": "merchant", "dialogueId": "liu-greeting", "tags": ["merchant", "tea-master", "dignified"] },
+    { "entityId": "apothecary-ma", "name": "Apothecary Ma Suri", "zoneId": "medicine-quarter", "role": "quest-giver", "dialogueId": "ma-greeting", "tags": ["healer", "desperate-for-medicine", "no-distinction"] },
+    { "entityId": "old-jian", "name": "Old Jian", "zoneId": "iron-crow-teahouse", "role": "npc", "dialogueId": "jian-greeting", "tags": ["tavern-keeper", "retired-warden", "one-armed"] },
+    { "entityId": "commander-zhao", "name": "Commander Zhao Mingzhu", "zoneId": "fortress-command", "role": "quest-giver", "dialogueId": "zhao-greeting", "tags": ["commander", "authority", "feared", "respected"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "huang-greeting",
+      "speakers": ["huang"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "huang", "text": "Berth four. Follow the pilot. All cargo to the Inspection Hall before you step ashore. Weapons declared or confiscated. No exceptions.", "choices": [
+          { "id": "c1", "text": "I have weapons to declare.", "nextNodeId": "declare" },
+          { "id": "c2", "text": "No weapons aboard.", "nextNodeId": "no-weapons" }
+        ]},
+        "declare": { "id": "declare", "speaker": "huang", "text": "Good. Honest declaration earns a receipt. Chief Warden Sun will process you at the Inspection Hall. Your weapons will be stored in the vault and returned on departure. The system works when you cooperate.", "choices": [] },
+        "no-weapons": { "id": "no-weapons", "speaker": "huang", "text": "Then the inspection will be brief. Chief Warden Sun will verify. If she finds anything undeclared... I suggest she doesn't.", "choices": [] }
+      }
+    },
+    {
+      "id": "sun-greeting",
+      "speakers": ["sun"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "sun", "text": "Captain. Cargo on the tables. Everything. I inspect personally. If you've declared weapons, show me the receipt. If you haven't declared but have them... this is your last chance to correct that.", "choices": [
+          { "id": "c1", "text": "Here's my declaration.", "nextNodeId": "declared" },
+          { "id": "c2", "text": "What happens if weapons are found undeclared?", "nextNodeId": "consequences" }
+        ]},
+        "declared": { "id": "declared", "speaker": "sun", "text": "Cutlasses, two. Pistols, one. Matches the declaration. They go to Vault Keeper Deng. You'll get them back when you leave — with the receipt. Without it, they're melted on the first of the month.", "choices": [] },
+        "consequences": { "id": "consequences", "speaker": "sun", "text": "Confiscation. A fine equal to the weapons' value. And a mark on your record that follows you to every Silk Circle port. Three marks and you're banned from the straits. Permanently. Fifteen Iron Wolves discovered the alternative.", "choices": [] }
+      }
+    },
+    {
+      "id": "deng-greeting",
+      "speakers": ["deng"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "deng", "text": "Receipt. Show me. I log every weapon by type, weight, and ship. I have never lost an item and I do not intend to start. Your weapons are safer here than on your ship.", "choices": [
+          { "id": "c1", "text": "When can I reclaim them?", "nextNodeId": "reclaim" }
+        ]},
+        "reclaim": { "id": "reclaim", "speaker": "deng", "text": "On departure. Present the receipt at this desk. I match it to my log. If it matches, you get your weapons. If it doesn't, we have a conversation. The conversation is not pleasant.", "choices": [] }
+      }
+    },
+    {
+      "id": "liu-greeting",
+      "speakers": ["liu"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "liu", "text": "Tea, Captain? Dragon's Gate produces the finest smoked black tea in the East. Applewood-smoked, hand-rolled, aged in cedar. I will brew a sample. If you don't taste the difference, you are not paying attention.", "choices": [
+          { "id": "c1", "text": "I want to buy tea.", "nextNodeId": "buy-tea" },
+          { "id": "c2", "text": "What else is traded here?", "nextNodeId": "other-trade" }
+        ]},
+        "buy-tea": { "id": "buy-tea", "speaker": "liu", "text": "Smoked black tea — twenty silver per pound. Unsmoked green — twelve. Aged pu-erh from the fortress cellars — forty. I weigh with calibrated scales and seal in lead-lined tins. The tea arrives at your destination as it left my market.", "choices": [] },
+        "other-trade": { "id": "other-trade", "speaker": "liu", "text": "Tea and porcelain go out. Medicines and iron come in. This is a fortress first and a trading port second. But the tea alone is worth the journey. The porcelain is the bonus.", "choices": [] }
+      }
+    },
+    {
+      "id": "ma-greeting",
+      "speakers": ["ma"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "ma", "text": "Captain. If you carry medicines, I will buy every ounce at premium price. The garrison needs them. The monsoon brings fever. I heal everyone — warden, sailor, merchant, pirate. Disease doesn't check your papers.", "choices": [
+          { "id": "c1", "text": "I have medicines to sell.", "nextNodeId": "sell-medicine" },
+          { "id": "c2", "text": "What do you need most?", "nextNodeId": "needs" }
+        ]},
+        "sell-medicine": { "id": "sell-medicine", "speaker": "ma", "text": "Show me. Fever bark, wound poultice, anti-venom, anything. I test quality but I'm not picky about source. Ember Isle medicines are the best, but I'll take whatever arrives. The garrison doesn't have the luxury of preferences.", "choices": [] },
+        "needs": { "id": "needs", "speaker": "ma", "text": "Fever bark — desperately. Anti-venom for sea-snake bites. Wound poultices for the garrison. And anything that treats lung complaints — the damp fortress air rots lungs. Bring me medicine from Ember Isle and I'll pay double what anyone else offers.", "choices": [] }
+      }
+    },
+    {
+      "id": "jian-greeting",
+      "speakers": ["jian"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "jian", "text": "Tea. Rice wine. Cold noodles. That's the menu. Sit down. You're in Dragon's Gate — there's nowhere else to drink and nowhere to hurry to. Your weapons are in the vault and your cargo's being inspected. Might as well eat.", "choices": [
+          { "id": "c1", "text": "What happened to your arm?", "nextNodeId": "arm" },
+          { "id": "c2", "text": "Any news worth hearing?", "nextNodeId": "news" }
+        ]},
+        "arm": { "id": "arm", "speaker": "jian", "text": "Iron Wolves. Fifteen of them tried to smuggle weapons through the Gate. I was on the boarding party. One of them had a concealed blade. I got his weapon. He got my arm. The other fourteen got the seabed. I consider it a fair trade.", "choices": [] },
+        "news": { "id": "news", "speaker": "jian", "text": "Commander Zhao refused a Monsoon Syndicate bribe last week. The sum was apparently impressive. She had the messenger escorted to the strait and told to swim home. The wardens were amused. The Syndicate was not.", "choices": [] }
+      }
+    },
+    {
+      "id": "zhao-greeting",
+      "speakers": ["zhao"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "zhao", "text": "Captain. Commander Zhao Mingzhu. I control this strait. You are here because I permitted it. If you trade honestly — tea, porcelain, iron, medicines — you are welcome. If you attempt to move weapons through my gate, we will have a very short conversation.", "choices": [
+          { "id": "c1", "text": "I'm a legitimate trader.", "nextNodeId": "legitimate" },
+          { "id": "c2", "text": "The chains haven't been raised in fifteen years?", "nextNodeId": "chains" }
+        ]},
+        "legitimate": { "id": "legitimate", "speaker": "zhao", "text": "Then trade. Buy our tea — it is the finest. Sell us medicines — we need them badly. The strait is open to honest commerce. That is its purpose. The chains are for those who forget that purpose.", "choices": [] },
+        "chains": { "id": "chains", "speaker": "zhao", "text": "Correct. The threat is sufficient. The Iron Wolves tested us once. The seabed memorial teaches every captain who passes. I maintain the chains. I test them weekly. I prefer not to use them. But I will.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader passing through the fortress strait.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "gate-approved", "name": "Gate Approved", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "silk-circle" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

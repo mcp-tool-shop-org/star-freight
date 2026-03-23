@@ -1,0 +1,379 @@
+{
+  "id": "portlight-coral-throne",
+  "name": "Coral Throne",
+  "description": "Island kingdom built on coral reefs. The Coral Palace — grown over centuries from living reef — rises from the lagoon like a crown. All trade begins with tribute to the Coral King. Silk or weapons preferred. Refusal is exile. The lagoon entrance is narrow and treacherous — local pilots guide every ship. Warriors in war canoes escort you to the royal dock. The Coral King has no heir. Three princes compete for the throne, each courting foreign captains for weapons and alliances.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["regal", "tribal", "political"],
+  "difficulty": "advanced",
+  "narratorTone": "War canoes appear before you see the lagoon entrance — painted hulls cutting the water in formation. Warriors in coral-shell armor gesture with spears: follow. The lagoon opens like a secret — turquoise water over white sand, and at its center, the Coral Palace rises from the reef itself. Walls of living coral, embedded with shells and pearls, glittering in the sun. The Coral Throne is not a port. It is a kingdom that lets you visit.",
+  "mode": "district",
+
+  "map": {
+    "id": "coral-throne-map",
+    "name": "Coral Throne",
+    "description": "A lagoon enclosed by a coral reef barrier. The Coral Palace occupies a natural island at the lagoon's center. The royal dock, tribute hall, and market ring the palace. The town spreads across smaller islets connected by coral causeways. War canoes patrol the lagoon constantly.",
+    "gridWidth": 56,
+    "gridHeight": 48,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "royal-dock",
+      "name": "The Royal Dock",
+      "tags": ["harbor", "docks", "arrival", "military"],
+      "description": "A coral-stone dock on the palace island where foreign ships are escorted by war canoes. Dock Captain Rangi — a warrior with shell-inlaid armor and a diplomatic smile — manages arrivals. Every ship is met by an escort. Every captain is reminded: tribute first, trade second. The dock is spotless. The warriors are watchful. The message is clear — you are a guest in someone else's kingdom.",
+      "gridX": 16, "gridY": 34,
+      "gridWidth": 18, "gridHeight": 6,
+      "neighbors": ["tribute-hall", "lagoon-market", "war-canoe-harbor"],
+      "exits": [],
+      "light": 10, "noise": 5,
+      "hazards": ["shallow reef near dock — follow the pilot"],
+      "interactables": [
+        { "name": "War Canoe Escort", "type": "inspect", "description": "Painted war canoes with coral-shell warriors. They escort every ship through the lagoon entrance and to the dock. Not optional. Not negotiable. They are fast, armed, and very professional." },
+        { "name": "Tribute Banner", "type": "inspect", "description": "A coral-stone arch over the dock bearing the Coral Crown's sigil — a crown of living reef. Below it, in three languages: 'Tribute precedes trade. The Crown is generous to friends.'" },
+        { "name": "Pilot Station", "type": "use", "description": "Local pilots wait in outrigger canoes to guide ships through the treacherous lagoon entrance. The channel is narrow, shallow, and shifts with the tides. Without a pilot, your ship will decorate the reef." }
+      ],
+      "parentDistrictId": "palace-ring"
+    },
+    {
+      "id": "tribute-hall",
+      "name": "The Tribute Hall",
+      "tags": ["institution", "authority", "customs"],
+      "description": "A grand coral-stone hall where every visiting captain presents tribute to the Coral King. Tribute Master Atua — the king's voice in trade — receives offerings with the gravity of a priest accepting sacraments. Silk or weapons are preferred. Silver is acceptable. Refusal is exile — your ship is escorted out and your name is remembered. The hall displays past tributes on coral shelves — evidence of every captain who paid respect.",
+      "gridX": 20, "gridY": 24,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["royal-dock", "palace-approach", "lagoon-market"],
+      "exits": [],
+      "light": 8, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Tribute Table", "type": "use", "description": "A coral slab where offerings are placed. Atua examines each tribute with careful hands. Silk is unfolded and inspected. Weapons are weighed and tested. Silver is counted. The quality of your tribute determines the quality of your welcome." },
+        { "name": "Tribute Shelves", "type": "inspect", "description": "Coral shelves displaying past tributes — bolts of silk, ornate weapons, porcelain vases, rare spices. Each is tagged with the captain's name and date. The shelves are a record of every friendship the Crown has made." },
+        { "name": "Exile List", "type": "inspect", "description": "A coral tablet listing captains who refused tribute. The list is short — most learn from others' mistakes. A Western merchant's ship nameplate is displayed alongside the tablet. He refused tribute. He swam home." }
+      ],
+      "parentDistrictId": "palace-ring"
+    },
+    {
+      "id": "lagoon-market",
+      "name": "The Lagoon Market",
+      "tags": ["market", "commerce", "trade"],
+      "description": "An open-air market on the causeway connecting the palace island to the outer islets. After tribute is paid, trade is permitted here — pearls, tobacco, rum, and tropical goods. The merchants are Crown-appointed — freelance trading is forbidden. Market Warden Tui ensures fair dealing with a coral-tipped staff and a reputation for impartiality. He reports directly to the king.",
+      "gridX": 36, "gridY": 28,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["royal-dock", "tribute-hall", "princes-quarter"],
+      "exits": [],
+      "light": 10, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Pearl Stalls", "type": "use", "description": "Crown-sanctioned pearl merchants displaying South Seas pearls on woven mats. Prices are set by the Crown and posted publicly. No haggling — the Crown's price is the price." },
+        { "name": "Tobacco & Rum Stand", "type": "use", "description": "South Seas tobacco and locally distilled rum. The tobacco is sun-cured and aromatic. The rum is dark, strong, and sweetened with reef honey. Both are exclusive to the Coral Crown." },
+        { "name": "Import Demand Board", "type": "inspect", "description": "A coral board listing what the Crown wants to buy — weapons (desperately), silk, tea. Prices are generous. The Crown pays well for what it needs. It needs weapons most of all." }
+      ],
+      "parentDistrictId": "market-islet"
+    },
+    {
+      "id": "war-canoe-harbor",
+      "name": "War Canoe Harbor",
+      "tags": ["military", "harbor", "naval"],
+      "description": "A sheltered inlet on the palace island's north side where the Crown's war canoe fleet is maintained. Thirty canoes in various states of repair and readiness. War Chief Mahina commands the fleet — a woman of terrifying competence who has repelled two pirate raids and one attempted coup without losing a single canoe. She is looking for weapons. Any captain who can supply them earns her respect, which is worth more than silver in the lagoon.",
+      "gridX": 4, "gridY": 22,
+      "gridWidth": 10, "gridHeight": 10,
+      "neighbors": ["royal-dock", "crown-tavern"],
+      "exits": [],
+      "light": 8, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "War Canoe Fleet", "type": "inspect", "description": "Thirty painted canoes on coral-stone slips. Each seats twelve warriors. The hulls are carved from single logs and reinforced with shark-skin binding. War Chief Mahina inspects each one daily." },
+        { "name": "Weapons Rack", "type": "inspect", "description": "Spears, clubs, and shell-edged swords. Effective but limited. Mahina wants steel weapons — cutlasses, pistols, anything that gives her warriors parity with foreign arms." },
+        { "name": "Training Ground", "type": "inspect", "description": "A flat coral platform where warriors train — spear drills, canoe-boarding exercises, formation maneuvers. Mahina watches from the edge, correcting with sharp commands and sharper throws of training spears." }
+      ],
+      "parentDistrictId": "palace-ring"
+    },
+    {
+      "id": "palace-approach",
+      "name": "The Palace Approach",
+      "tags": ["passage", "landmark", "royal"],
+      "description": "A coral causeway leading from the Tribute Hall to the Coral Palace itself. The walls on either side are living reef — coral still growing, embedded with shells and pearls that catch the light. Warriors stand at intervals. The approach is designed to impress, and it succeeds. At its end, the palace gates — coral arches ten feet high — frame a view of the throne room within.",
+      "gridX": 16, "gridY": 12,
+      "gridWidth": 8, "gridHeight": 10,
+      "neighbors": ["tribute-hall", "throne-room"],
+      "exits": [],
+      "light": 9, "noise": 2,
+      "hazards": [],
+      "interactables": [
+        { "name": "Living Coral Walls", "type": "inspect", "description": "The causeway walls are still growing — new coral polyps extend the palace's reach year by year. Embedded shells and pearls create patterns that shift with the tide. The palace is alive." },
+        { "name": "Warrior Sentries", "type": "inspect", "description": "Warriors in coral-shell armor standing at five-pace intervals. They do not speak. They do not move. Their eyes follow everything. Each carries a coral-tipped spear and a shark-tooth dagger." },
+        { "name": "Palace Gates", "type": "inspect", "description": "Two arches of living coral, ten feet high, framing the entrance to the throne room. The coral has been shaped — trained over centuries to grow in this form. Architecture through patience." }
+      ],
+      "parentDistrictId": "palace-ring"
+    },
+    {
+      "id": "throne-room",
+      "name": "The Throne Room",
+      "tags": ["institution", "authority", "landmark", "royal"],
+      "description": "The heart of the Coral Palace. The throne is carved from a single coral formation — grown in place over centuries, shaped by the reef itself. The Coral King sits here, old, wise, and without an heir. Three princes compete for succession, each courting foreign captains for weapons and alliances. The King observes, judges, and says little. His word is law. His silence is louder.",
+      "gridX": 14, "gridY": 2,
+      "gridWidth": 16, "gridHeight": 8,
+      "neighbors": ["palace-approach"],
+      "exits": [],
+      "light": 7, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Coral Throne", "type": "inspect", "description": "A throne grown from living reef — not carved, grown. It has taken three hundred years to reach its current form. The seat fits one person. The King says the throne chooses its occupant, not the other way around." },
+        { "name": "Pearl-Shell Walls", "type": "inspect", "description": "The throne room walls glitter with embedded pearls and shells — a fortune in decoration. Each pearl was placed by a different king over generations. The pattern tells the Crown's history to those who can read it." },
+        { "name": "Prince's Alcoves", "type": "inspect", "description": "Three alcoves flanking the throne room where the competing princes hold their separate courts. Each alcove bears a different banner. The tension between them is visible in the way their guards won't look at each other." }
+      ],
+      "parentDistrictId": "palace-ring"
+    },
+    {
+      "id": "crown-tavern",
+      "name": "The Reef Crown",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A thatched-roof tavern on the outer islet where visiting captains drink and scheme. Run by Miri — a former palace servant who knows every prince's weakness and every warrior's price. She serves reef honey rum and grilled fish with a smile that knows more than it says. The tavern is where the succession politics play out — each prince's agents buy drinks and whisper offers.",
+      "gridX": 4, "gridY": 10,
+      "gridWidth": 8, "gridHeight": 8,
+      "neighbors": ["war-canoe-harbor", "princes-quarter"],
+      "exits": [],
+      "light": 6, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Miri's Bar", "type": "use", "description": "A driftwood bar where Miri pours reef honey rum — sweet, dark, and stronger than it tastes. She offers information with each cup. The first cup is gossip. The second is politics. The third is secrets." },
+        { "name": "Prince's Corner Tables", "type": "inspect", "description": "Three tables in separate corners, each reserved for a different prince's agents. They buy drinks for captains and whisper about alliances, weapons deals, and the future of the Crown. The politics are real. The rum helps." },
+        { "name": "Succession Board", "type": "inspect", "description": "A cork board where Miri tracks the succession odds — tallied from conversations, observations, and a keen understanding of power. She updates daily. The princes pretend not to watch. They all watch." }
+      ],
+      "parentDistrictId": "market-islet"
+    },
+    {
+      "id": "princes-quarter",
+      "name": "The Princes' Quarter",
+      "tags": ["political", "faction", "residential"],
+      "description": "A cluster of buildings on the outer islet where the three competing princes maintain their households. Prince Kai — the warrior, allied with War Chief Mahina. Prince Lani — the diplomat, who courts foreign alliances. Prince Vao — the youngest, who believes the Crown should modernize. Each prince approaches visiting captains differently. Each wants weapons. The reasons differ.",
+      "gridX": 38, "gridY": 10,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["lagoon-market", "crown-tavern"],
+      "exits": [],
+      "light": 8, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Kai's War Hall", "type": "inspect", "description": "Prince Kai's residence — decorated with weapons and trophies. He wants weapons to strengthen the fleet. His alliance with Mahina gives him military backing. He offers pearls and timber in exchange." },
+        { "name": "Lani's Pavilion", "type": "inspect", "description": "Prince Lani's residence — open-sided, draped in silk, and designed for diplomacy. He wants weapons to buy alliances, not to fight. He offers trade concessions and exclusive access to Crown markets." },
+        { "name": "Vao's Workshop", "type": "inspect", "description": "Prince Vao's residence — cluttered with foreign books, navigation instruments, and a half-built spyglass. He wants weapons because a modern kingdom needs modern arms. He offers something the others can't — change." }
+      ],
+      "parentDistrictId": "market-islet"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "royal-dock", "toZoneId": "tribute-hall", "bidirectional": true, "kind": "road", "label": "Tribute Walk" },
+    { "fromZoneId": "royal-dock", "toZoneId": "lagoon-market", "bidirectional": true, "kind": "road", "label": "Market Causeway" },
+    { "fromZoneId": "royal-dock", "toZoneId": "war-canoe-harbor", "bidirectional": true, "kind": "road", "label": "North Shore" },
+    { "fromZoneId": "tribute-hall", "toZoneId": "palace-approach", "bidirectional": true, "kind": "road", "label": "Palace Way" },
+    { "fromZoneId": "tribute-hall", "toZoneId": "lagoon-market", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "palace-approach", "toZoneId": "throne-room", "bidirectional": true, "kind": "passage", "label": "Palace Gates" },
+    { "fromZoneId": "lagoon-market", "toZoneId": "princes-quarter", "bidirectional": true, "kind": "road", "label": "Outer Causeway" },
+    { "fromZoneId": "war-canoe-harbor", "toZoneId": "crown-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "crown-tavern", "toZoneId": "princes-quarter", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "palace-ring",
+      "name": "The Palace Ring",
+      "zoneIds": ["royal-dock", "tribute-hall", "war-canoe-harbor", "palace-approach", "throne-room"],
+      "tags": ["royal", "military", "authority"],
+      "baseMetrics": { "commerce": 40, "morale": 75, "safety": 90, "stability": 70 },
+      "economyProfile": { "supplyCategories": ["pearls", "tobacco", "rum"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    },
+    {
+      "id": "market-islet",
+      "name": "The Outer Islets",
+      "zoneIds": ["lagoon-market", "crown-tavern", "princes-quarter"],
+      "tags": ["commerce", "social", "political"],
+      "baseMetrics": { "commerce": 75, "morale": 65, "safety": 60, "stability": 55 },
+      "economyProfile": { "supplyCategories": ["pearls", "rum", "tobacco", "weapons"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "coral-palace", "name": "The Coral Palace", "zoneId": "throne-room", "gridX": 20, "gridY": 5, "description": "A palace grown from living reef over centuries. Walls of coral embedded with shells and pearls, glittering in the sun. The throne is a single coral formation — not carved, grown. Three hundred years in the making." },
+    { "id": "lagoon-entrance", "name": "The Lagoon Gate", "zoneId": "royal-dock", "gridX": 22, "gridY": 38, "description": "The narrow, treacherous entrance to the lagoon — navigable only with a local pilot. War canoes escort every ship through. The reef on either side has claimed dozens of hulls. Their remains are visible in the clear water." },
+    { "id": "war-fleet", "name": "The War Canoe Fleet", "zoneId": "war-canoe-harbor", "gridX": 8, "gridY": 26, "description": "Thirty painted war canoes on coral-stone slips. War Chief Mahina's fleet — the teeth of the Coral Crown. Each canoe seats twelve warriors in coral-shell armor." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "royal-dock", "gridX": 24, "gridY": 37, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "dock-captain-rangi", "name": "Dock Captain Rangi", "zoneId": "royal-dock", "role": "npc", "dialogueId": "rangi-greeting", "tags": ["dock-master", "warrior", "diplomatic"] },
+    { "entityId": "tribute-master-atua", "name": "Tribute Master Atua", "zoneId": "tribute-hall", "role": "npc", "dialogueId": "atua-greeting", "tags": ["authority", "tribute", "ceremonial"] },
+    { "entityId": "market-warden-tui", "name": "Market Warden Tui", "zoneId": "lagoon-market", "role": "merchant", "dialogueId": "tui-greeting", "tags": ["warden", "fair", "coral-staff"] },
+    { "entityId": "war-chief-mahina", "name": "War Chief Mahina", "zoneId": "war-canoe-harbor", "role": "quest-giver", "dialogueId": "mahina-greeting", "tags": ["war-chief", "fearsome", "weapons-hungry"] },
+    { "entityId": "coral-king", "name": "The Coral King", "zoneId": "throne-room", "role": "quest-giver", "dialogueId": "king-greeting", "tags": ["king", "old", "wise", "heirless"] },
+    { "entityId": "tavern-miri", "name": "Miri", "zoneId": "crown-tavern", "role": "npc", "dialogueId": "miri-greeting", "tags": ["tavern-keeper", "informed", "succession-tracker"] },
+    { "entityId": "prince-kai", "name": "Prince Kai", "zoneId": "princes-quarter", "role": "quest-giver", "dialogueId": "kai-prince-greeting", "tags": ["prince", "warrior", "mahina-allied"] },
+    { "entityId": "prince-lani", "name": "Prince Lani", "zoneId": "princes-quarter", "role": "quest-giver", "dialogueId": "lani-greeting", "tags": ["prince", "diplomat", "silk-lover"] },
+    { "entityId": "prince-vao", "name": "Prince Vao", "zoneId": "princes-quarter", "role": "quest-giver", "dialogueId": "vao-greeting", "tags": ["prince", "modernizer", "youngest"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "rangi-greeting",
+      "speakers": ["rangi"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "rangi", "text": "Captain. Welcome to the Coral Throne. Follow the pilot through the lagoon. My warriors will escort you. This is not a request — it is the Crown's protocol. Tribute first, then trade. The Tribute Hall is straight ahead from the dock.", "choices": [
+          { "id": "c1", "text": "What tribute is expected?", "nextNodeId": "tribute" },
+          { "id": "c2", "text": "I've heard the King has no heir.", "nextNodeId": "succession" }
+        ]},
+        "tribute": { "id": "tribute", "speaker": "rangi", "text": "Silk or weapons preferred. Silver accepted. The quality matters — Tribute Master Atua has an eye for value. A generous tribute earns the King's welcome. A poor one earns his patience. Refusal earns exile. Choose wisely.", "choices": [] },
+        "succession": { "id": "succession", "speaker": "rangi", "text": "The King's affairs are the King's business. But yes — three princes, no heir named. The lagoon is... political, right now. Trade carefully. Each prince has friends in the market. And in the tavern. And everywhere else.", "choices": [] }
+      }
+    },
+    {
+      "id": "atua-greeting",
+      "speakers": ["atua"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "atua", "text": "Captain. I am Atua, the King's voice in tribute. Place your offering on the table. Silk is examined for thread count. Weapons are weighed and tested. Silver is counted. The Crown remembers generosity — and its absence.", "choices": [
+          { "id": "c1", "text": "I offer this tribute.", "nextNodeId": "accept" },
+          { "id": "c2", "text": "What happens if I refuse?", "nextNodeId": "refuse" }
+        ]},
+        "accept": { "id": "accept", "speaker": "atua", "text": "Hmm. *examines the tribute carefully* The Crown accepts. You may trade in the Lagoon Market. Your name is recorded as a friend. Return with equal generosity and doors will open that are closed to others.", "choices": [] },
+        "refuse": { "id": "refuse", "speaker": "atua", "text": "Then your ship is escorted out of the lagoon and your name is added to the exile list. A Western merchant refused once. The King displayed his ship's nameplate as a palace decoration. The merchant swam home. The choice is yours.", "choices": [] }
+      }
+    },
+    {
+      "id": "tui-greeting",
+      "speakers": ["tui"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tui", "text": "Tribute paid? Good. The Lagoon Market is open to you. Prices are set by the Crown and posted publicly. No haggling — fair for buyer and seller. What do you seek?", "choices": [
+          { "id": "c1", "text": "Pearls and tobacco.", "nextNodeId": "pearls" },
+          { "id": "c2", "text": "What does the Crown need?", "nextNodeId": "needs" }
+        ]},
+        "pearls": { "id": "pearls", "speaker": "tui", "text": "South Seas pearls — from Typhoon Anchorage divers and our own reefs. Tobacco sun-cured on the outer islets. Both at Crown prices. Fair and final.", "choices": [] },
+        "needs": { "id": "needs", "speaker": "tui", "text": "Weapons. Desperately. The Crown's warriors fight with spears and coral-edged clubs. Steel cutlasses, pistols, powder — any captain who supplies these will find the Crown extremely generous in return. Silk and tea are also valued. But weapons... weapons change the Crown's future.", "choices": [] }
+      }
+    },
+    {
+      "id": "mahina-greeting",
+      "speakers": ["mahina"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "mahina", "text": "Captain. I am Mahina, War Chief of the Coral Crown. I command thirty canoes and three hundred warriors. We repelled two pirate raids with spears and courage. But courage is not enough against steel. I need weapons. What do you carry?", "choices": [
+          { "id": "c1", "text": "I have weapons to trade.", "nextNodeId": "weapons" },
+          { "id": "c2", "text": "Why not buy from other ports?", "nextNodeId": "why" }
+        ]},
+        "weapons": { "id": "weapons", "speaker": "mahina", "text": "Show me. Cutlasses, pistols, powder — name your price. The Crown pays in pearls, timber, and exclusive trade rights. Prince Kai supports my fleet. Together, we can offer favorable terms. Arm my warriors and the Crown remembers.", "choices": [] },
+        "why": { "id": "why", "speaker": "mahina", "text": "Dragon's Gate bans weapons export. The Exchange Alliance charges tribute we can't afford. The Monsoon Syndicate offers weapons at prices that include Syndicate loyalty. I want weapons without strings. A captain who sells clean is worth more than any alliance.", "choices": [] }
+      }
+    },
+    {
+      "id": "king-greeting",
+      "speakers": ["king"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "king", "text": "Captain. You stand before the Coral Throne. This throne has been growing for three hundred years. It will grow for three hundred more — with or without me. I am old. I have no heir. But the Crown endures. What brings you to my lagoon?", "choices": [
+          { "id": "c1", "text": "Trade, Your Majesty.", "nextNodeId": "trade" },
+          { "id": "c2", "text": "The succession — is there anything I can do?", "nextNodeId": "succession" }
+        ]},
+        "trade": { "id": "trade", "speaker": "king", "text": "Then trade well and trade fairly. The Crown remembers honest captains. Bring us weapons and we will give you pearls. Bring us silk and we will give you rum. The lagoon is open to those who pay tribute and keep their word.", "choices": [] },
+        "succession": { "id": "succession", "speaker": "king", "text": "Three princes. Kai fights. Lani talks. Vao thinks. Each has merit. Each has blind spots. The throne will choose — it always does. What you can do, Captain, is trade with all three and favor none. The Crown is larger than any prince.", "choices": [] }
+      }
+    },
+    {
+      "id": "miri-greeting",
+      "speakers": ["miri"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "miri", "text": "Reef honey rum? It's sweet until it hits. Like the politics here. I served in the palace for fifteen years. Now I serve rum and better information. What do you want to know?", "choices": [
+          { "id": "c1", "text": "Tell me about the three princes.", "nextNodeId": "princes" },
+          { "id": "c2", "text": "Any rumors?", "nextNodeId": "rumors" }
+        ]},
+        "princes": { "id": "princes", "speaker": "miri", "text": "Kai has the warriors — Mahina backs him. Lani has the diplomats — he's courting the Exchange Alliance. Vao has the ideas — the youngest, the cleverest, the least experienced. My board says Kai leads. But the throne doesn't always choose the strongest. It chose the King, and he was a fisherman's son.", "choices": [] },
+        "rumors": { "id": "rumors", "speaker": "miri", "text": "Prince Lani sent envoys to Porto Novo last month — seeking an Exchange Alliance trade agreement. Kai found out and tripled the war canoe patrols to look strong. Vao, meanwhile, is building a spyglass from foreign parts. The King watches all three and says nothing. As always.", "choices": [] }
+      }
+    },
+    {
+      "id": "kai-prince-greeting",
+      "speakers": ["kai-prince"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kai-prince", "text": "Captain. I am Kai, eldest prince. The Crown needs strength. Mahina's fleet needs steel. I offer pearls and exclusive harbor rights to any captain who arms our warriors. Talk or fight — I prefer fight. But I'll settle for trade.", "choices": [
+          { "id": "c1", "text": "What would you do as King?", "nextNodeId": "vision" }
+        ]},
+        "vision": { "id": "vision", "speaker": "kai-prince", "text": "Expand the fleet. Arm the warriors with steel. Make the Coral Crown feared, not just respected. The Brotherhood raids our fishing boats. The Syndicate eyes our waters. Respect comes from strength. I am strength.", "choices": [] }
+      }
+    },
+    {
+      "id": "lani-greeting",
+      "speakers": ["lani"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "lani", "text": "Captain. Prince Lani. Please, sit — I prefer conversation to confrontation. The Crown's future lies in alliances, not armies. I offer trade concessions to captains who can connect us to the Exchange Alliance. Silk for diplomacy. Weapons for security. But always — diplomacy first.", "choices": [
+          { "id": "c1", "text": "What would you do as King?", "nextNodeId": "vision" }
+        ]},
+        "vision": { "id": "vision", "speaker": "lani", "text": "Make the Coral Crown a trading partner, not just a tribute collector. Alliance with the Exchange Alliance opens ports across the Mediterranean. Alliance with the Silk Circle opens the East. The Crown sits at a crossroads. I would make that crossroads the center of the world.", "choices": [] }
+      }
+    },
+    {
+      "id": "vao-greeting",
+      "speakers": ["vao"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "vao", "text": "Captain! Come see this — I'm building a spyglass from parts I traded for. My brothers want weapons and alliances. I want knowledge. Navigation instruments, books, charts — bring me the tools to understand the world and I'll show this kingdom a future neither of my brothers can imagine.", "choices": [
+          { "id": "c1", "text": "What would you do as King?", "nextNodeId": "vision" }
+        ]},
+        "vision": { "id": "vision", "speaker": "vao", "text": "Build a school. Train navigators. Learn to build ships, not just canoes. The world is larger than the lagoon, and the Crown that learns fastest will lead longest. Kai fights yesterday's battles. Lani negotiates today's deals. I'm planning for tomorrow.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "dock-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in the Coral King's lagoon.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "crown-friend", "name": "Friend of the Crown", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "coral-crown" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

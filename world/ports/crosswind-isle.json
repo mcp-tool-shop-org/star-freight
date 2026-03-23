@@ -1,0 +1,346 @@
+{
+  "id": "portlight-crosswind-isle",
+  "name": "Crosswind Isle",
+  "description": "Free port at the junction of all trade winds. Everything passes through, nothing stays cheap. The Free Port Council — elected captains — enforce exactly one rule: no one rules. All flags fly. No nation claims the isle. Someone tried once. By morning, every captain in harbor had their guns trained on his ship. He left.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["chaotic", "free", "mercantile"],
+  "difficulty": "beginner",
+  "narratorTone": "The Free Port Bell tolls — one ring for every ship that enters, never for one that leaves. Flags from every nation snap in the crosswind. Money-changers set up tables on the dock before your anchor hits bottom. Crosswind Isle doesn't care who you are. It cares what you carry.",
+  "mode": "district",
+
+  "map": {
+    "id": "crosswind-isle-map",
+    "name": "Crosswind Isle",
+    "description": "A volcanic island with a natural harbor on the leeward side. The town sprawls up from the waterfront in layers of wood, canvas, and ambition. No permanent stone buildings — everything here is temporary by philosophy. The Free Port Bell hangs on a tower at the harbor mouth.",
+    "gridWidth": 56,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "bell-harbor",
+      "name": "Bell Harbor",
+      "tags": ["harbor", "docks", "arrival", "landmark"],
+      "description": "A wide natural harbor where ships from every region jostle for berth. The Free Port Bell — a massive bronze bell on a wooden tower — tolls once for each arriving ship. The harbor has no master, no assigned berths, no fees. You anchor where you can. Disputes are settled by whoever got there first. The Bell Keeper is an old woman named Dessa who rings it with a rope thicker than her arm. She has not missed an arrival in twenty years.",
+      "gridX": 12, "gridY": 30,
+      "gridWidth": 24, "gridHeight": 8,
+      "neighbors": ["money-row", "the-jumble", "council-platform"],
+      "exits": [],
+      "light": 9, "noise": 9,
+      "hazards": ["crowded moorings — watch for collisions"],
+      "interactables": [
+        { "name": "The Free Port Bell", "type": "inspect", "description": "A massive bronze bell on a wooden tower. One toll for every ship that enters. Never tolled for a departure — to leave Crosswind Isle is your own business. The bell's sound carries across the entire harbor." },
+        { "name": "Flag Forest", "type": "inspect", "description": "A thicket of flagpoles at the harbor entrance, flying every national flag, faction pennant, and pirate standard. All flags fly here. That's the law. Adding one costs nothing. Removing one costs everything." },
+        { "name": "Anchor Stones", "type": "inspect", "description": "Natural basalt columns where ships tie off. No assigned berths — first come, first served. Scratch marks on the stone record a hundred thousand lines." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "money-row",
+      "name": "Money Row",
+      "tags": ["commerce", "finance", "market"],
+      "description": "A row of canvas-topped stalls along the harbor where money-changers, commodity brokers, and insurance agents operate. Every currency in the Known World is exchanged here. The changers set up before dawn and pack away at dusk — no permanent structures allowed on Money Row. Chief Changer Abbas runs the largest operation with an abacus that clicks faster than speech. He can quote exchange rates for twelve currencies simultaneously.",
+      "gridX": 8, "gridY": 22,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["bell-harbor", "the-jumble", "all-flags-tavern"],
+      "exits": [],
+      "light": 8, "noise": 8,
+      "hazards": ["pickpockets"],
+      "interactables": [
+        { "name": "Currency Tables", "type": "use", "description": "Canvas-topped tables heaped with coins from every nation. Abbas's abacus clicks without pause. Exchange rates are chalked on a slate — they change hourly." },
+        { "name": "Insurance Board", "type": "inspect", "description": "A cork board where cargo insurance is offered. Rates depend on route, season, and the insurer's confidence in your seamanship. Some routes are listed as 'uninsurable.'" },
+        { "name": "Broker's Chalk Wall", "type": "inspect", "description": "A long plank wall where commodity prices are chalked in real time. Spice, silk, iron, grain — all fluctuating as ships arrive and depart. Erasing someone else's price is grounds for a duel." }
+      ],
+      "parentDistrictId": "waterfront"
+    },
+    {
+      "id": "the-jumble",
+      "name": "The Jumble",
+      "tags": ["market", "commerce", "bazaar"],
+      "description": "A sprawling open-air market where anything legal — and some things that aren't — can be bought. Stalls made of driftwood and sailcloth, arranged in no particular order and rearranged daily. Goods from every region pile on tables and blankets. The Jumble has no master, no rules beyond 'don't steal from the stall in front of you.' Navigation requires instinct. Finding something twice requires luck.",
+      "gridX": 20, "gridY": 16,
+      "gridWidth": 16, "gridHeight": 10,
+      "neighbors": ["bell-harbor", "money-row", "all-flags-tavern", "council-platform", "provision-alley"],
+      "exits": [],
+      "light": 8, "noise": 9,
+      "hazards": ["pickpockets", "occasional brawls"],
+      "interactables": [
+        { "name": "Spice Corner", "type": "use", "description": "A cluster of stalls selling spice from the East Indies — cinnamon, cardamom, pepper. Prices fluctuate by the hour depending on what ships have arrived." },
+        { "name": "Arms Table", "type": "use", "description": "Cutlasses, pistols, and ammunition laid out on a canvas sheet. The seller is a scarred woman who tests every blade on a rope before selling. No names. No questions." },
+        { "name": "Curiosities Stall", "type": "inspect", "description": "A stall of oddities — compass roses carved from whale bone, maps of dubious accuracy, a bottle labeled 'genuine kraken ink.' The seller swears everything is authentic. The prices suggest otherwise." }
+      ],
+      "parentDistrictId": "market-district"
+    },
+    {
+      "id": "all-flags-tavern",
+      "name": "The All-Flags Tavern",
+      "tags": ["tavern", "social", "rumors", "landmark"],
+      "description": "The oldest establishment on Crosswind Isle — a ramshackle two-story building held together by habit and rum. The ceiling is hung with flags from ships that never left. Tavern keeper Big Nara — a towering woman from the South Seas — serves rum, beer, and a fish stew that tastes different every day depending on what the fishing boats caught. She breaks up fights with a voice that stops storms.",
+      "gridX": 2, "gridY": 14,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["money-row", "the-jumble"],
+      "exits": [],
+      "light": 5, "noise": 8,
+      "hazards": ["bar fights after dark"],
+      "interactables": [
+        { "name": "Nara's Bar", "type": "use", "description": "A bar made from a ship's keel. Nara pours rum with one hand and keeps order with the other. Her stew is free with a drink. The drink is not optional." },
+        { "name": "Dead-Ship Flags", "type": "inspect", "description": "Flags from ships that sank, were scuttled, or simply never sailed again. Each has a small plaque with the ship's name and the year. The oldest is forty years old. Nobody removes them." },
+        { "name": "Notice Board", "type": "inspect", "description": "Crew wanted, cargo sought, routes offered. Written on torn paper and pinned with nails. Half the notices are outdated. The other half are opportunities — if you can tell the difference." }
+      ],
+      "parentDistrictId": "market-district"
+    },
+    {
+      "id": "provision-alley",
+      "name": "Provision Alley",
+      "tags": ["shop", "supplies", "merchant-npc"],
+      "description": "A narrow alley behind the Jumble where serious provisioners operate. Quartermaster Obi stocks everything a ship needs — rope, sailcloth, tar, dried food, ammunition. He's a retired naval quartermaster who deserted for the free port life. His prices are fair, his inventory is complete, and he judges you by the state of your ship, not the weight of your purse.",
+      "gridX": 38, "gridY": 18,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["the-jumble"],
+      "exits": [],
+      "light": 6, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Ship Supplies", "type": "use", "description": "Rope, sailcloth, tar, nails, lantern oil — organized with military precision. Obi knows what you need before you ask. He also knows what you've been neglecting." },
+        { "name": "Dried Provisions", "type": "use", "description": "Hardtack, salt pork, dried fruit, rice. All sealed against damp. Obi won't sell provisions he wouldn't eat himself. That eliminates about half the market's stock." },
+        { "name": "Ammunition Chest", "type": "use", "description": "Locked iron chest of pistol shot, powder charges, and crossbow bolts. Obi keeps the key on his person. He sells to anyone but remembers every face." }
+      ],
+      "parentDistrictId": "market-district"
+    },
+    {
+      "id": "council-platform",
+      "name": "The Council Platform",
+      "tags": ["institution", "authority", "political"],
+      "description": "An elevated wooden platform at the harbor's north end where the Free Port Council meets. Five elected captains who serve two-year terms. Their only job is to maintain the one rule: no one rules. Council Speaker Tomás Reyes — a weathered Portuguese privateer — chairs sessions with dry humor and a loaded pistol on the table. The pistol is for emphasis. He has never fired it. At a meeting.",
+      "gridX": 36, "gridY": 28,
+      "gridWidth": 10, "gridHeight": 6,
+      "neighbors": ["bell-harbor", "the-jumble", "safe-harbor-dock"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Council Table", "type": "inspect", "description": "A weathered table with five chairs. Tomás's pistol sits at center. The charter — a single page declaring that no nation may claim the isle — is nailed to the table's surface under glass." },
+        { "name": "Petition Box", "type": "use", "description": "A locked box where captains submit grievances. The council reviews them weekly. Most complaints are about berth disputes. Some are about more interesting things." }
+      ],
+      "parentDistrictId": "council-quarter"
+    },
+    {
+      "id": "safe-harbor-dock",
+      "name": "Safe Harbor Dock",
+      "tags": ["harbor", "safe-harbor", "refuge"],
+      "description": "A sheltered inner dock where ships in distress are given free berth for three days. The Free Port Council established it after a typhoon left seven crews stranded with damaged vessels. No questions asked, no fees charged, no cargo inspected. The only rule: you leave when your ship is seaworthy. Ships have been known to exaggerate damage for the free berth. The council doesn't investigate — they say generosity is the price of freedom.",
+      "gridX": 44, "gridY": 32,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["council-platform"],
+      "exits": [],
+      "light": 8, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Safe Harbor Plaque", "type": "inspect", "description": "A carved wooden plaque: 'Three days. No questions. No fees. The sea does not discriminate and neither do we.' Signed by the founding council, thirty years ago." },
+        { "name": "Repair Tools", "type": "use", "description": "Basic tools and timber left for visiting crews to make emergency repairs. Maintained by the council from harbor donations. Not fancy, but functional." }
+      ],
+      "parentDistrictId": "council-quarter"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "bell-harbor", "toZoneId": "money-row", "bidirectional": true, "kind": "road", "label": "Harbor Walk" },
+    { "fromZoneId": "bell-harbor", "toZoneId": "the-jumble", "bidirectional": true, "kind": "stairs", "label": "Market Steps" },
+    { "fromZoneId": "bell-harbor", "toZoneId": "council-platform", "bidirectional": true, "kind": "road", "label": "North Dock" },
+    { "fromZoneId": "money-row", "toZoneId": "the-jumble", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "money-row", "toZoneId": "all-flags-tavern", "bidirectional": true, "kind": "road", "label": "Tavern Lane" },
+    { "fromZoneId": "the-jumble", "toZoneId": "all-flags-tavern", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "the-jumble", "toZoneId": "council-platform", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "the-jumble", "toZoneId": "provision-alley", "bidirectional": true, "kind": "passage", "label": "Back Alley" },
+    { "fromZoneId": "council-platform", "toZoneId": "safe-harbor-dock", "bidirectional": true, "kind": "road", "label": "Inner Dock Path" }
+  ],
+
+  "districts": [
+    {
+      "id": "waterfront",
+      "name": "The Waterfront",
+      "zoneIds": ["bell-harbor", "money-row"],
+      "tags": ["harbor", "finance", "arrival"],
+      "baseMetrics": { "commerce": 95, "morale": 70, "safety": 50, "stability": 55 },
+      "economyProfile": { "supplyCategories": ["everything"], "scarcityDefaults": {} },
+      "controllingFaction": "free-ports"
+    },
+    {
+      "id": "market-district",
+      "name": "The Market District",
+      "zoneIds": ["the-jumble", "all-flags-tavern", "provision-alley"],
+      "tags": ["commerce", "social", "chaotic"],
+      "baseMetrics": { "commerce": 90, "morale": 75, "safety": 45, "stability": 50 },
+      "economyProfile": { "supplyCategories": ["spice", "arms", "provisions", "silk", "iron"], "scarcityDefaults": {} },
+      "controllingFaction": "free-ports"
+    },
+    {
+      "id": "council-quarter",
+      "name": "The Council Quarter",
+      "zoneIds": ["council-platform", "safe-harbor-dock"],
+      "tags": ["authority", "refuge", "political"],
+      "baseMetrics": { "commerce": 20, "morale": 80, "safety": 75, "stability": 70 },
+      "economyProfile": { "supplyCategories": [], "scarcityDefaults": {} },
+      "controllingFaction": "free-ports"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "free-port-bell", "name": "The Free Port Bell", "zoneId": "bell-harbor", "gridX": 22, "gridY": 33, "description": "A massive bronze bell on a wooden tower at the harbor mouth. One toll for every ship that enters, never for one that leaves. Bell Keeper Dessa has not missed an arrival in twenty years." },
+    { "id": "flag-forest", "name": "The Flag Forest", "zoneId": "bell-harbor", "gridX": 14, "gridY": 31, "description": "A thicket of flagpoles at the harbor entrance flying every flag in the Known World. All flags fly here. That's the law." },
+    { "id": "all-flags-ceiling", "name": "The Dead-Ship Gallery", "zoneId": "all-flags-tavern", "gridX": 6, "gridY": 17, "description": "The ceiling of the All-Flags Tavern, hung with flags from ships that never sailed again. Each has a plaque. The oldest is forty years old." }
+  ],
+
+  "spawnPoints": [
+    { "id": "harbor-arrival", "zoneId": "bell-harbor", "gridX": 22, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "dessa-bellkeeper", "name": "Bell Keeper Dessa", "zoneId": "bell-harbor", "role": "npc", "dialogueId": "dessa-greeting", "tags": ["bell-keeper", "veteran", "observant"] },
+    { "entityId": "abbas-changer", "name": "Chief Changer Abbas", "zoneId": "money-row", "role": "merchant", "dialogueId": "abbas-greeting", "tags": ["money-changer", "fast", "shrewd"] },
+    { "entityId": "big-nara", "name": "Big Nara", "zoneId": "all-flags-tavern", "role": "npc", "dialogueId": "nara-greeting", "tags": ["tavern-keeper", "towering", "south-seas"] },
+    { "entityId": "tomas-reyes", "name": "Council Speaker Tomás Reyes", "zoneId": "council-platform", "role": "quest-giver", "dialogueId": "tomas-greeting", "tags": ["authority", "privateer", "dry-humor"] },
+    { "entityId": "quartermaster-obi", "name": "Quartermaster Obi", "zoneId": "provision-alley", "role": "merchant", "dialogueId": "obi-greeting", "tags": ["merchant", "ex-navy", "precise"] },
+    { "entityId": "arms-dealer-scar", "name": "Scar", "zoneId": "the-jumble", "role": "merchant", "dialogueId": "scar-greeting", "tags": ["arms-dealer", "silent", "scarred"] },
+    { "entityId": "safe-harbor-keeper", "name": "Dockhand Finn", "zoneId": "safe-harbor-dock", "role": "npc", "dialogueId": "finn-greeting", "tags": ["dockhand", "kind", "volunteer"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "dessa-greeting",
+      "speakers": ["dessa"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "dessa", "text": "*BONG* That's yours, Captain. Ship number fourteen thousand, three hundred and something. I stopped counting exactly. Welcome to Crosswind Isle. There are no rules except the one.", "choices": [
+          { "id": "c1", "text": "What's the one rule?", "nextNodeId": "rule" },
+          { "id": "c2", "text": "What happens here?", "nextNodeId": "what-happens" }
+        ]},
+        "rule": { "id": "rule", "speaker": "dessa", "text": "No one rules. All flags fly. The last man who tried to claim this isle woke up to forty cannons pointed at his cabin. He left before breakfast. The bell doesn't toll for departures.", "choices": [] },
+        "what-happens": { "id": "what-happens", "speaker": "dessa", "text": "Everything. Every cargo, every currency, every flag. Money Row for exchange, the Jumble for goods, the All-Flags for rum and rumors. If it exists and it can be sold, someone on this island has it. Finding them is your problem.", "choices": [] }
+      }
+    },
+    {
+      "id": "abbas-greeting",
+      "speakers": ["abbas"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "abbas", "text": "Currency? I change twelve. Name yours. Exchange rate is on the slate — updated hourly because the wind changes and so does value. Fair rates. My reputation is my business.", "choices": [
+          { "id": "c1", "text": "What's the market like today?", "nextNodeId": "market" },
+          { "id": "c2", "text": "I need to convert a large sum.", "nextNodeId": "large-sum" }
+        ]},
+        "market": { "id": "market", "speaker": "abbas", "text": "Three eastern junks arrived at dawn — eastern currency is flooding. Western silver is strong today. If you're carrying Silk Circle coin, sell it now. By afternoon the rate will drop. The abacus doesn't lie.", "choices": [] },
+        "large-sum": { "id": "large-sum", "speaker": "abbas", "text": "Large sums get better rates — the abacus rewards volume. But I count every coin twice. You should too. Crosswind Isle is free, not safe. Count your silver before you leave my table.", "choices": [] }
+      }
+    },
+    {
+      "id": "nara-greeting",
+      "speakers": ["nara"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "nara", "text": "Sit down before you fall down — you look like the wind blew you here. Rum or stew? The stew is free with a drink. The rum costs three silver. The stew changes daily. The rum doesn't.", "choices": [
+          { "id": "c1", "text": "What's the word on the water?", "nextNodeId": "rumors" },
+          { "id": "c2", "text": "Tell me about those flags on the ceiling.", "nextNodeId": "flags" },
+          { "id": "c3", "text": "Any work going?", "nextNodeId": "work" }
+        ]},
+        "rumors": { "id": "rumors", "speaker": "nara", "text": "The Monsoon Syndicate has scouts in harbor — two ships, flying fake Free Port colors. Everybody knows. Nobody cares. That's Crosswind Isle for you. Also, a Silk Circle junk is selling porcelain at half price. Either it's stolen or it's cracked. Either way, the deal won't last.", "choices": [] },
+        "flags": { "id": "flags", "speaker": "nara", "text": "Ships that didn't make it. The flag stays so the name isn't forgotten. Some sank. Some were scuttled. Some just... stopped. I hang them myself. It's the least a tavern keeper can do for the sea.", "choices": [] },
+        "work": { "id": "work", "speaker": "nara", "text": "Check the notice board. Crew wanted, cargo sought, routes offered. Half of it's outdated, half of it's lies, and the rest is opportunity. Figuring out which is which — that's the free port tax.", "choices": [] }
+      }
+    },
+    {
+      "id": "tomas-greeting",
+      "speakers": ["tomas"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tomas", "text": "Captain. Tomás Reyes, Council Speaker. We have one rule and I enforce it with five elected captains and this pistol. Both are loaded. What brings you to the council?", "choices": [
+          { "id": "c1", "text": "How does the council work?", "nextNodeId": "council" },
+          { "id": "c2", "text": "I have a dispute to settle.", "nextNodeId": "dispute" }
+        ]},
+        "council": { "id": "council", "speaker": "tomas", "text": "Five captains, elected every two years by captains with at least three dockings at Crosswind Isle. We maintain the charter — no one claims the isle, all flags fly, safe harbor for ships in distress. We don't govern. We prevent governing. There's a difference.", "choices": [] },
+        "dispute": { "id": "dispute", "speaker": "tomas", "text": "Write it up and put it in the petition box. The council reviews weekly. Berth disputes, cargo claims, accusations of cheating — we hear them all. We're fair because we have to be. An unfair free port isn't free for long.", "choices": [] }
+      }
+    },
+    {
+      "id": "obi-greeting",
+      "speakers": ["obi"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "obi", "text": "Your rigging needs replacement — I could see it from shore. Quartermaster Obi. I stock what ships need, not what merchants want to sell. There's a difference. What do you need?", "choices": [
+          { "id": "c1", "text": "Full resupply.", "nextNodeId": "resupply" },
+          { "id": "c2", "text": "Ammunition.", "nextNodeId": "ammo" }
+        ]},
+        "resupply": { "id": "resupply", "speaker": "obi", "text": "Rope, sailcloth, tar, hardtack, salt meat, lamp oil. Standard kit — fifteen silver. Everything tested. I served twenty years in the navy before I decided freedom was worth the pay cut. I still run my stores to naval standard.", "choices": [] },
+        "ammo": { "id": "ammo", "speaker": "obi", "text": "Powder charges, pistol shot, crossbow bolts. All dry, all tested. I don't sell damp powder — I've seen what it does in a fight. Nothing. And then you're dead.", "choices": [] }
+      }
+    },
+    {
+      "id": "scar-greeting",
+      "speakers": ["scar"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "scar", "text": "Looking or buying.", "choices": [
+          { "id": "c1", "text": "Buying.", "nextNodeId": "buying" },
+          { "id": "c2", "text": "Just looking.", "nextNodeId": "looking" }
+        ]},
+        "buying": { "id": "buying", "speaker": "scar", "text": "Cutlass. Rapier. Pistol. Prices on the blade. I test everything. If it breaks on my rope, it won't break on you. No names. No questions. Silver only.", "choices": [] },
+        "looking": { "id": "looking", "speaker": "scar", "text": "Look fast.", "choices": [] }
+      }
+    },
+    {
+      "id": "finn-greeting",
+      "speakers": ["finn"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "finn", "text": "Safe harbor, Captain. Three days, no fees, no questions. If your ship needs mending, tools are on the rack. If your crew needs feeding, Big Nara's stew is free for safe harbor ships. Just wave my name at the bar.", "choices": [
+          { "id": "c1", "text": "Why do you volunteer here?", "nextNodeId": "why" }
+        ]},
+        "why": { "id": "why", "speaker": "finn", "text": "A storm took my ship two years ago. Safe harbor saved my crew. Now I keep the dock clean and the tools sharp. The council pays nothing. I owe everything. Fair trade, in my book.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "harbor-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader at the crossroads.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "free-port-voter", "name": "Free Port Voter", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "free-port-citizen" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

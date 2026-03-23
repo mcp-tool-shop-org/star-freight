@@ -1,0 +1,192 @@
+{
+  "id": "portlight-palm-cove",
+  "name": "Palm Cove",
+  "description": "A West African rum port where the Seven Houses distill spirits so fine that captains detour entire routes to fill their holds. The air is sweet molasses and fermenting sugar cane. Palm Cove doesn't do politics — it does rum and generosity. A cup for every stranger. Refusing is a generational insult. The cheapest provisions in the known world because the land provides and the people share.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["tropical", "generous", "easygoing"],
+  "difficulty": "beginner",
+  "narratorTone": "The breeze smells like sugar and forgiveness. Palm Cove is the kind of port where your problems dissolve in rum and your debts dissolve in generosity. Nobody here has ever held a grudge. The concept is culturally impossible.",
+  "mode": "district",
+
+  "map": {
+    "id": "palm-cove-map",
+    "name": "Palm Cove",
+    "description": "A crescent cove fringed by palm trees and sugar cane fields. The harbor is shallow — big ships anchor offshore and lighter cargo in. Distillery Row lines the beach road. Kofi's leatherworks sits at the edge of town. Everything is sun-bleached, salt-crusted, and unhurried.",
+    "gridWidth": 48,
+    "gridHeight": 36,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "palm-harbor",
+      "name": "The Shallow Harbor",
+      "tags": ["harbor", "docks", "arrival", "tropical"],
+      "description": "A warm, shallow harbor where big ships anchor offshore and cargo comes in by lighter. The beach is white coral sand. Palm trees lean over the water. Dockworkers carry rum barrels on their shoulders, singing as they wade through knee-deep water. The harbor master is a woman named Abena who greets every captain with a cup of rum. Refusing it is an insult that will echo for generations.",
+      "gridX": 10, "gridY": 22,
+      "gridWidth": 20, "gridHeight": 8,
+      "neighbors": ["distillery-row", "kofi-workshop", "cove-commons"],
+      "exits": [],
+      "light": 10, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Welcome Cup", "type": "use", "description": "Harbor Master Abena holds a cup of dark rum. She offers it with both hands. Take it. Drink it. Smile. This is how Palm Cove says hello. Refusing is the only crime here." },
+        { "name": "Lighter Boats", "type": "inspect", "description": "Flat-bottomed boats that shuttle cargo between anchored ships and the beach. The lighter crews race each other. It's not official. Everyone pretends it's not happening." }
+      ],
+      "parentDistrictId": "beach"
+    },
+    {
+      "id": "distillery-row",
+      "name": "Distillery Row",
+      "tags": ["industry", "landmark", "rum", "craft"],
+      "description": "Seven rum houses line the beach road, each owned by a founding family. The recipes are secret. The rivalries are friendly. The rum is extraordinary. Sugar cane fields stretch behind the distilleries to the hills. Each house has a sign — a carved emblem of the family's totem animal. The competition produces the finest rum in the world. Everyone in Palm Cove knows this. They're not wrong.",
+      "gridX": 6, "gridY": 12,
+      "gridWidth": 22, "gridHeight": 8,
+      "neighbors": ["palm-harbor", "cove-commons"],
+      "exits": [],
+      "light": 9, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Seven Signs", "type": "inspect", "description": "Seven carved wooden signs — pelican, turtle, heron, crocodile, parrot, iguana, and fish. Each family's totem. Each house's pride. The carvings are repainted annually in a festival that involves more rum than paint." },
+        { "name": "Tasting Table", "type": "use", "description": "Every distillery offers free tastings. Every captain tries all seven. Every captain has a favorite. Every family claims the most favorites. Nobody keeps count. Everyone keeps count." },
+        { "name": "Sugar Cane Press", "type": "inspect", "description": "A massive wooden press where raw sugar cane is crushed. The juice flows into copper kettles. The smell of molasses is so thick you can taste it by breathing." }
+      ],
+      "parentDistrictId": "beach"
+    },
+    {
+      "id": "kofi-workshop",
+      "name": "Kofi's Leatherworks",
+      "tags": ["shop", "armor", "merchant-npc", "craft"],
+      "description": "A workshop at the cove's edge where Kofi works crocodile hide into armor that turns blades. His fingers are scarred from the stitching awl. He doesn't talk much — he shows you the leather, you feel the quality, and you either buy or you don't. His prices are the fairest on the coast because, as he says, 'good leather doesn't need a good price. It needs honest hands.'",
+      "gridX": 34, "gridY": 18,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["palm-harbor"],
+      "exits": [],
+      "light": 7, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Leather Display", "type": "use", "description": "Crocodile-hide vests, padded coats, belts, scabbards. Every piece hand-stitched. Kofi holds each one up without speaking. The quality speaks for itself." },
+        { "name": "Stitching Bench", "type": "inspect", "description": "An awl, heavy thread, and a half-finished vest. Kofi's hands bear scars from decades of crocodile hide work. He stitches even when there are no customers. 'Idle hands make bad leather,' he says." }
+      ],
+      "parentDistrictId": "beach"
+    },
+    {
+      "id": "cove-commons",
+      "name": "The Cove Commons",
+      "tags": ["social", "tavern", "community"],
+      "description": "Not a tavern — a communal gathering space under a massive thatched roof where the entire cove comes together each evening. Old Cassius tends the fire and the conversation. He claims rum cures fever, heals wounds, and makes you invisible to customs officers. Two of those three are true. The Commons is where deals are sealed, stories are told, and the Seven Houses compete to see whose rum empties first.",
+      "gridX": 14, "gridY": 4,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["distillery-row", "palm-harbor"],
+      "exits": [],
+      "light": 5, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Cassius's Fire", "type": "use", "description": "Old Cassius sits by the fire with a rum gourd that's never empty. 'Rum cures fever, heals wounds, and makes you invisible to customs. Two of those are true. Buy a gourd and figure out which two.'" },
+        { "name": "Seven Barrels", "type": "inspect", "description": "Seven rum barrels, one from each House, set up for communal drinking. The barrel that empties first means that House wins... something. Nobody remembers what. But every House wants to win." },
+        { "name": "Story Fire", "type": "use", "description": "After dark, stories circle the fire. Work songs become history songs. Captains who share a good story earn a refill. Captains who share a true story earn two." }
+      ],
+      "parentDistrictId": "inland"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "palm-harbor", "toZoneId": "distillery-row", "bidirectional": true, "kind": "road", "label": "Beach Road" },
+    { "fromZoneId": "palm-harbor", "toZoneId": "kofi-workshop", "bidirectional": true, "kind": "road", "label": "Cove Path" },
+    { "fromZoneId": "palm-harbor", "toZoneId": "cove-commons", "bidirectional": true, "kind": "road", "label": "Inland Path" },
+    { "fromZoneId": "distillery-row", "toZoneId": "cove-commons", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "beach",
+      "name": "The Beach",
+      "zoneIds": ["palm-harbor", "distillery-row", "kofi-workshop"],
+      "tags": ["harbor", "industry", "craft"],
+      "baseMetrics": { "commerce": 70, "morale": 90, "safety": 75, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["rum", "tobacco", "leather"], "scarcityDefaults": {} },
+      "controllingFaction": "gold-coast-compact"
+    },
+    {
+      "id": "inland",
+      "name": "The Inland",
+      "zoneIds": ["cove-commons"],
+      "tags": ["social", "community"],
+      "baseMetrics": { "commerce": 30, "morale": 95, "safety": 85, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["provisions"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "distillery-row-landmark", "name": "Distillery Row", "zoneId": "distillery-row", "gridX": 16, "gridY": 16, "description": "Seven rum houses, seven family totems, seven secret recipes. The finest rum in the world. Everyone in Palm Cove knows this. They're not wrong." },
+    { "id": "welcome-cup", "name": "The Welcome Cup", "zoneId": "palm-harbor", "gridX": 20, "gridY": 26, "description": "The cup of rum offered to every arriving captain. Refusing it is a generational insult. Nobody has ever refused it twice." }
+  ],
+
+  "spawnPoints": [
+    { "id": "beach-arrival", "zoneId": "palm-harbor", "gridX": 20, "gridY": 26, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "harbor-master-abena", "name": "Harbor Master Abena", "zoneId": "palm-harbor", "role": "npc", "dialogueId": "abena-greeting", "tags": ["harbor-master", "warm", "rum"] },
+    { "entityId": "kofi-leatherworker", "name": "Kofi", "zoneId": "kofi-workshop", "role": "merchant", "dialogueId": "kofi-greeting", "tags": ["leatherworker", "quiet", "craftsman"] },
+    { "entityId": "old-cassius", "name": "Old Cassius", "zoneId": "cove-commons", "role": "npc", "dialogueId": "cassius-greeting", "tags": ["elder", "storyteller", "rum-philosopher"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "abena-greeting", "speakers": ["abena"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "abena", "text": "[Holds out a cup of dark rum with both hands.] Welcome to Palm Cove, Captain. Drink. Then we talk.", "choices": [
+          { "id": "c1", "text": "[Take the cup and drink.]", "nextNodeId": "drink" }
+        ]},
+        "drink": { "id": "drink", "speaker": "abena", "text": "Good. Now you're welcome. Provisions are the cheapest you'll find anywhere — the land provides and we share. Distillery Row is open. Kofi's workshop is around the cove. And Captain — here, we don't hold grudges. It's not in our nature. Enjoy your stay.", "choices": [] }
+      }
+    },
+    {
+      "id": "kofi-greeting", "speakers": ["kofi"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "kofi", "text": "Good leather takes time. I have what's ready.", "choices": [
+          { "id": "c1", "text": "Show me.", "nextNodeId": "show" }
+        ]},
+        "show": { "id": "show", "speaker": "kofi", "text": "[Holds up a crocodile-hide vest, turning it in the light. Says nothing more. The quality is visible.]", "choices": [] }
+      }
+    },
+    {
+      "id": "cassius-greeting", "speakers": ["cassius"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "cassius", "text": "Sit, sit! Cassius has a gourd and a story. Rum cures fever, heals wounds, and makes you invisible to customs officers. Two of those three are true. Buy a gourd and figure out which two.", "choices": [
+          { "id": "c1", "text": "Which two?", "nextNodeId": "which" },
+          { "id": "c2", "text": "Any news from the coast?", "nextNodeId": "news" }
+        ]},
+        "which": { "id": "which", "speaker": "cassius", "text": "[Winks.] That's the kind of question that requires a second gourd. And a third. By then, you won't care which two.", "choices": [] },
+        "news": { "id": "news", "speaker": "cassius", "text": "News? Palm Cove doesn't have news. We have rum, sunshine, and the knowledge that nobody has ever invaded us because there's nothing here worth fighting over except the rum. And you can't fight over rum. You can only share it.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "beach-arrival",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader at the rum capital.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["trader"], "progressionTreeId": "cove-path", "grantedVerbs": ["trade"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "cove-path", "name": "Cove Path", "currency": "standing",
+    "nodes": [
+      { "id": "cove-friend", "name": "Cove Friend", "cost": 3, "effects": [{ "type": "grant-tag", "params": { "tag": "cove-friend" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}

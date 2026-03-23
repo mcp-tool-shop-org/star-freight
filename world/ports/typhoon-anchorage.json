@@ -1,0 +1,323 @@
+{
+  "id": "portlight-typhoon-anchorage",
+  "name": "Typhoon Anchorage",
+  "description": "Storm-battered harbor that only the boldest captains visit. The Storm Wall — a massive breakwater built from the hulls of ships that didn't make it — is both monument and warning. The Storm Riders dive deeper and in worse conditions than anyone. Ships are chained, not anchored — anchors aren't enough here. Pearls and rare tropical hardwood reward the brave. A captain carved her name into the Storm Wall seven times. They call her the Unkillable.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["defiant", "storm-scarred", "brave"],
+  "difficulty": "advanced",
+  "narratorTone": "The Storm Wall looms before the harbor entrance — a rampart of wrecked hulls, broken masts, and salvaged timbers fused together by salt and time. Behind it, the harbor is deceptively calm. Ships are chained to the cliff face. The Storm Riders dive from the dock as casually as other men step ashore. Typhoon Anchorage doesn't fear the storm. It was built from storms.",
+  "mode": "district",
+
+  "map": {
+    "id": "typhoon-anchorage-map",
+    "name": "Typhoon Anchorage",
+    "description": "A harbor carved into the leeward cliff of a storm-battered island. The Storm Wall breakwater protects the entrance. The town is built into the cliff face — stone, timber, and salvaged ship parts. Everything is bolted down. Everything is storm-tested.",
+    "gridWidth": 48,
+    "gridHeight": 44,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "chain-dock",
+      "name": "The Chain Dock",
+      "tags": ["harbor", "docks", "arrival"],
+      "description": "A stone dock carved into the leeward cliff where ships are chained to iron bolts set into the rock. Anchors aren't enough — the undertow at Typhoon Anchorage can drag a fully loaded galleon. Dock Master Rongo chains every vessel personally. He is massive, weathered, and speaks in a voice that carries over gale-force winds. He has chained ten thousand ships. He has lost four. He remembers all four names.",
+      "gridX": 14, "gridY": 32,
+      "gridWidth": 16, "gridHeight": 6,
+      "neighbors": ["storm-wall", "pearl-market", "unkillable-tavern"],
+      "exits": [],
+      "light": 7, "noise": 7,
+      "hazards": ["strong undertow", "spray from storm swells"],
+      "interactables": [
+        { "name": "Chain Bolts", "type": "inspect", "description": "Iron bolts driven into the cliff face, each with a heavy chain. Ships are chained fore and aft. Rongo tests every bolt before attaching. He trusts iron more than rope and rope more than anchor." },
+        { "name": "Storm Gauge", "type": "inspect", "description": "A brass instrument bolted to the dock that measures wind speed and barometric pressure. When the needle hits red, the harbor closes. Nobody argues with the gauge." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "storm-wall",
+      "name": "The Storm Wall",
+      "tags": ["landmark", "memorial", "defense"],
+      "description": "A massive breakwater built from the hulls, masts, and timbers of ships that didn't survive the typhoons. The Wall curves across the harbor mouth, breaking the worst of the swells. Captains who survive a typhoon carve their ship's name into the Wall — an honor earned only by those the storm tried to kill and failed. The Unkillable has carved her name seven times. She drinks alone at the tavern above.",
+      "gridX": 4, "gridY": 28,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["chain-dock"],
+      "exits": [],
+      "light": 8, "noise": 8,
+      "hazards": ["wave spray", "unstable footing on wreck timbers"],
+      "interactables": [
+        { "name": "Carved Names", "type": "inspect", "description": "Ship names carved into the Wall's timbers — hundreds of them, some faded to illegibility, some fresh. Each represents a typhoon survived. The deepest carving reads 'SEVEN STORMS' — the Unkillable's mark." },
+        { "name": "Wreck Timbers", "type": "inspect", "description": "The Wall is built from salvaged hulls — you can see where ships' planking meets, where ribs interlock, where a figurehead's face stares out from the barrier. Each piece was once part of a story that ended here." },
+        { "name": "Memorial Bell", "type": "use", "description": "A salvaged ship's bell mounted at the Wall's highest point. Rung once for each ship lost in a season. After a typhoon, the bell tolls for hours. The sound carries across the harbor like grief." }
+      ],
+      "parentDistrictId": "harbor"
+    },
+    {
+      "id": "pearl-market",
+      "name": "The Pearl Market",
+      "tags": ["market", "commerce", "diving"],
+      "description": "An open-air market on a cliff ledge where the Storm Riders sell pearls harvested from the deep reefs. The pearls are the finest in the South Seas — the deeper the dive, the larger the pearl. Dive Master Moana runs the market with the authority of the woman who dives deepest. She sets prices based on depth, size, and the risk involved. No haggling — the price reflects how close to death the diver went to retrieve it.",
+      "gridX": 32, "gridY": 26,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["chain-dock", "timber-yard", "cliff-quarters"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Pearl Display", "type": "use", "description": "Pearls laid out on black volcanic cloth — the contrast makes them glow. Each pearl is tagged with the depth it was harvested from and the diver's name. The deepest pearls command the highest prices." },
+        { "name": "Depth Board", "type": "inspect", "description": "A slate board showing today's dive records — who dove, how deep, what they brought up. The Storm Riders compete on depth. The current record is ninety feet. The previous record holder didn't surface." },
+        { "name": "Fist Pearl Replica", "type": "inspect", "description": "A wooden carving of the legendary fist-sized pearl that the Storm Riders retrieved from the deepest reef in the South Seas — their answer to Pearl Shallows' accusations of reef poaching. The real pearl was gifted to the Coral King." }
+      ],
+      "parentDistrictId": "cliff-town"
+    },
+    {
+      "id": "timber-yard",
+      "name": "The Timber Yard",
+      "tags": ["shipyard", "industry", "craft"],
+      "description": "A shipyard built into a natural cave at the cliff base where tropical hardwood is cut and ships are repaired. Shipwright Tua works with timber that grows only on the storm-battered windward slopes — ironwood and kauri that has been beaten by salt wind until it's harder than oak. His repairs are expensive but they survive typhoons. Ships repaired elsewhere often don't.",
+      "gridX": 34, "gridY": 16,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["pearl-market", "cliff-quarters"],
+      "exits": [],
+      "light": 6, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Hardwood Racks", "type": "inspect", "description": "Tropical hardwood planks seasoned by storm wind. Tua raps each plank with a mallet — a solid ring means it's ready, a dull thud means another season of curing. He will not use wood that isn't ready." },
+        { "name": "Storm Repair Dock", "type": "use", "description": "A sheltered dock inside the cave where storm-damaged ships are hauled and mended. Tua's repairs use double-thickness planking and copper bolts. Expensive, but his ships come home." },
+        { "name": "Timber Export Stack", "type": "use", "description": "Planks and beams of tropical hardwood bound for export. Kauri and ironwood are prized by shipwrights everywhere — Silk Haven and Jade Port pay premium for timber that can handle monsoon waters." }
+      ],
+      "parentDistrictId": "cliff-town"
+    },
+    {
+      "id": "unkillable-tavern",
+      "name": "The Unkillable",
+      "tags": ["tavern", "social", "rumors"],
+      "description": "A tavern built from the remains of a ship that washed over the Storm Wall in a legendary typhoon and landed upright on the cliff ledge above. The hull is the floor. The mast is the central pillar. It's named after the captain who carved her name in the Wall seven times — she drinks at the corner table, alone, every evening. Tavern keeper Selu serves kava and rum with stories that grow taller with each pour.",
+      "gridX": 6, "gridY": 16,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["chain-dock", "cliff-quarters"],
+      "exits": [],
+      "light": 5, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Selu's Bar", "type": "use", "description": "A bar built from a ship's helm. Selu pours kava — a traditional South Seas drink — and rum imported from the West. The kava relaxes. The rum emboldens. The combination is why most Storm Wall carvings happen at night." },
+        { "name": "Ship Hull Floor", "type": "inspect", "description": "The tavern's floor is the hull of the ship that washed over the Wall — the planking is still intact, curved like a bowl. Tables are bolted to it. Everything in Typhoon Anchorage is bolted to something." },
+        { "name": "The Unkillable's Table", "type": "inspect", "description": "A corner table where a weathered woman drinks alone every evening. She has survived seven typhoons. She does not tell stories. She does not need to. Her name is carved in the Wall seven times. That says everything." }
+      ],
+      "parentDistrictId": "cliff-town"
+    },
+    {
+      "id": "cliff-quarters",
+      "name": "The Cliff Quarters",
+      "tags": ["residential", "faction", "diving"],
+      "description": "Living quarters carved into the cliff face — stone rooms with shuttered windows that bolt against the storm. The Storm Riders live here — divers who harvest pearls from the deep reefs. Their leader, Captain Hine, is a woman of fifty who has dove deeper than anyone alive. She trains the young riders with a simple philosophy: the reef gives, the sea takes, and the diver lives between.",
+      "gridX": 20, "gridY": 8,
+      "gridWidth": 12, "gridHeight": 10,
+      "neighbors": ["pearl-market", "timber-yard", "unkillable-tavern", "diving-cliff"],
+      "exits": [],
+      "light": 6, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Storm Shutters", "type": "inspect", "description": "Iron-reinforced shutters on every window. During typhoon season, they're bolted shut — the cliff quarters become a sealed fortress. The Storm Riders sleep through storms that flatten buildings." },
+        { "name": "Dive Equipment Rack", "type": "inspect", "description": "Ropes, weights, mesh bags, and knives — the Storm Riders' tools. Each set is personalized. The knife is most important — for cutting free if the current takes you down." },
+        { "name": "Captain Hine's Map", "type": "inspect", "description": "A wall-mounted chart of the surrounding reefs, with depths marked and pearl beds circled. The deepest areas are marked in red. Below those marks, Hine has written: 'Not yet.'" }
+      ],
+      "parentDistrictId": "cliff-town"
+    },
+    {
+      "id": "diving-cliff",
+      "name": "The Diving Cliff",
+      "tags": ["landmark", "diving", "overlook"],
+      "description": "A sheer cliff face on the island's windward side where the Storm Riders launch their dives. The water below is deep blue-black — the reef drops off sharply into open ocean. Divers descend on weighted ropes, harvest pearls from the reef face, and signal to be hauled up. The deepest dives last three minutes. The record is four. The holder of that record is Captain Hine. She says she saw something at the bottom. She won't say what.",
+      "gridX": 34, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["cliff-quarters"],
+      "exits": [],
+      "light": 10, "noise": 6,
+      "hazards": ["sheer drop", "strong currents at depth"],
+      "interactables": [
+        { "name": "Dive Platform", "type": "inspect", "description": "A wooden platform bolted to the cliff edge. Divers step off into ninety feet of water. The rope crew stands ready. The tension in the rope tells them everything — a steady pull means harvest, a sudden jerk means trouble." },
+        { "name": "Signal Flags", "type": "inspect", "description": "Colored flags used to communicate with divers below. Red means surface immediately. White means all clear. Black means don't dive — the current is too strong. Today's flag is white." },
+        { "name": "Record Board", "type": "inspect", "description": "A plank of ironwood carved with dive records — depth, duration, harvest. Captain Hine's record stands alone at the top: ninety-two feet, four minutes, one pearl the size of a fist." }
+      ],
+      "parentDistrictId": "cliff-town"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "chain-dock", "toZoneId": "storm-wall", "bidirectional": true, "kind": "road", "label": "Wall Path" },
+    { "fromZoneId": "chain-dock", "toZoneId": "pearl-market", "bidirectional": true, "kind": "stairs", "label": "Market Steps" },
+    { "fromZoneId": "chain-dock", "toZoneId": "unkillable-tavern", "bidirectional": true, "kind": "stairs", "label": "Tavern Climb" },
+    { "fromZoneId": "pearl-market", "toZoneId": "timber-yard", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "pearl-market", "toZoneId": "cliff-quarters", "bidirectional": true, "kind": "stairs", "label": "Quarter Steps" },
+    { "fromZoneId": "timber-yard", "toZoneId": "cliff-quarters", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "unkillable-tavern", "toZoneId": "cliff-quarters", "bidirectional": true, "kind": "passage", "label": "Cliff Path" },
+    { "fromZoneId": "cliff-quarters", "toZoneId": "diving-cliff", "bidirectional": true, "kind": "road", "label": "Windward Trail" }
+  ],
+
+  "districts": [
+    {
+      "id": "harbor",
+      "name": "The Harbor",
+      "zoneIds": ["chain-dock", "storm-wall"],
+      "tags": ["harbor", "memorial", "defense"],
+      "baseMetrics": { "commerce": 55, "morale": 65, "safety": 50, "stability": 60 },
+      "economyProfile": { "supplyCategories": ["pearls", "timber"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    },
+    {
+      "id": "cliff-town",
+      "name": "Cliff Town",
+      "zoneIds": ["pearl-market", "timber-yard", "unkillable-tavern", "cliff-quarters", "diving-cliff"],
+      "tags": ["residential", "commerce", "diving"],
+      "baseMetrics": { "commerce": 70, "morale": 80, "safety": 45, "stability": 55 },
+      "economyProfile": { "supplyCategories": ["pearls", "tropical-hardwood"], "scarcityDefaults": {} },
+      "controllingFaction": "coral-crown"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "storm-wall-landmark", "name": "The Storm Wall", "zoneId": "storm-wall", "gridX": 8, "gridY": 31, "description": "A massive breakwater built from the hulls of wrecked ships. Both harbor defense and memorial. Captains who survive a typhoon carve their ship's name into the timbers. The Unkillable has carved hers seven times." },
+    { "id": "diving-cliff-landmark", "name": "The Diving Cliff", "zoneId": "diving-cliff", "gridX": 38, "gridY": 7, "description": "A sheer cliff on the windward side where Storm Riders launch pearl dives into ninety feet of blue-black water. Captain Hine's record: ninety-two feet, four minutes, one pearl the size of a fist." },
+    { "id": "wrecked-ship-tavern", "name": "The Ship That Washed Over", "zoneId": "unkillable-tavern", "gridX": 10, "gridY": 19, "description": "A ship's hull, washed over the Storm Wall in a legendary typhoon, now serves as the floor of the Unkillable tavern. It landed upright. The mast is the central pillar." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "chain-dock", "gridX": 20, "gridY": 35, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "dock-master-rongo", "name": "Dock Master Rongo", "zoneId": "chain-dock", "role": "npc", "dialogueId": "rongo-greeting", "tags": ["dock-master", "massive", "chain-expert"] },
+    { "entityId": "dive-master-moana", "name": "Dive Master Moana", "zoneId": "pearl-market", "role": "merchant", "dialogueId": "moana-greeting", "tags": ["dive-master", "authority", "deep-diver"] },
+    { "entityId": "shipwright-tua", "name": "Shipwright Tua", "zoneId": "timber-yard", "role": "npc", "dialogueId": "tua-greeting", "tags": ["shipwright", "hardwood", "storm-builder"] },
+    { "entityId": "tavern-keeper-selu", "name": "Selu", "zoneId": "unkillable-tavern", "role": "npc", "dialogueId": "selu-greeting", "tags": ["tavern-keeper", "kava", "storyteller"] },
+    { "entityId": "captain-hine", "name": "Captain Hine", "zoneId": "cliff-quarters", "role": "quest-giver", "dialogueId": "hine-greeting", "tags": ["captain", "deepest-diver", "leader"] },
+    { "entityId": "the-unkillable", "name": "The Unkillable", "zoneId": "unkillable-tavern", "role": "npc", "dialogueId": "unkillable-greeting", "tags": ["legend", "seven-storms", "alone"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "rongo-greeting",
+      "speakers": ["rongo"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "rongo", "text": "Chain your ship or lose it. Your choice. I've chained ten thousand vessels and lost four. I remember their names. I don't want to remember yours. Berth three — double chain, port and starboard.", "choices": [
+          { "id": "c1", "text": "How bad are the storms here?", "nextNodeId": "storms" },
+          { "id": "c2", "text": "I need repairs.", "nextNodeId": "repairs" }
+        ]},
+        "storms": { "id": "storms", "speaker": "rongo", "text": "Bad enough to build a wall from the ships that didn't survive. The Storm Wall isn't decoration — it's a harbor defense and a graveyard. Typhoon season is summer. If you're here in summer, you're either brave, stupid, or after pearls. Usually all three.", "choices": [] },
+        "repairs": { "id": "repairs", "speaker": "rongo", "text": "Tua's timber yard — cave at the cliff base. He works with tropical hardwood that's been storm-beaten until it's harder than anything from the mainland. His prices are high. His ships survive. Yours might not without him.", "choices": [] }
+      }
+    },
+    {
+      "id": "moana-greeting",
+      "speakers": ["moana"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "moana", "text": "Pearls, Captain. Harvested from the deep reef by the Storm Riders. The price reflects the depth — and the risk. This pearl came from sixty feet. This one from eighty. The deeper the dive, the finer the pearl, the higher the price. No haggling. The diver's risk is the diver's price.", "choices": [
+          { "id": "c1", "text": "Show me your best pearls.", "nextNodeId": "best" },
+          { "id": "c2", "text": "Tell me about the rivalry with Pearl Shallows.", "nextNodeId": "rivalry" }
+        ]},
+        "best": { "id": "best", "speaker": "moana", "text": "This one — eighty-five feet, Captain Hine herself. The luster is unmatched. Fifty silver. Worth it? Ask any jeweler from Porto Novo to Jade Port. They'll tell you Typhoon Anchorage pearls have no equal. The Breath-Holders disagree. They're wrong.", "choices": [] },
+        "rivalry": { "id": "rivalry", "speaker": "moana", "text": "Pearl Shallows called us reef poachers. We responded by diving the deepest reef in the South Seas and bringing up a pearl the size of a fist. We gifted it to the Coral King. The Breath-Holders meditate and breathe. We dive and bring up proof.", "choices": [] }
+      }
+    },
+    {
+      "id": "tua-greeting",
+      "speakers": ["tua"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "tua", "text": "Your hull took a beating on the approach. I can see the stress marks from here. Tua — shipwright. I work with kauri and ironwood. Storm-seasoned timber. My repairs cost double mainland prices. My ships survive typhoons. Mainland repairs don't.", "choices": [
+          { "id": "c1", "text": "Repair my ship.", "nextNodeId": "repair" },
+          { "id": "c2", "text": "I want to buy timber for export.", "nextNodeId": "export" }
+        ]},
+        "repair": { "id": "repair", "speaker": "tua", "text": "Four silver a hull point — double thickness planking, copper bolts, storm-tested joints. A week for full repairs. I don't rush and the wood doesn't lie. When it's ready, it's ready.", "choices": [] },
+        "export": { "id": "export", "speaker": "tua", "text": "Kauri planks — twenty silver per stack. Ironwood beams — thirty. Both storm-seasoned. The shipwrights at Silk Haven and Jade Port pay double for this timber because their ships survive monsoon waters with it. It's not cheap. But sinking is more expensive.", "choices": [] }
+      }
+    },
+    {
+      "id": "selu-greeting",
+      "speakers": ["selu"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "selu", "text": "Kava or rum? The kava's local — relaxes the muscles after a dive. The rum's imported — relaxes everything else. Sit in the hull and feel the ship that built this bar. She washed over the Wall in the Storm of '98. Landed upright. We built a tavern around her.", "choices": [
+          { "id": "c1", "text": "Tell me about the Unkillable.", "nextNodeId": "unkillable" },
+          { "id": "c2", "text": "Any rumors?", "nextNodeId": "rumors" }
+        ]},
+        "unkillable": { "id": "unkillable", "speaker": "selu", "text": "Corner table. Every evening. She's survived seven typhoons — carved her name in the Wall each time. Real name? Nobody asks. She doesn't tell stories. Doesn't need to. Seven carvings in the Wall. That's her autobiography.", "choices": [] },
+        "rumors": { "id": "rumors", "speaker": "selu", "text": "Captain Hine went deeper than anyone last week — ninety-two feet. Says she saw something on the bottom. Won't say what. The Storm Riders are buzzing about it. Some say it's a wreck. Some say it's something older. Hine just smiles and pours more kava.", "choices": [] }
+      }
+    },
+    {
+      "id": "hine-greeting",
+      "speakers": ["hine"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hine", "text": "Captain. I am Hine. I lead the Storm Riders. We dive where others won't and we bring up what the reef offers. If you want pearls, talk to Moana at the market. If you want to understand why we dive... sit with me.", "choices": [
+          { "id": "c1", "text": "What did you see at ninety-two feet?", "nextNodeId": "deep" },
+          { "id": "c2", "text": "How do you train your divers?", "nextNodeId": "training" }
+        ]},
+        "deep": { "id": "deep", "speaker": "hine", "text": "Something on the reef floor. Not a wreck — older than wrecks. Carved stone. Covered in coral but the shapes are too regular to be natural. I need to go back. But ninety-two feet is... not a casual dive. I'm planning. I'll need the right conditions and the right crew.", "choices": [] },
+        "training": { "id": "training", "speaker": "hine", "text": "The reef gives. The sea takes. The diver lives between. We train for two years before the first deep dive. Breath control, current reading, reef navigation. The Pearl Shallows Breath-Holders think we're reckless. We think they're timid. The pearls in our market settle the argument.", "choices": [] }
+      }
+    },
+    {
+      "id": "unkillable-greeting",
+      "speakers": ["unkillable"],
+      "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "unkillable", "text": "*stares at you over a cup of kava* *says nothing*", "choices": [
+          { "id": "c1", "text": "Seven storms. That's incredible.", "nextNodeId": "seven" },
+          { "id": "c2", "text": "I'll leave you be.", "nextNodeId": "leave" }
+        ]},
+        "seven": { "id": "seven", "speaker": "unkillable", "text": "*takes a slow drink* Seven storms. Forty-three crew members lost across them. I remember every name. The Wall remembers the ships. I remember the people. *returns to silence*", "choices": [] },
+        "leave": { "id": "leave", "speaker": "unkillable", "text": "*nods once*", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Arriving Captain",
+    "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 3, "will": 3 },
+    "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [],
+    "startingEquipment": {},
+    "spawnPointId": "dock-arrival",
+    "tags": ["captain", "newcomer"],
+    "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8,
+    "maxTraits": 2,
+    "requiredFlaws": 0,
+    "archetypes": [
+      { "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader in storm-battered waters.", "statPriorities": { "will": 2, "instinct": 1 }, "startingTags": ["licensed"], "progressionTreeId": "merchant-path", "grantedVerbs": ["trade", "negotiate"] }
+    ],
+    "backgrounds": [],
+    "traits": [],
+    "disciplines": [],
+    "crossTitles": [],
+    "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "merchant-path",
+    "name": "Merchant's Path",
+    "currency": "standing",
+    "nodes": [
+      { "id": "trusted-trader", "name": "Trusted Trader", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "trusted" } }] },
+      { "id": "storm-friend", "name": "Storm Friend", "cost": 10, "requires": ["trusted-trader"], "effects": [{ "type": "grant-tag", "params": { "tag": "coral-crown" } }] }
+    ]
+  }],
+
+  "factions": [],
+  "pressureHotspots": [],
+  "assets": []
+}

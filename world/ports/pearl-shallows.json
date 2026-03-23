@@ -1,0 +1,246 @@
+{
+  "id": "portlight-pearl-shallows",
+  "name": "Pearl Shallows",
+  "description": "A West African pearl diving community where the craft is sacred and the price is set by the diver, not the buyer. The Blessing Pool — a tidal pool where divers pray before descending — is the spiritual center. Pearls are never haggled over. The diver names the price. You pay or you leave. The Breath-Holders have dove these reefs for generations. The oldest says there's a fist-sized pearl in the deep reef. Three divers went looking. Only two came back.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["sacred", "quiet", "reverent"],
+  "difficulty": "beginner",
+  "narratorTone": "The water here is warm and clear as glass. You can see the reef from the surface — purple, green, gold. The divers move through it like slow-motion birds. Pearl Shallows doesn't shout. It holds its breath. And when it surfaces, it brings something precious.",
+  "mode": "district",
+
+  "map": {
+    "id": "pearl-shallows-map",
+    "name": "Pearl Shallows",
+    "description": "A shallow lagoon protected by a coral reef. The village sits on the lagoon's edge — simple structures of coral stone and palm thatch. The Blessing Pool is a natural tidal basin at the reef's edge. The diving grounds stretch beyond, visible through crystal water.",
+    "gridWidth": 44,
+    "gridHeight": 36,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "lagoon-dock",
+      "name": "The Lagoon Dock",
+      "tags": ["harbor", "docks", "arrival", "quiet"],
+      "description": "A simple wooden dock extending into the lagoon. The water is so clear you can see fish swimming beneath the planks. Ships moor in deeper water and lighter cargo across. The harbor has no formal master — the eldest diver's daughter handles arrivals with a calm nod and a gesture toward the beach. No ceremony. No fuss. Pearl Shallows doesn't waste words on what silence says better.",
+      "gridX": 12, "gridY": 24,
+      "gridWidth": 16, "gridHeight": 6,
+      "neighbors": ["blessing-pool", "pearl-market", "yaa-shop"],
+      "exits": [],
+      "light": 10, "noise": 3,
+      "hazards": [],
+      "interactables": [
+        { "name": "Crystal Water", "type": "inspect", "description": "The lagoon is clear enough to see the sandy bottom ten feet down. Small fish dart between coral heads. A ray glides past the dock pilings, unhurried." },
+        { "name": "Mooring Post", "type": "inspect", "description": "A single palm-wood post where visiting boats tie up. Carved into it: a pearl inside a wave. The symbol means: this is a place of the sea. Respect it." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "blessing-pool",
+      "name": "The Blessing Pool",
+      "tags": ["sacred", "landmark", "spiritual"],
+      "description": "A natural tidal pool at the reef's edge where divers gather before every descent. The water is warmer than the lagoon — heated by shallow stone. Divers kneel at the pool's edge, wet their hands, and press them to their foreheads. The prayer is silent. The ritual is older than the village. Nobody dives without visiting the pool first. Nobody is asked to explain why.",
+      "gridX": 4, "gridY": 16,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["lagoon-dock", "diving-grounds"],
+      "exits": [],
+      "light": 10, "noise": 1,
+      "hazards": [],
+      "interactables": [
+        { "name": "The Pool", "type": "use", "description": "Warm, shallow water in a natural basin. Smooth stones line the bottom. Divers kneel here before every dive. The ritual is silent — no words, just water on the forehead and a moment of stillness." },
+        { "name": "Offering Stones", "type": "inspect", "description": "Small stones placed around the pool's rim by divers returning safely. Each stone represents a dive completed. Some are smooth coral. Some are rough volcanic. All are placed with care." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "diving-grounds",
+      "name": "The Diving Grounds",
+      "tags": ["industry", "sacred", "underwater"],
+      "description": "The reef beyond the lagoon where the Breath-Holders dive for pearls. Visible from shore as a line of dark water where the coral drops into deeper blue. Divers work in pairs — one dives, one watches from a canoe. They can hold their breath for four minutes. Some claim five. The oldest diver says there's a fist-sized pearl in the deep reef. Three divers went looking. Only two came back. The pearl is still there.",
+      "gridX": 2, "gridY": 6,
+      "gridWidth": 14, "gridHeight": 8,
+      "neighbors": ["blessing-pool"],
+      "exits": [],
+      "light": 10, "noise": 2,
+      "hazards": ["deep water beyond the reef edge — only trained divers enter"],
+      "interactables": [
+        { "name": "Diving Canoes", "type": "inspect", "description": "Small outrigger canoes where the watching diver waits. A rope connects diver to canoe. One tug means 'coming up.' Two tugs means 'pull me up now.' Three tugs has never been needed. So far." },
+        { "name": "Reef Edge", "type": "inspect", "description": "Where the coral shelf drops into deep blue. The pearl oysters grow on the wall below. The light changes here — warm shallow green becomes cold deep blue in the space of a breath." }
+      ],
+      "parentDistrictId": "shore"
+    },
+    {
+      "id": "pearl-market",
+      "name": "The Pearl Market",
+      "tags": ["market", "commerce", "sacred"],
+      "description": "A simple stone platform where pearls are sold. No scales — pearls are valued by the diver's eye, not by weight. The diver names the price. You pay or you leave. Haggling is not forbidden — it simply doesn't happen. The concept is foreign here. Pearls are sacred objects. Negotiating their value would be like negotiating the value of a prayer. Cotton and dyes are also traded, with more conventional pricing.",
+      "gridX": 22, "gridY": 14,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["lagoon-dock", "nneka-yard"],
+      "exits": [],
+      "light": 9, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Pearl Cloth", "type": "use", "description": "A white cloth where the day's pearls are displayed. Each sits in its own fold. The diver stands behind, arms crossed. The price is spoken once. Nod or walk away." },
+        { "name": "Cotton Stall", "type": "use", "description": "Less sacred, more negotiable. Cotton and dyes from the interior, traded at conventional market rates. The stall keeper is chattier than the pearl divers. Everyone is." }
+      ],
+      "parentDistrictId": "village"
+    },
+    {
+      "id": "yaa-shop",
+      "name": "Yaa's Blade Shop",
+      "tags": ["shop", "weapons", "merchant-npc"],
+      "description": "A small shop near the dock where Yaa sources knives and slings from inland villages and sells them to visiting sailors. She's shrewd, competitive, and claims Pearl Shallows has the best steel on the coast. She's probably exaggerating. But her throwing knives are genuinely excellent.",
+      "gridX": 30, "gridY": 20,
+      "gridWidth": 8, "gridHeight": 6,
+      "neighbors": ["lagoon-dock"],
+      "exits": [],
+      "light": 7, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Blade Display", "type": "use", "description": "'Pearl Shallows has the best steel on the coast. Don't let anyone tell you otherwise.' Yaa's knives are inland-forged but ocean-tested. She throws one into a post from across the shop to demonstrate." },
+        { "name": "Sling Rack", "type": "use", "description": "Leather slings and smooth stones. Yaa sources them from the same inland villages that supply her knives. Simple, ancient, effective." }
+      ],
+      "parentDistrictId": "village"
+    },
+    {
+      "id": "nneka-yard",
+      "name": "Nneka's Training Ground",
+      "tags": ["training", "fighting-style", "dambe"],
+      "description": "A packed-earth yard behind the pearl market where Nneka Ironfist teaches Dambe. She learned from Kolo in Sun Harbor but developed her own approach — more emphasis on the counter, less on the sweep. Her students are pearl divers who need to defend themselves at sea. Nneka says the breath control divers learn underwater translates perfectly to combat stamina. She's not wrong.",
+      "gridX": 30, "gridY": 6,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["pearl-market"],
+      "exits": [],
+      "light": 10, "noise": 4,
+      "hazards": [],
+      "interactables": [
+        { "name": "Training Circle", "type": "use", "description": "A circle of packed coral sand. Nneka's students spar barefoot — divers' feet are already tough. She teaches Dambe with a diver's patience: watch, breathe, strike when the moment comes." },
+        { "name": "Breath Stone", "type": "inspect", "description": "A flat stone where students sit and practice breath-holding before sparring. Nneka says four-minute breath control translates to four-minute combat endurance. The connection is real." }
+      ],
+      "parentDistrictId": "village"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "lagoon-dock", "toZoneId": "blessing-pool", "bidirectional": true, "kind": "road", "label": "Shore Path" },
+    { "fromZoneId": "lagoon-dock", "toZoneId": "pearl-market", "bidirectional": true, "kind": "road", "label": "Village Path" },
+    { "fromZoneId": "lagoon-dock", "toZoneId": "yaa-shop", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "blessing-pool", "toZoneId": "diving-grounds", "bidirectional": true, "kind": "passage", "label": "Reef Path" },
+    { "fromZoneId": "pearl-market", "toZoneId": "nneka-yard", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "shore",
+      "name": "The Shore",
+      "zoneIds": ["lagoon-dock", "blessing-pool", "diving-grounds"],
+      "tags": ["harbor", "sacred", "diving"],
+      "baseMetrics": { "commerce": 50, "morale": 85, "safety": 80, "stability": 90 },
+      "economyProfile": { "supplyCategories": ["pearls", "dyes"], "scarcityDefaults": {} },
+      "controllingFaction": "gold-coast-compact"
+    },
+    {
+      "id": "village",
+      "name": "The Village",
+      "zoneIds": ["pearl-market", "yaa-shop", "nneka-yard"],
+      "tags": ["commerce", "training", "community"],
+      "baseMetrics": { "commerce": 60, "morale": 80, "safety": 85, "stability": 85 },
+      "economyProfile": { "supplyCategories": ["pearls", "cotton", "arms"], "scarcityDefaults": {} }
+    }
+  ],
+
+  "landmarks": [
+    { "id": "blessing-pool-landmark", "name": "The Blessing Pool", "zoneId": "blessing-pool", "gridX": 8, "gridY": 20, "description": "A warm tidal pool where divers pray before every descent. Offering stones ring the edge — each one a dive completed, a breath held, a return to the surface." },
+    { "id": "reef-edge", "name": "The Reef Edge", "zoneId": "diving-grounds", "gridX": 8, "gridY": 10, "description": "Where the coral shelf drops into deep blue. Pearl oysters grow on the wall below. Somewhere in the deep: a fist-sized pearl. Three divers looked. Two came back." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "lagoon-dock", "gridX": 20, "gridY": 27, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "eldest-daughter", "name": "Eldest Daughter", "zoneId": "lagoon-dock", "role": "npc", "dialogueId": "daughter-greeting", "tags": ["harbor", "calm"] },
+    { "entityId": "old-diver", "name": "The Old Diver", "zoneId": "blessing-pool", "role": "npc", "dialogueId": "diver-greeting", "tags": ["elder", "sacred", "breath-holder"] },
+    { "entityId": "pearl-diver", "name": "Pearl Diver", "zoneId": "pearl-market", "role": "merchant", "dialogueId": "pearl-greeting", "tags": ["diver", "merchant", "silent"] },
+    { "entityId": "yaa-sharpedge", "name": "Yaa Sharpedge", "zoneId": "yaa-shop", "role": "merchant", "dialogueId": "yaa-greeting", "tags": ["merchant", "shrewd", "knives"] },
+    { "entityId": "nneka-ironfist", "name": "Nneka Ironfist", "zoneId": "nneka-yard", "role": "npc", "dialogueId": "nneka-greeting", "tags": ["trainer", "dambe", "diver-fighter"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "daughter-greeting", "speakers": ["daughter"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "daughter", "text": "[Nods toward the beach. A calm gesture — this way.]", "choices": [] }
+      }
+    },
+    {
+      "id": "diver-greeting", "speakers": ["diver"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "diver", "text": "You watch the divers. Good. Watch is all outsiders should do. The reef is ours. The pearls are ours. The price is ours. This is not cruelty — it is respect. The sea gives to those who ask properly.", "choices": [
+          { "id": "c1", "text": "Tell me about the deep pearl.", "nextNodeId": "deep-pearl" },
+          { "id": "c2", "text": "May I visit the Blessing Pool?", "nextNodeId": "pool" }
+        ]},
+        "deep-pearl": { "id": "deep-pearl", "speaker": "diver", "text": "There is a pearl in the deep reef. I have seen it — once, in my youth. The size of a fist. The color of moonlight. Three divers went after it. Two came back. The third... the sea kept. The pearl is still there. It will outlast us all.", "choices": [] },
+        "pool": { "id": "pool", "speaker": "diver", "text": "You may sit by the pool. You may watch. You may not touch the water unless you are diving. The pool is for those who go beneath. If you have not held your breath until the darkness closes in, the pool is not for you.", "choices": [] }
+      }
+    },
+    {
+      "id": "pearl-greeting", "speakers": ["pearl-diver"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "pearl-diver", "text": "[Unfolds a white cloth. Three pearls sit in individual creases. Points at each.] Forty. Sixty. Ninety.", "choices": [
+          { "id": "c1", "text": "[Nod at the sixty-silver pearl.]", "nextNodeId": "buy" },
+          { "id": "c2", "text": "Can we negotiate?", "nextNodeId": "no" }
+        ]},
+        "buy": { "id": "buy", "speaker": "pearl-diver", "text": "[Wraps the pearl in silk. Holds out palm for silver. Transaction complete. No words needed.]", "choices": [] },
+        "no": { "id": "no", "speaker": "pearl-diver", "text": "[Looks at you. Folds the cloth over the pearls. The conversation is over.]", "choices": [] }
+      }
+    },
+    {
+      "id": "yaa-greeting", "speakers": ["yaa"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "yaa", "text": "Pearl Shallows has the best steel on the coast. Don't let anyone tell you otherwise. [Throws a knife into a post across the shop.] See? Balance. Edge. Flight. What do you need?", "choices": [
+          { "id": "c1", "text": "Throwing knives.", "nextNodeId": "knives" },
+          { "id": "c2", "text": "What else do you carry?", "nextNodeId": "else" }
+        ]},
+        "knives": { "id": "knives", "speaker": "yaa", "text": "Eight silver each. Inland-forged, ocean-tested. I throw every one before I sell it. If it doesn't fly true, it goes back to the smith. I don't sell anything I wouldn't throw myself.", "choices": [] },
+        "else": { "id": "else", "speaker": "yaa", "text": "Slings from the south — West Africa's oldest weapon. Cutlasses for the practical captain. And daggers for the captain who likes to work close. I don't carry armor — that's Kofi's business in Palm Cove. I sell what cuts.", "choices": [] }
+      }
+    },
+    {
+      "id": "nneka-greeting", "speakers": ["nneka"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "nneka", "text": "You breathe too fast. A diver holds their breath four minutes. In combat, that's four minutes of control. I learned Dambe from Kolo in Sun Harbor, but I teach it my way — with breath. The leg sweep comes when you exhale. Everything powerful comes on the exhale.", "choices": [
+          { "id": "c1", "text": "Teach me.", "nextNodeId": "teach" }
+        ]},
+        "teach": { "id": "teach", "speaker": "nneka", "text": "Sixty silver. Six days. First two days are breath work. You will think I'm wasting your time. By day three, you'll understand why I'm not. By day six, your sweep will come on the exhale and your opponent won't see it coming.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 2, "instinct": 4, "will": 2 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "dock-arrival",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader at the pearl reefs.", "statPriorities": { "instinct": 2, "will": 1 }, "startingTags": ["trader"], "progressionTreeId": "reef-path", "grantedVerbs": ["trade"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "reef-path", "name": "Reef Path", "currency": "standing",
+    "nodes": [
+      { "id": "reef-welcome", "name": "Reef Welcome", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "reef-welcome" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}

@@ -1,0 +1,192 @@
+{
+  "id": "portlight-iron-point",
+  "name": "Iron Point",
+  "description": "A West African mining port where the river runs red and everything is stained with ore dust. The River Mouth Mines cut into red cliffs above the harbor. The Red Hand — the miners' guild — controls extraction with hard labor and harder pride. Iron Point is raw where Ironhaven is refined, and the tension between them defines the global iron trade. Miners spit on their hands before a deal. It means the ore is honest.",
+  "version": "0.1.0",
+  "genre": "pirate",
+  "tones": ["industrial", "raw", "pride"],
+  "difficulty": "beginner",
+  "narratorTone": "The water in the harbor is tinted red — ore runoff from the mines above. Everything here is stained: the docks, the workers' hands, the stone walls. Iron Point is where iron comes from before it becomes anything else. Raw, heavy, and proud of it.",
+  "mode": "district",
+
+  "map": {
+    "id": "iron-point-map",
+    "name": "Iron Point",
+    "description": "A harbor at the base of red cliffs, where mine tunnels open above the waterline. The town is small — docks, a market, and the miners' quarter. Ore carts run on wooden tracks from mine mouth to harbor.",
+    "gridWidth": 40,
+    "gridHeight": 36,
+    "tileSize": 32
+  },
+
+  "zones": [
+    {
+      "id": "red-harbor",
+      "name": "The Red Harbor",
+      "tags": ["harbor", "docks", "mining"],
+      "description": "A working harbor stained red by ore runoff. Iron is loaded directly from mine carts onto waiting ships. The water is tinted — not polluted, the miners insist, just colored. Dock workers have permanently red-stained hands. The harbor master runs the loading operation with the efficiency of a man who's done it ten thousand times.",
+      "gridX": 8, "gridY": 22,
+      "gridWidth": 18, "gridHeight": 8,
+      "neighbors": ["mine-mouth", "ore-market", "miners-rest"],
+      "exits": [],
+      "light": 9, "noise": 7,
+      "hazards": [],
+      "interactables": [
+        { "name": "Ore Carts", "type": "inspect", "description": "Wooden carts on iron rails running from the mine mouth to the loading dock. They're gravity-fed downhill and pulled back up by mules. Simple, reliable, and older than anyone in town." },
+        { "name": "Red Water", "type": "inspect", "description": "The harbor water is tinted red from centuries of ore runoff. The miners say it's nature, not waste. Fish still swim in it. The fish are rust-colored." }
+      ],
+      "parentDistrictId": "dockside"
+    },
+    {
+      "id": "mine-mouth",
+      "name": "The River Mouth Mines",
+      "tags": ["industry", "landmark", "mining"],
+      "description": "Tunnel entrances in the red cliff face above the harbor. The mines have produced iron ore for longer than the port has existed. The Red Hand — the miners' guild — controls extraction. They spit on their hands before every deal. It means the ore is honest. Deep in the newest shaft, miners hit something that wasn't iron. The foreman sealed the tunnel and doubled the guard. Nobody talks about it.",
+      "gridX": 4, "gridY": 10,
+      "gridWidth": 14, "gridHeight": 10,
+      "neighbors": ["red-harbor", "ore-market"],
+      "exits": [],
+      "light": 3, "noise": 8,
+      "hazards": ["unstable tunnels in older sections"],
+      "interactables": [
+        { "name": "Mine Entrance", "type": "inspect", "description": "A timber-framed tunnel mouth in the red cliff. Oil lamps hang on iron hooks inside. The sound of picks echoes from deeper in. Everything is red — the stone, the dust, the men." },
+        { "name": "Sealed Shaft", "type": "inspect", "description": "A tunnel entrance sealed with fresh timber and marked with the Red Hand's warning sign. A guard sits nearby, saying nothing. The other miners avoid looking at it." },
+        { "name": "Ore Samples", "type": "inspect", "description": "Raw iron ore displayed on a stone shelf outside the mine office. Red, heavy, and honest. The foreman can grade ore by weight in his palm." }
+      ],
+      "parentDistrictId": "dockside"
+    },
+    {
+      "id": "ore-market",
+      "name": "The Ore Market",
+      "tags": ["market", "commerce", "mining"],
+      "description": "A simple stone platform between mine and harbor where ore is graded, priced, and sold. No fancy stalls — just scales, sample trays, and the Red Hand factor who quotes prices with the enthusiasm of a man who's quoted the same prices every day for twenty years. Iron Point also buys grain (miners eat a lot), porcelain (miners' wives want nice things), and weapons (for mining tools, they say).",
+      "gridX": 22, "gridY": 14,
+      "gridWidth": 12, "gridHeight": 8,
+      "neighbors": ["red-harbor", "mine-mouth", "miners-rest"],
+      "exits": [],
+      "light": 9, "noise": 5,
+      "hazards": [],
+      "interactables": [
+        { "name": "Grading Scales", "type": "use", "description": "Massive iron scales for weighing ore. The factor places a sample on one pan and standard weights on the other. He can tell grade by color, but the scales make it official." },
+        { "name": "Trade Board", "type": "inspect", "description": "Iron export prices posted daily. Also listed: what Iron Point needs — grain, cotton, tools. Captains who bring the right cargo get priority loading." }
+      ],
+      "parentDistrictId": "dockside"
+    },
+    {
+      "id": "miners-rest",
+      "name": "The Miners' Rest",
+      "tags": ["tavern", "social", "miners"],
+      "description": "A stone building with a thatch roof where off-shift miners drink bitter ale and argue about tunnel grades. The walls are stained red from hundreds of ore-dusted hands. The tavern keeper is a former miner who lost a leg to a rock fall and found a second career pouring drinks. The food is heavy — stew, bread, and more stew. Miners need fuel, not flavor.",
+      "gridX": 28, "gridY": 4,
+      "gridWidth": 10, "gridHeight": 8,
+      "neighbors": ["ore-market", "red-harbor"],
+      "exits": [],
+      "light": 4, "noise": 6,
+      "hazards": [],
+      "interactables": [
+        { "name": "Red Walls", "type": "inspect", "description": "The tavern walls are stained red from the hands of a hundred miners over a hundred years. Nobody paints over it. The stains are history." },
+        { "name": "Miner's Board", "type": "inspect", "description": "A board where miners post shift reports and ore finds. One note, repeatedly pinned and torn down: 'WHAT WAS IN SHAFT SEVEN?' Nobody answers. The question keeps appearing." },
+        { "name": "Heavy Stew", "type": "use", "description": "Stew so thick a spoon stands up in it. The tavern keeper serves it in iron bowls. 'Miners need fuel, not flavor,' he says. He's right. It's terrible. It's filling." }
+      ],
+      "parentDistrictId": "dockside"
+    }
+  ],
+
+  "connections": [
+    { "fromZoneId": "red-harbor", "toZoneId": "mine-mouth", "bidirectional": true, "kind": "stairs", "label": "Ore Cart Track" },
+    { "fromZoneId": "red-harbor", "toZoneId": "ore-market", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "red-harbor", "toZoneId": "miners-rest", "bidirectional": true, "kind": "road", "label": "Hill Road" },
+    { "fromZoneId": "mine-mouth", "toZoneId": "ore-market", "bidirectional": true, "kind": "road" },
+    { "fromZoneId": "ore-market", "toZoneId": "miners-rest", "bidirectional": true, "kind": "road" }
+  ],
+
+  "districts": [
+    {
+      "id": "dockside",
+      "name": "Iron Point",
+      "zoneIds": ["red-harbor", "mine-mouth", "ore-market", "miners-rest"],
+      "tags": ["mining", "harbor", "industry"],
+      "baseMetrics": { "commerce": 65, "morale": 60, "safety": 65, "stability": 75 },
+      "economyProfile": { "supplyCategories": ["iron"], "scarcityDefaults": {} },
+      "controllingFaction": "gold-coast-compact"
+    }
+  ],
+
+  "landmarks": [
+    { "id": "mine-mouth-landmark", "name": "The River Mouth Mines", "zoneId": "mine-mouth", "gridX": 10, "gridY": 14, "description": "Tunnel entrances in red cliffs, producing iron ore for longer than the port has existed. Deep in Shaft Seven, they hit something that wasn't iron. The shaft is sealed. Nobody talks about it." },
+    { "id": "red-water", "name": "The Red Water", "zoneId": "red-harbor", "gridX": 16, "gridY": 26, "description": "Harbor water tinted red by centuries of ore runoff. The miners insist it's natural. The fish are rust-colored. They taste fine." }
+  ],
+
+  "spawnPoints": [
+    { "id": "dock-arrival", "zoneId": "red-harbor", "gridX": 16, "gridY": 26, "isDefault": true }
+  ],
+
+  "entityPlacements": [
+    { "entityId": "iron-point-hm", "name": "Harbor Master", "zoneId": "red-harbor", "role": "npc", "dialogueId": "iphm-greeting", "tags": ["harbor-master", "efficient"] },
+    { "entityId": "mine-foreman", "name": "The Foreman", "zoneId": "mine-mouth", "role": "npc", "dialogueId": "foreman-greeting", "tags": ["mining", "red-hand", "guarded"] },
+    { "entityId": "ore-factor", "name": "Ore Factor", "zoneId": "ore-market", "role": "quest-giver", "dialogueId": "factor-greeting", "tags": ["commerce", "red-hand", "routine"] },
+    { "entityId": "tavern-keeper-ip", "name": "One-Leg", "zoneId": "miners-rest", "role": "npc", "dialogueId": "oneleg-greeting", "tags": ["tavern-keeper", "miner", "practical"] }
+  ],
+
+  "dialogues": [
+    {
+      "id": "iphm-greeting", "speakers": ["hm"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "hm", "text": "Iron Point. Berth fee four silver. Loading queue is two days if you're buying ore. If you're selling grain, you jump the queue. We're always hungry.", "choices": [] }
+      }
+    },
+    {
+      "id": "foreman-greeting", "speakers": ["foreman"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "foreman", "text": "[Spits on his hand, offers a handshake.] Red Hand greeting, Captain. Means the ore is honest. So am I. What do you want to know?", "choices": [
+          { "id": "c1", "text": "What happened in Shaft Seven?", "nextNodeId": "seven" },
+          { "id": "c2", "text": "How's the iron grade this season?", "nextNodeId": "grade" }
+        ]},
+        "seven": { "id": "seven", "speaker": "foreman", "text": "[Pause.] Nothing happened in Shaft Seven. The tunnel was unstable. I sealed it for safety. That's the official answer. That's the only answer.", "choices": [] },
+        "grade": { "id": "grade", "speaker": "foreman", "text": "Best in years. Clean ore, consistent grade. Ironhaven calls it 'unrefined swamp metal.' They can call it whatever they want. Their furnaces burn our ore. They know the quality. We know the price.", "choices": [] }
+      }
+    },
+    {
+      "id": "factor-greeting", "speakers": ["factor"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "factor", "text": "Iron for sale. Grain wanted. Porcelain wanted. Weapons wanted. Prices are posted. Same prices as yesterday. Same as tomorrow. That's Iron Point.", "choices": [
+          { "id": "c1", "text": "I have grain.", "nextNodeId": "grain" }
+        ]},
+        "grain": { "id": "grain", "speaker": "factor", "text": "Good. The miners eat twice their weight. Bring grain, take iron. Simple trade, honest margins. No tricks, no tricks needed.", "choices": [] }
+      }
+    },
+    {
+      "id": "oneleg-greeting", "speakers": ["oneleg"], "entryNodeId": "greeting",
+      "nodes": {
+        "greeting": { "id": "greeting", "speaker": "oneleg", "text": "Stew's in the pot. Ale's in the barrel. Sit down or stand up, I don't care which. Lost a leg to a rock fall in the mines. Found a career behind a bar. Not sure which was worse.", "choices": [
+          { "id": "c1", "text": "What's the talk?", "nextNodeId": "talk" }
+        ]},
+        "talk": { "id": "talk", "speaker": "oneleg", "text": "The miners hit something in Shaft Seven. Not iron. The foreman sealed it and doubled the guard. Nobody talks about it out loud. But that board over there? The note that keeps getting pinned up? 'What was in Shaft Seven?' It's been asked seventeen times. Seventeen times torn down. Eighteenth time just went up this morning.", "choices": [] }
+      }
+    }
+  ],
+
+  "encounters": [],
+  "itemPlacements": [],
+
+  "playerTemplate": {
+    "name": "Visiting Captain", "defaultArchetypeId": "merchant-captain",
+    "baseStats": { "vigor": 3, "instinct": 2, "will": 3 }, "baseResources": { "hp": 12, "stamina": 8 },
+    "startingInventory": [], "startingEquipment": {}, "spawnPointId": "dock-arrival",
+    "tags": ["captain", "visitor"], "custom": {}
+  },
+
+  "buildCatalog": {
+    "statBudget": 8, "maxTraits": 2, "requiredFlaws": 0,
+    "archetypes": [{ "id": "merchant-captain", "name": "Merchant Captain", "description": "A trader at the iron mines.", "statPriorities": { "vigor": 2, "will": 1 }, "startingTags": ["trader"], "progressionTreeId": "red-path", "grantedVerbs": ["trade"] }],
+    "backgrounds": [], "traits": [], "disciplines": [], "crossTitles": [], "entanglements": []
+  },
+
+  "progressionTrees": [{
+    "id": "red-path", "name": "Red Hand Path", "currency": "standing",
+    "nodes": [
+      { "id": "red-hand-known", "name": "Red Hand Known", "cost": 5, "effects": [{ "type": "grant-tag", "params": { "tag": "red-hand-known" } }] }
+    ]
+  }],
+
+  "factions": [], "pressureHotspots": [], "assets": []
+}
