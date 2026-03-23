@@ -298,6 +298,7 @@ def simulate_run(
 
     turn = 0
     max_turns = days * 2  # safety limit (some turns are travel, some are station)
+    recent_combat_days: list[int] = []  # tracks days of recent fights for escalation
 
     while state.day <= days and turn < max_turns:
         turn += 1
@@ -360,7 +361,14 @@ def simulate_run(
                 metrics.encounters_by_type[arch] = metrics.encounters_by_type.get(arch, 0) + 1
                 metrics.combat_count += 1
 
-                result = run_combat(state, enc, strategy=profile.combat_strategy)
+                # Escalation: count fights in the last 10 days
+                recent_combat_days = [d for d in recent_combat_days if state.day - d <= 10]
+                clustered = len(recent_combat_days)
+                escalation = min(0.6, clustered * 0.15)
+                recent_combat_days.append(state.day)
+
+                result = run_combat(state, enc, strategy=profile.combat_strategy,
+                                    escalation_factor=escalation)
                 outcome = result.outcome.value
                 metrics.encounter_outcomes[outcome] = metrics.encounter_outcomes.get(outcome, 0) + 1
 
@@ -513,6 +521,53 @@ def analyze_divergence(
     return results
 
 
+def _classify_fear(metrics: RunMetrics) -> str:
+    """Classify what this captain feared based on telemetry, not prose.
+
+    Each captain type has distinct fear families. The classifier asks:
+    "what kind of danger was defining this captain's life?"
+
+    Relief fears: delay, undercapacity, public failure
+    Gray fears: seizure, exposure, paper closure
+    Honor fears: escalation, crew loss, thin support
+    """
+    ct = metrics.captain_type
+
+    if ct == "relief":
+        # Relief fear: delivery lateness, runway compression, shortage pressure
+        if metrics.delays > 3:
+            return "delivery delay — late shipments eroding trust"
+        if metrics.pay_missed > 0:
+            return "undercapacity — runway too short for obligations"
+        # Check if credits ever dipped below starting (500) mid-run
+        if any(c < 300 for c in metrics.credits_history):
+            return "public failure — visible decline in a legitimate path"
+        return "schedule compression — too many stops, not enough margin"
+
+    if ct == "gray":
+        # Gray fear: seizure, exposure, paper closure
+        if metrics.seizures > 0:
+            return "seizure — cargo confiscated, cover blown"
+        if metrics.retreats > metrics.combat_count * 0.3:
+            return "exposure — too many close calls, scrutiny building"
+        if metrics.delays > 2:
+            return "paper closure — bureaucratic walls tightening"
+        return "institutional pressure — the system remembering your name"
+
+    if ct == "honor":
+        # Honor fear: escalation, crew loss, thin support
+        if metrics.crew_injuries > 2:
+            return "crew loss — victories costing the people who fight beside you"
+        if metrics.repairs_needed > 2:
+            return "escalation — the ship can't take much more"
+        if metrics.crew_departures > 0:
+            return "thin support — allies leaving when the fights get real"
+        return "combat attrition — winning fights but losing the war of wear"
+
+    # Fallback for unknown captain types
+    return "running out of options"
+
+
 def generate_synthesis(
     metrics: RunMetrics,
 ) -> dict:
@@ -540,15 +595,8 @@ def generate_synthesis(
     else:
         pressure = "maintaining momentum"
 
-    # What it feared
-    if metrics.retreats > metrics.combat_count * 0.4:
-        feared = "direct confrontation"
-    elif metrics.delays > 3:
-        feared = "being stuck in someone else's queue"
-    elif metrics.crew_injuries > 2:
-        feared = "losing crew capability"
-    else:
-        feared = "running out of options"
+    # What it feared — captain-specific detection from telemetry
+    feared = _classify_fear(metrics)
 
     return {
         "captain_type": metrics.captain_type,

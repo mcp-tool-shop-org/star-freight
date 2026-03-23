@@ -271,6 +271,26 @@ def travel_to(state: CampaignState, destination: str) -> dict:
             "credits": state.credits, "fuel": state.ship_fuel}
 
 
+# P1: Demand premiums — specialist goods command higher prices at demand stations.
+# This lifts Gray (orryn goods) and Honor (veshan/luxury goods) without helping Relief.
+_DEMAND_PREMIUMS: dict[str, float] = {
+    # Gray/Honor specialist goods — higher premium (lifts thin-margin captains)
+    "orryn_data": 1.7,            # intelligence is highly valued
+    "orryn_brokered_goods": 1.6,  # cross-civ brokered goods carry markup
+    "veshan_weapons": 1.6,        # weapons in demand carry premium
+    "black_seal_resin": 1.7,      # luxury status good
+    "bond_plate": 1.6,            # legal certification has institutional value
+    # Relief volume goods — lower premium (trims dominant loop)
+    "medical_supplies": 1.3,      # widely needed but commoditized
+    "keth_organics": 1.35,        # broad demand, lower premium
+}
+
+
+def _demand_premium(good_id: str) -> float:
+    """Get demand premium multiplier for a good. Default 1.5, specialist goods higher."""
+    return _DEMAND_PREMIUMS.get(good_id, 1.5)
+
+
 def execute_trade(state: CampaignState, good_id: str, action: str, quantity: int = 1) -> dict:
     """Buy or sell goods. Cultural knowledge affects prices. Trade can trigger investigation."""
     station = SLICE_STATIONS.get(state.current_station)
@@ -285,9 +305,15 @@ def execute_trade(state: CampaignState, good_id: str, action: str, quantity: int
 
     base_price = good.base_price
     if good_id in station.produces:
-        base_price = int(base_price * 0.65)   # 35% discount at source
+        # Source discount: 35% off normally, reduced for Relief-dominant loop goods
+        source_mult = 0.65
+        if good_id in ("keth_organics", "medical_supplies"):
+            source_mult = 0.72  # P1: trim Relief compounding on volume goods
+        base_price = int(base_price * source_mult)
     elif good_id in station.demands:
-        base_price = int(base_price * 1.5)    # 50% premium at demand
+        # Demand premium: base 50%, higher for specialist goods
+        demand_mult = _demand_premium(good_id)
+        base_price = int(base_price * demand_mult)
     price = max(1, int(base_price * (1.0 + price_mod)))
 
     if action == "buy":
@@ -342,7 +368,10 @@ def execute_trade(state: CampaignState, good_id: str, action: str, quantity: int
     return result
 
 
-def run_combat(state: CampaignState, encounter: dict, strategy: str = "aggressive") -> CombatResult:
+def run_combat(
+    state: CampaignState, encounter: dict, strategy: str = "aggressive",
+    escalation_factor: float = 0.0,
+) -> CombatResult:
     """Run combat and write back to campaign state."""
     arch = SLICE_ENCOUNTERS.get(encounter["archetype"], SLICE_ENCOUNTERS["reach_pirate"])
 
@@ -406,7 +435,10 @@ def run_combat(state: CampaignState, encounter: dict, strategy: str = "aggressiv
             enemy_act(cs, current.id)
         end_turn(cs)
 
-    result = resolve_combat(cs, encounter.get("civilization", ""), list(state.ship_cargo))
+    result = resolve_combat(
+        cs, encounter.get("civilization", ""), list(state.ship_cargo),
+        escalation_factor=escalation_factor,
+    )
 
     # Write back
     state.ship_hull = result.player_hull_remaining

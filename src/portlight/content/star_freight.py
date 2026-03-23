@@ -159,8 +159,8 @@ SLICE_STATIONS: dict[str, Station] = {
         cultural_opportunity="Acknowledging the Debt Ledger publicly unlocks martial contracts. "
                             "Combat record opens House Drashan's respect — and their armory.",
         knowledge_required_for_restricted=1,
-        produces=["veshan_weapons", "veshan_minerals"],
-        demands=["keth_organics", "medical_supplies"],
+        produces=["veshan_weapons", "veshan_minerals", "black_seal_resin"],
+        demands=["keth_organics", "medical_supplies", "orryn_brokered_goods"],
         contraband=["unsealed_weapons"],
         fragment_sources=[],
         sector="veshan",
@@ -216,7 +216,7 @@ SLICE_STATIONS: dict[str, Station] = {
                             "and the only Ancestor tech market.",
         knowledge_required_for_restricted=2,
         produces=["reach_contraband", "ancestor_tech"],
-        demands=["medical_supplies", "keth_organics"],
+        demands=["medical_supplies", "keth_organics", "black_seal_resin"],
         contraband=[],  # nothing is illegal here
         fragment_sources=["med_manifest"],
         sector="reach",
@@ -265,7 +265,7 @@ SLICE_STATIONS: dict[str, Station] = {
                     "issued, and delayed cargo becomes political. Everything here is recorded. "
                     "Sloppy captains feel small. Prepared captains feel powerful.",
         services=["market", "fuel", "contracts"],
-        docking_fee=15,  # administrative overhead
+        docking_fee=12,  # administrative overhead
         repair_cost_per_point=4,  # expensive — this is not a shipyard
         fuel_cost_per_day=15,
         cultural_greeting="Automated docking. Your ship ID is logged before you're through the "
@@ -311,7 +311,7 @@ SLICE_STATIONS: dict[str, Station] = {
                             "and better fuel rates.",
         knowledge_required_for_restricted=1,
         produces=["orryn_data", "orryn_brokered_goods"],
-        demands=["ration_grain", "medical_supplies", "coolant_ampoules"],
+        demands=["ration_grain", "medical_supplies", "coolant_ampoules", "bond_plate"],
         contraband=["ancestor_tech"],
         fragment_sources=["dry_ledger_queue_delay"],
         sector="orryn",

@@ -695,6 +695,7 @@ def resolve_combat(
     state: CombatState,
     encounter_faction: str = "",
     cargo_at_risk: list[str] | None = None,
+    escalation_factor: float = 0.0,
 ) -> CombatResult:
     """Produce campaign-facing result from completed combat.
 
@@ -730,23 +731,31 @@ def resolve_combat(
     tags: list[str] = []
 
     if state.phase == CombatPhase.VICTORY:
-        # Salvage credits based on enemy size
+        # Salvage credits based on enemy size, diminished by escalation
+        salvage_mult = max(0.2, 1.0 - escalation_factor)
         for c in state.combatants.values():
             if c.team == Team.ENEMY:
-                credits += c.hp_max // 3  # salvage value — fighting should pay
+                credits += int(c.hp_max * 0.38 * salvage_mult)
 
         # Reputation: positive with your faction, negative with enemy's
         if encounter_faction:
             rep_delta[encounter_faction] = -5  # they hate you more
             rep_delta["compact"] = 2  # general lawfulness credit
 
-        # Crew injury chance: 20% per crew if player took heavy damage
-        if hull_damage > player.hp_max * 0.4:
+        # Crew injury chance: base 20%, escalation adds up to 30% more
+        injury_chance = 0.2 + escalation_factor * 0.3
+        damage_threshold = max(0.15, 0.4 - escalation_factor * 0.25)
+        if hull_damage > player.hp_max * damage_threshold:
             tags.append("heavy_damage")
-            # Flag crew for injury check (campaign layer decides)
             for ab in player.abilities:
-                if ab.crew_source and state.rng.random() < 0.2:
+                if ab.crew_source and state.rng.random() < injury_chance:
                     crew_injuries.append(ab.crew_source)
+
+        # Escalation hull wear: consecutive fights grind the ship down
+        if escalation_factor > 0:
+            wear = int(player.hp_max * escalation_factor * 0.05)
+            player.hp = max(1, player.hp - wear)
+            tags.append("escalation_wear")
 
         tags.append("combat_victory")
 
