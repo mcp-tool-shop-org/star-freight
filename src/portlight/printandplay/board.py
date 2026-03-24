@@ -1,9 +1,10 @@
-"""Game board rendering — port map with route connections.
+"""Game board rendering  -- star lanes of the Threshold.
 
-The board is the cleanest part of the kit:
-- Pale background, crisp route lines, strong port nodes
-- Sea = negative space, not decorative water texture
-- Port names readable from across a table
+The board is a political map, not a scenic one.
+- Lanes read as corridors under different kinds of pressure
+- Stations sit in governed territory, not neutral space
+- Lane identity (inspection, convoy, contested, hazard, gray) is visible
+- The board implies jurisdiction, not open travel
 """
 
 from __future__ import annotations
@@ -15,28 +16,60 @@ from portlight.printandplay.assets import (
     FONT_SMALL,
     FONT_TINY,
     INK,
+    LANE_CONTESTED,
+    LANE_CONVOY,
+    LANE_GRAY,
+    LANE_HAZARD,
+    LANE_INSPECTION,
     LIGHT_GRAY,
     MARGIN,
     MEDIUM_GRAY,
     PAPER,
-    REGION_COLORS,
+    SECTOR_COLORS,
     WHITE,
-    route_movement_cost,
+    lane_burn_cost,
 )
 
 if TYPE_CHECKING:
     from fpdf import FPDF
 
 
+def _lane_identity(lane) -> tuple[str, tuple[int, int, int]]:
+    """Classify a lane's pressure identity for visual rendering.
+
+    Returns (label, color) based on the lane's mechanical identity.
+    This is not cosmetic  -- it tells the player what kind of corridor they're entering.
+    """
+    # Contraband risk dominates  -- this is a monitored corridor
+    cr = getattr(lane, "contraband_risk", 0.0)
+    danger = getattr(lane, "danger", 0.0)
+    controlled = getattr(lane, "controlled_by", "")
+    terrain = getattr(lane, "terrain", "open")
+
+    if cr >= 0.25:
+        return "INSPECTED", LANE_INSPECTION
+    if controlled == "reach" or controlled == "disputed":
+        if danger >= 0.20:
+            return "CONTESTED", LANE_CONTESTED
+        return "GRAY", LANE_GRAY
+    if cr >= 0.15 and danger <= 0.05:
+        return "CONVOY", LANE_CONVOY
+    if terrain in ("debris_field", "asteroid_field", "nebula"):
+        return "HAZARD", LANE_HAZARD
+    if danger <= 0.05:
+        return "SAFE", LIGHT_GRAY
+    return "", MEDIUM_GRAY
+
+
 def draw_board(
     pdf: FPDF,
-    ports: dict,
-    routes: list,
+    stations: dict,
+    lanes: list | dict,
 ) -> None:
-    """Draw the game board on a new landscape page.
+    """Draw the star lane map on a new landscape page.
 
-    Ports must have .name, .region, .map_x, .map_y, .features attributes.
-    Routes must have .origin, .destination, .distance attributes.
+    Stations must have .name, .civilization/.sector, .x, .y attributes.
+    Lanes must have .station_a, .station_b, .distance_days attributes.
     """
     pdf.add_page(orientation="L")
 
@@ -48,111 +81,140 @@ def draw_board(
     pdf.set_font("Helvetica", "B", FONT_HEADING)
     pdf.set_text_color(*INK)
     pdf.set_xy(MARGIN, 5)
-    pdf.cell(pdf.w - 2 * MARGIN, 8, "PORTLIGHT - Trade Routes of the Known Seas", align="C")
+    pdf.cell(pdf.w - 2 * MARGIN, 8,
+             "STAR FREIGHT  -- Lanes of the Threshold", align="C")
 
     # Board area
     bx = MARGIN
     by = 16
     bw = pdf.w - 2 * MARGIN
-    bh = pdf.h - by - 20  # leave room for legend
+    bh = pdf.h - by - 22  # room for legend
 
-    # Light border
+    # Board border
     pdf.set_draw_color(*LIGHT_GRAY)
     pdf.set_line_width(0.3)
     pdf.rect(bx, by, bw, bh, style="D")
 
-    # Map coordinate system: use port map_x (0-50) and map_y (0-36)
-    # Scale to board area
-    x_scale = bw / 52.0
-    y_scale = bh / 38.0
+    # Coordinate scaling  -- station x (0-8), y (0-8) to board area
+    x_scale = bw / 10.0
+    y_scale = bh / 9.0
 
-    def port_pos(port) -> tuple[float, float]:
-        return (bx + (port.map_x + 1) * x_scale, by + (port.map_y + 1) * y_scale)
+    def station_pos(station) -> tuple[float, float]:
+        sx = getattr(station, "x", 0) or getattr(station, "map_x", 0) or 0
+        sy = getattr(station, "y", 0) or getattr(station, "map_y", 0) or 0
+        return (bx + (sx + 1) * x_scale, by + (sy + 1) * y_scale)
 
-    # Build port lookup
-    port_map = {pid: p for pid, p in ports.items()}
+    # Build station lookup
+    station_map = {}
+    if isinstance(stations, dict):
+        station_map = {sid: s for sid, s in stations.items()}
+    else:
+        for s in stations:
+            station_map[s.id] = s
 
-    # Draw routes (lines between ports)
-    for route in routes:
-        p1 = port_map.get(route.port_a)
-        p2 = port_map.get(route.port_b)
-        if not p1 or not p2:
+    # Normalize lanes to list
+    lane_list = lanes if isinstance(lanes, list) else list(lanes.values())
+
+    # --- Draw lanes (connections with identity) ---
+    for lane in lane_list:
+        a_id = getattr(lane, "station_a", None) or getattr(lane, "port_a", None)
+        b_id = getattr(lane, "station_b", None) or getattr(lane, "port_b", None)
+        s1 = station_map.get(a_id)
+        s2 = station_map.get(b_id)
+        if not s1 or not s2:
             continue
 
-        x1, y1 = port_pos(p1)
-        x2, y2 = port_pos(p2)
+        x1, y1 = station_pos(s1)
+        x2, y2 = station_pos(s2)
 
-        cost = route_movement_cost(route.distance)
+        dist = getattr(lane, "distance_days", 0) or getattr(lane, "distance", 0)
+        cost = lane_burn_cost(dist)
 
-        # Line style based on cost
-        if cost <= 1:
-            pdf.set_draw_color(*LIGHT_GRAY)
-            pdf.set_line_width(0.2)
-        elif cost == 2:
-            pdf.set_draw_color(*MEDIUM_GRAY)
-            pdf.set_line_width(0.3)
-        elif cost == 3:
-            pdf.set_draw_color(*INK)
+        identity_label, identity_color = _lane_identity(lane)
+
+        # Line style based on lane identity
+        pdf.set_draw_color(*identity_color)
+        terrain = getattr(lane, "terrain", "open")
+
+        if terrain in ("debris_field", "asteroid_field"):
             pdf.set_line_width(0.4)
+            _draw_dashed_line(pdf, x1, y1, x2, y2, dash_len=2.5, gap_len=1.5)
+        elif terrain == "nebula":
+            pdf.set_line_width(0.3)
+            _draw_dashed_line(pdf, x1, y1, x2, y2, dash_len=4, gap_len=2)
         else:
-            pdf.set_draw_color(*INK)
-            pdf.set_line_width(0.5)
-            # Dashed for extreme routes — draw as dotted segments
-            _draw_dashed_line(pdf, x1, y1, x2, y2, dash_len=3, gap_len=2)
-            continue
+            if cost <= 1:
+                pdf.set_line_width(0.2)
+            elif cost == 2:
+                pdf.set_line_width(0.35)
+            else:
+                pdf.set_line_width(0.5)
+            pdf.line(x1, y1, x2, y2)
 
-        pdf.line(x1, y1, x2, y2)
-
-        # Route cost label at midpoint
+        # Burn cost + identity label at midpoint
         mx, my = (x1 + x2) / 2, (y1 + y2) / 2
-        pdf.set_font("Helvetica", "", FONT_TINY)
-        pdf.set_text_color(*MEDIUM_GRAY)
-        pdf.set_xy(mx - 2, my - 1.5)
-        pdf.cell(4, 3, str(cost), align="C")
+        pdf.set_font("Helvetica", "B", FONT_TINY)
+        pdf.set_text_color(*identity_color)
+        pdf.set_xy(mx - 4, my - 3)
+        pdf.cell(8, 3, str(cost), align="C")
 
-    # Draw ports (nodes on top of routes)
-    for pid, port in port_map.items():
-        px, py = port_pos(port)
-        color = REGION_COLORS.get(port.region, INK)
+        if identity_label:
+            pdf.set_font("Helvetica", "", 4)
+            pdf.set_xy(mx - 8, my)
+            pdf.cell(16, 2.5, identity_label, align="C")
 
-        # Port dot
+    # --- Draw stations (nodes on top of lanes) ---
+    for sid, station in station_map.items():
+        px, py = station_pos(station)
+
+        # Determine civilization
+        civ = (getattr(station, "civilization", None)
+               or getattr(station, "sector", None)
+               or getattr(station, "region", None)
+               or "reach")
+        color = SECTOR_COLORS.get(civ, INK)
+
+        # Station node  -- hexagonal feel via slightly larger diamond
         pdf.set_fill_color(*color)
         pdf.set_draw_color(*INK)
-        pdf.set_line_width(0.2)
-        pdf.ellipse(px - 2.5, py - 2.5, 5, 5, style="FD")
+        pdf.set_line_width(0.25)
+        pdf.ellipse(px - 3, py - 3, 6, 6, style="FD")
 
-        # Feature marker inside dot
-        feat_char = ""
-        for f in port.features:
-            fv = f.value if hasattr(f, "value") else str(f)
-            if fv == "shipyard":
-                feat_char = "S"
-            elif fv == "black_market":
-                feat_char = "B"
-            elif fv == "safe_harbor":
-                feat_char = "H"
-        if feat_char:
+        # Service marker inside node
+        services = getattr(station, "services", [])
+        features = getattr(station, "features", [])
+        svc_char = ""
+        if "drydock" in services or "shipyard" in [
+            getattr(f, "value", f) for f in features
+        ]:
+            svc_char = "D"
+        elif "black_market" in services or "black_market" in [
+            getattr(f, "value", f) for f in features
+        ]:
+            svc_char = "B"
+        elif "contracts" in services:
+            svc_char = "C"
+
+        if svc_char:
             pdf.set_font("Helvetica", "B", 4)
             pdf.set_text_color(*WHITE)
             pdf.set_xy(px - 1.5, py - 1.5)
-            pdf.cell(3, 3, feat_char, align="C")
+            pdf.cell(3, 3, svc_char, align="C")
 
-        # Port name label
+        # Station name label
+        name = getattr(station, "name", sid)
         pdf.set_font("Helvetica", "B", FONT_TINY)
         pdf.set_text_color(*INK)
-        label = port.name
-        label_w = pdf.get_string_width(label)
+        label_w = pdf.get_string_width(name)
 
-        # Try to place label to the right; if near edge, place left
-        if px + 4 + label_w < bx + bw - 2:
-            pdf.set_xy(px + 4, py - 2)
+        if px + 5 + label_w < bx + bw - 2:
+            pdf.set_xy(px + 5, py - 2)
         else:
-            pdf.set_xy(px - 4 - label_w, py - 2)
-        pdf.cell(label_w + 1, 4, label)
+            pdf.set_xy(px - 5 - label_w, py - 2)
+        pdf.cell(label_w + 1, 4, name)
 
-    # Legend bar at bottom
+    # Legend
     _draw_legend(pdf, bx, by + bh + 2, bw)
-
     pdf.set_text_color(*INK)
 
 
@@ -189,40 +251,53 @@ def _draw_dashed_line(
 
 
 def _draw_legend(pdf: FPDF, x: float, y: float, w: float) -> None:
-    """Draw the board legend bar."""
+    """Draw the board legend  -- civilizations + lane identities."""
     pdf.set_font("Helvetica", "B", FONT_SMALL)
     pdf.set_text_color(*INK)
     pdf.set_xy(x, y)
-    pdf.cell(15, 4, "Legend:")
+    pdf.cell(15, 4, "Sectors:")
 
     cx = x + 16
-    # Region colors
-    for region, color in REGION_COLORS.items():
+    civ_abbr = {
+        "compact": "CMP", "keth": "KTH", "veshan": "VSH",
+        "orryn": "ORN", "reach": "RCH",
+    }
+    for civ, color in SECTOR_COLORS.items():
         pdf.set_fill_color(*color)
         pdf.rect(cx, y + 0.5, 3, 3, style="F")
         pdf.set_font("Helvetica", "", FONT_TINY)
-        abbr = {"Mediterranean": "MED", "North Atlantic": "ATL", "West Africa": "AFR",
-                "East Indies": "IND", "South Seas": "SEA"}.get(region, region[:3])
         pdf.set_xy(cx + 4, y)
-        pdf.cell(10, 4, abbr)
-        cx += 18
+        pdf.cell(10, 4, civ_abbr.get(civ, civ[:3].upper()))
+        cx += 16
 
-    # Features
-    cx += 5
-    for label, char in [("[S] Shipyard", "S"), ("[B] Black Market", "B"), ("[H] Safe Harbor", "H")]:
-        pdf.set_font("Helvetica", "", FONT_TINY)
-        pdf.set_xy(cx, y)
-        pdf.cell(25, 4, label)
-        cx += 28
-
-    # Route costs
-    cx += 5
+    # Lane identity legend
+    cx += 6
     pdf.set_font("Helvetica", "B", FONT_TINY)
     pdf.set_xy(cx, y)
-    pdf.cell(12, 4, "Routes:")
+    pdf.cell(12, 4, "Lanes:")
     cx += 13
-    for cost, desc in [(1, "Short"), (2, "Medium"), (3, "Long"), (4, "Extreme")]:
+
+    lane_legend = [
+        ("Inspected", LANE_INSPECTION),
+        ("Convoy", LANE_CONVOY),
+        ("Contested", LANE_CONTESTED),
+        ("Hazard", LANE_HAZARD),
+        ("Gray", LANE_GRAY),
+    ]
+    for label, color in lane_legend:
+        pdf.set_draw_color(*color)
+        pdf.set_line_width(0.4)
+        pdf.line(cx, y + 2, cx + 5, y + 2)
+        pdf.set_font("Helvetica", "", FONT_TINY)
+        pdf.set_text_color(*INK)
+        pdf.set_xy(cx + 6, y)
+        pdf.cell(14, 4, label)
+        cx += 22
+
+    # Service markers
+    cx += 4
+    for label, char in [("[D] Drydock", "D"), ("[B] Black Mkt", "B"), ("[C] Contracts", "C")]:
         pdf.set_font("Helvetica", "", FONT_TINY)
         pdf.set_xy(cx, y)
-        pdf.cell(18, 4, f"{cost}={desc}")
-        cx += 20
+        pdf.cell(20, 4, label)
+        cx += 22
