@@ -1,9 +1,15 @@
 <p align="center">
-  <a href="README.md">English</a> | <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.md">English</a>
 </p>
 
 <p align="center">
-  <img src="logo.png" alt="Star Freight — Trade. Decide. Survive." width="480">
+  <img src="https://raw.githubusercontent.com/mcp-tool-shop-org/brand/main/logos/star-freight/readme.png" alt="Star Freight — Trade. Decide. Survive." width="400">
+</p>
+
+<p align="center">
+  <a href="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml"><img src="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
+  <a href="https://mcp-tool-shop-org.github.io/star-freight/"><img src="https://img.shields.io/badge/landing_page-live-brightgreen" alt="Landing Page"></a>
 </p>
 
 # Star Freight
@@ -60,6 +66,21 @@ O mesmo mundo. Três pressões diferentes.
 
 Estas não são classes. São o que suas escolhas o transformaram.
 
+## Guia de início rápido
+
+```bash
+# Clone and install
+git clone https://github.com/mcp-tool-shop-org/star-freight.git
+cd star-freight
+pip install -e ".[tui]"
+
+# Start a new game
+starfreight new "Captain Nyx" --type merchant
+starfreight tui
+```
+
+**Controles:** `D` Painel | `C` Tripulação | `R` Rotas | `M` Mercado | `T` Estação | `J` Diário | `F` Facção | `B` Comprar | `S` Vender | `G` Viajar | `A` Avançar
+
 ## Estado atual
 
 Star Freight é um produto comprovado, não um conceito de design.
@@ -73,7 +94,7 @@ Star Freight é um produto comprovado, não um conceito de design.
 | Contratos | 9 |
 | Encontros | 6 |
 | Linhas de investigação | 4 |
-| Testes aprovados | 2,161 |
+| Testes aprovados | 2,200+ |
 
 A versão completa passou em todos os três critérios de validação: Caminho Dourado (vida de capitão contínua), Encontro (três ramificações com diferentes estados da campanha) e Economia (a pressão se mantém sem entrar em um ciclo repetitivo).
 
@@ -81,11 +102,23 @@ Três pacotes de expansão foram lançados: Working Lives (textura humana), Hous
 
 A divergência do caminho do capitão foi comprovada: três posturas produzem rotas diferentes, diferentes combinações de comércio, diferentes perfis de combate, diferentes texturas de falha e diferentes identidades de capitão.
 
+## Relatório de verificação da nave
+
+| Portão | Status | Evidências |
+|------|--------|----------|
+| A. Segurança | APROVADO | SECURITY.md, apenas para uso offline, sem segredos/telemetria |
+| B. Erros | APROVADO | Mais de 2200 testes, validação estruturada da campanha |
+| C. Documentação | APROVADO | README (8 idiomas), CHANGELOG, LICENÇA, MANUAIS |
+| D. Higiene | APROVADO | CI (Python 3.11+3.12), v1.0.0, fluxo de trabalho com restrições de caminho |
+| E. Refinamento | APROVADO | Logotipo, traduções, controle de qualidade de termos marítimos |
+
 ## Tecnologia
 
-Python 3.11+. Interface de texto rica. Derivado de [Portlight](https://github.com/mcp-tool-shop-org/portlight) — um motor de estratégia marítima com 1.832 testes que fornece a simulação de comércio, o modelo econômico e a arquitetura do estado do mundo. Star Freight adiciona a isso a vinculação da tripulação, o combate em grade, o conhecimento cultural, a investigação e a orquestração da campanha.
+Python 3.11+. Interface de usuário textual avançada. Vinculação da tripulação, combate em grade, conhecimento cultural, investigação e orquestração da campanha. Mais de 2200 testes.
 
 Sem dependências de IA externas. Sem serviços em nuvem. Executa na sua máquina.
+
+**Modelo de ameaças:** Star Freight é um jogo para um único jogador, que funciona offline. Ele acessa apenas arquivos de salvamento locais. NÃO acessa a rede, coleta dados de telemetria, armazena credenciais ou requer contas de usuário. As dependências são Typer, Rich e Textual — todas bem mantidas e sem código nativo. Consulte [SECURITY.md](SECURITY.md) para a política completa.
 
 ## A regra fundamental
 
@@ -100,3 +133,5 @@ Se não, pode esperar.
 ---
 
 *Star Freight é um jogo sobre navegar em sistemas de poder sem nunca pertencer totalmente a eles.*
+
+Desenvolvido por <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>

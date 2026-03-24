@@ -42,6 +42,18 @@ jobs:
         run: |
           python -m pytest tests/ -x -q --ignore=tests/test_tui_voyage_legacy.py
 
+      - name: Run tests with coverage (3.12 only)
+        if: matrix.python-version == '3.12'
+        run: |
+          python -m pytest tests/ --cov=src/portlight --cov-report=xml --ignore=tests/test_tui_voyage_legacy.py
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.12'
+        uses: codecov/codecov-action@v5
+        with:
+          file: coverage.xml
+          fail_ci_if_error: false
+
       - name: Maritime term guard
         run: |
           python -m pytest tests/test_maritime_guard.py -v

@@ -1,9 +1,15 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.md">English</a> | <a href="README.it.md">Italiano</a> | <a href="README.ko.md">한국어</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.md">English</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
-  <img src="logo.png" alt="Star Freight — Trade. Decide. Survive." width="480">
+  <img src="https://raw.githubusercontent.com/mcp-tool-shop-org/brand/main/logos/star-freight/readme.png" alt="Star Freight — Trade. Decide. Survive." width="400">
+</p>
+
+<p align="center">
+  <a href="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml"><img src="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
+  <a href="https://mcp-tool-shop-org.github.io/star-freight/"><img src="https://img.shields.io/badge/landing_page-live-brightgreen" alt="Landing Page"></a>
 </p>
 
 # स्टार फ्रेट
@@ -60,6 +66,21 @@
 
 ये कक्षाएं नहीं हैं। ये आपके द्वारा किए गए विकल्पों के कारण आप जो बन गए हैं, वही हैं।
 
+## शुरुआत
+
+```bash
+# Clone and install
+git clone https://github.com/mcp-tool-shop-org/star-freight.git
+cd star-freight
+pip install -e ".[tui]"
+
+# Start a new game
+starfreight new "Captain Nyx" --type merchant
+starfreight tui
+```
+
+**नियंत्रण:** `D` डैशबोर्ड | `C` चालक दल | `R` मार्ग | `M` बाजार | `T` स्टेशन | `J` जर्नल | `F` गुट | `B` खरीदें | `S` बेचें | `G` यात्रा करें | `A` आगे बढ़ें
+
 ## वर्तमान स्थिति
 
 स्टार फ्रेट एक सिद्ध उत्पाद है, कोई डिजाइन अवधारणा नहीं।
@@ -73,7 +94,7 @@
 | अनुबंध | 9 |
 | मुठभेड़ | 6 |
 | जांच के धागे | 4 |
-| सफलता परीक्षण | 2,161 |
+| सफलता परीक्षण | 2,200+ |
 
 'वर्टिकल स्लाइस' सभी तीन सत्यापन मानदंडों को पास कर चुका है: गोल्डन पाथ (लगातार कप्तान जीवन), एनकाउंटर (विभिन्न अभियान स्थिति के साथ तीन शाखाएं), और अर्थव्यवस्था (दबाव बिना ढहने के बना रहता है)।
 
@@ -81,11 +102,23 @@
 
 कप्तान पथ विचलन सिद्ध है: तीन दृष्टिकोण अलग-अलग रास्ते, अलग-अलग व्यापार मिश्रण, अलग-अलग युद्ध प्रोफाइल, अलग-अलग विफलता परिदृश्य और अलग-अलग कप्तान पहचान उत्पन्न करते हैं।
 
+## शिपचेक स्कोरकार्ड
+
+| गेट | स्थिति | सबूत |
+|------|--------|----------|
+| अ. सुरक्षा | पास | SECURITY.md, केवल ऑफलाइन, कोई गुप्त जानकारी/टेलीमेट्री नहीं |
+| ब. त्रुटियाँ | पास | 2200 से अधिक परीक्षण, संरचित अभियान सत्यापन |
+| स. दस्तावेज़ | पास | README (8 भाषाएँ), CHANGELOG, LICENSE, HANDBOOK |
+| द. स्वच्छता | पास | CI (Python 3.11+3.12), v1.0.0, पाथ-गेटेड वर्कफ़्लो |
+| इ. सुधार | पास | लोगो, अनुवाद, समुद्री शब्दावली सुरक्षा CI |
+
 ## तकनीक
 
-पायथन 3.11+। रिच टीयूआई। [पोर्टलाइट](https://github.com/mcp-tool-shop-org/portlight) से लिया गया है - एक 1,832-टेस्ट समुद्री रणनीति इंजन जो व्यापार सिमुलेशन, अर्थव्यवस्था मॉडल और विश्व-अवस्था आर्किटेक्चर प्रदान करता है। स्टार फ्रेट क्रू बाइंडिंग, ग्रिड कॉम्बैट, सांस्कृतिक ज्ञान, जांच और अभियान ऑर्केस्ट्रेशन को इसके ऊपर जोड़ता है।
+Python 3.11+. रिच TUI। चालक दल का बंधन, ग्रिड मुकाबला, सांस्कृतिक ज्ञान, जांच और अभियान प्रबंधन। 2200 से अधिक परीक्षण।
 
 कोई बाहरी एआई निर्भरता नहीं। कोई क्लाउड सेवाएं नहीं। यह आपके मशीन पर चलता है।
+
+**खतरे का मॉडल:** स्टार फ्रेट एक सिंगल-प्लेयर ऑफलाइन गेम है। यह केवल स्थानीय सेव फ़ाइलों का उपयोग करता है। यह नेटवर्क तक नहीं पहुंचता, कोई टेलीमेट्री एकत्र नहीं करता, कोई क्रेडेंशियल संग्रहीत नहीं करता, और न ही उपयोगकर्ता खातों की आवश्यकता होती है। निर्भरताएं Typer, Rich और Textual हैं - सभी अच्छी तरह से बनाए गए हैं, और इनमें कोई देशी कोड नहीं है। पूर्ण नीति के लिए [SECURITY.md](SECURITY.md) देखें।
 
 ## नियम
 
@@ -100,3 +133,5 @@
 ---
 
 *स्टार फ्रेट एक ऐसा खेल है जो शक्ति के प्रणालियों के माध्यम से आगे बढ़ने के बारे में है, बिना कभी पूरी तरह से उनमें शामिल हुए।*
+
+<a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a> द्वारा निर्मित।

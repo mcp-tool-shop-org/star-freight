@@ -1,17 +1,15 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
-  <img src="logo.png" alt="Star Freight — Trade. Decide. Survive." width="480">
+  <img src="https://raw.githubusercontent.com/mcp-tool-shop-org/brand/main/logos/star-freight/readme.png" alt="Star Freight — Trade. Decide. Survive." width="400">
 </p>
 
 <p align="center">
   <a href="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml"><img src="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version">
-  <img src="https://img.shields.io/badge/python-3.11+-green" alt="Python">
   <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
-  <img src="https://img.shields.io/badge/tests-2200+-brightgreen" alt="Tests">
+  <a href="https://mcp-tool-shop-org.github.io/star-freight/"><img src="https://img.shields.io/badge/landing_page-live-brightgreen" alt="Landing Page"></a>
 </p>
 
 # Star Freight
@@ -135,3 +133,5 @@ If not, it can wait.
 ---
 
 *Star Freight is a game about moving through systems of power without ever fully belonging to them.*
+
+Built by <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
