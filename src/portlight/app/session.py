@@ -72,10 +72,29 @@ class GameSession:
         self._trade_seq: int = 0
         self._rng: random.Random = random.Random()
         self.auto_resolve_duels: bool = False
+        # Star Freight campaign state — the space layer
+        self._sf_campaign = None
 
     @property
     def active(self) -> bool:
         return self.world is not None
+
+    @property
+    def sf_campaign(self):
+        """Star Freight campaign state for TUI views.
+
+        Lazily creates a default SF CampaignState with crew if not already set.
+        This provides the data contract that sf_views.py expects.
+        """
+        if self._sf_campaign is None:
+            from portlight.engine.sf_campaign import CampaignState as SFCampaignState
+            from portlight.engine.crew import recruit
+            from portlight.content.star_freight import create_thal, create_varek
+            state = SFCampaignState()
+            recruit(state.crew, create_thal())
+            recruit(state.crew, create_varek())
+            self._sf_campaign = state
+        return self._sf_campaign
 
     @property
     def captain(self):

@@ -49,48 +49,31 @@ def test_combat_screen_import():
 
 
 def test_theme_css():
-    """Theme CSS is a non-empty string with maritime colors."""
+    """Theme CSS is a non-empty string with Star Freight void palette."""
     from portlight.app.tui.theme import APP_CSS
     assert isinstance(APP_CSS, str)
     assert len(APP_CSS) > 500
-    assert "#0a1628" in APP_CSS  # deep ocean background
-    assert "#2a9d8f" in APP_CSS  # sea foam accent
-    assert "#264653" in APP_CSS  # storm gray for panels
-    assert "#e76f51" in APP_CSS  # coral red for danger
+    assert "#0a0e1a" in APP_CSS  # void black background
+    assert "#4090e0" in APP_CSS  # shield blue accent
+    assert "#1a1e2a" in APP_CSS  # hull gray for panels
+    assert "#e05050" in APP_CSS  # alert red for danger
 
 
-def test_theme_ship_art():
-    """Ship ASCII art is defined and contains visual elements."""
-    from portlight.app.tui.theme import SHIP_ART, SHIP_ART_SMALL
-    assert len(SHIP_ART) > 50
-    assert "\\" in SHIP_ART  # sail
-    assert "~" in SHIP_ART  # water
-    assert isinstance(SHIP_ART_SMALL, str)
+def test_theme_credits_display():
+    """Credits display shows the \u20a1 symbol and handles ranges."""
+    from portlight.app.tui.theme import credits_display
+    assert "\u20a1" in credits_display(1000)
+    assert "\u20a1" in credits_display(50)
+    assert "0" in credits_display(0)
 
 
-def test_theme_compass_rose():
-    """Compass rose contains all cardinal directions."""
-    from portlight.app.tui.theme import COMPASS_ROSE
-    for direction in ["N", "S", "E", "W", "NE", "NW", "SE", "SW"]:
-        assert direction in COMPASS_ROSE
-
-
-def test_theme_region_badges():
-    """Region badges exist for all 5 game regions."""
-    from portlight.app.tui.theme import REGION_BADGES
-    assert len(REGION_BADGES) == 5
-    assert "mediterranean" in REGION_BADGES
-    assert "north_atlantic" in REGION_BADGES
-    assert "west_africa" in REGION_BADGES
-    assert "east_indies" in REGION_BADGES
-    assert "south_seas" in REGION_BADGES
-
-
-def test_theme_wave_frames():
-    """Wave animation has multiple frames."""
-    from portlight.app.tui.theme import WAVE_FRAMES
-    assert len(WAVE_FRAMES) >= 2
-    assert all("~" in f for f in WAVE_FRAMES)
+def test_theme_no_maritime_content():
+    """Theme maritime stubs are empty (legacy compat only)."""
+    import portlight.app.tui.theme as theme
+    # Stubs exist for backward compat but must be empty
+    assert theme.SHIP_ART == ""
+    assert theme.REGION_BADGES == {}
+    assert not hasattr(theme, "COMPASS_ROSE")
 
 
 def test_theme_render_bar():
@@ -130,15 +113,14 @@ def test_theme_danger_indicator():
 
 
 def test_dashboard_content_tabs():
-    """ContentArea supports all expected tab names."""
+    """ContentArea supports all Star Freight tab names."""
     from portlight.app.tui.screens.dashboard import ContentArea
     from portlight.app.session import GameSession
     session = GameSession()
     content = ContentArea(session)
     expected_tabs = [
-        "dashboard", "market", "cargo", "routes", "port",
-        "fleet", "inventory", "contracts", "ledger",
-        "infrastructure", "help",
+        "dashboard", "crew", "routes", "market",
+        "station", "journal", "faction", "help",
     ]
     for tab in expected_tabs:
         content._current_tab = tab
@@ -146,12 +128,12 @@ def test_dashboard_content_tabs():
 
 
 def test_app_bindings():
-    """App has bindings for all navigation and action keys."""
-    from portlight.app.tui.app import PortlightApp
-    app = PortlightApp()
+    """App has bindings for all Star Freight navigation and action keys."""
+    from portlight.app.tui.app import StarFreightApp
+    app = StarFreightApp()
     binding_keys = {b.key for b in app.BINDINGS}
-    # Navigation keys
-    nav_keys = {"d", "m", "r", "c", "i", "f", "k", "p", "l", "w"}
+    # Navigation keys — Star Freight screen set
+    nav_keys = {"d", "c", "r", "m", "t", "j", "f"}
     assert nav_keys.issubset(binding_keys)
     # Action keys
     action_keys = {"b", "s", "g", "a"}
@@ -160,32 +142,41 @@ def test_app_bindings():
     assert "q" in binding_keys
 
 
-def test_splash_art():
-    """Splash screen art is defined."""
-    from portlight.app.tui.screens.dashboard import SPLASH_ART, SPLASH_TITLE
-    assert len(SPLASH_ART) > 100
+def test_splash_title():
+    """Splash screen title is Star Freight themed."""
+    from portlight.app.tui.screens.dashboard import SPLASH_TITLE
+    assert len(SPLASH_TITLE) > 100
+    assert "Portlight" not in SPLASH_TITLE
+    assert "merchant" in SPLASH_TITLE.lower() or "freight" in SPLASH_TITLE.lower()
     assert "____" in SPLASH_TITLE  # ASCII art banner
 
 
-def test_sidebar_components():
-    """StatusSidebar can be imported and has compose method."""
-    from portlight.app.tui.screens.dashboard import StatusSidebar
+def test_captain_bar_components():
+    """CaptainBar can be imported and has compose method."""
+    from portlight.app.tui.screens.dashboard import CaptainBar
     from portlight.app.session import GameSession
-    sidebar = StatusSidebar(GameSession())
-    assert hasattr(sidebar, "refresh_status")
-    assert hasattr(sidebar, "compose")
+    bar = CaptainBar(GameSession())
+    assert hasattr(bar, "refresh_status")
+    assert hasattr(bar, "compose")
 
 
 def test_tabbar():
-    """TabBar has all expected tab labels."""
+    """TabBar has all Star Freight tab labels."""
     from portlight.app.tui.screens.dashboard import TabBar
     bar = TabBar()
     labels = [label for _, label in bar.TAB_LABELS]
     assert "Dash" in labels
-    assert "Market" in labels
+    assert "Crew" in labels
     assert "Routes" in labels
-    assert "Fleet" in labels
+    assert "Market" in labels
+    assert "Station" in labels
+    assert "Journal" in labels
+    assert "Faction" in labels
     assert "Help" in labels
+    # No maritime tabs
+    assert "Fleet" not in labels
+    assert "Cargo" not in labels
+    assert "Port" not in labels
 
 
 def test_market_trade_dialog_construct():

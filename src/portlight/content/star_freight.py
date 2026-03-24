@@ -43,7 +43,7 @@ class StationService(str, Enum):
     FUEL = "fuel"
     CREW_HIRE = "crew_hire"
     CONTRACTS = "contracts"
-    SHIPYARD = "shipyard"
+    DRYDOCK = "drydock"
     BLACK_MARKET = "black_market"
     CULTURAL_EVENT = "cultural_event"
 
@@ -98,7 +98,7 @@ SLICE_STATIONS: dict[str, Station] = {
         description="The Compact's commercial face in the Threshold. Clean corridors, "
                     "regulated markets, bureaucratic friction. Your disgrace follows you here — "
                     "officials are cold, prices carry a surcharge, and military decks are off-limits.",
-        services=["market", "repair", "fuel", "contracts", "shipyard"],
+        services=["market", "repair", "fuel", "contracts", "drydock"],
         docking_fee=10,
         repair_cost_per_point=3,
         fuel_cost_per_day=12,
@@ -266,7 +266,7 @@ SLICE_STATIONS: dict[str, Station] = {
                     "Sloppy captains feel small. Prepared captains feel powerful.",
         services=["market", "fuel", "contracts"],
         docking_fee=12,  # administrative overhead
-        repair_cost_per_point=4,  # expensive — this is not a shipyard
+        repair_cost_per_point=4,  # expensive — this is not a drydock
         fuel_cost_per_day=15,
         cultural_greeting="Automated docking. Your ship ID is logged before you're through the "
                         "airlock. A registry clerk appears with a manifest reconciliation request "

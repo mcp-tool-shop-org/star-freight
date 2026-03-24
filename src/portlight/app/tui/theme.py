@@ -1,53 +1,20 @@
-"""Portlight TUI CSS theme — dark maritime palette.
+"""Star Freight TUI CSS theme — deep void palette.
 
 Colors:
-  Deep ocean (#0a1628) for backgrounds
-  Sea foam (#2a9d8f) for primary accents
-  Gold (#e9c46a) for silver/wealth
-  Coral red (#e76f51) for danger
-  Storm gray (#264653) for panels
+  Void black (#0a0e1a) for backgrounds
+  Star white (#e8e8e8) for primary text
+  Shield blue (#4090e0) for accents
+  Credit gold (#f0c040) for currency/wealth
+  Alert red (#e05050) for danger
+  Hull gray (#1a1e2a) for panels
+
+Civilization colors:
+  Keth amber (#d0a040)
+  Veshan crimson (#c04040)
+  Orryn teal (#40b0b0)
+  Reach purple (#9060c0)
+  Compact blue (#4090e0)
 """
-
-# ASCII ship art for the sidebar header
-SHIP_ART = """\
-[dim]     ~  ~[/dim]
-[bold cyan]   |\\[/bold cyan]
-[bold cyan]   | \\[/bold cyan]
-[bold cyan]   |  \\[/bold cyan]
-[dim cyan]  _|___\\__[/dim cyan]
-[dim cyan] /________\\[/dim cyan]
-[dim blue]~~~~~~~~~~~~~[/dim blue]"""
-
-SHIP_ART_SMALL = "[dim blue]~[/dim blue][bold cyan]|\\[/bold cyan][dim blue]~~[/dim blue]"
-
-# Compass rose for routes view
-COMPASS_ROSE = """\
-[bold cyan]        N[/bold cyan]
-[dim]        |[/dim]
-[bold cyan]   NW[/bold cyan] [dim]--+--[/dim] [bold cyan]NE[/bold cyan]
-[dim]        |[/dim]
-[bold cyan] W[/bold cyan] [dim]----+----[/dim] [bold cyan]E[/bold cyan]
-[dim]        |[/dim]
-[bold cyan]   SW[/bold cyan] [dim]--+--[/dim] [bold cyan]SE[/bold cyan]
-[dim]        |[/dim]
-[bold cyan]        S[/bold cyan]"""
-
-# Region banners
-REGION_BADGES = {
-    "mediterranean": "[on dark_blue] [bold]MED[/bold] [/on dark_blue]",
-    "north_atlantic": "[on #264653] [bold]ATL[/bold] [/on #264653]",
-    "west_africa": "[on #6b4226] [bold]AFR[/bold] [/on #6b4226]",
-    "east_indies": "[on #8b0000] [bold]IND[/bold] [/on #8b0000]",
-    "south_seas": "[on #006d6f] [bold]SEA[/bold] [/on #006d6f]",
-}
-
-# Wave frames for animation
-WAVE_FRAMES = [
-    "[dim blue]~-~-~-~-~-~-~-~-~-~-~[/dim blue]",
-    "[dim blue]-~-~-~-~-~-~-~-~-~-~-[/dim blue]",
-    "[dim blue]~-~-~-~-~-~-~-~-~-~-~[/dim blue]",
-    "[dim blue]-~-~-~-~-~-~-~-~-~-~-[/dim blue]",
-]
 
 # Visual bar characters
 BAR_FULL = "[bold green]\u2588[/bold green]"
@@ -75,19 +42,23 @@ def render_bar(current: int, maximum: int, width: int = 12) -> str:
 
 
 def render_mini_bar(current: int, maximum: int, width: int = 8) -> str:
-    """Compact bar for sidebar use."""
+    """Compact bar for header use."""
     return render_bar(current, maximum, width)
 
 
-def silver_display(amount: int) -> str:
-    """Stylized silver amount."""
+def credits_display(amount: int) -> str:
+    """Stylized credits amount with \u20a1 symbol."""
     if amount >= 1000:
-        return f"[bold yellow]{amount:,}[/bold yellow]"
+        return f"[bold #f0c040]{amount:,}\u20a1[/bold #f0c040]"
     elif amount >= 100:
-        return f"[yellow]{amount:,}[/yellow]"
+        return f"[#f0c040]{amount:,}\u20a1[/#f0c040]"
     elif amount > 0:
-        return f"[dim yellow]{amount}[/dim yellow]"
-    return "[bold red]0[/bold red]"
+        return f"[dim #f0c040]{amount}\u20a1[/dim #f0c040]"
+    return "[bold red]0\u20a1[/bold red]"
+
+
+# Keep old name as alias for any remaining internal references
+silver_display = credits_display
 
 
 def danger_indicator(danger: float) -> str:
@@ -103,48 +74,28 @@ def danger_indicator(danger: float) -> str:
     return "[green]\u2713[/green]"
 
 
+# Legacy stubs — still imported by old Portlight screens (encounter, routes)
+# These will be removed when the old screens are fully retired.
+REGION_BADGES: dict[str, str] = {}
+SHIP_ART = ""
+SHIP_ART_SMALL = ""
+WAVE_FRAMES = ["", ""]
+
+
 APP_CSS = """
 Screen {
-    background: #0a1628;
-    color: #c8d6e5;
+    background: #0a0e1a;
+    color: #e8e8e8;
 }
 
-/* Sidebar — deep ocean panel */
-#status-sidebar {
-    width: 30;
-    height: 100%;
-    dock: left;
-    border-right: thick #2a9d8f;
-    padding: 1;
-    background: #0d1f3c;
-}
-
-#sidebar-ship-art {
+/* Captain pressure bar — top header */
+#captain-bar {
+    width: 100%;
     height: auto;
-    text-align: center;
-    margin-bottom: 1;
-}
-
-#sidebar-captain {
-    height: auto;
-}
-
-#sidebar-ship {
-    height: auto;
-    margin-top: 1;
-}
-
-#sidebar-location {
-    height: auto;
-    margin-top: 1;
-    border-top: dashed #264653;
-    padding-top: 1;
-}
-
-#sidebar-wave {
-    dock: bottom;
-    height: 1;
-    text-align: center;
+    dock: top;
+    padding: 0 1;
+    background: #12162a;
+    border-bottom: tall #1a1e2a;
 }
 
 /* Content area */
@@ -153,20 +104,20 @@ Screen {
     padding: 0 1;
 }
 
-/* Tab bar — sea foam accent */
+/* Tab bar — shield blue accent */
 #tab-bar {
     dock: bottom;
     height: 1;
-    background: #0d1f3c;
-    color: #c8d6e5;
+    background: #12162a;
+    color: #e8e8e8;
     padding: 0 1;
-    border-top: tall #264653;
+    border-top: tall #1a1e2a;
 }
 
 /* Footer keybinding bar */
 Footer {
-    background: #0d1f3c;
-    color: #576574;
+    background: #12162a;
+    color: #606060;
 }
 
 /* View panels */
@@ -178,22 +129,22 @@ Footer {
 /* Market DataTable */
 DataTable {
     height: 1fr;
-    background: #0a1628;
+    background: #0a0e1a;
 }
 
 /* Combat panels */
 #combat-you {
     width: 1fr;
     height: auto;
-    border: tall #2a9d8f;
+    border: tall #4090e0;
     padding: 1;
-    background: #0d1f3c;
+    background: #12162a;
 }
 
 #combat-enemy {
     width: 1fr;
     height: auto;
-    border: tall #e76f51;
+    border: tall #e05050;
     padding: 1;
     background: #1a0a0a;
 }
@@ -202,8 +153,8 @@ DataTable {
     height: 1fr;
     overflow-y: auto;
     padding: 0 1;
-    border-top: tall #264653;
-    background: #0a1628;
+    border-top: tall #1a1e2a;
+    background: #0a0e1a;
 }
 
 /* Modal dialogs */
@@ -212,28 +163,14 @@ DataTable {
     height: auto;
     margin: 4;
     padding: 2;
-    background: #0d1f3c;
-    border: tall #2a9d8f;
+    background: #12162a;
+    border: tall #4090e0;
 }
 
 /* Splash screen */
 #splash-art {
     text-align: center;
     margin: 2;
-}
-
-/* Voyage progress */
-#voyage-bar {
-    height: auto;
-    margin: 1 0;
-}
-
-#voyage-log {
-    height: 1fr;
-    overflow-y: auto;
-    padding: 0 1;
-    background: #0d1f3c;
-    border: tall #264653;
 }
 
 /* Route list */
@@ -243,23 +180,23 @@ DataTable {
 
 /* Contract board */
 .contract-urgent {
-    color: #e76f51;
+    color: #e05050;
     text-style: bold;
 }
 
 .contract-normal {
-    color: #c8d6e5;
+    color: #e8e8e8;
 }
 
 .contract-done {
-    color: #2a9d8f;
+    color: #40c060;
 }
 
 /* Help panel */
 #help-panel {
     padding: 2;
-    background: #0d1f3c;
-    border: tall #264653;
+    background: #12162a;
+    border: tall #1a1e2a;
 }
 
 /* Encounter screen */
@@ -270,7 +207,7 @@ DataTable {
 #encounter-header {
     height: auto;
     padding: 1;
-    border: tall #e76f51;
+    border: tall #e05050;
     background: #1a0a0a;
 }
 
@@ -281,15 +218,15 @@ DataTable {
 #ship-player {
     width: 1fr;
     height: auto;
-    border: tall #2a9d8f;
+    border: tall #4090e0;
     padding: 1;
-    background: #0d1f3c;
+    background: #12162a;
 }
 
 #ship-enemy {
     width: 1fr;
     height: auto;
-    border: tall #e76f51;
+    border: tall #e05050;
     padding: 1;
     background: #1a0a0a;
 }
@@ -301,15 +238,15 @@ DataTable {
 #combatant-player {
     width: 1fr;
     height: auto;
-    border: tall #2a9d8f;
+    border: tall #4090e0;
     padding: 1;
-    background: #0d1f3c;
+    background: #12162a;
 }
 
 #combatant-enemy {
     width: 1fr;
     height: auto;
-    border: tall #e76f51;
+    border: tall #e05050;
     padding: 1;
     background: #1a0a0a;
 }
@@ -318,14 +255,14 @@ DataTable {
     height: 1fr;
     overflow-y: auto;
     padding: 0 1;
-    border-top: tall #264653;
-    background: #0a1628;
+    border-top: tall #1a1e2a;
+    background: #0a0e1a;
 }
 
 #encounter-actions {
     dock: bottom;
     height: 1;
-    background: #0d1f3c;
+    background: #12162a;
     padding: 0 1;
 }
 """
