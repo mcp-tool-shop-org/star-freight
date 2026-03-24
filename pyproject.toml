@@ -27,7 +27,7 @@ dependencies = [
 
 [project.optional-dependencies]
 tui = ["textual>=0.85.0"]
-dev = ["pytest>=8.0", "pytest-cov>=5.0"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "pytest-asyncio>=0.21"]
 
 [project.scripts]
 starfreight = "portlight.app.cli:app"
@@ -38,3 +38,4 @@ packages = ["src/portlight"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+asyncio_mode = "auto"

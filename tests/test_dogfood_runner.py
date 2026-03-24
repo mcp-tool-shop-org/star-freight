@@ -11,7 +11,7 @@ from portlight.engine.dogfood_runner import (
 )
 
 
-SCENARIO_DIR = Path("F:/AI/star-freight/dogfood/scenarios")
+SCENARIO_DIR = Path(__file__).parent.parent / "dogfood" / "scenarios"
 
 
 class TestScenarioLoading:
