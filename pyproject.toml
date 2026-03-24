@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "star-freight"
-version = "1.0.2"
+version = "1.0.3"
 description = "Star Freight — space merchant captain RPG. Five civilizations. One life."
 readme = "README.md"
 license = "MIT"
