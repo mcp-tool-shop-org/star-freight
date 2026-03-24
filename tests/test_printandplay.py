@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 
 
 class TestAssets:
@@ -89,8 +91,16 @@ class TestContentSourcing:
             assert tmpl.trust_requirement
 
 
+try:
+    import fpdf  # noqa: F401
+    _has_fpdf = True
+except ImportError:
+    _has_fpdf = False
+
+
+@pytest.mark.skipif(not _has_fpdf, reason="fpdf2 not installed — PDF generation is optional")
 class TestGenerator:
-    """Test full PDF generation."""
+    """Test full PDF generation (requires fpdf2)."""
 
     def test_generate_creates_pdf(self, tmp_path: Path):
         from portlight.printandplay.generator import generate
