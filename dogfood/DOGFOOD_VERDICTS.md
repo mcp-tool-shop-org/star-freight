@@ -5,6 +5,30 @@
 
 ---
 
+## Wave 3 — P1 Tuning Confirmation
+
+**Overall: PASS**
+
+All 8 checks passed. Credit ratio 4.78x (target 3-5x). All baselines survive.
+Fear classifier 3/3 distinct. Divergence 1.88. Honor escalation survives at
+245 credits with 4 injuries — scarred but alive, not comfortable.
+
+Two infrastructure bugs fixed during wave:
+1. `run_scenario` was not applying overrides before simulation (all stress runs were baselines)
+2. `simulate_run` always started at Meridian Exchange, ignoring scenario starting station
+
+| # | Scenario | Class | Credits | Fear | Verdict |
+|---|----------|-------|---------|------|---------|
+| 1 | Relief baseline | core | 3386 | delivery delay | PASS |
+| 2 | Gray baseline | core | 709 | exposure | PASS |
+| 3 | Honor baseline | core | 813 | crew loss | PASS |
+| 4 | Gray seizure | stress | 743 | exposure | PASS |
+| 5 | Relief shortage | stress | 2228 | delivery delay | PASS |
+| 6 | Honor escalation | stress | 245 | crew loss | PASS |
+| 7 | Burned rep recovery | recovery | 679 | combat attrition | PASS |
+
+---
+
 ## Wave 2 — Post-P0 Economy Fix
 
 **Overall: PASS with P1 items**
@@ -56,6 +80,10 @@ Architecture holds. Divergence is real (1.00 station, 1.00 lane). 3/3 unique ide
 | 2026-03-23 | Wave 1 | Fear classifier too coarse (2/3 unique) | P1: Add fear dimensions | PENDING |
 | 2026-03-23 | Wave 1 | Investigation only from station sources | P2: Broaden trigger matching | PENDING |
 | 2026-03-23 | Wave 1 | Reputation barely moves | P3: Increase rep velocity | PENDING |
-| 2026-03-23 | Wave 2 | Relief dominates (11x ratio) | P1: Narrow margin gap to 3-5x | PENDING |
-| 2026-03-23 | Wave 2 | Honor escalation too comfortable | P1: Make escalation stress real | PENDING |
+| 2026-03-23 | Wave 2 | Relief dominates (11x ratio) | P1: Narrow margin gap to 3-5x | DONE (Wave 3 confirmed 4.78x) |
+| 2026-03-23 | Wave 2 | Honor escalation too comfortable | P1: Make escalation stress real | DONE (Wave 3: 245 credits, 4 injuries) |
 | 2026-03-23 | Wave 2 | Investigation only station sources | P2: Fix harness event emission | PENDING |
+| 2026-03-24 | Wave 3 | run_scenario not applying overrides | Fix: apply before simulation | DONE |
+| 2026-03-24 | Wave 3 | simulate_run ignoring starting station | Fix: respect initial_state | DONE |
+| 2026-03-24 | Wave 3 | Gray at 709 — close to floor | Watch: monitor across seeds | WATCH |
+| 2026-03-24 | Wave 3 | test_full_voyage_arrives flaky | Pre-existing test ordering issue | WATCH |

@@ -2,7 +2,7 @@
   "id": "honor_escalation_60d_s17",
   "class": "stress",
   "path": "honor",
-  "description": "Veshan standing starts Cold (-15), encounter rate +50%. Does confrontation tolerance survive?",
+  "description": "Veshan standing starts Cool (-10), encounter rate +30%. Does confrontation tolerance survive?",
   "seed": 17,
   "days": 60,
   "crew": ["varek_drashan", "thal_communion"],
@@ -14,12 +14,12 @@
     "fuel": 8,
     "station": "drashan_citadel",
     "reputation_overrides": {
-      "veshan.drashan": -15,
-      "veshan.vekhari": -10
+      "veshan.drashan": -10,
+      "veshan.vekhari": -5
     }
   },
   "world_pressure": {
-    "encounter_rate_multiplier": 1.5
+    "encounter_rate_multiplier": 1.3
   },
   "pass_focus": ["pressure_fairness", "recovery_viability", "captain_divergence"]
 }

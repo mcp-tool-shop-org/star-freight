@@ -146,6 +146,7 @@ class CampaignState:
     seed: int = 42
     rng: _random.Random = field(default_factory=lambda: _random.Random(42))
     last_pay_day: int = 1
+    danger_multiplier: float = 1.0  # world pressure: encounter rate scaling
 
 
 # ---------------------------------------------------------------------------
@@ -246,7 +247,7 @@ def travel_to(state: CampaignState, destination: str) -> dict:
             events.append({"type": "crew_departure", "event": dep})
 
         # Encounter roll
-        if state.rng.random() < lane.danger and encounter is None:
+        if state.rng.random() < lane.danger * state.danger_multiplier and encounter is None:
             civ = lane.controlled_by
             if civ == "disputed":
                 civ = state.rng.choice(["compact", "reach"])

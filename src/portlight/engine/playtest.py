@@ -277,8 +277,13 @@ def simulate_run(
     posture: CaptainPosture,
     days: int = 90,
     seed: int = 42,
+    initial_state: CampaignState | None = None,
 ) -> tuple[CampaignState, RunMetrics]:
     """Run a complete simulation for one captain posture.
+
+    If initial_state is provided, uses it instead of creating a fresh one.
+    This allows dogfood scenarios to inject overrides (credits, hull, rep,
+    danger_multiplier) before the simulation loop begins.
 
     Returns (final_state, metrics).
     """
@@ -288,13 +293,19 @@ def simulate_run(
         CaptainPosture.HONOR: HONOR_PROFILE,
     }[posture]
 
-    state = create_campaign_for_posture(posture)
-    state.seed = seed
+    if initial_state is not None:
+        state = initial_state
+        state.seed = seed
+        state.rng = __import__('random').Random(seed)
+    else:
+        state = create_campaign_for_posture(posture)
+        state.seed = seed
     metrics = RunMetrics(captain_type=posture.value)
 
-    # Start at Meridian Exchange
-    dock_at_station(state, "meridian_exchange")
-    metrics.stations_visited["meridian_exchange"] = 1
+    # Start at initial station (scenario may override to a different port)
+    start_station = state.current_station or "meridian_exchange"
+    dock_at_station(state, start_station)
+    metrics.stations_visited[start_station] = 1
 
     turn = 0
     max_turns = days * 2  # safety limit (some turns are travel, some are station)

@@ -1,0 +1,122 @@
+{
+  "wave": 3,
+  "build": "post-P1-tuning",
+  "verdict": "PASS",
+  "core": {
+    "credits": {
+      "relief": 3386,
+      "gray": 709,
+      "honor": 813
+    },
+    "fears": {
+      "relief": "delivery delay \u2014 late shipments eroding trust",
+      "gray": "exposure \u2014 too many close calls, scrutiny building",
+      "honor": "crew loss \u2014 victories costing the people who fight beside you"
+    },
+    "divergence": {
+      "route_divergence": 1.0,
+      "lane_divergence": 1.0,
+      "economic_divergence": 1.636,
+      "combat_divergence": 1.0,
+      "reputation_divergence": 5.833,
+      "failure_divergence": 1.667,
+      "trade_divergence": 1.0,
+      "overall_divergence": 1.877
+    }
+  },
+  "stress": {
+    "gray_seizure_60d_s17": {
+      "credits": 743,
+      "pressure": "time and access",
+      "fear": "exposure \u2014 too many close calls, scrutiny building",
+      "combat_count": 2,
+      "crew_injuries": 0,
+      "repairs_needed": 1
+    },
+    "relief_shortage_60d_s17": {
+      "credits": 2228,
+      "pressure": "time and access",
+      "fear": "delivery delay \u2014 late shipments eroding trust",
+      "combat_count": 0,
+      "crew_injuries": 0,
+      "repairs_needed": 0
+    },
+    "honor_escalation_60d_s17": {
+      "credits": 245,
+      "pressure": "time and access",
+      "fear": "crew loss \u2014 victories costing the people who fight beside you",
+      "combat_count": 7,
+      "crew_injuries": 4,
+      "repairs_needed": 7
+    }
+  },
+  "recovery": {
+    "scenario": "recovery_burned_rep_45d_s99",
+    "credits": 679,
+    "pressure": "time and access",
+    "fear": "combat attrition \u2014 winning fights but losing the war of wear",
+    "survives": true
+  },
+  "verdicts": {
+    "credit_ratio": {
+      "pass": true,
+      "value": 4.78,
+      "target": "3.0-5.0x",
+      "detail": "3386/709"
+    },
+    "all_survive": {
+      "pass": true,
+      "credits": {
+        "relief": 3386,
+        "gray": 709,
+        "honor": 813
+      }
+    },
+    "relief_shape": {
+      "pass": true,
+      "richest": true,
+      "ratio": 4.78
+    },
+    "gray_viable": {
+      "pass": true,
+      "credits": 709
+    },
+    "honor_escalation": {
+      "pass": true,
+      "escalation_credits": 245,
+      "escalation_rate": 4.1,
+      "baseline_rate": 9.0,
+      "comfortable": false,
+      "survives": true
+    },
+    "fear_distinct": {
+      "pass": true,
+      "unique": 3,
+      "fears": {
+        "relief": "delivery delay \u2014 late shipments eroding trust",
+        "gray": "exposure \u2014 too many close calls, scrutiny building",
+        "honor": "crew loss \u2014 victories costing the people who fight beside you"
+      }
+    },
+    "divergence": {
+      "pass": true,
+      "overall": 1.88,
+      "detail": {
+        "route_divergence": 1.0,
+        "lane_divergence": 1.0,
+        "economic_divergence": 1.64,
+        "combat_divergence": 1.0,
+        "reputation_divergence": 5.83,
+        "failure_divergence": 1.67,
+        "trade_divergence": 1.0,
+        "overall_divergence": 1.88
+      }
+    },
+    "recovery": {
+      "pass": true,
+      "credits": 679,
+      "painful": false,
+      "survives": true
+    }
+  }
+}

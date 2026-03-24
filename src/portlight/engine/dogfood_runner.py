@@ -83,9 +83,17 @@ def apply_scenario_overrides(state: CampaignState, scenario: dict) -> None:
             if thread.fragments:
                 thread.last_progress_day = state.day - delay
 
+    # World pressure
+    world = scenario.get("world_pressure", {})
+    if "encounter_rate_multiplier" in world:
+        state.danger_multiplier = world["encounter_rate_multiplier"]
+
 
 def run_scenario(scenario: dict) -> dict:
     """Run a complete dogfood scenario and return the run record.
+
+    Creates a campaign state, applies scenario overrides (starting state
+    and world pressure), then runs the simulation with the configured state.
 
     Returns a dict with telemetry, synthesis, and scenario metadata.
     """
@@ -98,13 +106,14 @@ def run_scenario(scenario: dict) -> dict:
     seed = scenario.get("seed", 42)
     days = scenario.get("days", 90)
 
-    # Run simulation
-    state, metrics = simulate_run(posture, days=days, seed=seed)
-
-    # Apply overrides if scenario has custom starting state
-    # Note: for full fidelity, overrides should be applied BEFORE simulation.
-    # This simplified version runs the standard sim and records the result.
-    # A future version could inject overrides into create_campaign_for_posture.
+    # Build state with overrides applied BEFORE simulation
+    has_overrides = scenario.get("starting_state") or scenario.get("world_pressure")
+    if has_overrides:
+        initial = create_campaign_for_posture(posture)
+        apply_scenario_overrides(initial, scenario)
+        state, metrics = simulate_run(posture, days=days, seed=seed, initial_state=initial)
+    else:
+        state, metrics = simulate_run(posture, days=days, seed=seed)
 
     # Generate synthesis
     synthesis = generate_synthesis(metrics)
