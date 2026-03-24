@@ -6,6 +6,14 @@
   <img src="logo.png" alt="Star Freight — Trade. Decide. Survive." width="480">
 </p>
 
+<p align="center">
+  <a href="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml"><img src="https://github.com/mcp-tool-shop-org/star-freight/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/python-3.11+-green" alt="Python">
+  <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
+  <img src="https://img.shields.io/badge/tests-2200+-brightgreen" alt="Tests">
+</p>
+
 # Star Freight
 
 You were a military pilot. Then you were a disgrace. Now you are a captain with a bad ship, no standing, and a star system that was already moving before you got here.
@@ -60,6 +68,21 @@ The same world. Three different pressures.
 
 These are not classes. They are what your choices turned you into.
 
+## Quickstart
+
+```bash
+# Clone and install
+git clone https://github.com/mcp-tool-shop-org/star-freight.git
+cd star-freight
+pip install -e ".[tui]"
+
+# Start a new game
+starfreight new "Captain Nyx" --type merchant
+starfreight tui
+```
+
+**Controls:** `D` Dashboard | `C` Crew | `R` Routes | `M` Market | `T` Station | `J` Journal | `F` Faction | `B` Buy | `S` Sell | `G` Travel | `A` Advance
+
 ## Current state
 
 Star Freight is a proved product, not a design concept.
@@ -73,13 +96,23 @@ Star Freight is a proved product, not a design concept.
 | Contracts | 9 |
 | Encounters | 6 |
 | Investigation threads | 4 |
-| Tests passing | 2,161 |
+| Tests passing | 2,200+ |
 
 The vertical slice has passed all three proof criteria: Golden Path (continuous captain life), Encounter (three branches with different campaign state), and Economy (pressure sustains without collapsing into grind).
 
 Three expansion packs are shipped: Working Lives (human texture), Houses, Audits, and Seizures (institutional pressure), and Shortages, Sanctions, and Convoys (managed scarcity).
 
 Captain path divergence is proved: three postures produce different routes, different trade mixes, different combat profiles, different failure textures, and different captain identities.
+
+## Shipcheck scorecard
+
+| Gate | Status | Evidence |
+|------|--------|----------|
+| A. Security | PASS | SECURITY.md, offline-only, no secrets/telemetry |
+| B. Errors | PASS | 2200+ tests, structured campaign validation |
+| C. Docs | PASS | README (8 languages), CHANGELOG, LICENSE, HANDBOOK |
+| D. Hygiene | PASS | CI (Python 3.11+3.12), v1.0.0, paths-gated workflow |
+| E. Polish | PASS | Logo, translations, maritime term guard CI |
 
 ## Tech
 
