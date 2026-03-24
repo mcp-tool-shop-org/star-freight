@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
@@ -119,6 +119,8 @@ Captain path divergence is proved: three postures produce different routes, diff
 Python 3.11+. Rich TUI. Crew binding, grid combat, cultural knowledge, investigation, and campaign orchestration. 2200+ tests.
 
 No external AI dependencies. No cloud services. Runs on your machine.
+
+**Threat model:** Star Freight is a single-player offline game. It touches only local save files. It does NOT access the network, collect telemetry, store credentials, or require user accounts. Dependencies are Typer, Rich, and Textual — all well-maintained, no native code. See [SECURITY.md](SECURITY.md) for the full policy.
 
 ## The standing rule
 
