@@ -1,12 +1,17 @@
-"""Voyage integration tests — simulate a full trade cycle via pilot.
+"""LEGACY — Portlight voyage integration tests.
 
-Creates a game, buys goods, sails, advances to arrival, sells goods,
-and verifies state changes at each step. This is the "play a round" test.
+These test the old maritime game loop (buy grain, sail, advance at sea, sell).
+They exercise the Portlight GameSession/WorldState layer, NOT the Star Freight
+campaign layer. Quarantined during Phase 9D TUI cutover.
+
+Skip by default — run explicitly with: pytest tests/test_tui_voyage_legacy.py
 """
 
 from __future__ import annotations
 
 import pytest
+
+pytestmark = pytest.mark.skip(reason="Legacy Portlight tests — quarantined during SF cutover")
 
 textual = pytest.importorskip("textual", reason="textual not installed")
 

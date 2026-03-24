@@ -83,7 +83,7 @@ Captain path divergence is proved: three postures produce different routes, diff
 
 ## Tech
 
-Python 3.11+. Rich TUI. Forked from [Portlight](https://github.com/mcp-tool-shop-org/portlight) — a 1,832-test maritime strategy engine that provides the trade simulation, economy model, and world-state architecture. Star Freight layers crew binding, grid combat, cultural knowledge, investigation, and campaign orchestration on top.
+Python 3.11+. Rich TUI. Crew binding, grid combat, cultural knowledge, investigation, and campaign orchestration. 2200+ tests.
 
 No external AI dependencies. No cloud services. Runs on your machine.
 

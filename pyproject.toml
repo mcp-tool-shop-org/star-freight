@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "star-freight"
-version = "0.1.0"
-description = "Star Freight — gritty sci-fi space merchant RPG. Forked from Portlight."
+version = "1.0.0"
+description = "Star Freight — space merchant captain RPG. Five civilizations. One life."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [{ name = "mcp-tool-shop", email = "64996768+mcp-tool-shop@users.noreply.github.com" }]
 keywords = ["game", "rpg", "space", "trading", "strategy", "sci-fi"]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.11",
