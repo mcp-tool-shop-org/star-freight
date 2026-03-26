@@ -2,6 +2,18 @@
 
 All notable changes to Star Freight are documented here.
 
+## [1.0.4] - 2026-03-25
+
+### Added
+- `--version` / `-V` CLI flag
+- Version alignment test
+- SHA-pinned CI actions
+
+### Fixed
+- `__version__` in `__init__.py` now matches pyproject.toml (was stuck at 1.0.0)
+- SECURITY.md supported version widened from "1.0.x" to "1.x"
+- CLI app name corrected from "portlight" to "starfreight"
+
 ## [1.0.0] - 2026-03-24
 
 ### Added

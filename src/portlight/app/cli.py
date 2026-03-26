@@ -11,12 +11,13 @@ import random
 import typer
 from rich.console import Console
 
+from portlight import __version__
 from portlight.app import views
 from portlight.app.session import GameSession
 
 app = typer.Typer(
-    name="portlight",
-    help="Portlight -- trade-first maritime strategy game",
+    name="starfreight",
+    help="Star Freight — space merchant captain RPG",
     no_args_is_help=True,
 )
 console = Console()
@@ -30,9 +31,16 @@ def _main(
     save: str = typer.Option("default", "--save", "-s",
         help="Save slot name (isolates separate games)"),
 ) -> None:
-    """Portlight -- trade-first maritime strategy game."""
+    """Star Freight — space merchant captain RPG."""
     global _active_slot  # noqa: PLW0603
     _active_slot = save
+
+
+@app.command()
+def version() -> None:
+    """Print version and exit."""
+    typer.echo(f"starfreight {__version__}")
+    raise typer.Exit()
 
 
 def _session() -> GameSession:
