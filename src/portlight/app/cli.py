@@ -43,6 +43,17 @@ def version() -> None:
     raise typer.Exit()
 
 
+@app.command()
+def rpc() -> None:
+    """Start JSON-RPC server for graphical clients (stdio)."""
+    from portlight.rpc.server import RpcServer
+
+    s = GameSession(slot=_active_slot)
+    s.load()  # OK if no save exists — ping still works
+    server = RpcServer(session=s)
+    server.run()
+
+
 def _session() -> GameSession:
     """Load or fail with helpful message."""
     from portlight.engine.save import SaveVersionError
