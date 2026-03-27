@@ -20,7 +20,8 @@ These are the load-bearing walls. They cannot be changed without invalidating th
 
 ## What this handbook covers
 
-- [Getting Started](/star-freight/handbook/getting-started/) — install, first run, controls
-- [The World](/star-freight/handbook/the-world/) — civilizations, stations, lanes, goods
-- [Captain Paths](/star-freight/handbook/captain-paths/) — Relief, Gray, Honor — how they diverge
-- [Systems Reference](/star-freight/handbook/reference/) — crew, combat, culture, investigation, campaign state
+- [Getting Started](/star-freight/handbook/getting-started/) -- install, first run, controls
+- [The World](/star-freight/handbook/the-world/) -- civilizations, ports, routes, goods, factions
+- [Captain Paths](/star-freight/handbook/captain-paths/) -- nine classes, three postures, ships, companions
+- [Systems Reference](/star-freight/handbook/reference/) -- crew, combat, culture, investigation, trade, contracts
+- [Beginner's Guide](/star-freight/handbook/beginners/) -- first 30 minutes walkthrough for new captains

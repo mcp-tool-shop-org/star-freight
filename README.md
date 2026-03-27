@@ -54,17 +54,20 @@ Five civilizations share a star system called the Threshold.
 
 **The Sable Reach** — Pirate factions, Ancestor tech salvagers, and people the Compact would rather forget. No law. No customs. No refunds. The highest risk and the highest reward in the system.
 
-## Three kinds of captain
+## Nine captain classes
 
-The same world. Three different pressures.
+Each captain class reshapes pricing, voyage modifiers, reputation growth, and starting relationships with the 20-port world.
 
-**Relief captain.** Convoy discipline, trust-based access, public consequence. You keep people fed and get trapped by legitimacy. You fear delay and undercapacity.
-
-**Gray runner.** Paper leverage, timing abuse, institutional risk. You make money by staying hard to read. You fear seizure and exposure.
-
-**Honor captain.** Direct confrontation, house politics, reputation volatility. You solve problems face-to-face. You fear escalation and thin support networks.
-
-These are not classes. They are what your choices turned you into.
+**Merchant** -- volume trade, port fee discounts, steady and reliable.
+**Smuggler** -- inspection evasion, underworld connections, lean margins.
+**Navigator** -- speed bonuses, fuel efficiency, storm resilience.
+**Privateer** -- faction-aligned combat, salvage income, political leverage.
+**Corsair** -- high-risk piracy, black market access, reputation volatility.
+**Scholar** -- cultural knowledge, luxury trade bonuses, diplomatic options.
+**Merchant Prince** -- luxury specialist, high starting capital, expensive tastes.
+**Dockhand** -- hard start, no advantages, everything earned from nothing.
+**Bounty Hunter** -- combat-funded, target contracts, faction heat.
+**Custom** -- distribute 10 skill points across Trade, Sailing, Shadow, and Reputation. Choose a home port, cultural background, and faction alignment. No best build -- only trade-offs.
 
 ## Quickstart
 
@@ -74,12 +77,14 @@ git clone https://github.com/mcp-tool-shop-org/star-freight.git
 cd star-freight
 pip install -e ".[tui]"
 
-# Start a new game
+# Start a new game (pick any of 9 types or custom)
 starfreight new "Captain Nyx" --type merchant
 starfreight tui
 ```
 
 **Controls:** `D` Dashboard | `C` Crew | `R` Routes | `M` Market | `T` Station | `J` Journal | `F` Faction | `B` Buy | `S` Sell | `G` Travel | `A` Advance
+
+Use `--save slotname` to run multiple captain lives in parallel.
 
 ## Current state
 
@@ -87,13 +92,14 @@ Star Freight is a proved product, not a design concept.
 
 | | Count |
 |---|---|
-| Stations | 9 |
-| Space lanes | 14 |
-| Trade goods | 18 |
-| Crew members | 5 + player |
-| Contracts | 9 |
-| Encounters | 6 |
-| Investigation threads | 4 |
+| Ports | 20 (5 regions) |
+| Trade routes | 43 (tiered by ship class) |
+| Trade goods | 18 (6 categories incl. contraband) |
+| Captain classes | 9 + custom builder |
+| Companions | 10 (5 roles, 2 each) |
+| Ship classes | 5 (sloop to man-of-war) |
+| Contract templates | 24 (7 families) |
+| Pirate factions | 4 |
 | Tests passing | 2,200+ |
 
 The vertical slice has passed all three proof criteria: Golden Path (continuous captain life), Encounter (three branches with different campaign state), and Economy (pressure sustains without collapsing into grind).
@@ -114,11 +120,11 @@ Captain path divergence is proved: three postures produce different routes, diff
 
 ## Tech
 
-Python 3.11+. Rich TUI. Crew binding, grid combat, cultural knowledge, investigation, and campaign orchestration. 2200+ tests.
+Python 3.11+. Typer CLI + Rich TUI + Textual full-screen mode. Crew binding, grid combat (8x6), cultural knowledge, investigation, and campaign orchestration. 2,200+ tests.
 
 No external AI dependencies. No cloud services. Runs on your machine.
 
-**Threat model:** Star Freight is a single-player offline game. It touches only local save files. It does NOT access the network, collect telemetry, store credentials, or require user accounts. Dependencies are Typer, Rich, and Textual — all well-maintained, no native code. See [SECURITY.md](SECURITY.md) for the full policy.
+**Threat model:** Star Freight is a single-player offline game. It touches only local save files. It does NOT access the network, collect telemetry, store credentials, or require user accounts. Dependencies are Typer, Rich, and Textual -- all well-maintained, no native code. See [SECURITY.md](SECURITY.md) for the full policy.
 
 ## The standing rule
 

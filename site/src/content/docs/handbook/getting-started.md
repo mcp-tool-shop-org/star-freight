@@ -21,8 +21,14 @@ pip install -e ".[tui]"
 ## Start a game
 
 ```bash
+# Create a new captain (pick from 9 types or custom)
+starfreight new "Captain Nyx" --type merchant
+
+# Launch the full-screen TUI
 starfreight tui
 ```
+
+Use `--save slotname` on any command to run multiple captain lives in parallel.
 
 ## Controls
 
