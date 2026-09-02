@@ -1,0 +1,4 @@
+{
+  "name": "Star Freight",
+  "install": "python3 -m pip install --break-system-packages --upgrade pip && python3 -m pip install --break-system-packages -e \".[dev,tui]\""
+}
