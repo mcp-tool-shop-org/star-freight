@@ -406,6 +406,94 @@ def after_action_summary(result: CombatResult, state: CampaignState) -> Panel:
 
 
 # ---------------------------------------------------------------------------
+# 3b. Approach — the encounter decision surface (C2)
+# ---------------------------------------------------------------------------
+
+def approach_panel(info: dict) -> Panel:
+    """Stakes-first interdiction surface: who, cargo, hull — then the choices.
+
+    Answers the surface order: where am I (interdiction), what matters
+    (stakes), what can I do (approaches), what will it cost (each line's hint).
+    Grid is only reached on Fight. Honor challenges close negotiate and flee.
+    """
+    civ_style = _civ_style(info.get("civilization", ""))
+    lines: list = []
+
+    header = Text()
+    header.append("  INTERDICTION", style=C_RED)
+    header.append("  \u2014  ", style=C_DIM)
+    header.append(info["name"], style=civ_style)
+    lines.append(header)
+    lines.append(Text(f"  {info['description']}", style=C_DIM))
+    lines.append(Text())
+
+    # What matters — the stakes.
+    lines.append(Text("  Stakes", style=C_GOLD))
+    hostile = Text("  Hostile:  ")
+    hostile.append(info["name"], style=civ_style)
+    hostile.append(
+        f"   hull ~{info['enemy_hull']}   guns ~{info['enemy_damage']}",
+        style=C_RED,
+    )
+    lines.append(hostile)
+
+    yours = Text("  Your ship: ")
+    yours.append_text(_bar(info["player_hull"], info["player_hull_max"], 10))
+    yours.append(f" {info['player_hull']}/{info['player_hull_max']} hull")
+    lines.append(yours)
+
+    cargo = info.get("cargo") or []
+    if cargo:
+        names = ", ".join(
+            (SLICE_GOODS.get(g).name if SLICE_GOODS.get(g) else g) for g in cargo
+        )
+        lines.append(Text(f"  Cargo at risk: {len(cargo)} \u2014 {names}", style="yellow"))
+    else:
+        lines.append(Text("  Cargo hold: empty", style=C_DIM))
+    lines.append(Text())
+
+    # What can I do — the approaches, with cost visible.
+    lines.append(Text("  Approach", style=C_GOLD))
+
+    if info["must_fight"]:
+        lines.append(Text("  [N] Negotiate  \u2014 closed: honor challenge", style=C_DIM))
+    elif info["can_negotiate"]:
+        neg = Text("  [N] Negotiate", style=C_GREEN)
+        if info.get("negotiate_hint"):
+            neg.append(f"  \u2014 {info['negotiate_hint']}", style=C_DIM)
+        lines.append(neg)
+    else:
+        lines.append(
+            Text("  [N] Negotiate  \u2014 no standing (needs cultural knowledge)", style=C_DIM)
+        )
+
+    if info["must_fight"]:
+        lines.append(Text("  [F] Flee       \u2014 closed: refusing is dishonor", style=C_DIM))
+    else:
+        flee = Text("  [F] Flee", style="yellow")
+        if info.get("flee_consequence"):
+            flee.append(f"  \u2014 {info['flee_consequence']}", style=C_DIM)
+        lines.append(flee)
+
+    fight = Text("  [G] Fight", style=C_RED)
+    fight.append("  \u2014 open the tactical grid (8\u00d76)", style=C_DIM)
+    lines.append(fight)
+
+    border = C_VESHAN if info["must_fight"] else "#e05050"
+    title = "[bold red]APPROACH[/bold red]"
+    if info["must_fight"]:
+        title = "[bold #c04040]HONOR CHALLENGE[/bold #c04040]"
+
+    return Panel(
+        Group(*lines),
+        title=title,
+        border_style=border,
+        box=box.HEAVY,
+        padding=(1, 2),
+    )
+
+
+# ---------------------------------------------------------------------------
 # 4. Grid Combat Screen
 # ---------------------------------------------------------------------------
 

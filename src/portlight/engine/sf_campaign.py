@@ -587,6 +587,181 @@ def run_combat(
     return finish_combat(state, cs, encounter, escalation_factor=escalation_factor)
 
 
+# ---------------------------------------------------------------------------
+# Approach — the encounter decision surface (C2)
+#
+# Every interdiction opens an approach: stakes first, then Negotiate / Flee /
+# Fight. The grid is only reached on Fight. A Veshan honor challenge (behavior
+# "honor") cannot skip the grid — refusing is dishonor, so negotiate and flee
+# are closed. These are read/resolve helpers; the TUI ApproachScreen drives them.
+# ---------------------------------------------------------------------------
+
+
+def _encounter_archetype(encounter: dict) -> "EncounterArchetype":
+    return SLICE_ENCOUNTERS.get(
+        encounter.get("archetype", ""), SLICE_ENCOUNTERS["reach_pirate"]
+    )
+
+
+def approach_encounter(state: CampaignState, encounter: dict) -> dict:
+    """Stakes + available approaches for an interdiction. Pure read, no writes."""
+    arch = _encounter_archetype(encounter)
+    opts = encounter.get("cultural_options", {}) or {}
+    must_fight = arch.behavior == "honor"
+    knowledge = int(opts.get("knowledge_level", 0))
+    can_negotiate = bool(opts.get("can_negotiate")) and not must_fight
+    can_flee = not must_fight
+
+    dest = state.pending_destination
+    dest_name = ""
+    if dest:
+        st = SLICE_STATIONS.get(dest)
+        dest_name = st.name if st else dest
+
+    return {
+        "archetype": arch.id,
+        "name": arch.name,
+        "civilization": arch.civilization,
+        "behavior": arch.behavior,
+        "description": arch.description,
+        "must_fight": must_fight,
+        "can_negotiate": can_negotiate,
+        "can_flee": can_flee,
+        "knowledge_level": knowledge,
+        "negotiate_hint": arch.cultural_option,
+        "flee_consequence": arch.retreat_consequence,
+        "victory_consequence": arch.victory_consequence,
+        "defeat_consequence": arch.defeat_consequence,
+        "enemy_hull": arch.ship_hull,
+        "enemy_shield": arch.ship_shield,
+        "enemy_damage": arch.ship_damage,
+        "player_hull": state.ship_hull,
+        "player_hull_max": state.ship_hull_max,
+        "cargo": list(state.ship_cargo),
+        "destination": dest,
+        "destination_name": dest_name,
+    }
+
+
+def _cargo_name(good_id: str) -> str:
+    good = SLICE_GOODS.get(good_id)
+    return good.name if good else good_id
+
+
+def negotiate_encounter(state: CampaignState, encounter: dict) -> dict:
+    """Talk instead of fight. Requires cultural standing; grid is skipped.
+
+    On success you resolve the transit and dock at the pending destination.
+    """
+    info = approach_encounter(state, encounter)
+    if info["must_fight"]:
+        return {
+            "resolved": False,
+            "error": "A Veshan honor challenge cannot be talked away.",
+        }
+    if not info["can_negotiate"]:
+        return {
+            "resolved": False,
+            "error": "You lack the cultural standing to negotiate this. Fight or flee.",
+        }
+
+    arch = _encounter_archetype(encounter)
+    civ = encounter.get("civilization", "")
+    reputation_delta: dict[str, int] = {}
+    credits_spent = 0
+
+    if arch.id == "compact_patrol":
+        # Comply and present papers — the Compact notes your cooperation.
+        if civ in state.reputation:
+            state.reputation[civ] = min(100, state.reputation[civ] + 2)
+            reputation_delta[civ] = 2
+        line = (
+            "You submit to inspection and present your permits. "
+            "The patrol logs your cooperation and waves you through."
+        )
+    elif arch.id == "reach_pirate":
+        # Buy them off — the Reach respect a paid debt more than a fight.
+        toll = min(state.credits, 60 + arch.ship_damage // 2)
+        state.credits -= toll
+        credits_spent = toll
+        line = (
+            f"You open a channel and buy the raiders off for {toll}\u20a1. "
+            "They peel away to hunt easier prey."
+        )
+    else:
+        line = "You talk your way clear of the encounter."
+
+    state.consequence_tags.append(f"negotiated_{arch.id}")
+
+    arrival = resolve_transit(state) if state.in_transit else {}
+    return {
+        "resolved": True,
+        "outcome": "negotiated",
+        "line": line,
+        "reputation_delta": reputation_delta,
+        "credits_spent": credits_spent,
+        "arrival": arrival,
+        "destination_name": info["destination_name"],
+    }
+
+
+def flee_encounter(state: CampaignState, encounter: dict) -> dict:
+    """Run rather than fight. Aborts the voyage back to the origin station.
+
+    Cost is the archetype's retreat consequence: Reach raiders take a cargo
+    unit; a Compact patrol flags you as wanted. Honor challenges cannot be fled.
+    """
+    info = approach_encounter(state, encounter)
+    if info["must_fight"]:
+        return {
+            "resolved": False,
+            "error": "Refusing a Veshan honor challenge is dishonor. You cannot flee.",
+        }
+
+    arch = _encounter_archetype(encounter)
+    civ = encounter.get("civilization", "")
+    cargo_lost: list[str] = []
+    reputation_delta: dict[str, int] = {}
+
+    if arch.id == "compact_patrol":
+        if civ in state.reputation:
+            state.reputation[civ] = max(-100, state.reputation[civ] - 10)
+            reputation_delta[civ] = -10
+        state.consequence_tags.append("wanted_compact")
+        line = (
+            "You burn past the patrol and run the blockade. Your transponder is "
+            "flagged system-wide — the Compact will remember this."
+        )
+    elif arch.id == "reach_pirate":
+        if state.ship_cargo:
+            dropped = state.ship_cargo.pop()
+            cargo_lost.append(dropped)
+            line = (
+                f"You jettison {_cargo_name(dropped)} and run dark. "
+                "The raiders break off to scoop the spoils."
+            )
+        else:
+            line = (
+                "You run with an empty hold. The raiders give chase but your "
+                "engines hold and you slip into the dark."
+            )
+        state.consequence_tags.append("fled_reach")
+    else:
+        line = "You disengage and slip away into the dark."
+
+    # Fleeing aborts the run — you fall back to the station you left.
+    state.in_transit = False
+    state.pending_destination = None
+
+    return {
+        "resolved": True,
+        "outcome": "fled",
+        "line": line,
+        "cargo_lost": cargo_lost,
+        "reputation_delta": reputation_delta,
+    }
+
+
 def get_campaign_summary(state: CampaignState) -> dict:
     """Snapshot for testing and display."""
     return {

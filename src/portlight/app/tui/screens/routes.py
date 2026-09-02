@@ -71,7 +71,7 @@ def execute_sail_flow(app, session: "GameSession") -> None:
         return
 
     from portlight.content.star_freight import SLICE_STATIONS, SLICE_LANES
-    from portlight.engine.sf_campaign import travel_to, begin_combat
+    from portlight.engine.sf_campaign import travel_to
 
     here = state.current_station
     destinations = []
@@ -111,9 +111,10 @@ def execute_sail_flow(app, session: "GameSession") -> None:
         enc = result.get("encounter")
         if enc:
             app.notify(f"Interdicted en route to {dest_name}.", severity="warning")
-            combat = begin_combat(state, enc)
-            from portlight.app.tui.screens.combat import CombatScreen
-            app.push_screen(CombatScreen(session, combat, enc))
+            # C2: open the approach surface first — stakes, then negotiate /
+            # flee / fight. The grid is only reached if the captain chooses Fight.
+            from portlight.app.tui.screens.approach import ApproachScreen
+            app.push_screen(ApproachScreen(session, enc))
             return
         else:
             app.notify(f"Arrived at {dest_name}.", severity="information", timeout=5)

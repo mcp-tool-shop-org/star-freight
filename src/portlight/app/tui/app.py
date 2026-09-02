@@ -57,6 +57,14 @@ class StarFreightApp(App):
         return None
 
     @property
+    def _approach_screen(self):
+        """Return the live overlay ApproachScreen if it is on top."""
+        from portlight.app.tui.screens.approach import ApproachScreen
+        if isinstance(self.screen, ApproachScreen):
+            return self.screen
+        return None
+
+    @property
     def _encounter_screen(self):
         """Return the active EncounterScreen if one is pushed, else None."""
         from portlight.app.tui.screens.encounter import EncounterScreen
@@ -84,6 +92,12 @@ class StarFreightApp(App):
             if key == "parry":
                 combat.action_retreat()
             return
+        approach = self._approach_screen
+        if approach is not None:
+            # Overlay approach claims N (negotiate). Other encounter keys are inert.
+            if key == "negotiate":
+                approach.action_negotiate()
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key(key)
@@ -97,6 +111,13 @@ class StarFreightApp(App):
                 combat.action_move()
             elif tab == "station":
                 combat.action_attack()
+            return
+        approach = self._approach_screen
+        if approach is not None:
+            # Approach owns F (flee). Every other tab key is inert — you cannot
+            # navigate away from an interdiction (C1: no D/C/R/M/T/J escape).
+            if tab == "faction":
+                approach.action_flee()
             return
         enc = self._encounter_screen
         if enc:
@@ -122,6 +143,8 @@ class StarFreightApp(App):
         """Open buy dialog. During overlay combat: ignored. During ancestor encounter: broadside."""
         if self._grid_combat_screen is not None:
             return
+        if self._approach_screen is not None:
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("broadside")
@@ -135,6 +158,8 @@ class StarFreightApp(App):
         """Open sell dialog. During overlay combat: ignored. During ancestor encounter: spare."""
         if self._grid_combat_screen is not None:
             return
+        if self._approach_screen is not None:
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("spare")
@@ -147,6 +172,11 @@ class StarFreightApp(App):
     def action_travel(self) -> None:
         """Open travel/route selection. Overlay combat owns the screen; G is a no-op there."""
         if self._grid_combat_screen is not None:
+            return
+        approach = self._approach_screen
+        if approach is not None:
+            # G commits to the grid from the approach surface.
+            approach.action_fight()
             return
         enc = self._encounter_screen
         if enc:
@@ -165,6 +195,9 @@ class StarFreightApp(App):
         combat = self._grid_combat_screen
         if combat is not None:
             combat.action_ability()
+            return
+        if self._approach_screen is not None:
+            # No day advance mid-interdiction.
             return
         enc = self._encounter_screen
         if enc:
