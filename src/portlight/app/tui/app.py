@@ -36,12 +36,10 @@ class StarFreightApp(App):
         Binding("a", "advance", "Advance", priority=True),
         Binding("p", "services", "Services", priority=True),
         Binding("q", "quit", "Quit", priority=True),
-        # Encounter-specific keys (only active when ancestor EncounterScreen is pushed)
+        # Overlay encounter keys: N negotiates on the approach surface,
+        # X retreats on the combat grid. Both are serviced by action_* below.
         Binding("n", "encounter_dispatch('negotiate')", show=False, priority=True),
-        Binding("z", "encounter_dispatch('slash')", show=False, priority=True),
         Binding("x", "encounter_dispatch('parry')", show=False, priority=True),
-        Binding("o", "encounter_dispatch('shoot')", show=False, priority=True),
-        Binding("e", "encounter_dispatch('evade')", show=False, priority=True),
     ]
 
     def __init__(self, session: GameSession | None = None) -> None:
@@ -73,14 +71,6 @@ class StarFreightApp(App):
             return self.screen
         return None
 
-    @property
-    def _encounter_screen(self):
-        """Return the active EncounterScreen if one is pushed, else None."""
-        from portlight.app.tui.screens.encounter import EncounterScreen
-        if isinstance(self.screen, EncounterScreen):
-            return self.screen
-        return None
-
     def compose(self) -> ComposeResult:
         from portlight.app.tui.screens.dashboard import DashboardScreen
         yield DashboardScreen(self.session)
@@ -94,7 +84,7 @@ class StarFreightApp(App):
                 self.push_screen(SlotPickerScreen(self.session))
 
     def action_encounter_dispatch(self, key: str) -> None:
-        """Dispatch encounter-specific keys. Overlay combat claims X (retreat)."""
+        """Route overlay encounter keys: N (approach negotiate), X (combat retreat)."""
         aftermath = self._aftermath_screen
         if aftermath is not None:
             aftermath.action_continue()
@@ -110,9 +100,6 @@ class StarFreightApp(App):
             if key == "negotiate":
                 approach.action_negotiate()
             return
-        enc = self._encounter_screen
-        if enc:
-            enc.action_encounter_key(key)
 
     def action_switch_tab(self, tab: str) -> None:
         """Switch the content area to a different tab."""
@@ -135,23 +122,6 @@ class StarFreightApp(App):
             if tab == "faction":
                 approach.action_flee()
             return
-        enc = self._encounter_screen
-        if enc:
-            # NOTE (build-order item 5): this ancestor EncounterScreen remap is
-            # dead for live `starfreight tui` — the overlay never pushes
-            # EncounterScreen (approach/combat/aftermath are handled above). It
-            # survives only for the ancestor encounter tests. Remove it together
-            # with EncounterScreen when the ancestor combat path is retired.
-            # Remap tab keys to encounter actions during combat
-            _remap = {
-                "faction": "flee",       # f → flee
-                "crew": "close",         # c → close range
-                "routes": "rake",        # r → rake
-                "station": "thrust",     # t → thrust
-            }
-            if tab in _remap:
-                enc.action_encounter_key(_remap[tab])
-            return  # Block all tab switches during encounter
         if not self.session.active:
             self.notify("No active game.", severity="warning")
             return
@@ -161,17 +131,13 @@ class StarFreightApp(App):
             dashboard.switch_tab(tab)
 
     def action_buy(self) -> None:
-        """Open buy dialog. During overlay combat: ignored. During ancestor encounter: broadside."""
+        """Open buy dialog. Inert during overlay combat/approach/aftermath."""
         if self._aftermath_screen is not None:
             self._aftermath_screen.action_continue()
             return
         if self._grid_combat_screen is not None:
             return
         if self._approach_screen is not None:
-            return
-        enc = self._encounter_screen
-        if enc:
-            enc.action_encounter_key("broadside")
             return
         if not self.session.active:
             return
@@ -179,17 +145,13 @@ class StarFreightApp(App):
         execute_buy_flow(self, self.session)
 
     def action_sell(self) -> None:
-        """Open sell dialog. During overlay combat: ignored. During ancestor encounter: spare."""
+        """Open sell dialog. Inert during overlay combat/approach/aftermath."""
         if self._aftermath_screen is not None:
             self._aftermath_screen.action_continue()
             return
         if self._grid_combat_screen is not None:
             return
         if self._approach_screen is not None:
-            return
-        enc = self._encounter_screen
-        if enc:
-            enc.action_encounter_key("spare")
             return
         if not self.session.active:
             return
@@ -207,10 +169,6 @@ class StarFreightApp(App):
         if approach is not None:
             # G commits to the grid from the approach surface.
             approach.action_fight()
-            return
-        enc = self._encounter_screen
-        if enc:
-            enc.action_encounter_key("fight")
             return
         if not self.session.active:
             return
@@ -233,10 +191,6 @@ class StarFreightApp(App):
         if self._approach_screen is not None:
             # No day advance mid-interdiction.
             return
-        enc = self._encounter_screen
-        if enc:
-            enc.action_encounter_key("take_all")
-            return
         if not self.session.active:
             return
         if self.session.world is not None and self.session.world.pirates.pending_duel is not None:
@@ -253,8 +207,6 @@ class StarFreightApp(App):
         if self._grid_combat_screen is not None:
             return
         if self._approach_screen is not None:
-            return
-        if self._encounter_screen:
             return
         if not self.session.active:
             return

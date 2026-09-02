@@ -74,7 +74,7 @@ async def test_approach_negotiate():
         screen = EncounterScreen(s, enc)
         app.push_screen(screen)
         await pilot.pause()
-        await pilot.press("n")
+        screen.action_encounter_key("negotiate")
         await pilot.pause()
         # Phase should have changed (either resolved or naval if negotiate failed)
         assert screen._phase in ("resolved", "naval")
@@ -92,7 +92,7 @@ async def test_approach_fight_transitions_to_naval():
         screen = EncounterScreen(s, enc)
         app.push_screen(screen)
         await pilot.pause()
-        await pilot.press("g")
+        screen.action_encounter_key("fight")
         await pilot.pause()
         assert screen._phase == "naval"
         assert enc.phase == "naval"
@@ -110,7 +110,7 @@ async def test_approach_flee():
         screen = EncounterScreen(s, enc)
         app.push_screen(screen)
         await pilot.pause()
-        await pilot.press("f")
+        screen.action_encounter_key("flee")
         await pilot.pause()
         # Flee either succeeds (resolved) or fails (naval)
         assert screen._phase in ("resolved", "naval")
@@ -133,12 +133,12 @@ async def test_naval_broadside_round():
         app.push_screen(screen)
         await pilot.pause()
         # Go to naval
-        await pilot.press("g")
+        screen.action_encounter_key("fight")
         await pilot.pause()
         assert screen._phase == "naval"
         # Fire broadside
         initial_turns = enc.naval_turns
-        await pilot.press("b")
+        screen.action_encounter_key("broadside")
         await pilot.pause()
         assert enc.naval_turns == initial_turns + 1
 
@@ -155,13 +155,13 @@ async def test_naval_close_increases_boarding():
         screen = EncounterScreen(s, enc)
         app.push_screen(screen)
         await pilot.pause()
-        await pilot.press("g")  # fight → naval
+        screen.action_encounter_key("fight")  # → naval
         await pilot.pause()
         # Close multiple times to try to trigger boarding
         for _ in range(5):
             if screen._phase != "naval":
                 break
-            await pilot.press("c")
+            screen.action_encounter_key("close")
             await pilot.pause()
         # Should have progressed past naval (boarding or duel or defeat)
         assert enc.naval_turns > 0
@@ -184,9 +184,9 @@ async def test_duel_actions():
         screen = EncounterScreen(s, enc)
         app.push_screen(screen)
         await pilot.pause()
-        await pilot.press("g")  # fight → naval
+        screen.action_encounter_key("fight")  # → naval
         await pilot.pause()
-        await pilot.press("c")  # close → should trigger boarding immediately
+        screen.action_encounter_key("close")  # → trigger boarding
         await pilot.pause()
         # Wait for boarding timer
         await pilot.pause(delay=1.5)
@@ -194,7 +194,7 @@ async def test_duel_actions():
         if screen._phase == "duel":
             assert screen._player_combatant is not None
             assert screen._opponent_combatant is not None
-            await pilot.press("t")  # thrust
+            screen.action_encounter_key("thrust")
             await pilot.pause()
             assert enc.duel_turns >= 1
 
