@@ -2,6 +2,7 @@
 
 from io import StringIO
 
+import pytest
 from rich.console import Console
 
 from portlight.app import views
@@ -9,10 +10,19 @@ from portlight.content.ports import PORTS
 from portlight.content.routes import ROUTES
 
 
+@pytest.fixture(autouse=True)
+def _pin_terminal_size(monkeypatch):
+    """Keep map width stable; pytest's captured tty is too short to print labels."""
+    monkeypatch.setattr(
+        "shutil.get_terminal_size",
+        lambda fallback=(80, 40): type("s", (), {"columns": 80, "lines": 40})(),
+    )
+
+
 def _render(renderable) -> str:
     """Render a Rich renderable to plain text for assertions."""
     buf = StringIO()
-    console = Console(file=buf, width=140, no_color=True)
+    console = Console(file=buf, width=140, height=50, no_color=True)
     console.print(renderable)
     return buf.getvalue()
 

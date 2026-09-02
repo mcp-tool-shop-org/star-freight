@@ -50,8 +50,8 @@ export const config: SiteConfig = {
           desc: 'Relief, Gray, and Honor produce genuinely different lives — different routes, trades, combat profiles, and fears.',
         },
         {
-          title: '2,200+ Tests',
-          desc: 'Comprehensive suite covering crew binding, grid combat, cultural knowledge, investigation, campaign integration, and dogfood simulation.',
+          title: 'Proved in simulation',
+          desc: 'Crew binding, grid combat, cultural knowledge, investigation, and three captain postures are covered by the pytest suite and dogfood waves.',
         },
       ],
     },

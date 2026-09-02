@@ -15,7 +15,7 @@ from portlight.engine.models import EncounterState, PendingDuel  # noqa: E402
 
 def _make_session() -> GameSession:
     s = GameSession(slot="tui_encounter_test")
-    s.new("Captain Storm", captain_type="privateer")
+    s.new_portlight("Captain Storm", captain_type="privateer")
     return s
 
 

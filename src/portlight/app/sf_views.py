@@ -453,23 +453,32 @@ def combat_screen(combat: CombatState) -> Panel:
 
         targets = get_valid_targets(combat, current.id)
         if targets:
-            parts.append(Text(f"  [T] Attack ({current.base_attack_damage} dmg, range {current.base_attack_range})", style="white"))
+            parts.append(Text(
+                f"  [T] Attack ({current.base_attack_damage} dmg, range {current.base_attack_range})",
+                style="white",
+            ))
+        else:
+            parts.append(Text("  [T] Attack — no target in range", style=C_DIM))
 
         abilities = get_available_abilities(combat, current.id)
-        for ab in abilities:
-            ab_text = Text(f"  [A] {ab.name}")
-            if ab.crew_source:
-                ab_text.append(f" — {ab.crew_source}", style=C_DIM)
-            if ab.degraded:
-                ab_text.append(" (DEGRADED)", style="yellow")
-            ab_text.append(f" ({ab.effect_type}, cd:{ab.cooldown})", style=C_DIM)
-            parts.append(ab_text)
-
-        # Show locked/unavailable abilities
-        for ab in current.abilities:
-            if ab.id not in [a.id for a in abilities]:
-                reason = "cooldown" if combat.combatants[current.id].ability_cooldowns.get(ab.id, 0) > 0 else "cost"
-                parts.append(Text(f"  [-] {ab.name} — {reason}", style=C_DIM))
+        shown = {a.id for a in abilities}
+        for i, ab in enumerate(current.abilities[:4], 1):
+            if ab.id in shown:
+                ab_text = Text(f"  [{i}] {ab.name}")
+                if ab.crew_source:
+                    ab_text.append(f" — {ab.crew_source}", style=C_DIM)
+                if ab.degraded:
+                    ab_text.append(" (DEGRADED)", style="yellow")
+                ab_text.append(f" ({ab.effect_type}, cd:{ab.cooldown})", style=C_DIM)
+                parts.append(ab_text)
+            else:
+                reason = "cooldown" if current.ability_cooldowns.get(ab.id, 0) > 0 else "unavailable"
+                label = ab.name
+                if ab.crew_source:
+                    label += f" — {ab.crew_source}"
+                parts.append(Text(f"  [{i}] {label} — {reason}", style=C_DIM))
+        for i in range(len(current.abilities) + 1, 5):
+            parts.append(Text(f"  [{i}] — no crew", style=C_DIM))
 
         parts.append(Text("  [V] Defend (+evasion this turn)", style="white"))
         parts.append(Text("  [X] Retreat (cargo at risk)", style="yellow"))

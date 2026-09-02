@@ -258,7 +258,11 @@ No captain path should dominate profit, survivability, access, legitimacy handli
 | 8 | Captain Paths (divergence proved) | +30 |
 | 9A | TUI Audit | — |
 | 9B | TUI Product Surfaces | +36 |
-| **Total** | | **2,161** |
+| **Total (historical)** | | **2,161** |
+
+Test totals above are the phase-era counts. Treat them as history, not a live `pytest` claim.
+
+**Live path:** `starfreight new` boots overlay campaign state at Meridian Exchange. Ancestor modules stay in the tree for tests (`new_portlight()`). Next: TUI grid combat on that campaign. Grounded / UE5 is later.
 
 ---
 

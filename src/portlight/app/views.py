@@ -342,7 +342,7 @@ def hint_line(
 
     # Low provisions warning
     if captain.provisions < 5:
-        return "[yellow]Low provisions![/yellow] Buy more before sailing: [cyan]portlight provision 15[/cyan]"
+        return "[yellow]Low provisions![/yellow] Buy more before sailing: [cyan]starfreight provision 15[/cyan]"
 
     # Ship upgrade close
     ship = captain.ship
@@ -357,11 +357,11 @@ def hint_line(
     if not any(w.active for w in infra.warehouses):
         cargo_used = sum(c.quantity for c in captain.cargo)
         if ship and cargo_used > ship.cargo_capacity * 0.5:
-            return "Hold getting full? Lease a warehouse to stage cargo: [cyan]portlight warehouse lease depot[/cyan]"
+            return "Hold getting full? Lease a warehouse to stage cargo: [cyan]starfreight warehouse lease depot[/cyan]"
 
     # Available contracts
     if board.offers and not board.active:
-        return "Contracts available at the board. Accept one for bonus silver: [cyan]portlight contracts[/cyan]"
+        return "Contracts available at the board. Accept one for bonus silver: [cyan]starfreight contracts[/cyan]"
 
     return None
 
@@ -1081,7 +1081,7 @@ def warehouse_view(
 
     if not active_warehouses:
         return Panel(
-            "[dim]No warehouses leased. Use [bold]portlight warehouse lease <tier>[/bold] to open one.[/dim]",
+            "[dim]No warehouses leased. Use [bold]starfreight warehouse lease <tier>[/bold] to open one.[/dim]",
             title="[bold]Warehouses[/bold]", border_style="yellow",
         )
 
@@ -1194,7 +1194,7 @@ def offices_view(infra: "InfrastructureState") -> Panel:
     if not active_brokers:
         return Panel(
             "[dim]No broker offices established.\n"
-            "Use [bold]portlight office open <region>[/bold] to open one.[/dim]",
+            "Use [bold]starfreight office open <region>[/bold] to open one.[/dim]",
             title="[bold]Broker Offices[/bold]",
             border_style="blue",
         )

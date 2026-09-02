@@ -35,7 +35,7 @@ class StarFreightApp(App):
         Binding("g", "travel", "Travel", priority=True),
         Binding("a", "advance", "Advance", priority=True),
         Binding("q", "quit", "Quit", priority=True),
-        # Encounter-specific keys (only active when EncounterScreen is pushed)
+        # Encounter-specific keys (only active when ancestor EncounterScreen is pushed)
         Binding("n", "encounter_dispatch('negotiate')", show=False, priority=True),
         Binding("z", "encounter_dispatch('slash')", show=False, priority=True),
         Binding("x", "encounter_dispatch('parry')", show=False, priority=True),
@@ -47,6 +47,14 @@ class StarFreightApp(App):
         super().__init__()
         self.session = session or GameSession()
         self._current_tab = "dashboard"
+
+    @property
+    def _grid_combat_screen(self):
+        """Return the live overlay CombatScreen if it is on top."""
+        from portlight.app.tui.screens.combat import CombatScreen
+        if isinstance(self.screen, CombatScreen):
+            return self.screen
+        return None
 
     @property
     def _encounter_screen(self):
@@ -64,19 +72,32 @@ class StarFreightApp(App):
         if not self.session.active:
             if not self.session.load():
                 self.notify(
-                    "No save found. Run 'portlight new <name>' first, then 'portlight tui'.",
+                    "No save found. Run 'starfreight new <name>' first, then 'starfreight tui'.",
                     severity="error",
                     timeout=8,
                 )
 
     def action_encounter_dispatch(self, key: str) -> None:
-        """Dispatch encounter-specific keys to EncounterScreen."""
+        """Dispatch encounter-specific keys. Overlay combat claims X (retreat)."""
+        combat = self._grid_combat_screen
+        if combat is not None:
+            if key == "parry":
+                combat.action_retreat()
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key(key)
 
     def action_switch_tab(self, tab: str) -> None:
         """Switch the content area to a different tab."""
+        combat = self._grid_combat_screen
+        if combat is not None:
+            # Combat owns M/T. Other tab keys stay put (C1 — no D/C/R/F remap).
+            if tab == "market":
+                combat.action_move()
+            elif tab == "station":
+                combat.action_attack()
+            return
         enc = self._encounter_screen
         if enc:
             # Remap tab keys to encounter actions during combat
@@ -98,7 +119,9 @@ class StarFreightApp(App):
             dashboard.switch_tab(tab)
 
     def action_buy(self) -> None:
-        """Open buy dialog. During encounter: dispatches to encounter."""
+        """Open buy dialog. During overlay combat: ignored. During ancestor encounter: broadside."""
+        if self._grid_combat_screen is not None:
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("broadside")
@@ -109,7 +132,9 @@ class StarFreightApp(App):
         execute_buy_flow(self, self.session)
 
     def action_sell(self) -> None:
-        """Open sell dialog. During encounter: dispatches to encounter."""
+        """Open sell dialog. During overlay combat: ignored. During ancestor encounter: spare."""
+        if self._grid_combat_screen is not None:
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("spare")
@@ -120,28 +145,34 @@ class StarFreightApp(App):
         execute_sell_flow(self, self.session)
 
     def action_travel(self) -> None:
-        """Open travel/route selection. During encounter: dispatches fight."""
+        """Open travel/route selection. Overlay combat owns the screen; G is a no-op there."""
+        if self._grid_combat_screen is not None:
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("fight")
             return
         if not self.session.active:
             return
-        if self.session.world and self.session.world.pirates.pending_duel is not None:
+        if self.session.world is not None and self.session.world.pirates.pending_duel is not None:
             self.notify("Resolve the encounter first!", severity="warning")
             return
         from portlight.app.tui.screens.routes import execute_sail_flow
         execute_sail_flow(self, self.session)
 
     def action_advance(self) -> None:
-        """Advance one day. During encounter: dispatches to encounter."""
+        """Advance one day, or use a crew ability during overlay combat."""
+        combat = self._grid_combat_screen
+        if combat is not None:
+            combat.action_ability()
+            return
         enc = self._encounter_screen
         if enc:
             enc.action_encounter_key("take_all")
             return
         if not self.session.active:
             return
-        if self.session.world and self.session.world.pirates.pending_duel is not None:
+        if self.session.world is not None and self.session.world.pirates.pending_duel is not None:
             self.notify("Resolve the encounter first!", severity="warning")
             return
         from portlight.app.tui.screens.routes import execute_advance

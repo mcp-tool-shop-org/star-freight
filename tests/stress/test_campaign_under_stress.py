@@ -29,7 +29,7 @@ from portlight.stress.invariants import check_all_invariants
 
 def _fresh_session(tmp_path: Path, captain_type: str = "merchant") -> GameSession:
     s = GameSession(base_path=tmp_path)
-    s.new("CampaignBot", captain_type=captain_type)
+    s.new_portlight("CampaignBot", captain_type=captain_type)
     return s
 
 

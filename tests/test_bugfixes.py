@@ -174,7 +174,7 @@ class TestSailFuzzyMatch:
 
         with tempfile.TemporaryDirectory() as tmp:
             s = GameSession(Path(tmp))
-            s.new("Tester", captain_type="merchant")
+            s.new_portlight("Tester", captain_type="merchant")
             s.captain.silver = 1000
 
             # Find a reachable port via routes
@@ -203,7 +203,7 @@ class TestSailFuzzyMatch:
 
         with tempfile.TemporaryDirectory() as tmp:
             s = GameSession(Path(tmp))
-            s.new("Tester", captain_type="merchant")
+            s.new_portlight("Tester", captain_type="merchant")
             s.captain.silver = 1000
 
             current = s.world.voyage.destination_id
@@ -266,7 +266,7 @@ class TestStartingPortContracts:
 
         with tempfile.TemporaryDirectory() as tmp:
             s = GameSession(Path(tmp))
-            s.new("Tester", captain_type="merchant")
+            s.new_portlight("Tester", captain_type="merchant")
             # Board uses lazy refresh — trigger it
             port = s.current_port
             assert port is not None
@@ -286,7 +286,7 @@ class TestStartingPortContracts:
         for ctype in captain_types:
             with tempfile.TemporaryDirectory() as tmp:
                 s = GameSession(Path(tmp))
-                s.new("Tester", captain_type=ctype)
+                s.new_portlight("Tester", captain_type=ctype)
                 port = s.current_port
                 assert port is not None, f"{ctype}: no starting port"
                 s._refresh_board(port)

@@ -77,24 +77,98 @@ class GameSession:
 
     @property
     def active(self) -> bool:
-        return self.world is not None
+        return self._sf_campaign is not None or self.world is not None
 
     @property
     def sf_campaign(self):
-        """Star Freight campaign state for TUI views.
-
-        Lazily creates a default SF CampaignState with crew if not already set.
-        This provides the data contract that sf_views.py expects.
-        """
-        if self._sf_campaign is None:
-            from portlight.engine.sf_campaign import CampaignState as SFCampaignState
-            from portlight.engine.crew import recruit
-            from portlight.content.star_freight import create_thal, create_varek
-            state = SFCampaignState()
-            recruit(state.crew, create_thal())
-            recruit(state.crew, create_varek())
-            self._sf_campaign = state
+        """Star Freight campaign state. None until new() or a Star Freight save loads."""
         return self._sf_campaign
+
+    def new(
+        self,
+        captain_name: str = "Captain",
+        starting_port: str | None = None,
+        captain_type: str = "merchant",
+        seed: int | None = None,
+    ) -> None:
+        """Start a Star Freight campaign. captain_type is ignored (fork leftover)."""
+        from portlight.engine.sf_campaign import start_campaign
+        self.world = None
+        self._sf_campaign = start_campaign(
+            captain_name=captain_name,
+            seed=seed,
+            starting_station=starting_port or "meridian_exchange",
+        )
+        self._rng = self._sf_campaign.rng
+        self._save()
+
+    def new_portlight(
+        self,
+        captain_name: str = "Captain",
+        starting_port: str | None = None,
+        captain_type: str = "merchant",
+        seed: int | None = None,
+    ) -> None:
+        """Ancestor Portlight session — tests only. Not the live game."""
+        ct = CaptainType(captain_type)
+        self._sf_campaign = None
+        self.world = new_game(captain_name, starting_port, ct, seed=seed)
+        self._rng = random.Random(self.world.seed)
+        self.ledger = ReceiptLedger(run_id=f"run-{self.world.seed}")
+        self.board = ContractBoard()
+        self.infra = InfrastructureState()
+        self.campaign = CampaignState()
+        self.narrative = NarrativeState()
+        self._trade_seq = 0
+        self._save()
+        port = self.current_port
+        if port:
+            saved_rng = self._rng
+            self._rng = random.Random(self.world.seed + 7919)
+            self._refresh_board(port)
+            self._rng = saved_rng
+            self._save()
+
+    def load(self) -> bool:
+        """Load saved game. Star Freight first, then Portlight ancestor saves."""
+        sf_path = self._sf_save_path()
+        if sf_path.exists():
+            import json
+            from portlight.engine.sf_campaign import campaign_from_dict
+            data = json.loads(sf_path.read_text(encoding="utf-8"))
+            if data.get("kind") == "star-freight":
+                self._sf_campaign = campaign_from_dict(data)
+                self.world = None
+                self._rng = self._sf_campaign.rng
+                return True
+        result = load_game(self.base_path, slot=self.slot)
+        if result is None:
+            return False
+        self.world, self.ledger, self.board, self.infra, self.campaign, self.narrative = result
+        self._sf_campaign = None
+        self._rng = random.Random(self.world.seed + self.world.day)
+        self._trade_seq = len(self.ledger.receipts)
+        for port in self.world.ports.values():
+            self._recalc(port)
+        return True
+
+    def _sf_save_path(self):
+        from portlight.engine.save import SAVE_DIR, save_filename
+        name = save_filename(self.slot).replace(".json", ".sf.json")
+        return self.base_path / SAVE_DIR / name
+
+    def _save(self) -> None:
+        """Auto-save after every mutation."""
+        if self._sf_campaign is not None:
+            import json
+            from portlight.engine.sf_campaign import campaign_to_dict
+            path = self._sf_save_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(campaign_to_dict(self._sf_campaign), indent=2), encoding="utf-8")
+            return
+        if self.world:
+            self.world.captain.silver = max(0, self.world.captain.silver)
+            save_game(self.world, self.ledger, self.board, self.infra, self.campaign, self.narrative, self.base_path, slot=self.slot)
 
     @property
     def captain(self):
@@ -117,6 +191,8 @@ class GameSession:
 
     @property
     def at_sea(self) -> bool:
+        if self._sf_campaign is not None:
+            return self._sf_campaign.in_transit
         return (self.world is not None and
                 self.world.voyage is not None and
                 self.world.voyage.status == VoyageStatus.AT_SEA)
@@ -132,59 +208,11 @@ class GameSession:
         except (ValueError, KeyError):
             return CAPTAIN_TEMPLATES[CaptainType.MERCHANT]
 
-    def new(
-        self,
-        captain_name: str = "Captain",
-        starting_port: str | None = None,
-        captain_type: str = "merchant",
-        seed: int | None = None,
-    ) -> None:
-        """Start a fresh game. captain_type: 'merchant', 'smuggler', or 'navigator'."""
-        ct = CaptainType(captain_type)
-        self.world = new_game(captain_name, starting_port, ct, seed=seed)
-        self._rng = random.Random(self.world.seed)
-        self.ledger = ReceiptLedger(run_id=f"run-{self.world.seed}")
-        self.board = ContractBoard()
-        self.infra = InfrastructureState()
-        self.campaign = CampaignState()
-        self.narrative = NarrativeState()
-        self._trade_seq = 0
-        self._save()
-        # Populate contract board at starting port using a deterministic
-        # RNG derived from world.seed to avoid perturbing the main sequence.
-        port = self.current_port
-        if port:
-            saved_rng = self._rng
-            self._rng = random.Random(self.world.seed + 7919)
-            self._refresh_board(port)
-            self._rng = saved_rng
-            self._save()
-
-    def load(self) -> bool:
-        """Load saved game. Returns True if loaded."""
-        result = load_game(self.base_path, slot=self.slot)
-        if result is None:
-            return False
-        self.world, self.ledger, self.board, self.infra, self.campaign, self.narrative = result
-        self._rng = random.Random(self.world.seed + self.world.day)
-        self._trade_seq = len(self.ledger.receipts)
-        # Recalculate prices for all ports (handles migrated slots with price=0)
-        for port in self.world.ports.values():
-            self._recalc(port)
-        return True
-
     @property
     def _pricing(self):
         """Captain's pricing modifiers for economy calls."""
         t = self.captain_template
         return t.pricing if t else None
-
-    def _save(self) -> None:
-        """Auto-save after every mutation."""
-        if self.world:
-            # Clamp silver to non-negative (infrastructure/wage deductions can overshoot)
-            self.world.captain.silver = max(0, self.world.captain.silver)
-            save_game(self.world, self.ledger, self.board, self.infra, self.campaign, self.narrative, self.base_path, slot=self.slot)
 
     def _recalc(self, port) -> None:
         """Recalculate prices at a port with captain modifiers."""

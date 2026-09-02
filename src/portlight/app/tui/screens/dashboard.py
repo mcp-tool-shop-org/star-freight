@@ -12,7 +12,6 @@ from typing import TYPE_CHECKING
 
 from rich.panel import Panel
 from rich.text import Text
-from textual.containers import Horizontal
 from textual.widget import Widget
 from textual.widgets import Footer, Static
 
@@ -58,12 +57,12 @@ class CaptainBar(Widget):
 
     def refresh_status(self) -> None:
         from portlight.app.tui.theme import render_mini_bar, credits_display
-        from portlight.engine.crew import active_crew, fit_crew, calculate_crew_pay
+        from portlight.engine.crew import active_crew, fit_crew
 
         line1 = self.query_one("#captain-line1", Static)
         line2 = self.query_one("#captain-line2", Static)
 
-        if not self.session.active:
+        if not self.session.active or self.session.sf_campaign is None:
             line1.update("[dim]No active game[/dim]")
             line2.update("")
             return
@@ -147,7 +146,7 @@ class ContentArea(Widget):
         self._render_tab()
 
     def _render_tab(self) -> None:
-        if not self.session.active:
+        if not self.session.active or self.session.sf_campaign is None:
             self._static.update(SPLASH_TITLE)
             return
         self._static.update(self._get_view())
@@ -190,6 +189,10 @@ class ContentArea(Widget):
             "[bold #4090e0]Actions[/bold #4090e0]",
             "  [bold #f0c040]B[/bold #f0c040] Buy goods    [bold #f0c040]S[/bold #f0c040] Sell goods",
             "  [bold #f0c040]G[/bold #f0c040] Travel       [bold #f0c040]A[/bold #f0c040] Advance day",
+            "",
+            "[bold #4090e0]Combat (when interdicted)[/bold #4090e0]",
+            "  [bold cyan]M[/bold cyan] Move   [bold cyan]T[/bold cyan] Attack   [bold cyan]A[/bold cyan] Ability 1–4",
+            "  [bold cyan]V[/bold cyan] Defend   [bold yellow]X[/bold yellow] Retreat   [dim]Esc cancels a pick[/dim]",
             "",
             "[bold #4090e0]Information[/bold #4090e0]",
             "  [dim]Credits (\u20a1) are your runway. Pay crew every 30 days.[/dim]",

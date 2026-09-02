@@ -1,14 +1,8 @@
-"""Market screen — maritime-themed interactive buy/sell.
-
-Features:
-- Numbered good selection with price preview
-- Profit/loss indicator in selection list
-- Quantity input with max affordability
-- Trade result notifications with silver amounts
-"""
+"""Market screen — buy and sell overlay goods at the current station."""
 
 from __future__ import annotations
 
+from collections import Counter
 from typing import TYPE_CHECKING
 
 from textual.app import ComposeResult
@@ -22,7 +16,7 @@ if TYPE_CHECKING:
 
 
 class TradeDialog(ModalScreen[str | None]):
-    """Modal dialog for quantity input with maritime styling."""
+    """Quantity input for a buy or sell."""
 
     BINDINGS = [Binding("escape", "cancel", "Cancel")]
 
@@ -38,10 +32,10 @@ class TradeDialog(ModalScreen[str | None]):
         total_max = self.price * self.max_qty
         with Vertical(id="input-area"):
             yield Static(
-                f"[bold #e9c46a]\u2693 {self.action.title()} {self.good_name}[/bold #e9c46a]\n\n"
-                f"  Price: [yellow]{self.price}[/yellow] silver each\n"
+                f"[bold #f0c040]{self.action.title()} {self.good_name}[/bold #f0c040]\n\n"
+                f"  Price: [yellow]{self.price}[/yellow] ₡ each\n"
                 f"  Max:   [cyan]{self.max_qty}[/cyan] units"
-                + (f" ([yellow]{total_max:,}[/yellow] silver)" if self.action == "buy" else "")
+                + (f" ([yellow]{total_max:,}[/yellow] ₡)" if self.action == "buy" else "")
             )
             yield Input(
                 placeholder=f"Quantity (1-{self.max_qty})",
@@ -60,27 +54,26 @@ class TradeDialog(ModalScreen[str | None]):
 
 
 class GoodSelectDialog(ModalScreen[str | None]):
-    """Modal dialog to select a good — shows prices and margins."""
+    """Pick a good by number or name."""
 
     BINDINGS = [Binding("escape", "cancel", "Cancel")]
 
     def __init__(self, action: str, goods: list[tuple[str, str, int, int]]) -> None:
         super().__init__()
         self.action = action
-        # (good_id, display_name, price, extra_info)
         self.goods = goods
 
     def compose(self) -> ComposeResult:
         with Vertical(id="input-area"):
-            lines = [f"[bold #e9c46a]\u2693 {self.action.title()} which good?[/bold #e9c46a]", ""]
-            for i, (gid, name, price, extra) in enumerate(self.goods, 1):
+            lines = [f"[bold #f0c040]{self.action.title()} which good?[/bold #f0c040]", ""]
+            for i, (_gid, name, price, extra) in enumerate(self.goods, 1):
                 price_str = f"[yellow]{price}[/yellow]" if price > 0 else "[dim]-[/dim]"
                 extra_str = ""
                 if extra > 0 and self.action == "buy":
                     extra_str = f" [dim](stock: {extra})[/dim]"
                 elif extra > 0 and self.action == "sell":
                     extra_str = f" [dim](held: {extra})[/dim]"
-                lines.append(f"  [cyan]{i:2d}[/cyan]. {name:16s} {price_str} silver{extra_str}")
+                lines.append(f"  [cyan]{i:2d}[/cyan]. {name:16s} {price_str} ₡{extra_str}")
             lines.append("")
             yield Static("\n".join(lines))
             yield Input(placeholder="Enter name or number", id="good-input")
@@ -107,71 +100,78 @@ class GoodSelectDialog(ModalScreen[str | None]):
 
 
 def execute_buy_flow(app, session: "GameSession") -> None:
-    """Launch the buy flow with price previews."""
-    port = session.current_port
-    if not port:
-        app.notify("\u2693 Not docked at a port.", severity="warning")
+    """Buy overlay goods at the current station."""
+    state = session.sf_campaign
+    if state is None or state.in_transit:
+        app.notify("Not docked at a station.", severity="warning")
         return
 
-    from portlight.content.goods import GOODS
+    from portlight.content.star_freight import SLICE_STATIONS, SLICE_GOODS
+    from portlight.engine.sf_campaign import execute_trade
+
+    station = SLICE_STATIONS.get(state.current_station)
+    if station is None:
+        app.notify("Unknown station.", severity="warning")
+        return
+
     available = []
-    for slot in sorted(port.market, key=lambda s: s.buy_price):
-        good = GOODS.get(slot.good_id)
-        if good and slot.buy_price > 0 and slot.stock_current > 0:
-            max_afford = session.world.captain.silver // slot.buy_price
-            if max_afford > 0:
-                available.append((slot.good_id, good.name, slot.buy_price, slot.stock_current))
+    for good_id in station.produces:
+        good = SLICE_GOODS.get(good_id)
+        if good:
+            available.append((good_id, good.name, good.base_price, 99))
 
     if not available:
-        app.notify("Nothing affordable to buy.", severity="warning")
+        app.notify("Nothing for sale here.", severity="warning")
         return
 
     def on_good_selected(good_id: str | None) -> None:
         if good_id is None:
             return
-        slot = next((s for s in port.market if s.good_id == good_id), None)
-        if not slot:
+        good = SLICE_GOODS.get(good_id)
+        if not good:
             return
-        good = GOODS.get(good_id)
-        max_afford = session.world.captain.silver // slot.buy_price if slot.buy_price > 0 else 0
-        max_qty = min(max_afford, slot.stock_current)
+        max_afford = max(1, state.credits // max(1, good.base_price))
+        max_qty = min(max_afford, state.ship_cargo_capacity - len(state.ship_cargo))
+        if max_qty <= 0:
+            app.notify("Cannot buy — hold or credits.", severity="warning")
+            return
 
         def on_qty(qty_str: str | None) -> None:
             if qty_str is None:
                 return
-            qty = int(qty_str)
-            result = session.buy(good_id, qty)
-            if isinstance(result, str):
-                app.notify(f"\u2717 {result}", severity="error")
+            result = execute_trade(state, good_id, "buy", int(qty_str))
+            if result.get("error"):
+                app.notify(result["error"], severity="error")
             else:
                 app.notify(
-                    f"\u2713 Bought {result.quantity} {good.name} for {result.total_cost:,} silver",
+                    f"Bought {result['quantity']} {result['good']} for {result['total']:,} ₡",
                     severity="information",
                     timeout=5,
                 )
+                session._save()
                 app.refresh_views()
 
-        app.push_screen(TradeDialog("buy", good_id, good.name, max_qty, slot.buy_price), on_qty)
+        app.push_screen(TradeDialog("buy", good_id, good.name, max_qty, good.base_price), on_qty)
 
     app.push_screen(GoodSelectDialog("buy", available), on_good_selected)
 
 
 def execute_sell_flow(app, session: "GameSession") -> None:
-    """Launch the sell flow with held quantities."""
-    port = session.current_port
-    if not port:
-        app.notify("\u2693 Not docked at a port.", severity="warning")
+    """Sell overlay cargo at the current station."""
+    state = session.sf_campaign
+    if state is None or state.in_transit:
+        app.notify("Not docked at a station.", severity="warning")
         return
 
-    cap = session.world.captain
-    from portlight.content.goods import GOODS
+    from portlight.content.star_freight import SLICE_GOODS
+    from portlight.engine.sf_campaign import execute_trade
+
+    held = Counter(state.ship_cargo)
     available = []
-    for cargo in cap.cargo:
-        good = GOODS.get(cargo.good_id)
-        if good and cargo.quantity > 0:
-            slot = next((s for s in port.market if s.good_id == cargo.good_id), None)
-            sell_price = slot.sell_price if slot else 0
-            available.append((cargo.good_id, good.name, sell_price, cargo.quantity))
+    for good_id, qty in held.items():
+        good = SLICE_GOODS.get(good_id)
+        if good:
+            available.append((good_id, good.name, good.base_price, qty))
 
     if not available:
         app.notify("No cargo to sell.", severity="warning")
@@ -180,34 +180,26 @@ def execute_sell_flow(app, session: "GameSession") -> None:
     def on_good_selected(good_id: str | None) -> None:
         if good_id is None:
             return
-        cargo_item = next((c for c in cap.cargo if c.good_id == good_id), None)
-        if not cargo_item:
+        good = SLICE_GOODS.get(good_id)
+        qty_held = held[good_id]
+        if not good:
             return
-        good = GOODS.get(good_id)
-        slot = next((s for s in port.market if s.good_id == good_id), None)
-        sell_price = slot.sell_price if slot else 0
 
         def on_qty(qty_str: str | None) -> None:
             if qty_str is None:
                 return
-            qty = int(qty_str)
-            result = session.sell(good_id, qty)
-            if isinstance(result, str):
-                app.notify(f"\u2717 {result}", severity="error")
+            result = execute_trade(state, good_id, "sell", int(qty_str))
+            if result.get("error"):
+                app.notify(result["error"], severity="error")
             else:
-                profit = result.total_revenue - result.total_cost
-                profit_str = ""
-                if profit > 0:
-                    profit_str = f" [green](+{profit:,} profit)[/green]"
-                elif profit < 0:
-                    profit_str = f" [red]({profit:,} loss)[/red]"
                 app.notify(
-                    f"\u2713 Sold {result.quantity} {good.name} for {result.total_revenue:,} silver{profit_str}",
+                    f"Sold {result['quantity']} {result['good']} for {result['total']:,} ₡",
                     severity="information",
                     timeout=5,
                 )
+                session._save()
                 app.refresh_views()
 
-        app.push_screen(TradeDialog("sell", good_id, good.name, cargo_item.quantity, sell_price), on_qty)
+        app.push_screen(TradeDialog("sell", good_id, good.name, qty_held, good.base_price), on_qty)
 
     app.push_screen(GoodSelectDialog("sell", available), on_good_selected)
