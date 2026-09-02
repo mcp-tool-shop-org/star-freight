@@ -137,6 +137,11 @@ class StarFreightApp(App):
             return
         enc = self._encounter_screen
         if enc:
+            # NOTE (build-order item 5): this ancestor EncounterScreen remap is
+            # dead for live `starfreight tui` — the overlay never pushes
+            # EncounterScreen (approach/combat/aftermath are handled above). It
+            # survives only for the ancestor encounter tests. Remove it together
+            # with EncounterScreen when the ancestor combat path is retired.
             # Remap tab keys to encounter actions during combat
             _remap = {
                 "faction": "flee",       # f → flee
