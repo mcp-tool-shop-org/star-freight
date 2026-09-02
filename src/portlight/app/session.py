@@ -57,6 +57,39 @@ from portlight.engine.voyage import EventType, VoyageEvent, advance_day, arrive,
 from portlight.receipts.models import ReceiptLedger, TradeReceipt
 
 
+def list_star_freight_saves(base_path: Path) -> list[dict]:
+    """Summaries of every Star Freight save slot under ``base_path/saves``.
+
+    Powers the save-slot picker. Returns one dict per ``*.sf.json`` save with
+    the slot name and a light summary; malformed or non-SF files are skipped.
+    """
+    import json
+    from portlight.engine.save import SAVE_DIR
+
+    out: list[dict] = []
+    save_dir = Path(base_path) / SAVE_DIR
+    if not save_dir.exists():
+        return out
+    suffix = ".sf.json"
+    for path in sorted(save_dir.glob("*.sf.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if data.get("kind") != "star-freight":
+            continue
+        out.append(
+            {
+                "slot": path.name[: -len(suffix)],
+                "captain_name": data.get("captain_name", "Captain"),
+                "day": int(data.get("day", 1)),
+                "station": data.get("current_station", ""),
+                "credits": int(data.get("credits", 0)),
+            }
+        )
+    return out
+
+
 class GameSession:
     """Holds active game state and mediates all player actions."""
 
@@ -151,6 +184,10 @@ class GameSession:
         for port in self.world.ports.values():
             self._recalc(port)
         return True
+
+    def switch_slot(self, slot: str) -> None:
+        """Point this session at a different save slot (before load/new)."""
+        self.slot = slot
 
     def _sf_save_path(self):
         from portlight.engine.save import SAVE_DIR, save_filename

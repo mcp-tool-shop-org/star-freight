@@ -87,12 +87,11 @@ class StarFreightApp(App):
 
     def on_mount(self) -> None:
         if not self.session.active:
+            # Respect an explicit --save slot that already exists; otherwise
+            # offer the save-slot picker (continue a captain or start new).
             if not self.session.load():
-                self.notify(
-                    "No save found. Run 'starfreight new <name>' first, then 'starfreight tui'.",
-                    severity="error",
-                    timeout=8,
-                )
+                from portlight.app.tui.screens.startup import SlotPickerScreen
+                self.push_screen(SlotPickerScreen(self.session))
 
     def action_encounter_dispatch(self, key: str) -> None:
         """Dispatch encounter-specific keys. Overlay combat claims X (retreat)."""
