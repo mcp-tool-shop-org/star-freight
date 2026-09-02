@@ -840,6 +840,7 @@ def station_screen(state: CampaignState) -> Panel:
     services = Text("  Services: ")
     services.append(", ".join(station.services))
     parts.append(services)
+    parts.append(Text("  Press [P] to use station services", style=C_GOLD))
     parts.append(Text(f"  Docking fee: {station.docking_fee}₡  │  Repair: {station.repair_cost_per_point}₡/pt  │  Fuel: {station.fuel_cost_per_day}₡/day"))
     parts.append(Text())
 

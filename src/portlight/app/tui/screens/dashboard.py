@@ -189,6 +189,7 @@ class ContentArea(Widget):
             "[bold #4090e0]Actions[/bold #4090e0]",
             "  [bold #f0c040]B[/bold #f0c040] Buy goods    [bold #f0c040]S[/bold #f0c040] Sell goods",
             "  [bold #f0c040]G[/bold #f0c040] Travel       [bold #f0c040]A[/bold #f0c040] Advance day",
+            "  [bold #f0c040]P[/bold #f0c040] Station services (repair, refuel, hire)",
             "",
             "[bold #4090e0]Combat (when interdicted)[/bold #4090e0]",
             "  [bold cyan]M[/bold cyan] Move   [bold cyan]T[/bold cyan] Attack   [bold cyan]A[/bold cyan] Ability 1–4",

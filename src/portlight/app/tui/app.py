@@ -34,6 +34,7 @@ class StarFreightApp(App):
         Binding("s", "sell", "Sell", priority=True),
         Binding("g", "travel", "Travel", priority=True),
         Binding("a", "advance", "Advance", priority=True),
+        Binding("p", "services", "Services", priority=True),
         Binding("q", "quit", "Quit", priority=True),
         # Encounter-specific keys (only active when ancestor EncounterScreen is pushed)
         Binding("n", "encounter_dispatch('negotiate')", show=False, priority=True),
@@ -239,6 +240,22 @@ class StarFreightApp(App):
             return
         from portlight.app.tui.screens.routes import execute_advance
         execute_advance(self, self.session)
+
+    def action_services(self) -> None:
+        """Open the station-services picker (docked only)."""
+        if self._aftermath_screen is not None:
+            self._aftermath_screen.action_continue()
+            return
+        if self._grid_combat_screen is not None:
+            return
+        if self._approach_screen is not None:
+            return
+        if self._encounter_screen:
+            return
+        if not self.session.active:
+            return
+        from portlight.app.tui.screens.services import execute_services_flow
+        execute_services_flow(self, self.session)
 
     def refresh_views(self) -> None:
         """Refresh all visible views after a state mutation."""
