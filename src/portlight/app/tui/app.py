@@ -65,6 +65,14 @@ class StarFreightApp(App):
         return None
 
     @property
+    def _aftermath_screen(self):
+        """Return the post-combat AftermathScreen if it is on top."""
+        from portlight.app.tui.screens.aftermath import AftermathScreen
+        if isinstance(self.screen, AftermathScreen):
+            return self.screen
+        return None
+
+    @property
     def _encounter_screen(self):
         """Return the active EncounterScreen if one is pushed, else None."""
         from portlight.app.tui.screens.encounter import EncounterScreen
@@ -87,6 +95,10 @@ class StarFreightApp(App):
 
     def action_encounter_dispatch(self, key: str) -> None:
         """Dispatch encounter-specific keys. Overlay combat claims X (retreat)."""
+        aftermath = self._aftermath_screen
+        if aftermath is not None:
+            aftermath.action_continue()
+            return
         combat = self._grid_combat_screen
         if combat is not None:
             if key == "parry":
@@ -104,6 +116,10 @@ class StarFreightApp(App):
 
     def action_switch_tab(self, tab: str) -> None:
         """Switch the content area to a different tab."""
+        aftermath = self._aftermath_screen
+        if aftermath is not None:
+            aftermath.action_continue()
+            return
         combat = self._grid_combat_screen
         if combat is not None:
             # Combat owns M/T. Other tab keys stay put (C1 — no D/C/R/F remap).
@@ -141,6 +157,9 @@ class StarFreightApp(App):
 
     def action_buy(self) -> None:
         """Open buy dialog. During overlay combat: ignored. During ancestor encounter: broadside."""
+        if self._aftermath_screen is not None:
+            self._aftermath_screen.action_continue()
+            return
         if self._grid_combat_screen is not None:
             return
         if self._approach_screen is not None:
@@ -156,6 +175,9 @@ class StarFreightApp(App):
 
     def action_sell(self) -> None:
         """Open sell dialog. During overlay combat: ignored. During ancestor encounter: spare."""
+        if self._aftermath_screen is not None:
+            self._aftermath_screen.action_continue()
+            return
         if self._grid_combat_screen is not None:
             return
         if self._approach_screen is not None:
@@ -171,6 +193,9 @@ class StarFreightApp(App):
 
     def action_travel(self) -> None:
         """Open travel/route selection. Overlay combat owns the screen; G is a no-op there."""
+        if self._aftermath_screen is not None:
+            self._aftermath_screen.action_continue()
+            return
         if self._grid_combat_screen is not None:
             return
         approach = self._approach_screen
@@ -192,6 +217,10 @@ class StarFreightApp(App):
 
     def action_advance(self) -> None:
         """Advance one day, or use a crew ability during overlay combat."""
+        aftermath = self._aftermath_screen
+        if aftermath is not None:
+            aftermath.action_continue()
+            return
         combat = self._grid_combat_screen
         if combat is not None:
             combat.action_ability()

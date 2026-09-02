@@ -299,17 +299,20 @@ class CombatScreen(Screen):
                 st = SLICE_STATIONS.get(state.current_station)
                 dest = st.name if st else state.current_station
         self.session._save()
-        hull = f"hull {result.player_hull_remaining}/{result.player_hull_max}"
-        cargo = (
-            f"; lost {', '.join(result.cargo_lost)}"
-            if result.cargo_lost
-            else "; kept cargo"
-        )
-        line = f"{result.outcome.value} — {hull}{cargo}"
+
+        # C3: one contrastive toast, then the writeback overlay (not a reset).
+        from portlight.app.sf_views import contrastive_aftermath_line
+
+        line = contrastive_aftermath_line(result, state)
         if dest:
             line += f"; docked {dest}"
         self.app.notify(line, timeout=8)
-        self.app.pop_screen()
+
+        from portlight.app.tui.screens.aftermath import AftermathScreen
+
+        # Replace the grid with the aftermath overlay so it pops back to the
+        # dashboard, not onto a dead combat screen.
+        self.app.switch_screen(AftermathScreen(self.session, result))
         if hasattr(self.app, "refresh_views"):
             self.app.refresh_views()
 

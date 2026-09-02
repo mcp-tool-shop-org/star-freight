@@ -405,6 +405,62 @@ def after_action_summary(result: CombatResult, state: CampaignState) -> Panel:
     )
 
 
+# Civilization -> the docking pressure an injured crew member implies (C3).
+_CIV_DOCK_LABEL = {
+    "keth": "Communion",
+    "veshan": "Veshan",
+    "compact": "Compact",
+    "orryn": "Orryn",
+    "reach": "Reach",
+}
+
+
+def contrastive_aftermath_line(result: CombatResult, state: CampaignState) -> str:
+    """One contrastive line for the post-combat toast (C3).
+
+    Not a delta dump — a "why P rather than Q" summary. States the choice made
+    against the alternative it displaced, then the deltas that will bite next.
+    The full breakdown lives in the after-action overlay.
+    """
+    clauses: list[str] = []
+
+    if result.outcome == CombatPhase.VICTORY:
+        clauses.append("Held the field")
+    elif result.outcome == CombatPhase.RETREAT:
+        clauses.append("Ran rather than lose the ship")
+    else:  # DEFEAT
+        clauses.append("Limped clear rather than break up")
+
+    if result.cargo_lost:
+        names = ", ".join(
+            (SLICE_GOODS.get(g).name if SLICE_GOODS.get(g) else g)
+            for g in result.cargo_lost
+        )
+        clauses.append(f"dumped {names}")
+    elif state.ship_cargo:
+        clauses.append("kept cargo rather than dumping it")
+
+    if result.hull_damage_taken > 0:
+        clauses.append(f"hull \u2212{result.hull_damage_taken}")
+
+    if result.credits_gained > 0:
+        clauses.append(f"+{result.credits_gained}\u20a1 salvage")
+
+    for cid in result.crew_injuries:
+        member = next(
+            (m for m in state.crew.members if m.id == cid or m.name == cid),
+            None,
+        )
+        if member is None:
+            continue
+        civ_label = _CIV_DOCK_LABEL.get(
+            member.civilization.value, member.civilization.value.title()
+        )
+        clauses.append(f"{member.name} injured \u2014 {civ_label} docking will hurt")
+
+    return "; ".join(clauses)
+
+
 # ---------------------------------------------------------------------------
 # 3b. Approach — the encounter decision surface (C2)
 # ---------------------------------------------------------------------------
