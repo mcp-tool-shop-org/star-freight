@@ -21,7 +21,7 @@ from portlight.app.tui.app import PortlightApp  # noqa: E402
 
 def _make_session() -> GameSession:
     s = GameSession(slot="tui_voyage_test")
-    s.new("Captain Blackwood", captain_type="merchant")
+    s.new_portlight("Captain Blackwood", captain_type="merchant")
     return s
 
 

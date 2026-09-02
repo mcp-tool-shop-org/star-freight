@@ -428,14 +428,14 @@ class TestSessionIntegration:
     def test_session_has_infra(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         assert s.infra is not None
         assert isinstance(s.infra, InfrastructureState)
 
     def test_session_infra_persists(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         depot = WAREHOUSE_TIERS[WarehouseTier.DEPOT]
         s.lease_warehouse_cmd(depot)
@@ -448,7 +448,7 @@ class TestSessionIntegration:
     def test_deposit_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         # Lease warehouse
         depot = WAREHOUSE_TIERS[WarehouseTier.DEPOT]
@@ -466,7 +466,7 @@ class TestSessionIntegration:
     def test_withdraw_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         depot = WAREHOUSE_TIERS[WarehouseTier.DEPOT]
         s.lease_warehouse_cmd(depot)
@@ -480,7 +480,7 @@ class TestSessionIntegration:
     def test_upkeep_on_advance(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         depot = WAREHOUSE_TIERS[WarehouseTier.DEPOT]
         s.lease_warehouse_cmd(depot)

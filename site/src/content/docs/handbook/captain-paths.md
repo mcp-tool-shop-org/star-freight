@@ -1,13 +1,15 @@
 ---
 title: Captain Paths
-description: Nine captain classes and three emergent postures that reshape every run.
+description: Three proved postures. Nine inherited new-game types until the fork is finished.
 sidebar:
   order: 3
 ---
 
-## Nine captain classes
+## Inherited new-game types
 
-Each captain class changes pricing, voyage modifiers, reputation growth, inspection profile, and starting relationships. You pick a class at game start, but your choices during play push you toward one of three emergent postures.
+`starfreight new --type` still offers nine Portlight captain types plus a custom builder. They reshape the ancestor session (silver, maritime ports, voyage modifiers). They are not the Star Freight identity model.
+
+The proved game is the three postures below. Those emerge from crew, routes, and risk on the overlay.
 
 | Class | Play style | Starting edge |
 |-------|-----------|---------------|
@@ -22,7 +24,7 @@ Each captain class changes pricing, voyage modifiers, reputation growth, inspect
 | Bounty Hunter | Combat-funded, target contracts | Faction heat |
 | Custom | 10 skill points across Trade/Sailing/Shadow/Reputation | Your trade-offs |
 
-The custom builder lets you choose a home port, cultural background, and faction alignment. Every choice is a trade-off, not an optimization puzzle.
+The custom builder still picks a Portlight home port (Porto Novo, Ironhaven, and the rest). That goes away with the fork.
 
 ## Three emergent postures
 
@@ -63,7 +65,9 @@ Honor is combat-funded and volatile. One good fight is rewarding. Seven fights i
 
 ## Ships
 
-Five ship classes gate route access and define your combat profile:
+Overlay ships in content are the Threshold Hauler, Orryn Runner, and Veshan Warbird.
+
+The live session still uses Portlight's five sailing classes (sloop through man-of-war). Those gate ancestor routes, not Star Freight lanes.
 
 | Class | Role | Unlocks |
 |-------|------|---------|
@@ -76,6 +80,8 @@ Five ship classes gate route access and define your combat profile:
 Upgrading your ship is a campaign decision, not just a purchase. Bigger ships cost more to maintain, dock at higher fees, and attract more attention.
 
 ## Companions
+
+The overlay binds **crew** (Thal, Varek, Sera, Nera, Ilen), not Portlight companions. The live session still recruits the ancestor companion roster below.
 
 Ten recruitable companions across five roles (two per role):
 

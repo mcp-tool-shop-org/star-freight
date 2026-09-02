@@ -1,49 +1,9 @@
 # Scorecard
 
-> Score a repo before remediation. Fill this out first, then use SHIP_GATE.md to fix.
+> Historical shipcheck worksheet. The live gate is [`SHIP_GATE.md`](SHIP_GATE.md).
 
-**Repo:** <!-- repo name -->
-**Date:** <!-- YYYY-MM-DD -->
-**Type tags:** <!-- [npm] [mcp] [cli] etc. -->
+**Repo:** star-freight
+**Date:** 2026-03-24 (original pass) / 2026-09-02 (housekeeping note)
+**Type tags:** `[cli]` `[pypi]`
 
-## Pre-Remediation Assessment
-
-| Category | Score | Notes |
-|----------|-------|-------|
-| A. Security | /10 | |
-| B. Error Handling | /10 | |
-| C. Operator Docs | /10 | |
-| D. Shipping Hygiene | /10 | |
-| E. Identity (soft) | /10 | |
-| **Overall** | **/50** | |
-
-## Key Gaps
-
-<!-- List the 3-5 most critical gaps that need fixing. Be specific. -->
-
-1.
-2.
-3.
-
-## Remediation Priority
-
-<!-- What to fix first, second, third. Informed by the gaps above. -->
-
-| Priority | Item | Estimated effort |
-|----------|------|-----------------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-
-## Post-Remediation
-
-<!-- Fill this out after applying SHIP_GATE.md -->
-
-| Category | Before | After |
-|----------|--------|-------|
-| A. Security | /10 | /10 |
-| B. Error Handling | /10 | /10 |
-| C. Operator Docs | /10 | /10 |
-| D. Shipping Hygiene | /10 | /10 |
-| E. Identity (soft) | /10 | /10 |
-| **Overall** | /50 | /50 |
+Shipcheck A–E passed at v1.0.0 packaging. Current manifest version is **1.0.4**. Remaining product work is the unfinished Portlight fork, not another identity pass.

@@ -21,8 +21,8 @@ pip install -e ".[tui]"
 ## Start a game
 
 ```bash
-# Create a new captain (pick from 9 types or custom)
-starfreight new "Captain Nyx" --type merchant
+# Create a new captain
+starfreight new "Captain Nyx"
 
 # Launch the full-screen TUI
 starfreight tui

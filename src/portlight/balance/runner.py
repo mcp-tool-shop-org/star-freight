@@ -34,7 +34,7 @@ def run_balance_simulation(config: BalanceRunConfig) -> RunMetrics:
         random.seed(config.seed)
 
         session = GameSession(Path(tmp))
-        session.new("BalanceBot", captain_type=config.captain_type, seed=config.seed)
+        session.new_portlight("BalanceBot", captain_type=config.captain_type, seed=config.seed)
         session.auto_resolve_duels = True
 
         # Ensure session RNG matches the deterministic seed

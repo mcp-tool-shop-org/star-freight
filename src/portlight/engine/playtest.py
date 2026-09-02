@@ -24,6 +24,7 @@ from portlight.engine.sf_campaign import (
     travel_to,
     execute_trade,
     run_combat,
+    resolve_transit,
     get_campaign_summary,
 )
 from portlight.engine.crew import (
@@ -392,10 +393,13 @@ def simulate_run(
 
                 metrics.consequence_tags.extend(result.consequence_tags)
 
-                # If we didn't arrive, dock at nearest available
-                if state.current_station != dest:
-                    # Try to continue to destination
-                    state.current_station = dest  # simplified: assume we limp there
+                if state.in_transit:
+                    arrive = resolve_transit(state)
+                    for event in arrive.get("events", []):
+                        if event.get("type") == "investigation":
+                            metrics.investigation_sources["station"] = (
+                                metrics.investigation_sources.get("station", 0) + 1
+                            )
             else:
                 # Arrived — dock
                 dock_result = dock_at_station(state, dest)
