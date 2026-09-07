@@ -48,12 +48,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev,tui]"
 
+      # SKILL item 7: a full-suite re-run is a rig ritual, not a CI shape. On 3.12
+      # the coverage step below runs THIS EXACT SUITE again, so running it plain
+      # here too was 2.8 min of pure duplication every push. 3.11 still runs it.
       - name: Run tests
+        if: matrix.python-version != '3.12'
         run: |
           python -m pytest tests/ -x -q --ignore=tests/test_tui_voyage_legacy.py
 
+      # COVERAGE_CORE=sysmon puts coverage.py on PEP 669 sys.monitoring, which
+      # 3.12 supports. Measured 2026-09-07 (run 34122830821): this step took
+      # 31.3 min against 2.8 min for the same suite uninstrumented - an 11x
+      # tracing tax that made one job 35 of this workflow's 39 billable minutes.
+      # No --cov-branch here and no --cov-fail-under, so the faster core changes
+      # cost, not verdicts. Ignored outright by coverage < 7.4.
       - name: Run tests with coverage (3.12 only)
         if: matrix.python-version == '3.12'
+        env:
+          COVERAGE_CORE: sysmon
         run: |
           python -m pytest tests/ --cov=src/portlight --cov-report=xml --ignore=tests/test_tui_voyage_legacy.py
 
