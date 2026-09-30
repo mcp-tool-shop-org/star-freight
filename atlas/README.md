@@ -1,27 +1,36 @@
 # star-freight: how it works
 
-Mapped at 2026-09-23 from commit fd07312.
+Mapped at 2026-09-30 from commit ae33f19 by Atlas 1.24.0.
 
 ## What this is
 
-8 parts, mostly Python (207 files). Work enters through 5 doors; the busiest is CI, which reaches 2 parts. It publishes to PyPI. People run starfreight.
+8 parts, mostly Python (207 files), CSS (2), TypeScript (2), Astro (1) and JavaScript (1). Work enters through 5 doors; the busiest is CI, which reaches 2 parts. It publishes to PyPI. It deploys a site to GitHub Pages. People run starfreight.
 
-## What changed since the last map
+## What changed since 2026-09-23 (fd07312)
 
-This is the first map.
+- CI's pull request trigger now also names `atlas/**` and `codecov.yml`.
+- CI's push trigger now also names `atlas/**` and `codecov.yml`.
+- Publish to PyPI now also checks src/portlight/.
+- And 1 more change to a door.
+- README.md is now read by pyproject.toml.
+- dogfood/scenarios/ is now also read by src/portlight/engine/dogfood_runner.py and tests/test_dogfood_runner.py.
+- dogfood/scenarios/gray_seizure_60d_s17.json is now read by tests/test_dogfood_runner.py.
+- And 6 more new writers and readers of places.
+- 1 file added and 316 changed content, across 8 parts.
 
 ## What comes in
 
-1. **CI.** On a pull request touching 7 paths; on a push touching 7 paths; or by hand. Runs tests/.
+1. **CI.** On a pull request touching 9 paths; on a push touching 9 paths; or by hand. Runs tests/.
 2. **Deploy site to GitHub Pages.** On a push to main touching 2 paths; or by hand. Runs site/astro.config.mjs and site/src/.
-3. **Publish to PyPI.** When a release is published; or by hand. Runs no file this map can see.
-4. **Release Binaries.** When a release is published; or by hand. Runs no file this map can see.
+3. **Release Binaries.** When a release is published; or by hand. Builds src/portlight/__main__.py.
+4. **Publish to PyPI.** When a release is published; or by hand. Checks src/portlight/.
 5. **starfreight** (a command people run). Runs src/portlight/app/cli.py.
 
 ## What happens through CI
 
 1. The workflow runs tests/ in tests.
 2. That reaches src (104 files).
+3. It uploads coverage to Codecov.
 
 ## Who reads the results
 
@@ -31,23 +40,21 @@ CI writes nothing this map can see.
 
 **Deploy site to GitHub Pages** runs site/astro.config.mjs and site/src/, and deploys the site.
 
-**Publish to PyPI** runs no file this map can see and publishes to PyPI.
+**Release Binaries** builds src/portlight/__main__.py into binaries for darwin-arm64, linux-x64 and win-x64 and uploads them to the release.
 
-**Release Binaries** runs no file this map can see and creates a GitHub release.
+**Publish to PyPI** checks src/portlight/ and publishes to PyPI.
 
 **starfreight** (a command people run) runs src/portlight/app/cli.py.
 
 ## What breaks what
 
-- **src** is imported by 1 part (dogfood), and by 1 more only from tests; it sits on the path of 2 doors.
+- **src** is imported by 1 part (dogfood), and by 1 more only from tests; it sits on the path of 4 doors.
 
 ## What tends to change together
 
-- **src/portlight/content/star_freight.py** and **tests/test_star_freight_content.py** changed together in 5 of 7 commits, and the tests part imports the src part.
+No two source files changed together often enough to name.
 
-Confidence is low: fewer than 20 source files reach 10 revisions in the window.
-
-Window: 180 days; a pair counts from 3 shared commits, since 0 source files reach 10 revisions; the floor rises to 10 when 25 do.
+Window: 180 days; a pair counts from 3 shared commits, since the window holds fewer than 30 qualifying commits.
 
 ## What no test touches
 
@@ -71,18 +78,19 @@ No two parts export a helper that looks alike.
 
 ## Hand-authored
 
-People write .github/, design/, the repository root, site/ and world/; 5 writes with paths built at run time may land here.
+People write .github/, design/, the repository root, site/ and world/. Nothing in this repository writes to them.
 
 ## Where to start
 
-.github/workflows/ci.yml → tests/balance/test_captain_parity.py → src/portlight/balance/aggregates.py
+src/portlight/app/cli.py → src/portlight/app/session.py → src/portlight/engine/encounter.py → src/portlight/engine/captain_memory.py → src/portlight/engine/underworld.py → src/portlight/engine/weapon_provenance.py → src/portlight/engine/loot.py
 
-Read those in order to follow one pull request end to end.
+Read those in order to follow one run of starfreight end to end. This path follows starfreight (a command people run) from its entry, since CI runs only tests.
 
 ## What this map cannot see
 
-- 2 import sites could not be resolved.
-- 5 writes and 2 reads use paths built at run time and are not named here.
-- Statistics confidence is low: fewer than 20 source files reach 10 revisions in the window.
+- 2 imports could not be resolved: `src/portlight/app/tui/screens/encounter.py` imports `portlight.content.weapons`, which is no module on its import path and no declared dependency, twice.
+- 6 writes and 124 reads go to a path their caller passes, not to this repository.
+- 2 reads go to the directory the command is run in, not to this repository.
+- Statistics confidence is low: fewer than 30 qualifying commits in the window, and fewer than 25 source files reach 10 revisions.
 
 Regenerate with `npx --yes @dogfood-lab/atlas map`.

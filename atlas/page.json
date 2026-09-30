@@ -8,7 +8,7 @@
   ],
   "breaks": [
     {
-      "doors": 2,
+      "doors": 4,
       "importedBy": [
         "dogfood"
       ],
@@ -21,37 +21,96 @@
     }
   ],
   "changes": {
-    "first": true
+    "fileCounts": {
+      "added": 1,
+      "changed": 316,
+      "moved": 0,
+      "parts": 8,
+      "removed": 0
+    },
+    "items": [
+      {
+        "kind": "door",
+        "sentence": "CI's pull request trigger now also names `atlas/**` and `codecov.yml`.",
+        "subjects": [
+          ".github/workflows/ci.yml"
+        ]
+      },
+      {
+        "kind": "door",
+        "sentence": "CI's push trigger now also names `atlas/**` and `codecov.yml`.",
+        "subjects": [
+          ".github/workflows/ci.yml"
+        ]
+      },
+      {
+        "kind": "door",
+        "sentence": "Publish to PyPI now also checks src/portlight/.",
+        "subjects": [
+          ".github/workflows/publish.yml",
+          "src/portlight/"
+        ]
+      },
+      {
+        "kind": "door",
+        "sentence": "And 1 more change to a door.",
+        "subjects": []
+      },
+      {
+        "kind": "landing",
+        "sentence": "README.md is now read by pyproject.toml.",
+        "subjects": [
+          "README.md",
+          "pyproject.toml"
+        ]
+      },
+      {
+        "kind": "landing",
+        "sentence": "dogfood/scenarios/ is now also read by src/portlight/engine/dogfood_runner.py and tests/test_dogfood_runner.py.",
+        "subjects": [
+          "dogfood/scenarios/",
+          "src/portlight/engine/dogfood_runner.py",
+          "tests/test_dogfood_runner.py"
+        ]
+      },
+      {
+        "kind": "landing",
+        "sentence": "dogfood/scenarios/gray_seizure_60d_s17.json is now read by tests/test_dogfood_runner.py.",
+        "subjects": [
+          "dogfood/scenarios/gray_seizure_60d_s17.json",
+          "tests/test_dogfood_runner.py"
+        ]
+      },
+      {
+        "kind": "landing",
+        "sentence": "And 6 more new writers and readers of places.",
+        "subjects": []
+      },
+      {
+        "kind": "counts",
+        "sentence": "1 file added and 316 changed content, across 8 parts.",
+        "subjects": []
+      }
+    ],
+    "since": {
+      "commit": "fd07312f95cf26ca68946584bff53dc5b1d4f7aa",
+      "generatedAt": "2026-09-23T22:49:48.416Z"
+    },
+    "unchanged": false
   },
-  "changesTogether": [
-    {
-      "a": "src/portlight/content/star_freight.py",
-      "b": "tests/test_star_freight_content.py",
-      "either": 7,
-      "partLabels": [
-        "src",
-        "tests"
-      ],
-      "parts": [
-        "src",
-        "tests"
-      ],
-      "relation": "b-imports-a",
-      "shared": 5
-    }
-  ],
+  "changesTogether": [],
   "changesTogetherNote": [
-    "Confidence is low: fewer than 20 source files reach 10 revisions in the window.",
-    "Window: 180 days; a pair counts from 3 shared commits, since 0 source files reach 10 revisions; the floor rises to 10 when 25 do."
+    "Window: 180 days; a pair counts from 3 shared commits, since the window holds fewer than 30 qualifying commits."
   ],
   "changesTogetherWithTests": 0,
-  "commit": "fd07312f95cf26ca68946584bff53dc5b1d4f7aa",
+  "commit": "ae33f19e7d4d1dd6c1b2cbf98da636e28a86a377",
   "defaultBranch": "main",
-  "derived": "8 parts, mostly Python (207 files). Work enters through 5 doors; the busiest is CI, which reaches 2 parts. It publishes to PyPI. People run starfreight.",
+  "derived": "8 parts, mostly Python (207 files), CSS (2), TypeScript (2), Astro (1) and JavaScript (1). Work enters through 5 doors; the busiest is CI, which reaches 2 parts. It publishes to PyPI. It deploys a site to GitHub Pages. People run starfreight.",
   "doors": [
     {
       "checks": [],
       "checksCount": 0,
+      "checksMore": 0,
       "file": ".github/workflows/ci.yml",
       "id": ".github/workflows/ci.yml",
       "landings": [],
@@ -73,17 +132,21 @@
         "tests/"
       ],
       "runsCount": 1,
-      "sends": [],
+      "runsMore": 0,
+      "sends": [
+        "uploads coverage to Codecov"
+      ],
       "stages": [],
       "triggers": [
-        "on a pull request touching 7 paths",
-        "on a push touching 7 paths",
+        "on a pull request touching 9 paths",
+        "on a push touching 9 paths",
         "or by hand"
       ]
     },
     {
       "checks": [],
       "checksCount": 0,
+      "checksMore": 0,
       "file": ".github/workflows/pages.yml",
       "id": ".github/workflows/pages.yml",
       "landings": [],
@@ -93,7 +156,7 @@
         {
           "boundary": "site",
           "depth": 0,
-          "files": 3
+          "files": 5
         }
       ],
       "runs": [
@@ -101,6 +164,7 @@
         "site/src/"
       ],
       "runsCount": 2,
+      "runsMore": 0,
       "sends": [
         "deploys the site"
       ],
@@ -111,16 +175,57 @@
       ]
     },
     {
+      "builds": [
+        "src/portlight/__main__.py"
+      ],
       "checks": [],
       "checksCount": 0,
+      "checksMore": 0,
+      "file": ".github/workflows/release-binaries.yml",
+      "id": ".github/workflows/release-binaries.yml",
+      "landings": [],
+      "name": "Release Binaries",
+      "pushes": false,
+      "reach": [
+        {
+          "boundary": "src",
+          "depth": 0,
+          "files": 90
+        }
+      ],
+      "runs": [],
+      "runsCount": 0,
+      "runsMore": 0,
+      "sends": [
+        "builds src/portlight/__main__.py into binaries for darwin-arm64, linux-x64 and win-x64 and uploads them to the release"
+      ],
+      "stages": [],
+      "triggers": [
+        "when a release is published",
+        "or by hand"
+      ]
+    },
+    {
+      "checks": [
+        "src/portlight/"
+      ],
+      "checksCount": 1,
+      "checksMore": 0,
       "file": ".github/workflows/publish.yml",
       "id": ".github/workflows/publish.yml",
       "landings": [],
       "name": "Publish to PyPI",
       "pushes": false,
-      "reach": [],
+      "reach": [
+        {
+          "boundary": "src",
+          "depth": 0,
+          "files": 115
+        }
+      ],
       "runs": [],
       "runsCount": 0,
+      "runsMore": 0,
       "sends": [
         "publishes to PyPI"
       ],
@@ -133,26 +238,7 @@
     {
       "checks": [],
       "checksCount": 0,
-      "file": ".github/workflows/release-binaries.yml",
-      "id": ".github/workflows/release-binaries.yml",
-      "landings": [],
-      "name": "Release Binaries",
-      "pushes": false,
-      "reach": [],
-      "runs": [],
-      "runsCount": 0,
-      "sends": [
-        "creates a GitHub release"
-      ],
-      "stages": [],
-      "triggers": [
-        "when a release is published",
-        "or by hand"
-      ]
-    },
-    {
-      "checks": [],
-      "checksCount": 0,
+      "checksMore": 0,
       "file": "pyproject.toml",
       "id": "pyproject.toml#starfreight",
       "kind": "command",
@@ -163,13 +249,14 @@
         {
           "boundary": "src",
           "depth": 0,
-          "files": 87
+          "files": 89
         }
       ],
       "runs": [
         "src/portlight/app/cli.py"
       ],
       "runsCount": 1,
+      "runsMore": 0,
       "sends": [],
       "stages": [],
       "triggers": []
@@ -179,6 +266,7 @@
   "duplicatesLead": null,
   "duplicatesNote": [],
   "edges": [],
+  "engine": "1.24.0",
   "generated": [
     {
       "place": "dogfood/wave1_results.json",
@@ -199,11 +287,12 @@
       ]
     }
   ],
-  "generatedAt": "2026-09-23T22:49:48.416Z",
+  "generatedAt": "2026-09-30T20:13:33.461Z",
   "limits": [
-    "2 import sites could not be resolved.",
-    "5 writes and 2 reads use paths built at run time and are not named here.",
-    "Statistics confidence is low: fewer than 20 source files reach 10 revisions in the window."
+    "2 imports could not be resolved: `src/portlight/app/tui/screens/encounter.py` imports `portlight.content.weapons`, which is no module on its import path and no declared dependency, twice.",
+    "6 writes and 124 reads go to a path their caller passes, not to this repository.",
+    "2 reads go to the directory the command is run in, not to this repository.",
+    "Statistics confidence is low: fewer than 30 qualifying commits in the window, and fewer than 25 source files reach 10 revisions."
   ],
   "mainDoor": ".github/workflows/ci.yml",
   "partLabels": {
@@ -220,12 +309,17 @@
   "readers": [],
   "repo": "mcp-tool-shop-org/star-freight",
   "sequences": [],
-  "startDoor": ".github/workflows/ci.yml",
+  "startDoor": "pyproject.toml#starfreight",
   "startHere": [
-    ".github/workflows/ci.yml",
-    "tests/balance/test_captain_parity.py",
-    "src/portlight/balance/aggregates.py"
+    "src/portlight/app/cli.py",
+    "src/portlight/app/session.py",
+    "src/portlight/engine/encounter.py",
+    "src/portlight/engine/captain_memory.py",
+    "src/portlight/engine/underworld.py",
+    "src/portlight/engine/weapon_provenance.py",
+    "src/portlight/engine/loot.py"
   ],
+  "startReason": "This path follows starfreight (a command people run) from its entry, since CI runs only tests.",
   "summary": null,
   "summaryFrom": null,
   "testFiles": 89,
@@ -233,7 +327,7 @@
     "dogfood": 0,
     "src": 85
   },
-  "unnamedWrites": 5,
+  "unnamedWrites": 0,
   "unread": [
     {
       "place": "dogfood/wave1_results.json",
@@ -254,6 +348,7 @@
       ]
     }
   ],
+  "unreadFiles": 0,
   "unreadNote": [],
   "untested": [
     {
