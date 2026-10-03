@@ -437,7 +437,7 @@ class TestSaveLoadReputation:
 
     def test_full_reputation_roundtrip(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Trader", captain_type="merchant")
+        s.new_portlight("Trader", captain_type="merchant")
         # Do some trading to generate reputation
         s.captain.standing.customs_heat["West Africa"] = 15
         s.captain.standing.port_standing["porto_novo"] = 12
@@ -456,7 +456,7 @@ class TestSessionReputation:
 
     def test_sell_mutates_reputation(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Trader", captain_type="merchant")
+        s.new_portlight("Trader", captain_type="merchant")
         # Buy grain, sell it to trigger reputation mutation
         s.buy("grain", 10)
         # Sell at same port (low margin, should be clean)
@@ -468,7 +468,7 @@ class TestSessionReputation:
 
     def test_reputation_ticks_on_advance(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Trader", captain_type="merchant")
+        s.new_portlight("Trader", captain_type="merchant")
         s.captain.standing.customs_heat["Mediterranean"] = 20
         s.advance()  # advance one day in port
         # Heat should have decayed

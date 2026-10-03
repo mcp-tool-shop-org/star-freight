@@ -405,6 +405,150 @@ def after_action_summary(result: CombatResult, state: CampaignState) -> Panel:
     )
 
 
+# Civilization -> the docking pressure an injured crew member implies (C3).
+_CIV_DOCK_LABEL = {
+    "keth": "Communion",
+    "veshan": "Veshan",
+    "compact": "Compact",
+    "orryn": "Orryn",
+    "reach": "Reach",
+}
+
+
+def contrastive_aftermath_line(result: CombatResult, state: CampaignState) -> str:
+    """One contrastive line for the post-combat toast (C3).
+
+    Not a delta dump — a "why P rather than Q" summary. States the choice made
+    against the alternative it displaced, then the deltas that will bite next.
+    The full breakdown lives in the after-action overlay.
+    """
+    clauses: list[str] = []
+
+    if result.outcome == CombatPhase.VICTORY:
+        clauses.append("Held the field")
+    elif result.outcome == CombatPhase.RETREAT:
+        clauses.append("Ran rather than lose the ship")
+    else:  # DEFEAT
+        clauses.append("Limped clear rather than break up")
+
+    if result.cargo_lost:
+        names = ", ".join(
+            (SLICE_GOODS.get(g).name if SLICE_GOODS.get(g) else g)
+            for g in result.cargo_lost
+        )
+        clauses.append(f"dumped {names}")
+    elif state.ship_cargo:
+        clauses.append("kept cargo rather than dumping it")
+
+    if result.hull_damage_taken > 0:
+        clauses.append(f"hull \u2212{result.hull_damage_taken}")
+
+    if result.credits_gained > 0:
+        clauses.append(f"+{result.credits_gained}\u20a1 salvage")
+
+    for cid in result.crew_injuries:
+        member = next(
+            (m for m in state.crew.members if m.id == cid or m.name == cid),
+            None,
+        )
+        if member is None:
+            continue
+        civ_label = _CIV_DOCK_LABEL.get(
+            member.civilization.value, member.civilization.value.title()
+        )
+        clauses.append(f"{member.name} injured \u2014 {civ_label} docking will hurt")
+
+    return "; ".join(clauses)
+
+
+# ---------------------------------------------------------------------------
+# 3b. Approach — the encounter decision surface (C2)
+# ---------------------------------------------------------------------------
+
+def approach_panel(info: dict) -> Panel:
+    """Stakes-first interdiction surface: who, cargo, hull — then the choices.
+
+    Answers the surface order: where am I (interdiction), what matters
+    (stakes), what can I do (approaches), what will it cost (each line's hint).
+    Grid is only reached on Fight. Honor challenges close negotiate and flee.
+    """
+    civ_style = _civ_style(info.get("civilization", ""))
+    lines: list = []
+
+    header = Text()
+    header.append("  INTERDICTION", style=C_RED)
+    header.append("  \u2014  ", style=C_DIM)
+    header.append(info["name"], style=civ_style)
+    lines.append(header)
+    lines.append(Text(f"  {info['description']}", style=C_DIM))
+    lines.append(Text())
+
+    # What matters — the stakes.
+    lines.append(Text("  Stakes", style=C_GOLD))
+    hostile = Text("  Hostile:  ")
+    hostile.append(info["name"], style=civ_style)
+    hostile.append(
+        f"   hull ~{info['enemy_hull']}   guns ~{info['enemy_damage']}",
+        style=C_RED,
+    )
+    lines.append(hostile)
+
+    yours = Text("  Your ship: ")
+    yours.append_text(_bar(info["player_hull"], info["player_hull_max"], 10))
+    yours.append(f" {info['player_hull']}/{info['player_hull_max']} hull")
+    lines.append(yours)
+
+    cargo = info.get("cargo") or []
+    if cargo:
+        names = ", ".join(
+            (SLICE_GOODS.get(g).name if SLICE_GOODS.get(g) else g) for g in cargo
+        )
+        lines.append(Text(f"  Cargo at risk: {len(cargo)} \u2014 {names}", style="yellow"))
+    else:
+        lines.append(Text("  Cargo hold: empty", style=C_DIM))
+    lines.append(Text())
+
+    # What can I do — the approaches, with cost visible.
+    lines.append(Text("  Approach", style=C_GOLD))
+
+    if info["must_fight"]:
+        lines.append(Text("  [N] Negotiate  \u2014 closed: honor challenge", style=C_DIM))
+    elif info["can_negotiate"]:
+        neg = Text("  [N] Negotiate", style=C_GREEN)
+        if info.get("negotiate_hint"):
+            neg.append(f"  \u2014 {info['negotiate_hint']}", style=C_DIM)
+        lines.append(neg)
+    else:
+        lines.append(
+            Text("  [N] Negotiate  \u2014 no standing (needs cultural knowledge)", style=C_DIM)
+        )
+
+    if info["must_fight"]:
+        lines.append(Text("  [F] Flee       \u2014 closed: refusing is dishonor", style=C_DIM))
+    else:
+        flee = Text("  [F] Flee", style="yellow")
+        if info.get("flee_consequence"):
+            flee.append(f"  \u2014 {info['flee_consequence']}", style=C_DIM)
+        lines.append(flee)
+
+    fight = Text("  [G] Fight", style=C_RED)
+    fight.append("  \u2014 open the tactical grid (8\u00d76)", style=C_DIM)
+    lines.append(fight)
+
+    border = C_VESHAN if info["must_fight"] else "#e05050"
+    title = "[bold red]APPROACH[/bold red]"
+    if info["must_fight"]:
+        title = "[bold #c04040]HONOR CHALLENGE[/bold #c04040]"
+
+    return Panel(
+        Group(*lines),
+        title=title,
+        border_style=border,
+        box=box.HEAVY,
+        padding=(1, 2),
+    )
+
+
 # ---------------------------------------------------------------------------
 # 4. Grid Combat Screen
 # ---------------------------------------------------------------------------
@@ -453,23 +597,32 @@ def combat_screen(combat: CombatState) -> Panel:
 
         targets = get_valid_targets(combat, current.id)
         if targets:
-            parts.append(Text(f"  [T] Attack ({current.base_attack_damage} dmg, range {current.base_attack_range})", style="white"))
+            parts.append(Text(
+                f"  [T] Attack ({current.base_attack_damage} dmg, range {current.base_attack_range})",
+                style="white",
+            ))
+        else:
+            parts.append(Text("  [T] Attack — no target in range", style=C_DIM))
 
         abilities = get_available_abilities(combat, current.id)
-        for ab in abilities:
-            ab_text = Text(f"  [A] {ab.name}")
-            if ab.crew_source:
-                ab_text.append(f" — {ab.crew_source}", style=C_DIM)
-            if ab.degraded:
-                ab_text.append(" (DEGRADED)", style="yellow")
-            ab_text.append(f" ({ab.effect_type}, cd:{ab.cooldown})", style=C_DIM)
-            parts.append(ab_text)
-
-        # Show locked/unavailable abilities
-        for ab in current.abilities:
-            if ab.id not in [a.id for a in abilities]:
-                reason = "cooldown" if combat.combatants[current.id].ability_cooldowns.get(ab.id, 0) > 0 else "cost"
-                parts.append(Text(f"  [-] {ab.name} — {reason}", style=C_DIM))
+        shown = {a.id for a in abilities}
+        for i, ab in enumerate(current.abilities[:4], 1):
+            if ab.id in shown:
+                ab_text = Text(f"  [{i}] {ab.name}")
+                if ab.crew_source:
+                    ab_text.append(f" — {ab.crew_source}", style=C_DIM)
+                if ab.degraded:
+                    ab_text.append(" (DEGRADED)", style="yellow")
+                ab_text.append(f" ({ab.effect_type}, cd:{ab.cooldown})", style=C_DIM)
+                parts.append(ab_text)
+            else:
+                reason = "cooldown" if current.ability_cooldowns.get(ab.id, 0) > 0 else "unavailable"
+                label = ab.name
+                if ab.crew_source:
+                    label += f" — {ab.crew_source}"
+                parts.append(Text(f"  [{i}] {label} — {reason}", style=C_DIM))
+        for i in range(len(current.abilities) + 1, 5):
+            parts.append(Text(f"  [{i}] — no crew", style=C_DIM))
 
         parts.append(Text("  [V] Defend (+evasion this turn)", style="white"))
         parts.append(Text("  [X] Retreat (cargo at risk)", style="yellow"))
@@ -687,6 +840,7 @@ def station_screen(state: CampaignState) -> Panel:
     services = Text("  Services: ")
     services.append(", ".join(station.services))
     parts.append(services)
+    parts.append(Text("  Press [P] to use station services", style=C_GOLD))
     parts.append(Text(f"  Docking fee: {station.docking_fee}₡  │  Repair: {station.repair_cost_per_point}₡/pt  │  Fuel: {station.fuel_cost_per_day}₡/day"))
     parts.append(Text())
 

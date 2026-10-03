@@ -132,7 +132,7 @@ def render_cover(pdf: FPDF) -> None:
     pdf.set_xy(MARGIN, PAGE_H - 30)
     pdf.multi_cell(PAGE_W - 2 * MARGIN, 4,
                    "Generated from Star Freight world data.\n"
-                   "Digital game: pip install portlight[tui]", align="C")
+                   "Digital game: pip install -e \".[tui]\"", align="C")
 
 
 def render_rules(pdf: FPDF) -> None:

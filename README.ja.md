@@ -75,7 +75,7 @@ cd star-freight
 pip install -e ".[tui]"
 
 # Start a new game
-starfreight new "Captain Nyx" --type merchant
+starfreight new "Captain Nyx" 
 starfreight tui
 ```
 

@@ -691,7 +691,7 @@ def merchant_list_view(merchants: list[dict], port_name: str) -> Panel:
         lines.append(f"  [bold]{m['name']}[/bold] — {m['title']}")
         lines.append(f"    [italic]{m['greeting']}[/italic]")
         lines.append(f"    Sells: {', '.join(m['inventory_types'])}  |  Markup: +{int((m['markup'] - 1) * 100)}%")
-        lines.append(f"    [dim]portlight merchant {m['id']}[/dim]")
+        lines.append(f"    [dim]starfreight merchant {m['id']}[/dim]")
         lines.append("")
 
     return Panel(

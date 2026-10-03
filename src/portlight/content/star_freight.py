@@ -98,7 +98,7 @@ SLICE_STATIONS: dict[str, Station] = {
         description="The Compact's commercial face in the Threshold. Clean corridors, "
                     "regulated markets, bureaucratic friction. Your disgrace follows you here — "
                     "officials are cold, prices carry a surcharge, and military decks are off-limits.",
-        services=["market", "repair", "fuel", "contracts", "drydock"],
+        services=["market", "repair", "fuel", "contracts", "drydock", "crew_hire"],
         docking_fee=10,
         repair_cost_per_point=3,
         fuel_cost_per_day=12,
@@ -264,7 +264,7 @@ SLICE_STATIONS: dict[str, Station] = {
                     "where manifests are reconciled, claims are filed, emergency liens are "
                     "issued, and delayed cargo becomes political. Everything here is recorded. "
                     "Sloppy captains feel small. Prepared captains feel powerful.",
-        services=["market", "fuel", "contracts"],
+        services=["market", "fuel", "contracts", "crew_hire"],
         docking_fee=12,  # administrative overhead
         repair_cost_per_point=4,  # expensive — this is not a drydock
         fuel_cost_per_day=15,
@@ -956,6 +956,32 @@ def create_ilen() -> CrewMember:
             "orryn_customs": 5,
         },
     )
+
+
+CREW_FACTORIES = {
+    "thal_communion": create_thal,
+    "varek_drashan": create_varek,
+    "sera_vale": create_sera,
+    "nera_quill": create_nera,
+    "ilen_marr": create_ilen,
+}
+
+# Who can be hired where. Only stations that already offer crew_hire.
+STATION_HIRES: dict[str, list[str]] = {
+    "meridian_exchange": ["sera_vale"],
+    "communion_relay": ["thal_communion"],
+    "drashan_citadel": ["varek_drashan"],
+    "mourning_quay": ["thal_communion"],
+    "registry_spindle": ["nera_quill"],
+    "queue_of_flags": ["ilen_marr"],
+}
+
+
+def create_crew(crew_id: str) -> CrewMember:
+    factory = CREW_FACTORIES.get(crew_id)
+    if factory is None:
+        raise KeyError(f"Unknown crew: {crew_id}")
+    return factory()
 
 
 # ---------------------------------------------------------------------------

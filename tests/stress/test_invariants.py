@@ -31,7 +31,7 @@ from portlight.stress.types import InvariantResult, Subsystem
 def _fresh_session(tmp_path: Path, captain_type: str = "merchant") -> GameSession:
     """Create a clean session for invariant testing."""
     s = GameSession(base_path=tmp_path)
-    s.new("Tester", captain_type=captain_type)
+    s.new_portlight("Tester", captain_type=captain_type)
     return s
 
 

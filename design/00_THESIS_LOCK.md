@@ -28,7 +28,11 @@ You are a disgraced military pilot who starts over on the fringe, navigating ali
 
 ## Platform
 
-TBD — likely Rust TUI (proven stack) or desktop (Tauri). Not browser. Not mobile.
+**Current:** Python 3.11+ CLI + Rich/Textual TUI. This is the design-proof and the next playable game.
+
+**Later:** Unreal Engine 5 2.5D for Star Freight: Grounded (standalone prologue). Not this lane.
+
+Not browser. Not mobile. Rust TUI and Tauri are deferred.
 
 ## Session Shape
 
@@ -77,6 +81,10 @@ This game is built by forking Portlight's world simulation layer and reskinning 
 **What must be built new:** Alien civilizations (biology, customs, trade preferences, taboos), turn-based grid combat engine (replacing Portlight's stance/broadside systems), the cultural navigation mechanics, the disgrace/redemption narrative spine, sci-fi content.
 
 ---
+
+## Status (2026-09-02)
+
+The five civilizations are Compact, Keth, Veshan, Orryn, Reach. The overlay proved crew-as-access, cultural knowledge, and three captain postures. The live CLI session still boots the Portlight ancestor. Working title is Star Freight.
 
 ## Unresolved Questions
 

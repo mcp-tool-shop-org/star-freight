@@ -3,6 +3,8 @@
 > What we inherited, what we keep, what we replace, what we build new.
 > This is the single source of truth for fork decisions.
 
+> **Status 2026-09-02:** Live `starfreight new` / `starfreight tui` boot `CampaignState` (Meridian Exchange, credits, overlay stations). Ancestor Portlight modules remain in the tree for tests via `GameSession.new_portlight()`. The Python package is still `portlight`. Melee/naval/ports are not deleted this pass.
+
 ---
 
 ## Inherited Intact (use as-is, reskin content only)

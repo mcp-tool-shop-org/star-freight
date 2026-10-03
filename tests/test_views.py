@@ -34,7 +34,7 @@ def _render(renderable) -> str:
 
 def _fresh_session(tmp_path: Path, captain_type: str = "merchant") -> GameSession:
     s = GameSession(tmp_path)
-    s.new("TestCaptain", captain_type=captain_type)
+    s.new_portlight("TestCaptain", captain_type=captain_type)
     return s
 
 

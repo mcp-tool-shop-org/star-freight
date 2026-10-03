@@ -54,20 +54,11 @@ Five civilizations share a star system called the Threshold.
 
 **The Sable Reach** — Pirate factions, Ancestor tech salvagers, and people the Compact would rather forget. No law. No customs. No refunds. The highest risk and the highest reward in the system.
 
-## Nine captain classes
+## Captain lives
 
-Each captain class reshapes pricing, voyage modifiers, reputation growth, and starting relationships with the 20-port world.
+The proved game is not a class pick. Three postures emerge from crew, routes, and risk: **Relief / Legitimacy**, **Gray / Document**, and **Honor / Frontier**.
 
-**Merchant** -- volume trade, port fee discounts, steady and reliable.
-**Smuggler** -- inspection evasion, underworld connections, lean margins.
-**Navigator** -- speed bonuses, fuel efficiency, storm resilience.
-**Privateer** -- faction-aligned combat, salvage income, political leverage.
-**Corsair** -- high-risk piracy, black market access, reputation volatility.
-**Scholar** -- cultural knowledge, luxury trade bonuses, diplomatic options.
-**Merchant Prince** -- luxury specialist, high starting capital, expensive tastes.
-**Dockhand** -- hard start, no advantages, everything earned from nothing.
-**Bounty Hunter** -- combat-funded, target contracts, faction heat.
-**Custom** -- distribute 10 skill points across Trade, Sailing, Shadow, and Reputation. Choose a home port, cultural background, and faction alignment. No best build -- only trade-offs.
+`starfreight new YourName` starts you at Meridian Exchange with an empty roster, Compact disgrace standing, and a ship that needs crew, cargo, and a lane.
 
 ## Quickstart
 
@@ -77,8 +68,8 @@ git clone https://github.com/mcp-tool-shop-org/star-freight.git
 cd star-freight
 pip install -e ".[tui]"
 
-# Start a new game (pick any of 9 types or custom)
-starfreight new "Captain Nyx" --type merchant
+# Start a new game
+starfreight new "Captain Nyx"
 starfreight tui
 ```
 
@@ -88,39 +79,33 @@ Use `--save slotname` to run multiple captain lives in parallel.
 
 ## Current state
 
-Star Freight is a proved product, not a design concept.
+This repo is the Python CLI/TUI **design-proof**. `starfreight new` / `starfreight tui` boot the Star Freight overlay (stations, lanes, credits, crew). Ancestor Portlight modules remain in the tree for tests; they are not the live game.
 
-| | Count |
+| Layer | What is true |
 |---|---|
-| Ports | 20 (5 regions) |
-| Trade routes | 43 (tiered by ship class) |
-| Trade goods | 18 (6 categories incl. contraband) |
-| Captain classes | 9 + custom builder |
-| Companions | 10 (5 roles, 2 each) |
-| Ship classes | 5 (sloop to man-of-war) |
-| Contract templates | 24 (7 families) |
-| Pirate factions | 4 |
-| Tests passing | 2,200+ |
+| Star Freight overlay | 8 stations, 14 lanes, 18 goods, 5 crew, 9 contracts, 3 ship classes, 6 encounters |
+| Proved systems | Crew binding, grid combat, cultural knowledge, investigation, campaign writeback |
+| Expansion packs | Working Lives · Houses, Audits, and Seizures · Shortages, Sanctions, and Convoys |
+| Captain postures | Relief / Gray / Honor — Wave 3 dogfood PASS (credit ratio 4.78x) |
+| GDOS proofs | Golden Path, Encounter, and Economy all pass on the overlay |
+| Still in the tree | Portlight ancestor: 20 maritime ports, silver economy, 9 captain types, melee/naval combat |
+| Not this repo | Grounded prologue and UE5 2.5D — future work |
 
-The vertical slice has passed all three proof criteria: Golden Path (continuous captain life), Encounter (three branches with different campaign state), and Economy (pressure sustains without collapsing into grind).
-
-Three expansion packs are shipped: Working Lives (human texture), Houses, Audits, and Seizures (institutional pressure), and Shortages, Sanctions, and Convoys (managed scarcity).
-
-Captain path divergence is proved: three postures produce different routes, different trade mixes, different combat profiles, different failure textures, and different captain identities.
+The Python package is still named `portlight`. Player-facing commands are `starfreight`.
 
 ## Shipcheck scorecard
 
 | Gate | Status | Evidence |
 |------|--------|----------|
 | A. Security | PASS | SECURITY.md, offline-only, no secrets/telemetry |
-| B. Errors | PASS | 2200+ tests, structured campaign validation |
+| B. Errors | PASS | pytest suite, structured campaign validation |
 | C. Docs | PASS | README (8 languages), CHANGELOG, LICENSE, HANDBOOK |
-| D. Hygiene | PASS | CI (Python 3.11+3.12), v1.0.0, paths-gated workflow |
+| D. Hygiene | PASS | CI (Python 3.11+3.12), v1.0.4, paths-gated workflow |
 | E. Polish | PASS | Logo, translations, maritime term guard CI |
 
 ## Tech
 
-Python 3.11+. Typer CLI + Rich TUI + Textual full-screen mode. Crew binding, grid combat (8x6), cultural knowledge, investigation, and campaign orchestration. 2,200+ tests.
+Python 3.11+. Typer CLI + Rich TUI + Textual full-screen mode. Crew binding, grid combat (8x6), cultural knowledge, investigation, and campaign orchestration. Package name `portlight` until the fork rename.
 
 No external AI dependencies. No cloud services. Runs on your machine.
 

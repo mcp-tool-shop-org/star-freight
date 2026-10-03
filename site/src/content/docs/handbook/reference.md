@@ -120,9 +120,10 @@ Contracts look simple until the paperwork catches up, the shortage changes the p
 
 Python 3.11+. Typer CLI + Rich TUI + Textual full-screen mode. No external AI dependencies. No cloud services. Runs on your machine.
 
+The Python package is still named `portlight` until the fork rename. Player-facing commands are `starfreight`. Overlay world data lives in `portlight.content.star_freight`. Live `GameSession` still loads the Portlight ancestor.
+
 - **Engine:** `portlight.engine` -- campaign state, crew, combat, culture, investigation, economy
-- **Content:** `portlight.content` -- ports, routes, goods, companions, contracts, factions, ships
+- **Overlay content:** `portlight.content.star_freight` -- stations, lanes, goods, crew, contracts
 - **Views:** `portlight.app.sf_views` -- campaign-aware Rich rendering surfaces
 - **Playtest:** `portlight.engine.playtest` -- deterministic simulation harness
 - **Dogfood:** `portlight.engine.dogfood_runner` -- automated scenario runner
-- **Tests:** 2,200+ covering all systems

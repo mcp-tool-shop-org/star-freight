@@ -510,7 +510,7 @@ class TestSessionIntegration:
     def test_open_broker_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Broker Tester")
+        s.new_portlight("Broker Tester")
         silver_before = s.captain.silver
 
         spec = get_broker_spec("Mediterranean", BrokerTier.LOCAL)
@@ -521,7 +521,7 @@ class TestSessionIntegration:
     def test_purchase_license_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("License Tester")
+        s.new_portlight("License Tester")
         s.captain.silver = 5000
         s.captain.standing.commercial_trust = 80
         s.captain.standing.regional_standing["Mediterranean"] = 20
@@ -539,7 +539,7 @@ class TestSessionIntegration:
     def test_broker_survives_save_load(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Persist Tester")
+        s.new_portlight("Persist Tester")
         spec = get_broker_spec("Mediterranean", BrokerTier.LOCAL)
         s.open_broker_cmd("Mediterranean", spec)
 
@@ -552,7 +552,7 @@ class TestSessionIntegration:
         """When arriving at a port with a broker, board effects should be computed."""
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Arrival Tester")
+        s.new_portlight("Arrival Tester")
         spec = get_broker_spec("Mediterranean", BrokerTier.LOCAL)
         s.open_broker_cmd("Mediterranean", spec)
         # The session's _refresh_board now passes board_effects — verify no crash

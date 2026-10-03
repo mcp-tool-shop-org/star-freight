@@ -363,7 +363,7 @@ class TestSessionIntegration:
     def test_open_credit_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Credit Tester")
+        s.new_portlight("Credit Tester")
         s.captain.standing.commercial_trust = 30
         s.captain.standing.regional_standing["Mediterranean"] = 10
 
@@ -376,7 +376,7 @@ class TestSessionIntegration:
     def test_draw_and_repay_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Draw Tester")
+        s.new_portlight("Draw Tester")
         s.captain.standing.commercial_trust = 30
         s.captain.standing.regional_standing["Mediterranean"] = 10
 
@@ -395,7 +395,7 @@ class TestSessionIntegration:
     def test_credit_survives_save_load(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Persist Tester")
+        s.new_portlight("Persist Tester")
         s.captain.standing.commercial_trust = 30
         s.captain.standing.regional_standing["Mediterranean"] = 10
 
@@ -412,7 +412,7 @@ class TestSessionIntegration:
     def test_default_damages_trust_in_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Default Tester")
+        s.new_portlight("Default Tester")
         s.captain.standing.commercial_trust = 30
         s.captain.standing.regional_standing["Mediterranean"] = 10
 

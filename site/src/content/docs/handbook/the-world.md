@@ -1,6 +1,6 @@
 ---
 title: The World
-description: Five civilizations, twenty ports, forty-three routes.
+description: Five civilizations, eight stations, fourteen lanes.
 sidebar:
   order: 2
 ---
@@ -26,57 +26,33 @@ Mobile broker civilization. Neutral by policy, profitable by design. They trade 
 ### Sable Reach
 Pirate factions, Ancestor tech salvagers, and people the Compact would rather forget. No law. No customs. No refunds. The highest risk and the highest reward in the system.
 
-## Ports
+## Stations
 
-Twenty ports across five regions. Each port has:
+Eight stations in the overlay. Each station has a civilization, a market, cultural rules, and at least one investigation source.
 
-- **Produces** -- goods available at source discount (affinity > 1.0)
-- **Demands** -- goods that sell at premium (affinity < 1.0)
-- **Docking fee** -- flat cost to arrive
-- **Provision / repair / crew costs** -- vary by port (farming ports are cheap, luxury hubs are expensive)
-- **Features** -- some ports have shipyards, black markets, or safe harbors
+| Station | Civilization | Role |
+|---------|--------------|------|
+| Meridian Exchange | Terran Compact | Regulated commercial hub. Your disgrace follows you. |
+| Communion Relay | Keth Communion | Seasonal market. Patience is the price of entry. |
+| Drashan Citadel | Veshan Principalities | Honor and debt. Challenges before contracts. |
+| Grand Drift | Orryn Drift | Neutral brokerage. Information costs. |
+| Ironjaw Den | Sable Reach | No law. Black market. Ancestor tech. |
+| Mourning Quay | Keth Communion | Hospice-port. Recovery and ritual commerce. |
+| Registry Spindle | Terran Compact | Jurisdiction, claims, liens, paper violence. |
+| Queue of Flags | Orryn Drift | Relief queues, convoy assignment, shortage politics. |
 
-### Regions
+The live `starfreight new` session still docks at Portlight's twenty maritime ports. That ancestor is not the Star Freight world. It will go when the fork is finished.
 
-| Region | Ports | Character |
-|--------|-------|-----------|
-| Mediterranean | Porto Novo, Al-Manar, Silva Bay, Corsair's Rest | Starter region. Grain, timber, spice. Sloop-safe internal routes. |
-| North Atlantic | Ironhaven, Stormwall, Thornport | Iron, weapons, tea. Cold-water discipline. |
-| West Africa | Sun Harbor, Palm Cove, Iron Point, Pearl Shallows | Cotton, dyes, pearls. Mid-game expansion. |
-| East Indies | Jade Port, Monsoon Reach, Silk Haven, Crosswind Isle, Dragon's Gate, Spice Narrows | Silk, porcelain, luxury margins. Late mid-game. |
-| South Seas | Ember Isle, Typhoon Anchorage, Coral Throne | Remote, dangerous, highest reward. Endgame. |
+## Lanes
 
-## Routes
-
-Forty-three routes connect ports. Each route has:
-
-- **Distance** -- fuel cost in days
-- **Danger** -- encounter probability per transit day
-- **Minimum ship class** -- sloop routes are safe and short; galleon routes are long and lucrative
-- **Lore** -- named routes have history (The Grain Road, The Shadow Lane, The Cotton Crossing)
-
-Routes are tiered by ship class. Sloop-safe routes stay within a region. Brigantine routes bridge regions. Galleon and man-of-war routes are long-haul with high danger and luxury margins.
+Fourteen named lanes connect the eight stations. Each lane has travel days, danger, faction control, and terrain (open, asteroid field, nebula, debris). Danger is encounter frequency. There is no fast travel. Lane knowledge builds by using the corridor.
 
 ## Goods
 
-Eighteen trade goods across six categories:
+Eighteen overlay goods. Stations produce some and demand others. Legality is not universal — the same crate can be legal at Ironjaw and contraband at Meridian.
 
-| Category | Goods | Notes |
-|----------|-------|-------|
-| Commodity | Grain, Timber, Iron Ore, Cotton, Dyes, Pelts | Bulk trade, steady margins |
-| Luxury | Spice, Silk, Porcelain, Tea, Pearls | High value, cultural gates |
-| Provision | Rum, Tobacco | Crew and port supply |
-| Military | Weapons | Restricted, high demand |
-| Medicine | Medicines | Universal demand |
-| Contraband | Opium, Black Powder, Stolen Cargo | Black market only, extreme risk and reward |
+Categories in play: Compact alloys, Keth organics and bio-crystal, Veshan arms and minerals, Orryn data and brokered goods, medical supplies, Ancestor tech, Reach salvage/contraband, bonded and ration freight, coolant.
 
-## Pirate factions
+## Reach factions
 
-Four factions operate in the Sable Reach and beyond:
-
-- **The Crimson Tide**
-- **The Monsoon Syndicate**
-- **The Deep Reef Brotherhood**
-- **The Iron Wolves**
-
-Faction standing affects underworld access, smuggling contracts, and whether pirates attack or trade with you.
+The Sable Reach is not one flag. Overlay encounters include Ironjaw raids, honor challenges, Compact interdiction, seizures, and convoy politics. Faction standing changes whether a lane is a market or a fight.
