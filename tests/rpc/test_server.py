@@ -15,9 +15,13 @@ from portlight.rpc.protocol import NO_ACTIVE_GAME
 def _make_server(with_game: bool = True) -> RpcServer:
     """Create an RpcServer, optionally with a loaded game session."""
     if with_game:
+        import tempfile
+        from pathlib import Path
         from portlight.app.session import GameSession
-        session = GameSession()
-        session.new("TestCaptain", captain_type="merchant")
+        from portlight.engine.sf_campaign import hire_crew
+        session = GameSession(Path(tempfile.mkdtemp()))
+        session.new("TestCaptain", seed=1)
+        hire_crew(session.sf_campaign, "sera_vale")
         return RpcServer(session=session)
     return RpcServer(session=None)
 
@@ -60,7 +64,7 @@ class TestGetRoster:
         assert "error" not in resp
         roster = resp["result"]
         assert isinstance(roster["crew"], list)
-        assert roster["count"] >= 2  # thal + varek from sf_campaign default
+        assert roster["count"] >= 1  # Sera hired at Meridian after new()
 
     def test_crew_shape(self):
         server = _make_server()
@@ -82,12 +86,12 @@ class TestGetRoster:
 # ---------------------------------------------------------------------------
 
 class TestGetCrewMember:
-    def test_get_thal(self):
+    def test_get_sera(self):
         server = _make_server()
-        resp = _call(server, "get_crew_member", {"id": "thal_communion"})
+        resp = _call(server, "get_crew_member", {"id": "sera_vale"})
         assert "error" not in resp
-        assert resp["result"]["id"] == "thal_communion"
-        assert resp["result"]["civilization"] == "keth"
+        assert resp["result"]["id"] == "sera_vale"
+        assert resp["result"]["civilization"] == "compact"
 
     def test_unknown_id(self):
         server = _make_server()

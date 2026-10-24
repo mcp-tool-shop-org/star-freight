@@ -44,7 +44,7 @@
 ## D. Shipping Hygiene
 
 - [x] `[all]` `verify` script exists (test + build + smoke in one command) (2026-03-24)
-- [x] `[all]` Version in manifest matches git tag (2026-03-24) — pyproject.toml version = "1.0.0"
+- [x] `[all]` Version in manifest matches git tag (2026-03-24) — pyproject.toml version = "1.0.4"
 - [x] `[all]` Dependency scanning runs in CI (ecosystem-appropriate) (2026-03-24) — pip install in CI catches broken deps
 - [ ] `[all]` SKIP: no automated dep updates yet — single-player game with stable deps
 - [ ] `[npm]` SKIP: not an npm package

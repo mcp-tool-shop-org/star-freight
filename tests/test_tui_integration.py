@@ -18,7 +18,7 @@ from portlight.app.tui.app import StarFreightApp  # noqa: E402
 def _make_session() -> GameSession:
     """Create a fresh game session for testing."""
     s = GameSession(slot="tui_integration_test")
-    s.new("Captain Blackwood", captain_type="merchant")
+    s.new("Captain Blackwood", seed=1)
     return s
 
 

@@ -2,6 +2,8 @@
 
 > Prevents "we designed a game, but not one we can actually build." This doc defends the game's real shape by defining what the shippable version is, what's mandatory, what's aspirational, and what dies first under pressure.
 
+> **Status 2026-09-02:** Python CLI/TUI is the active build. Finish the Portlight fork, then make the TUI play Star Freight campaign state. Rust TUI and Tauri are deferred. UE5 2.5D is the future Grounded runtime, not this repo's current work. The stack table below is historical design reasoning from the fork decision.
+
 ---
 
 ## Engine / Stack

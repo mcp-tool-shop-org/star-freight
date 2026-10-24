@@ -391,7 +391,7 @@ class TestSessionIntegration:
     def test_purchase_policy_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Policy Tester")
+        s.new_portlight("Policy Tester")
         silver_before = s.captain.silver
 
         spec = get_policy_spec("hull_basic")
@@ -403,7 +403,7 @@ class TestSessionIntegration:
     def test_policy_survives_save_load(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Persist Tester")
+        s.new_portlight("Persist Tester")
         spec = get_policy_spec("hull_basic")
         s.purchase_policy_cmd(spec)
 
@@ -418,7 +418,7 @@ class TestSessionIntegration:
         from portlight.engine.voyage import EventType, VoyageEvent
 
         s = GameSession(base_path=tmp_path)
-        s.new("Claim Tester")
+        s.new_portlight("Claim Tester")
         spec = get_policy_spec("hull_basic")
         s.purchase_policy_cmd(spec)
         silver_after_policy = s.captain.silver
@@ -440,7 +440,7 @@ class TestSessionIntegration:
         from portlight.app.session import GameSession
 
         s = GameSession(base_path=tmp_path)
-        s.new("Arrival Tester")
+        s.new_portlight("Arrival Tester")
         s.auto_resolve_duels = True
         spec = get_policy_spec("hull_basic")
         s.purchase_policy_cmd(spec)

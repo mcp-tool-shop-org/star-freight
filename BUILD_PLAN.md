@@ -1,161 +1,81 @@
 # Build Plan — Star Freight
 
-> Phase 0 is complete when the fork runs, the seams are mapped, and the build order is locked.
-> Production phases are ordered by thesis risk, not feature completeness.
+> Status 2026-09-02. Python CLI/TUI is the active build. Grounded / UE5 2.5D is deferred.
 
 ---
 
-## Phase 0: Fork Truth (current)
+## Remaining (in order)
 
-**Goal:** Inherit Portlight, prove the fork runs, map every inherited vs new system.
+1. **TUI combat** — travel currently auto-resolves overlay grid combat. Next is a real grid combat screen, then aftermath.
+2. **Later strip** — melee/naval/`world/ports` stay in tree for ancestor tests. Delete when `new_portlight()` is gone.
+
+Grounded / UE5 2.5D is deferred.
+
+Do not invent new system truth during these steps. Express the overlay that is already proved.
+
+---
+
+## Completed
+
+### Phase 0: Fork Truth
 
 - [x] Create repo (mcp-tool-shop-org/star-freight)
 - [x] Copy Portlight source, tests, world data
 - [x] Update pyproject.toml for Star Freight
-- [x] Write FORK_MAP.md (inherited vs replaced vs new vs removed)
-- [ ] Write ACCEPTANCE_CRITERIA.md (proof-derived pass conditions)
-- [ ] Write STATE_MODEL.md (code-facing canonical state)
-- [ ] Verify inherited tests pass (`pytest`)
-- [ ] Initial commit and push
-- [ ] Strip removed modules (printandplay, medieval weapons/armor, fleet)
-- [ ] Verify tests still pass after strip
+- [x] Write FORK_MAP.md
+- [x] Write ACCEPTANCE_CRITERIA.md
+- [x] Write STATE_MODEL.md
+- [x] Inherited tests pass
+- [ ] Strip removed modules (printandplay kept as Star Freight board game; melee/naval/ports still in tree) — **later strip; live path no longer loads them**
 
-**Exit condition:** Fork runs green. Every system is tagged inherited/replace/new/remove. Build order is locked.
+### Phase 1: Crew Binding Spine — COMPLETE
 
----
+Crew members change trade access, combat abilities, and narrative options.
 
-## Phase 1: Crew Binding Spine
+### Phase 2: Grid Combat Engine — COMPLETE
 
-**Goal:** Build the thesis seam. Crew members are the binding constraint across trade, tactics, and narrative.
+8x6 grid, ships-as-characters, victory/loss/retreat write campaign state.
 
-**Why first:** If crew binding is weak, the game becomes three stacked systems. This is the single highest-risk design decision.
+### Phase 3: Cultural Knowledge System — COMPLETE
 
-- [ ] Design crew data model (identity, abilities, cultural knowledge, loyalty, fitness, ship role)
-- [ ] Implement crew roster management (recruit, dismiss, injury, recovery)
-- [ ] Wire crew to trade (cultural access, negotiation modifiers, merchant relationships)
-- [ ] Wire crew to combat (abilities determined by crew, absence limits options)
-- [ ] Wire crew to narrative (crew unlock plot leads, cultural knowledge gates)
-- [ ] Wire crew to ship (engineer → repair ability, gunner → weapon power, pilot → evasion)
-- [ ] Crew morale and pressure (pay, injury, loyalty shifts, departure risk)
-- [ ] Tests for all crew bindings
+Keth seasons, Veshan honor/debt, knowledge gates on station options.
 
-**Exit condition:** Adding/removing a crew member visibly changes trade options, combat abilities, and narrative access in a test harness.
+### Phase 4: Investigation System — COMPLETE
 
----
+Fragment journal, multi-path threads, crew interpretation.
 
-## Phase 2: Grid Combat Engine
+### Phase 5: Content Rewrite — OVERLAY COMPLETE, ANCESTOR NOT STRIPPED
 
-**Goal:** One tactical combat system that works for ground encounters and ship battles.
+Star Freight content lives in `content/star_freight.py` (8 stations, 14 lanes, 18 goods, 5 crew). Live `GameSession.new()` starts overlay campaign state. `new_portlight()` keeps ancestor tests working.
 
-**Why second:** Combat is the second most visible system. It must be unified before content.
+### Phase 6: Vertical Slice — COMPLETE
 
-- [ ] Grid model (hex or square, obstacles, cover, positioning)
-- [ ] Turn system (initiative, action points, move/attack/ability/item)
-- [ ] Ground combat entities (crew as combatants, enemy archetypes)
-- [ ] Ship combat entities (ships-as-characters, same grid, bigger numbers)
-- [ ] Crew abilities wired to combat (determined by crew binding spine)
-- [ ] Victory/loss/retreat with real state consequences
-- [ ] Boarding transition (ship combat → ground combat mid-encounter)
-- [ ] Encounter state machine (replaces Portlight's 4-phase escalation)
-- [ ] Combat views (TUI grid renderer)
-- [ ] Tests: full encounter with state change verification
+Golden Path, Encounter, and Economy proofs pass on the overlay.
 
-**Exit condition:** Can play a ship encounter that transitions to boarding, with crew abilities active, and aftermath changes campaign state.
+### Phase 7A–7C: Expansion packs — COMPLETE
 
----
+Working Lives. Houses, Audits, and Seizures. Shortages, Sanctions, and Convoys.
 
-## Phase 3: Cultural Knowledge System
+### Phase 8: Captain Paths — COMPLETE
 
-**Goal:** Civilizations feel alive and knowledge matters mechanically.
+Relief / Gray / Honor diverge. Wave 3 dogfood PASS.
 
-- [ ] Cultural knowledge model (per-civilization understanding level)
-- [ ] Knowledge gates (trade access, diplomatic options, safe passage, ritual participation)
-- [ ] Knowledge acquisition (crew members, time in culture, cultural events, study)
-- [ ] Customs and consequences (violate customs → reputation damage, respect them → access)
-- [ ] Civilization-specific mechanics (Keth seasons, Veshan debt, Orryn drift markets, Sable Reach silence protocols)
-- [ ] Tests: cultural knowledge changes available options at a station
+### Phase 9A–9B: TUI audit and Star Freight views — COMPLETE
 
-**Exit condition:** Player with Keth crew member can access Keth seasonal markets that a culturally ignorant player cannot.
+`sf_views.py` renders overlay state. Live Textual app and CLI drive Star Freight `CampaignState`.
 
----
+### Dogfood — COMPLETE through Wave 3
 
-## Phase 4: Investigation System
-
-**Goal:** The conspiracy plot layer that gives the campaign its arc.
-
-- [ ] Investigation state (leads, evidence, connections, dead ends)
-- [ ] Lead acquisition (crew contacts, station events, trade encounters, faction relationships)
-- [ ] Evidence gates (investigation progress unlocks plot beats)
-- [ ] Investigation cost (time, reputation, money — the plot competes with survival)
-- [ ] 10 investigation beats mapped to campaign progression
-- [ ] Tests: investigation progress changes available narrative and gameplay options
-
-**Exit condition:** Investigation feels like a real campaign thread with economic and political cost, not a separate quest log.
-
----
-
-## Phase 5: Content Rewrite
-
-**Goal:** Replace all Portlight content with Star Freight world.
-
-- [ ] 5 civilizations fully defined in code (from Content Architecture)
-- [ ] 20 stations (4 per civ) with markets, services, cultural rules
-- [ ] Space lanes between stations with distance, risk, encounter tables
-- [ ] 20 trade goods with civilization affinities
-- [ ] Ship classes (sci-fi vessels replacing sailing ships)
-- [ ] 7 crew members with full identity, abilities, cultural knowledge, loyalty arcs
-- [ ] Contract families reskinned for sci-fi
-- [ ] Encounter tables (pirates, patrols, faction conflicts, hazards)
-- [ ] Station NPCs with cross-station relationships
-- [ ] Transit events (replacing sea culture)
-
-**Exit condition:** Portlight maritime content fully replaced. No medieval language, no ocean references, no sailing terminology in gameplay.
-
----
-
-## Phase 6: Vertical Slice
-
-**Goal:** Prove the three-layer loop works end to end.
-
-- [ ] 5 stations (one per civ), 8 lanes, 5 trade goods
-- [ ] 2 crew members recruited and wired
-- [ ] 3 contract types available
-- [ ] At least 1 ground combat and 1 ship combat encounter
-- [ ] Cultural knowledge check at 1 station
-- [ ] 1 investigation lead discoverable
-- [ ] Economy runs for ~30 minutes of play without collapse
-- [ ] All 3 acceptance criteria pass
-
-**Exit condition:** Golden Path, Encounter, and Economy proofs all pass as playable sequences.
-
----
-
-## Phase 7: Full Build
-
-**Goal:** Scale from vertical slice to full game.
-
-- [ ] All 20 stations live
-- [ ] All 7 crew members recruitable
-- [ ] Full investigation chain (10 beats)
-- [ ] All 5 civilization cultural mechanics active
-- [ ] Balance harness adapted and running
-- [ ] Stress harness extended with new invariants
-- [ ] Full playthrough possible: disgrace → merchant/pirate → resolution
-
-**Exit condition:** The full designed game is playable. GDOS Thesis Lock is honored.
+Wave 1 WARN (economy killed captains). Wave 2 PASS with P1 items. Wave 3 PASS after P1 tuning (credit ratio 4.78x).
 
 ---
 
 ## Build Order Law
 
-The order above is not arbitrary. It follows thesis risk:
+The remaining work follows the same law as the original plan:
 
-1. **Crew binding** — if this fails, no game
-2. **Combat** — if this is boring, players leave
-3. **Culture** — if this is shallow, the world is dead
-4. **Investigation** — if this is missing, no campaign arc
-5. **Content** — if this is wrong, it can be rewritten
-6. **Slice** — proof of integration
-7. **Full** — scale
+1. **Honesty** — operators and players must know which layer they are in
+2. **Fork** — if the live session is still Portlight, the TUI cannot be Star Freight
+3. **TUI** — a game the player can actually play on the proved overlay
 
-Never skip ahead. Never build content before systems. Never build systems before the thesis seam.
+Never skip ahead. Never build Grounded in this lane.

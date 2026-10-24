@@ -54,10 +54,11 @@ class EncounterScreen(Screen):
     """Multi-phase pirate encounter -- approach, naval, boarding, duel, resolution."""
 
     BINDINGS = [
-        # Keys not bound by the App — handled directly by the Screen.
-        # Keys that conflict with App bindings (g/f/b/c/r/s/a/e) are
-        # intercepted by App.action_* methods which delegate to this screen
-        # via action_encounter_key() when an EncounterScreen is active.
+        # Ancestor encounter screen — not reachable from live `starfreight tui`
+        # (the overlay uses ApproachScreen/CombatScreen). The App no longer
+        # remaps navigation keys here; tests drive this screen directly via
+        # action_encounter_key(). These bindings cover the keys the App never
+        # claimed, so the screen still works if driven standalone.
         Binding("n", "encounter_key('negotiate')", "Negotiate", priority=True),
         Binding("t", "encounter_key('thrust')", "Thrust", priority=True),
         Binding("z", "encounter_key('slash')", "Slash", priority=True),

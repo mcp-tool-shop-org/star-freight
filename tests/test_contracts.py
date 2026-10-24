@@ -598,14 +598,14 @@ class TestSessionIntegration:
     def test_session_has_board(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         assert s.board is not None
         assert isinstance(s.board, ContractBoard)
 
     def test_session_board_persists(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         s.board.last_refresh_day = 99
         s._save()
 
@@ -616,7 +616,7 @@ class TestSessionIntegration:
     def test_accept_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         # Clear auto-generated offers and add our test offer
         s.board.offers.clear()
@@ -642,7 +642,7 @@ class TestSessionIntegration:
     def test_abandon_via_session(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         contract = ActiveContract(
             offer_id="abandon-test", template_id="proc_grain_feed",
@@ -662,7 +662,7 @@ class TestSessionIntegration:
         """Selling goods at the right port credits an active contract."""
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         # Set up: buy grain at porto_novo, sail to al_manar, sell
         # We'll simulate by teleporting

@@ -42,7 +42,7 @@ def generate(output: Path | None = None) -> Path:
     except ImportError:
         raise RuntimeError(
             "fpdf2 is required for PDF generation. "
-            "Install it with: pip install portlight[printandplay]"
+            "Install it with: pip install fpdf2"
         )
 
     # --- Content sourcing ---

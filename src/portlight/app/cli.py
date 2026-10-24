@@ -64,7 +64,30 @@ def _session() -> GameSession:
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
     if not loaded:
-        console.print("[red]No saved game found.[/red] Start a new game with: [bold]portlight new YourName --type merchant[/bold]")
+        console.print("[red]No saved game found.[/red] Start a new game with: [bold]starfreight new YourName[/bold]")
+        raise typer.Exit(1)
+    return s
+
+
+def _campaign(s: GameSession):
+    """Require a live Star Freight campaign."""
+    if s.sf_campaign is None:
+        console.print("[red]No Star Freight campaign loaded.[/red] Start one with: [bold]starfreight new YourName[/bold]")
+        raise typer.Exit(1)
+    return s.sf_campaign
+
+
+def _ocean() -> GameSession:
+    """Ancestor Portlight commands. Not the live game."""
+    s = _session()
+    if s.world is None:
+        console.print(
+            "[yellow]That command is from the ocean ancestor.[/yellow] "
+            "Live game: [bold]status[/bold], [bold]station[/bold], [bold]market[/bold], "
+            "[bold]buy[/bold], [bold]sell[/bold], [bold]crew[/bold], [bold]hire[/bold], "
+            "[bold]routes[/bold], [bold]sail[/bold], [bold]repair[/bold], [bold]refuel[/bold], "
+            "[bold]journal[/bold], [bold]faction[/bold]."
+        )
         raise typer.Exit(1)
     return s
 
@@ -76,30 +99,19 @@ def _session() -> GameSession:
 @app.command()
 def new(
     name: str = typer.Argument("Captain", help="Captain name"),
-    captain_type: str = typer.Option(None, "--type", "-t",
-        help="Captain type: merchant, smuggler, navigator, privateer, corsair, scholar, merchant_prince, dockhand, bounty_hunter, custom"),
+    seed: int = typer.Option(None, "--seed", help="RNG seed"),
 ) -> None:
-    """Start a new game. Choose your captain type to shape your career."""
-    from portlight.engine.captain_identity import CaptainType
-
-    # Interactive selection when --type is omitted
-    if captain_type is None:
-        _interactive_captain_select(name)
-        return
-
-    valid_types = {ct.value for ct in CaptainType}
-    if captain_type not in valid_types:
-        console.print(f"[red]Unknown captain type: {captain_type}[/red]")
-        console.print(f"Choose: {', '.join(sorted(valid_types))}")
-        raise typer.Exit(1)
-    if captain_type == "custom":
-        _create_custom_game(name)
-        return
+    """Start a Star Freight campaign at Meridian Exchange."""
+    from portlight.app import sf_views
 
     s = GameSession(slot=_active_slot)
-    s.new(name, captain_type=captain_type)
-    console.print("\n[bold green]A new voyage begins.[/bold green]\n")
-    console.print(views.welcome_view(s.captain, s.captain_template, s.world, s.infra))
+    s.new(name, seed=seed)
+    console.print("\n[bold green]A new captain life begins.[/bold green]\n")
+    console.print(sf_views.dashboard(s.sf_campaign))
+    console.print(
+        "\n[dim]You are docked at Meridian Exchange. Hire crew. Buy cargo. Travel a lane.[/dim]"
+    )
+
 
 
 def _interactive_captain_select(name: str) -> None:
@@ -179,7 +191,7 @@ def _interactive_captain_select(name: str) -> None:
                     if _confirm(ct):
                         s = GameSession(slot=_active_slot)
                         s.new(name, captain_type=ct.value)
-                        console.print("\n[bold green]A new voyage begins.[/bold green]\n")
+                        console.print("\n[bold green]A new captain life begins.[/bold green]\n")
                         console.print(views.welcome_view(s.captain, s.captain_template, s.world, s.infra))
                         return
                     else:
@@ -279,7 +291,7 @@ def _create_custom_game(name: str) -> None:
 
     s = GameSession(slot=_active_slot)
     s.new(name, captain_type="custom")
-    console.print("\n[bold green]A new voyage begins.[/bold green]\n")
+    console.print("\n[bold green]A new captain life begins.[/bold green]\n")
     console.print(views.welcome_view(s.captain, s.captain_template, s.world, s.infra))
     console.print(f"\n[dim]Build: Trade {trade} / Sailing {sailing} / Shadow {shadow} / Reputation {reputation}[/dim]")
     console.print(f"[dim]Home: {port_id.replace('_', ' ').title()} ({region})[/dim]")
@@ -295,7 +307,7 @@ def tui() -> None:
     try:
         from portlight.app.tui.app import StarFreightApp
     except ImportError:
-        console.print("[red]Textual not installed.[/red] Install with: [bold]pip install portlight[tui][/bold]")
+        console.print("[red]Textual not installed.[/red] Install with: [bold]pip install -e \".[tui]\"[/bold]")
         raise typer.Exit(1)
     s = GameSession(slot=_active_slot)
     tui_app = StarFreightApp(session=s)
@@ -308,13 +320,10 @@ def tui() -> None:
 
 @app.command()
 def captain() -> None:
-    """Show captain identity and advantages."""
+    """Show captain status."""
+    from portlight.app import sf_views
     s = _session()
-    t = s.captain_template
-    if not t:
-        console.print("[red]Unknown captain type[/red]")
-        return
-    console.print(views.captain_view(s.captain, t))
+    console.print(sf_views.dashboard(_campaign(s)))
 
 
 # ---------------------------------------------------------------------------
@@ -323,9 +332,10 @@ def captain() -> None:
 
 @app.command()
 def reputation() -> None:
-    """Show standing, customs heat, and commercial trust."""
+    """Show faction standing."""
+    from portlight.app import sf_views
     s = _session()
-    console.print(views.reputation_view(s.captain.standing, s.captain))
+    console.print(sf_views.faction_screen(_campaign(s)))
 
 
 # ---------------------------------------------------------------------------
@@ -335,58 +345,47 @@ def reputation() -> None:
 @app.command()
 def status() -> None:
     """Show captain status."""
+    from portlight.app import sf_views
     s = _session()
-    console.print(views.status_view(s.world, s.ledger, s.infra))
+    console.print(sf_views.dashboard(_campaign(s)))
 
 
-# ---------------------------------------------------------------------------
-# Port
-# ---------------------------------------------------------------------------
+@app.command()
+def station() -> None:
+    """Show current station."""
+    from portlight.app import sf_views
+    s = _session()
+    console.print(sf_views.station_screen(_campaign(s)))
+
 
 @app.command()
 def port() -> None:
-    """Show current port info."""
-    s = _session()
-    p = s.current_port
-    if not p:
-        console.print("[yellow]You're at sea. Use [bold]portlight advance[/bold] to continue sailing.[/yellow]")
-        return
-    console.print(views.port_view(p, s.captain))
+    """Show current station (alias)."""
+    station()
 
-
-# ---------------------------------------------------------------------------
-# Market
-# ---------------------------------------------------------------------------
 
 @app.command()
 def market() -> None:
-    """Show market board for current port."""
+    """Show market at the current station."""
+    from portlight.app import sf_views
     s = _session()
-    p = s.current_port
-    if not p:
-        console.print("[yellow]You're at sea — no market here.[/yellow]")
-        return
-    console.print(views.market_view(p, s.captain))
+    console.print(sf_views.market_screen(_campaign(s)))
 
-
-# ---------------------------------------------------------------------------
-# Cargo
-# ---------------------------------------------------------------------------
 
 @app.command()
 def cargo() -> None:
-    """Show cargo hold contents."""
+    """Show cargo hold."""
+    from portlight.app import sf_views
     s = _session()
-    console.print(views.cargo_view(s.captain))
+    state = _campaign(s)
+    console.print(sf_views.market_screen(state))
 
-
-# ---------------------------------------------------------------------------
-# Buy
-# ---------------------------------------------------------------------------
 
 @app.command()
 def buy(good: str, qty: str) -> None:
-    """Buy goods from port market."""
+    """Buy goods at the current station."""
+    from portlight.engine.sf_campaign import execute_trade
+    from portlight.app import sf_views
     try:
         quantity = int(qty)
     except ValueError:
@@ -396,32 +395,21 @@ def buy(good: str, qty: str) -> None:
         console.print("[red]Quantity must be a positive number.[/red]")
         return
     s = _session()
-    result = s.buy(good, quantity)
-    if isinstance(result, str):
-        console.print(f"[red]{result}[/red]")
+    state = _campaign(s)
+    result = execute_trade(state, good, "buy", quantity)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
         return
-    # Show updated market + cargo after trade
-    from portlight.app.formatting import silver
-    console.print(f"\n[green]Bought {result.quantity}x {result.good_id} for {silver(result.total_price)}[/green]\n")
+    s._save()
+    console.print(f"\n[green]Bought {result['quantity']}x {result['good']} for {result['total']:,} ₡[/green]\n")
+    console.print(sf_views.market_screen(state))
 
-    # Warn if remaining silver is too low for port fees
-    port = s.current_port
-    if port and s.captain.silver < port.port_fee:
-        console.print(f"[yellow]Warning: You have {silver(s.captain.silver)} left — "
-                       f"port fee to depart is {silver(port.port_fee)}. "
-                       f"You may need to sell cargo, hunt, or work the docks.[/yellow]\n")
-
-    console.print(views.market_view(s.current_port, s.captain))
-    console.print(views.cargo_view(s.captain))
-
-
-# ---------------------------------------------------------------------------
-# Sell
-# ---------------------------------------------------------------------------
 
 @app.command()
 def sell(good: str, qty: str) -> None:
-    """Sell goods to port market."""
+    """Sell goods at the current station."""
+    from portlight.engine.sf_campaign import execute_trade
+    from portlight.app import sf_views
     try:
         quantity = int(qty)
     except ValueError:
@@ -431,15 +419,14 @@ def sell(good: str, qty: str) -> None:
         console.print("[red]Quantity must be a positive number.[/red]")
         return
     s = _session()
-    result = s.sell(good, quantity)
-    if isinstance(result, str):
-        console.print(f"[red]{result}[/red]")
+    state = _campaign(s)
+    result = execute_trade(state, good, "sell", quantity)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
         return
-    from portlight.app.formatting import silver
-    # Show sale result
-    console.print(f"\n[green]Sold {result.quantity}x {result.good_id} for {silver(result.total_price)}[/green]\n")
-    console.print(views.market_view(s.current_port, s.captain))
-    console.print(views.cargo_view(s.captain))
+    s._save()
+    console.print(f"\n[green]Sold {result['quantity']}x {result['good']} for {result['total']:,} ₡[/green]\n")
+    console.print(sf_views.market_screen(state))
 
 
 # ---------------------------------------------------------------------------
@@ -449,7 +436,7 @@ def sell(good: str, qty: str) -> None:
 @app.command()
 def provision(days: int = typer.Argument(10, help="Days of provisions to buy")) -> None:
     """Buy provisions (2 silver per day)."""
-    s = _session()
+    s = _ocean()
     err = s.provision(days)
     if err:
         console.print(f"[red]{err}[/red]")
@@ -466,17 +453,30 @@ def provision(days: int = typer.Argument(10, help="Days of provisions to buy")) 
 
 @app.command()
 def repair(amount: int = typer.Argument(None, help="Hull points to repair (default: full)")) -> None:
-    """Repair ship hull (3 silver per HP)."""
+    """Repair ship hull at the current station."""
+    from portlight.engine.sf_campaign import repair_ship
     s = _session()
-    result = s.repair(amount)
-    if isinstance(result, str):
-        console.print(f"[red]{result}[/red]")
+    result = repair_ship(_campaign(s), amount)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
         return
-    repaired, cost = result
-    from portlight.app.formatting import hull_bar, silver
-    console.print(f"[green]Repaired {repaired} hull points ({silver(cost)})[/green]")
-    console.print(f"Hull: {hull_bar(s.captain.ship.hull, s.captain.ship.hull_max)}")
-    console.print(f"Silver: {silver(s.captain.silver)}")
+    s._save()
+    console.print(f"[green]Repaired {result['repaired']} hull for {result['cost']:,} ₡[/green]")
+    console.print(f"Hull: {result['hull']}  Credits: {result['credits']:,} ₡")
+
+
+@app.command()
+def refuel(days: int = typer.Argument(None, help="Days of fuel (default: fill tanks)")) -> None:
+    """Buy fuel at the current station."""
+    from portlight.engine.sf_campaign import refuel as do_refuel
+    s = _session()
+    result = do_refuel(_campaign(s), days)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
+        return
+    s._save()
+    console.print(f"[green]Fueled {result['fueled']}d for {result['cost']:,} ₡[/green]")
+    console.print(f"Fuel: {result['fuel']}d  Credits: {result['credits']:,} ₡")
 
 
 # ---------------------------------------------------------------------------
@@ -492,7 +492,7 @@ def hunt() -> None:
     """
     from portlight.engine.hunting import hunt as do_hunt
     from portlight.engine.models import CargoItem
-    s = _session()
+    s = _ocean()
     location = "sea" if s.world.voyage and s.world.voyage.status.value == "at_sea" else "port"
 
     if location == "sea" and s.captain.ship and s.captain.ship.morale < 20:
@@ -557,7 +557,7 @@ def hunt() -> None:
 def work() -> None:
     """Work the docks for a day to earn silver. Safety valve when stranded."""
     from portlight.engine.economy import work_docks
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to work the docks.[/yellow]")
         return
@@ -576,24 +576,38 @@ def work() -> None:
 
 @app.command()
 def hire(
-    count: int = typer.Argument(None, help="Crew to hire (default: 1)"),
-    role: str = typer.Option("sailor", "--role", "-r", help="Role: sailor, gunner, navigator, surgeon, marine, quartermaster"),
+    crew_id: str = typer.Argument(None, help="Crew id to hire (omit to list who is hiring here)"),
 ) -> None:
-    """Hire crew members. Specify role with --role."""
+    """Hire overlay crew at the current station."""
+    from portlight.content.star_freight import SLICE_STATIONS, STATION_HIRES, CREW_FACTORIES
+    from portlight.engine.sf_campaign import hire_crew
+    from portlight.app import sf_views
     s = _session()
-    if count is None:
-        count = 1
-    err = s.hire_crew(count, role)
-    if err:
-        console.print(f"[red]{err}[/red]")
+    state = _campaign(s)
+    available = STATION_HIRES.get(state.current_station, [])
+    if crew_id is None:
+        station = SLICE_STATIONS.get(state.current_station)
+        name = station.name if station else state.current_station
+        if not available:
+            console.print(f"[yellow]Nobody is hiring at {name}.[/yellow]")
+            return
+        console.print(f"[bold]Hiring at {name}[/bold]")
+        for cid in available:
+            console.print(f"  [cyan]{cid}[/cyan]")
+        console.print("\n[dim]starfreight hire <crew_id>[/dim]")
         return
-    from portlight.app.formatting import crew_status
-    ship = s.captain.ship
-    from portlight.content.ships import SHIPS
-    template = SHIPS.get(ship.template_id)
-    crew_min = template.crew_min if template else 1
-    console.print(f"[green]Hired {count} {role}(s)[/green]")
-    console.print(f"Crew: {crew_status(ship.crew, ship.crew_max, crew_min)}")
+    if crew_id not in CREW_FACTORIES and crew_id not in available:
+        # allow short names like "sera"
+        matches = [c for c in available if crew_id.lower() in c.lower()]
+        if len(matches) == 1:
+            crew_id = matches[0]
+    result = hire_crew(state, crew_id)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
+        return
+    s._save()
+    console.print(f"[green]Hired {result['hired']} for {result['cost']:,} ₡[/green]")
+    console.print(sf_views.crew_screen(state))
 
 
 @app.command()
@@ -602,7 +616,7 @@ def fire(
     role: str = typer.Option("sailor", "--role", "-r", help="Role: sailor, gunner, navigator, surgeon, marine, quartermaster"),
 ) -> None:
     """Fire crew members. Specify role with --role."""
-    s = _session()
+    s = _ocean()
     if count is None:
         count = 1
     # Track actual count before firing for accurate message
@@ -623,9 +637,10 @@ def fire(
 
 @app.command(name="crew")
 def crew_cmd() -> None:
-    """Show crew roster breakdown."""
+    """Show crew roster."""
+    from portlight.app import sf_views
     s = _session()
-    console.print(views.crew_roster_view(s.captain.ship))
+    console.print(sf_views.crew_screen(_campaign(s)))
 
 
 # ---------------------------------------------------------------------------
@@ -634,12 +649,10 @@ def crew_cmd() -> None:
 
 @app.command()
 def routes() -> None:
-    """List available routes from current port."""
+    """List lanes from the current station."""
+    from portlight.app import sf_views
     s = _session()
-    if s.at_sea:
-        console.print("[yellow]You're at sea — check routes when you arrive.[/yellow]")
-        return
-    console.print(views.routes_view(s.world))
+    console.print(sf_views.routes_screen(_campaign(s)))
 
 
 # ---------------------------------------------------------------------------
@@ -652,7 +665,7 @@ def world_map(
     region: str | None = typer.Option(None, "--region", help="Filter to region (med/atl/afr/ind/sea)"),
 ) -> None:
     """Display the world map with all ports and regions."""
-    s = _session()
+    s = _ocean()
     player_port = s.current_port_id
     console.print(views.world_map_view(
         s.world, player_port_id=player_port,
@@ -667,22 +680,59 @@ def world_map(
 @app.command()
 def sail(
     destination: str,
-    defer: bool = typer.Option(False, "--defer", help="Defer port fee (pay double on arrival)"),
+    defer: bool = typer.Option(False, "--defer", help="Ignored (fork leftover)"),
 ) -> None:
-    """Depart for a destination port."""
+    """Travel a lane to another station."""
+    from portlight.content.star_freight import SLICE_STATIONS, SLICE_LANES
+    from portlight.engine.sf_campaign import travel_to, run_combat, resolve_transit
+    from portlight.app import sf_views
     s = _session()
-    err = s.sail(destination, defer_fee=defer)
-    if err:
-        console.print(f"[red]{err}[/red]")
-        # Show routes to help
-        if s.current_port:
-            console.print()
-            console.print(views.routes_view(s.world))
+    state = _campaign(s)
+    dest_id = destination
+    if dest_id not in SLICE_STATIONS:
+        matches = [
+            sid for sid, st in SLICE_STATIONS.items()
+            if destination.lower() in sid.lower() or destination.lower() in st.name.lower()
+        ]
+        here = state.current_station
+        lane_matches = []
+        for sid in matches:
+            for lane in SLICE_LANES.values():
+                if (lane.station_a == here and lane.station_b == sid) or (
+                    lane.station_b == here and lane.station_a == sid
+                ):
+                    lane_matches.append(sid)
+                    break
+        if len(lane_matches) == 1:
+            dest_id = lane_matches[0]
+        elif len(matches) == 1:
+            dest_id = matches[0]
+    result = travel_to(state, dest_id)
+    if result.get("error"):
+        console.print(f"[red]{result['error']}[/red]")
+        console.print(sf_views.routes_screen(state))
         return
-    dest = s.world.ports.get(destination)
-    dest_name = dest.name if dest else destination
-    console.print(f"\n[bold cyan]Setting sail for {dest_name}![/bold cyan]\n")
-    console.print(views.voyage_view(s.world))
+    dest = SLICE_STATIONS.get(dest_id)
+    dest_name = dest.name if dest else dest_id
+    enc = result.get("encounter")
+    if enc:
+        console.print(f"\n[yellow]Interdicted en route to {dest_name}. Fighting through.[/yellow]\n")
+        combat = run_combat(state, enc, strategy="aggressive")
+        arrive = resolve_transit(state)
+        if arrive.get("error"):
+            console.print(f"[red]{arrive['error']}[/red]")
+        else:
+            console.print(f"[green]Combat {combat.outcome.value}. Docked at {dest_name}.[/green]")
+    else:
+        console.print(f"\n[bold cyan]Arrived at {dest_name}.[/bold cyan]\n")
+    s._save()
+    console.print(sf_views.dashboard(state))
+
+
+@app.command()
+def travel(destination: str) -> None:
+    """Alias for sail."""
+    sail(destination)
 
 
 # ---------------------------------------------------------------------------
@@ -690,158 +740,38 @@ def sail(
 # ---------------------------------------------------------------------------
 
 @app.command()
-def advance(days: int = typer.Argument(1, help="Days to advance")) -> None:
-    """Advance time (sail if at sea, wait if in port)."""
-    global _active_encounter, _player_combatant, _opponent_combatant
+def journal() -> None:
+    """Show investigation journal."""
+    from portlight.app import sf_views
     s = _session()
+    console.print(sf_views.journal_screen(_campaign(s)))
 
-    # Block if there's an unresolved encounter (persisted or in-memory)
-    _restore_encounter(s)
-    if _active_encounter is not None:
-        console.print("[bold red]Encounter in progress![/bold red] Resolve it first:")
-        phase = getattr(_active_encounter, "phase", "approach")
-        if phase == "approach":
-            console.print("  [cyan]portlight encounter <negotiate|flee|fight>[/cyan]")
-        elif phase == "naval":
-            console.print("  [cyan]portlight naval <broadside|close|evade|rake|flee>[/cyan]")
-        elif phase == "boarding":
-            console.print("  [cyan]portlight fight <thrust|slash|parry|shoot|throw|dodge>[/cyan]")
-        elif phase == "duel":
-            console.print("  [cyan]portlight fight <thrust|slash|parry|shoot|throw|dodge>[/cyan]")
-        elif phase == "resolved":
-            console.print("  [cyan]portlight spare[/cyan] or [cyan]portlight take-all[/cyan]")
-        return
 
-    for _ in range(days):
-        was_at_sea = s.at_sea
-        events = s.advance()
+@app.command()
+def faction() -> None:
+    """Show faction standing."""
+    from portlight.app import sf_views
+    s = _session()
+    console.print(sf_views.faction_screen(_campaign(s)))
 
-        # Tick NPC captain agency (autonomous actions)
-        if s.world and s.at_sea:
-            from portlight.engine.captain_memory import tick_captain_agency
-            region = s._voyage_region() if hasattr(s, '_voyage_region') else "Mediterranean"
-            captain_actions = tick_captain_agency(
-                s.world.pirates.captain_memories, region,
-                s.captain.silver, s.world.day, s._rng,
-            )
-            for ca in captain_actions:
-                if ca.effect_type == "encounter" and _active_encounter is None:
-                    # Ambush or challenge — create encounter immediately
-                    from portlight.engine.encounter import create_encounter
-                    enc = create_encounter(s.world.ports, s.world.voyage.destination_id if s.world.voyage else "porto_novo", s._rng)
-                    if enc:
-                        enc.enemy_captain_id = ca.captain_id
-                        enc.enemy_captain_name = ca.captain_name
-                        _active_encounter = enc
-                        _player_combatant = None
-                        _opponent_combatant = None
-                        from portlight.app import combat_views
-                        console.print(f"\n[bold red]{ca.message}[/bold red]")
-                        console.print(combat_views.encounter_view(
-                            enc.enemy_captain_name, "", enc.enemy_personality, enc.enemy_strength,
-                            f"{enc.enemy_captain_name}'s Ship", ca.message,
-                        ))
-                        if ca.verb == "ambush":
-                            enc.phase = "naval"  # no negotiate for ambushes
-                            console.print("\n[bold red]No time to negotiate! Use [cyan]portlight naval <action>[/cyan][/bold red]")
-                        else:
-                            console.print("\n[bold]Use [cyan]portlight encounter <negotiate|flee|fight>[/cyan][/bold]")
-                        s._save()
-                        break
-                elif ca.effect_type == "silver":
-                    s.captain.silver += ca.effect_value
-                    console.print(f"\n[dim]{ca.message}[/dim]")
-                elif ca.effect_type == "message":
-                    console.print(f"\n[dim]{ca.message}[/dim]")
 
-            if _active_encounter is not None:
-                break  # stop advancing — handle encounter first
+@app.command()
+def advance(days: int = typer.Argument(1, help="Days to wait at dock")) -> None:
+    """Spend days docked at the current station."""
+    from portlight.engine.sf_campaign import advance_docked
+    from portlight.app import sf_views
+    s = _session()
+    state = _campaign(s)
+    last = None
+    for _ in range(max(1, days)):
+        last = advance_docked(state)
+        if last.get("error"):
+            console.print(f"[red]{last['error']}[/red]")
+            return
+    s._save()
+    console.print(f"[green]Day {last['day']} at dock.[/green]")
+    console.print(sf_views.dashboard(state))
 
-        # Check for pirate encounter — intercept and create interactive encounter
-        pirate_event = None
-        for evt in events:
-            if hasattr(evt, '_pending_duel') and evt._pending_duel is not None:
-                pirate_event = evt
-                break
-
-        if pirate_event and pirate_event._pending_duel:
-            console.print(views.voyage_view(s.world, events))
-            # Create interactive encounter from the pending duel
-            from portlight.engine.encounter import create_encounter
-            enc = create_encounter(
-                s.world.ports, s.world.voyage.destination_id if s.world.voyage else "porto_novo",
-                s._rng,
-            )
-            if enc:
-                # Override with the specific captain from the event
-                pd = pirate_event._pending_duel
-                enc.enemy_captain_id = pd.captain_id
-                enc.enemy_captain_name = pd.captain_name
-                enc.enemy_faction_id = pd.faction_id
-                enc.enemy_personality = pd.personality
-                enc.enemy_strength = pd.strength
-                enc.enemy_region = pd.region
-
-                _active_encounter = enc
-                _player_combatant = None
-                _opponent_combatant = None
-                # Keep pending_duel set so encounter persists across CLI invocations
-                # It will be cleared when the encounter resolves
-
-                from portlight.app import combat_views
-                from portlight.content.factions import FACTIONS, PIRATE_CAPTAINS
-                faction = FACTIONS.get(pd.faction_id)
-                captain_data = PIRATE_CAPTAINS.get(pd.captain_id)
-                try:
-                    console.print(combat_views.encounter_view(
-                        pd.captain_name,
-                        faction.name if faction else "Unknown",
-                        pd.personality, pd.strength,
-                        f"{pd.captain_name}'s Ship",
-                        captain_data.encounter_text if captain_data else "",
-                    ))
-                except Exception as e:
-                    console.print(f"\n[bold red]Pirate encounter: {pd.captain_name} ({pd.personality}, str {pd.strength})[/bold red]")
-                    console.print(f"[dim]View error: {e}[/dim]")
-                # Check weapon recognition
-                gear = s.captain.combat_gear
-                if gear.melee_weapon and gear.weapon_provenance.get(gear.melee_weapon):
-                    from portlight.engine.weapon_provenance import WeaponProvenance, check_recognition
-                    prov = gear.weapon_provenance[gear.melee_weapon]
-                    if isinstance(prov, WeaponProvenance):
-                        from portlight.engine.captain_memory import get_or_create_memory
-                        cap_mem = get_or_create_memory(s.world.pirates.captain_memories, pd.captain_id)
-                        recog = check_recognition(
-                            prov, gear.melee_weapon.replace("_", " ").title(),
-                            pd.captain_id, cap_mem.relationship.familiarity, s._rng,
-                        )
-                        if recog.recognized:
-                            console.print(f"\n[bold]{recog.flavor}[/bold]")
-                            # Apply fear/respect bonus to captain memory
-                            cap_mem.relationship.fear = min(100, cap_mem.relationship.fear + recog.fear_bonus)
-                            cap_mem.relationship.respect = min(100, cap_mem.relationship.respect + recog.respect_bonus)
-
-                console.print("\n[bold]Use [cyan]portlight encounter <negotiate|flee|fight>[/cyan][/bold]")
-                break  # stop advancing — player must respond to encounter
-            else:
-                console.print(views.voyage_view(s.world, events))
-        elif events:
-            console.print(views.voyage_view(s.world, events))
-        else:
-            console.print(f"[dim]Day {s.world.day}. Markets shift.[/dim]")
-
-        # Check if arrived (only show arrival if we transitioned from sea)
-        if s.current_port and was_at_sea:
-            port = s.current_port
-            console.print(f"\n[bold green]Arrived at {port.name}![/bold green]\n")
-            console.print(views.port_view(port, s.captain))
-            console.print(views.status_view(s.world, s.ledger, s.infra))
-            break
-
-        # Check if ship sank
-        if s.captain.ship and s.captain.ship.hull <= 0:
-            console.print("\n[bold red]Your ship has broken apart. The voyage ends here.[/bold red]")
-            break
 
 
 # ---------------------------------------------------------------------------
@@ -853,7 +783,7 @@ def duel(
     stances: str = typer.Argument(..., help="Comma-separated stances: thrust,slash,parry (5 rounds)"),
 ) -> None:
     """Fight a pirate captain in a sword duel. Stances: thrust, slash, parry."""
-    s = _session()
+    s = _ocean()
     pending = s.world.pirates.pending_duel
     if pending is None:
         console.print("[yellow]No pirate has challenged you. Duels happen during pirate encounters at sea.[/yellow]")
@@ -934,7 +864,7 @@ def duel(
 @app.command()
 def ledger() -> None:
     """Show trade receipt ledger."""
-    s = _session()
+    s = _ocean()
     console.print(views.ledger_view(s.ledger, s.captain))
 
 
@@ -945,7 +875,7 @@ def ledger() -> None:
 @app.command()
 def inventory() -> None:
     """Show all personal gear: armor, weapons, styles, ranged, injuries, cargo."""
-    s = _session()
+    s = _ocean()
     gear = s.captain.combat_gear
 
     # Build gear data dict for the view
@@ -1026,7 +956,7 @@ def equip(
     item_id: str = typer.Argument(None, help="Item ID to equip, or slot to remove (armor/weapon)"),
 ) -> None:
     """Equip or unequip armor and melee weapons."""
-    s = _session()
+    s = _ocean()
     gear = s.captain.combat_gear
 
     if slot == "remove":
@@ -1049,12 +979,12 @@ def equip(
             s._save()
             console.print(f"[yellow]Stowed {old.name if old else 'weapon'}.[/yellow]")
         else:
-            console.print("[red]Usage: portlight equip remove armor|weapon[/red]")
+            console.print("[red]Usage: starfreight equip remove armor|weapon[/red]")
         return
 
     if slot == "armor":
         if item_id is None:
-            console.print("[red]Usage: portlight equip armor <armor_id>[/red]")
+            console.print("[red]Usage: starfreight equip armor <armor_id>[/red]")
             return
         from portlight.content.armor import ARMOR
         armor_def = ARMOR.get(item_id)
@@ -1067,7 +997,7 @@ def equip(
 
     elif slot == "weapon":
         if item_id is None:
-            console.print("[red]Usage: portlight equip weapon <weapon_id>[/red]")
+            console.print("[red]Usage: starfreight equip weapon <weapon_id>[/red]")
             return
         from portlight.content.melee_weapons import MELEE_WEAPONS
         weapon_def = MELEE_WEAPONS.get(item_id)
@@ -1093,7 +1023,7 @@ def merchant(
     qty: int = typer.Argument(1, help="Quantity to buy"),
 ) -> None:
     """Browse or buy from port merchants."""
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to visit merchants.[/yellow]")
         return
@@ -1158,7 +1088,7 @@ def merchant(
 def sell_gear(item_id: str = typer.Argument(..., help="Weapon or armor ID to sell back")) -> None:
     """Sell a weapon or armor back to the port for 50% of its value."""
     from portlight.engine.economy import sell_gear_value
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to sell gear.[/yellow]")
         return
@@ -1205,7 +1135,7 @@ def sell_gear(item_id: str = typer.Argument(..., help="Weapon or armor ID to sel
 def shipyard(buy_ship: str = typer.Argument(None, help="Ship ID to purchase")) -> None:
     """View or buy ships at the shipyard."""
     from portlight.engine.models import PortFeature
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to visit the shipyard.[/yellow]")
         return
@@ -1233,7 +1163,7 @@ def drydock(
     ship: str = typer.Option(None, "--ship", "-s", help="Fleet ship name (default: flagship)"),
 ) -> None:
     """Restore degraded hull_max at a shipyard. Costs 5x normal repair rate."""
-    s = _session()
+    s = _ocean()
     result = s.dry_dock(ship)
     if isinstance(result, str):
         console.print(f"[red]{result}[/red]")
@@ -1249,7 +1179,7 @@ def rename(
     ship: str = typer.Option(None, "--ship", "-s", help="Name of fleet ship to rename (default: flagship)"),
 ) -> None:
     """Rename your flagship or a fleet ship."""
-    s = _session()
+    s = _ocean()
     err = s.rename_ship(new_name, ship)
     if err:
         console.print(f"[red]{err}[/red]")
@@ -1261,14 +1191,14 @@ def rename(
 @app.command()
 def fleet() -> None:
     """Show all ships in your fleet."""
-    s = _session()
+    s = _ocean()
     console.print(views.fleet_view(s.captain))
 
 
 @app.command()
 def dock() -> None:
     """Park current ship and switch to another at the same port."""
-    s = _session()
+    s = _ocean()
     err = s.dock_current_ship()
     if err:
         console.print(f"[red]{err}[/red]")
@@ -1280,7 +1210,7 @@ def dock() -> None:
 @app.command()
 def board(ship_name: str = typer.Argument(..., help="Name of ship to board")) -> None:
     """Switch to a docked ship at the same port."""
-    s = _session()
+    s = _ocean()
     err = s.board_fleet_ship(ship_name)
     if err:
         console.print(f"[red]{err}[/red]")
@@ -1297,7 +1227,7 @@ def transfer(
     to_ship: str = typer.Argument(..., help="Destination ship name"),
 ) -> None:
     """Move cargo between ships at the same port."""
-    s = _session()
+    s = _ocean()
     err = s.transfer_fleet_cargo(good, qty, from_ship, to_ship)
     if err:
         console.print(f"[red]{err}[/red]")
@@ -1311,7 +1241,7 @@ def upgrade(
     remove: bool = typer.Option(False, "--remove", "-r", help="Remove an installed upgrade"),
 ) -> None:
     """Browse or install ship upgrades at the shipyard."""
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to visit the shipyard.[/yellow]")
         return
@@ -1345,7 +1275,7 @@ def upgrade(
 @app.command()
 def contracts() -> None:
     """Show the contract board at the current port."""
-    s = _session()
+    s = _ocean()
     if not s.current_port:
         console.print("[yellow]Must be docked to view the contract board.[/yellow]")
         return
@@ -1358,18 +1288,18 @@ def contracts() -> None:
 @app.command()
 def obligations() -> None:
     """Show active contract obligations."""
-    s = _session()
+    s = _ocean()
     console.print(views.obligations_view(s.board, s.world.day, s.world))
 
 
 @app.command()
 def accept(offer_id: str) -> None:
     """Accept a contract offer from the board."""
-    s = _session()
+    s = _ocean()
     # Allow short IDs (first 8 chars)
     matched = next((o for o in s.board.offers if o.id.startswith(offer_id)), None)
     if not matched:
-        console.print(f"[red]No offer matching '{offer_id}'. Check the board with: portlight contracts[/red]")
+        console.print(f"[red]No offer matching '{offer_id}'. Check the board with: starfreight contracts[/red]")
         return
     err = s.accept_contract(matched.id)
     if err:
@@ -1382,11 +1312,11 @@ def accept(offer_id: str) -> None:
 @app.command()
 def abandon(offer_id: str) -> None:
     """Abandon an active contract (reputation cost)."""
-    s = _session()
+    s = _ocean()
     # Allow short IDs
     matched = next((c for c in s.board.active if c.offer_id.startswith(offer_id)), None)
     if not matched:
-        console.print(f"[red]No active contract matching '{offer_id}'. Check obligations with: portlight obligations[/red]")
+        console.print(f"[red]No active contract matching '{offer_id}'. Check obligations with: starfreight obligations[/red]")
         return
     err = s.abandon_contract_cmd(matched.offer_id)
     if err:
@@ -1408,7 +1338,7 @@ def warehouse(
     source: str = typer.Option(None, "--source", "-s", help="Source port filter for withdraw"),
 ) -> None:
     """Manage warehouses: view, lease, deposit, or withdraw cargo."""
-    s = _session()
+    s = _ocean()
 
     if action is None:
         # Show warehouse status
@@ -1449,7 +1379,7 @@ def warehouse(
 
     if action == "deposit":
         if arg1 is None or arg2 is None:
-            console.print("[red]Usage: portlight warehouse deposit <good> <qty>[/red]")
+            console.print("[red]Usage: starfreight warehouse deposit <good> <qty>[/red]")
             return
         result = s.deposit_cmd(arg1, arg2)
         if isinstance(result, str):
@@ -1462,7 +1392,7 @@ def warehouse(
 
     if action == "withdraw":
         if arg1 is None or arg2 is None:
-            console.print("[red]Usage: portlight warehouse withdraw <good> <qty> [--source <port>][/red]")
+            console.print("[red]Usage: starfreight warehouse withdraw <good> <qty> [--source <port>][/red]")
             return
         result = s.withdraw_cmd(arg1, arg2, source)
         if isinstance(result, str):
@@ -1485,7 +1415,7 @@ def office(
     region: str = typer.Argument(None, help="Region name (Mediterranean, 'West Africa', 'East Indies')"),
 ) -> None:
     """Manage broker offices: view, open, or upgrade."""
-    s = _session()
+    s = _ocean()
 
     if action is None:
         console.print(views.offices_view(s.infra))
@@ -1522,7 +1452,7 @@ def office(
                 console.print(f"[red]No upgrade available in {target_region}.[/red]")
                 return
         elif action == "open" and current != BrokerTier.NONE:
-            console.print(f"[yellow]Already have a broker in {target_region}. Use [bold]portlight office upgrade[/bold] to upgrade.[/yellow]")
+            console.print(f"[yellow]Already have a broker in {target_region}. Use [bold]starfreight office upgrade[/bold] to upgrade.[/yellow]")
             return
         else:
             console.print(f"[yellow]Broker in {target_region} is already at maximum tier.[/yellow]")
@@ -1549,7 +1479,7 @@ def license(
     license_id: str = typer.Argument(None, help="License ID to purchase"),
 ) -> None:
     """View or purchase commercial licenses."""
-    s = _session()
+    s = _ocean()
 
     if action is None:
         console.print(views.licenses_view(s.infra, s.captain.standing))
@@ -1557,7 +1487,7 @@ def license(
 
     if action == "buy":
         if license_id is None:
-            console.print("[red]Usage: portlight license buy <license_id>[/red]")
+            console.print("[red]Usage: starfreight license buy <license_id>[/red]")
             console.print(views.licenses_view(s.infra, s.captain.standing))
             return
         from portlight.content.infrastructure import get_license_spec
@@ -1593,7 +1523,7 @@ def insure(
     contract: str = typer.Option(None, "--contract", "-c", help="Contract ID for guarantee policies"),
 ) -> None:
     """View or purchase insurance policies."""
-    s = _session()
+    s = _ocean()
 
     region = s.current_port.region if s.current_port else "Mediterranean"
     heat = s.captain.standing.customs_heat.get(region, 0)
@@ -1604,7 +1534,7 @@ def insure(
 
     if action == "buy":
         if policy_id is None:
-            console.print("[red]Usage: portlight insure buy <policy_id>[/red]")
+            console.print("[red]Usage: starfreight insure buy <policy_id>[/red]")
             console.print(views.insurance_view(s.infra, heat))
             return
         from portlight.content.infrastructure import get_policy_spec
@@ -1657,7 +1587,7 @@ def credit(
     amount: int = typer.Argument(None, help="Amount to draw or repay"),
 ) -> None:
     """Manage credit line: view, open, draw, or repay."""
-    s = _session()
+    s = _ocean()
 
     if action is None:
         console.print(views.credit_view(s.infra, s.captain.standing))
@@ -1688,7 +1618,7 @@ def credit(
 
     if action == "draw":
         if amount is None:
-            console.print("[red]Usage: portlight credit draw <amount>[/red]")
+            console.print("[red]Usage: starfreight credit draw <amount>[/red]")
             return
         err = s.draw_credit_cmd(amount)
         if err:
@@ -1703,7 +1633,7 @@ def credit(
 
     if action == "repay":
         if amount is None:
-            console.print("[red]Usage: portlight credit repay <amount>[/red]")
+            console.print("[red]Usage: starfreight credit repay <amount>[/red]")
             return
         err = s.repay_credit_cmd(amount)
         if err:
@@ -1719,7 +1649,7 @@ def credit(
 
     if action == "emergency":
         if amount is None:
-            console.print("[yellow]Usage: portlight credit emergency <amount> (max 200)[/yellow]")
+            console.print("[yellow]Usage: starfreight credit emergency <amount> (max 200)[/yellow]")
             return
         from portlight.engine.infrastructure import emergency_loan
         result = emergency_loan(s.captain, amount)
@@ -1745,7 +1675,7 @@ def credit(
 @app.command()
 def milestones() -> None:
     """Show merchant career ledger: milestones, profile, and victory progress."""
-    s = _session()
+    s = _ocean()
     snap = s._build_snapshot()
     console.print(views.milestones_view(s.campaign, snap))
 
@@ -1841,10 +1771,14 @@ def save() -> None:
 @app.command()
 def load() -> None:
     """Load a saved game."""
+    from portlight.app import sf_views
     s = GameSession(slot=_active_slot)
     if s.load():
         console.print("[green]Game loaded.[/green]")
-        console.print(views.status_view(s.world, s.ledger, s.infra))
+        if s.sf_campaign is not None:
+            console.print(sf_views.dashboard(s.sf_campaign))
+        elif s.world is not None:
+            console.print(views.status_view(s.world, s.ledger, s.infra))
     else:
         console.print("[red]No saved game found.[/red]")
 
@@ -1954,7 +1888,7 @@ def encounter(
         resolve_negotiate,
     )
 
-    s = _session()
+    s = _ocean()
     _restore_encounter(s)
     if _active_encounter is None or _active_encounter.phase != "approach":
         console.print("[yellow]No active encounter. Encounters happen during pirate events at sea.[/yellow]")
@@ -2032,7 +1966,7 @@ def naval(
         resolve_naval_turn,
     )
 
-    s = _session()
+    s = _ocean()
     _restore_encounter(s)
     if _active_encounter is None or _active_encounter.phase != "naval":
         console.print("[yellow]Not in naval combat.[/yellow]")
@@ -2120,7 +2054,7 @@ def naval(
             enc.phase = "capture_available"
             console.print("\n[bold yellow]You can capture this ship as a prize![/bold yellow]")
             console.print(f"  Enemy ship: {enc.enemy_captain_name}'s vessel")
-            console.print("  Use: [cyan]portlight capture <crew_to_assign>[/cyan]")
+            console.print("  Use: [cyan]starfreight capture <crew_to_assign>[/cyan]")
         else:
             console.print(f"\n[dim]Cannot capture: {reason}[/dim]")
             _clear_encounter(s)
@@ -2129,7 +2063,7 @@ def naval(
         boarding = resolve_boarding_phase(enc, s.captain.ship.crew, s._rng)
         s.captain.ship.crew = max(0, s.captain.ship.crew - boarding["player_crew_lost"])
         console.print(f"\n{boarding['flavor']}")
-        console.print("\n[bold]Personal combat begins! Use [cyan]portlight fight <action>[/cyan][/bold]")
+        console.print("\n[bold]Personal combat begins! Use [cyan]starfreight fight <action>[/cyan][/bold]")
     elif s.captain.ship.hull <= 0:
         console.print("\n[bold red]Your ship is sinking![/bold red]")
         s.world.pirates.naval_defeats += 1
@@ -2170,7 +2104,7 @@ def capture(
 ) -> None:
     """Capture a defeated enemy ship as a prize."""
     global _active_encounter
-    s = _session()
+    s = _ocean()
     if _active_encounter is None or _active_encounter.phase != "capture_available":
         console.print("[yellow]No ship available to capture.[/yellow]")
         return
@@ -2230,7 +2164,7 @@ def fight(
     )
     from portlight.engine.injuries import create_injury
 
-    s = _session()
+    s = _ocean()
     _restore_encounter(s)
     enc = _active_encounter
     if enc is None or enc.phase != "duel":
@@ -2367,8 +2301,8 @@ def fight(
             console.print(f"\n[bold green]Victory over {enc.enemy_captain_name}![/bold green]")
             console.print(f"\n{enc.enemy_captain_name} lies defeated at your feet.")
             console.print("\n[bold]Choose:[/bold]")
-            console.print("  [cyan]portlight spare[/cyan]     — Show mercy. (+25 respect, -10 grudge, +5 underworld standing)")
-            console.print("  [cyan]portlight take-all[/cyan]  — Take everything. (+5 fear, +10 grudge, more silver)")
+            console.print("  [cyan]starfreight spare[/cyan]     — Show mercy. (+25 respect, -10 grudge, +5 underworld standing)")
+            console.print("  [cyan]starfreight take-all[/cyan]  — Take everything. (+5 fear, +10 grudge, more silver)")
             _sync_encounter_phase(s)
             s._save()
             return  # DON'T clear encounter yet — spare/take-all commands will finalize
@@ -2407,7 +2341,7 @@ def train(
     from portlight.content.injuries import get_injured_body_parts
     from portlight.engine.training import can_learn_style, get_masters_at_port, learn_style
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked at a port to train.[/yellow]")
@@ -2465,7 +2399,7 @@ def equip_style(
     style_id: str = typer.Argument(None, help="Style to equip (or omit to unequip)"),
 ) -> None:
     """Equip or unequip a fighting style."""
-    s = _session()
+    s = _ocean()
     if style_id is None:
         s.captain.active_style = None
         console.print("[dim]Fighting style unequipped.[/dim]")
@@ -2473,7 +2407,7 @@ def equip_style(
         return
 
     if style_id not in s.captain.learned_styles:
-        console.print(f"[red]You haven't learned {style_id}. Use [bold]portlight train[/bold] at the right port.[/red]")
+        console.print(f"[red]You haven't learned {style_id}. Use [bold]starfreight train[/bold] at the right port.[/red]")
         return
 
     from portlight.content.injuries import get_injured_body_parts
@@ -2499,7 +2433,7 @@ def armory(
     from portlight.app import combat_views
     from portlight.content.ranged_weapons import AMMO, RANGED_WEAPONS, get_ammo_for_region, get_weapons_for_region
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked to visit the armory.[/yellow]")
@@ -2573,7 +2507,7 @@ def injuries() -> None:
     from portlight.app import combat_views
     from portlight.content.injuries import INJURIES
 
-    s = _session()
+    s = _ocean()
     if not s.captain.injuries:
         console.print("[dim]No injuries. You're in fighting shape.[/dim]")
         return
@@ -2607,7 +2541,7 @@ def maintain(
         get_weapon_summary,
     )
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked to maintain weapons.[/yellow]")
@@ -2675,7 +2609,7 @@ def smith(
     from portlight.engine.models import PortFeature
     from portlight.engine.weapon_quality import can_upgrade, get_quality_effects, upgrade_weapon
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked to visit a smith.[/yellow]")
@@ -2712,7 +2646,7 @@ def learn_skill_cmd(
     from portlight.content.skills import SKILLS, get_trainers_at_port
     from portlight.engine.skill_engine import can_learn_skill, get_skill_display, learn_skill
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked to learn skills.[/yellow]")
@@ -2773,7 +2707,7 @@ def field_repair_cmd(
     """Repair a weapon at sea (requires Journeyman blacksmith skill)."""
     from portlight.engine.skill_engine import field_repair_weapon, get_skill_level
 
-    s = _session()
+    s = _ocean()
     bs_level = get_skill_level(s.captain.skills, "blacksmith")
     gear = s.captain.combat_gear
 
@@ -2919,7 +2853,7 @@ def _finalize_victory(s, spared: bool) -> None:
 def spare() -> None:
     """Show mercy to a defeated pirate captain. Gains respect, reduces grudge."""
     global _pending_victory
-    s = _session()
+    s = _ocean()
     _restore_encounter(s)
     if not _pending_victory or _active_encounter is None:
         console.print("[yellow]No defeated opponent to spare. Win a duel first.[/yellow]")
@@ -2936,7 +2870,7 @@ def spare() -> None:
 def take_all() -> None:
     """Take everything from the defeated captain. More silver, more grudge."""
     global _pending_victory
-    s = _session()
+    s = _ocean()
     _restore_encounter(s)
     if not _pending_victory or _active_encounter is None:
         console.print("[yellow]No defeated opponent. Win a duel first.[/yellow]")
@@ -2960,7 +2894,7 @@ def bounty(
 ) -> None:
     """View the bounty board, accept targets, or claim rewards."""
     from portlight.engine.bounty import generate_bounty_board, accept_bounty, claim_bounty
-    s = _session()
+    s = _ocean()
 
     if action is None or action == "list":
         targets = generate_bounty_board(s.world.pirates, s._rng)
@@ -3015,7 +2949,7 @@ def bounty(
 def _get_party():
     """Get the captain's party as a PartyState object."""
     from portlight.engine.companion_engine import CompanionState, PartyState
-    s = _session()
+    s = _ocean()
     pd = s.captain.party
     if isinstance(pd, dict):
         companions = [
@@ -3051,7 +2985,7 @@ def recruit_cmd(
     from portlight.content.companions import COMPANIONS, get_companions_at_port
     from portlight.engine.companion_engine import can_recruit, recruit
 
-    s = _session()
+    s = _ocean()
     port = s.current_port
     if not port:
         console.print("[yellow]Must be docked to recruit companions.[/yellow]")
@@ -3102,7 +3036,7 @@ def dismiss_cmd(
     from portlight.content.companions import COMPANIONS
     from portlight.engine.companion_engine import dismiss
 
-    s = _session()
+    s = _ocean()
     party = _get_party()
     error = dismiss(party, companion_id)
     if error:
@@ -3148,7 +3082,7 @@ def party() -> None:
 @app.command("print-and-play")
 def print_and_play(
     output: str = typer.Option(
-        "portlight-print-and-play.pdf",
+        "star-freight-print-and-play.pdf",
         "--output", "-o",
         help="Output PDF file path",
     ),
@@ -3161,7 +3095,7 @@ def print_and_play(
     except ImportError:
         console.print(
             "[red]fpdf2 is required for PDF generation.[/red]\n"
-            "Install with: [bold]pip install portlight[printandplay][/bold]"
+            "Install with: [bold]pip install fpdf2[/bold]"
         )
         raise typer.Exit(1)
 

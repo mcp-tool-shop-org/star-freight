@@ -261,25 +261,25 @@ class TestSessionCaptainType:
 
     def test_session_new_merchant(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Hawk", captain_type="merchant")
+        s.new_portlight("Hawk", captain_type="merchant")
         assert s.captain.captain_type == "merchant"
         assert s.captain_template.name == "The Merchant"
 
     def test_session_new_smuggler(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Shadow", captain_type="smuggler")
+        s.new_portlight("Shadow", captain_type="smuggler")
         assert s.captain.captain_type == "smuggler"
         assert s.current_port_id == "palm_cove"
 
     def test_session_new_navigator(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Charts", captain_type="navigator")
+        s.new_portlight("Charts", captain_type="navigator")
         assert s.captain.captain_type == "navigator"
         assert s.current_port_id == "silva_bay"
 
     def test_session_default_is_merchant(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         assert s.captain.captain_type == "merchant"
 
 
@@ -288,7 +288,7 @@ class TestSaveLoadCaptainState:
 
     def test_captain_type_roundtrips(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Tester", captain_type="smuggler")
+        s.new_portlight("Tester", captain_type="smuggler")
         # Reload
         s2 = GameSession(tmp_path)
         assert s2.load()
@@ -296,7 +296,7 @@ class TestSaveLoadCaptainState:
 
     def test_reputation_roundtrips(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         s.captain.standing.commercial_trust = 25
         s.captain.standing.regional_standing["East Indies"] = 15
         s.captain.standing.customs_heat["West Africa"] = 8

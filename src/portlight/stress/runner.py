@@ -28,7 +28,7 @@ def run_stress_scenario(
 
     with tempfile.TemporaryDirectory() as tmp:
         session = GameSession(Path(tmp))
-        session.new("StressBot", captain_type=scenario.captain_type)
+        session.new_portlight("StressBot", captain_type=scenario.captain_type)
 
         # Override seed
         import random
