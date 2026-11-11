@@ -9,7 +9,7 @@
       "externals": 0,
       "files": [
         {
-          "hash": "77c92f1d81da4a1e9018855da24e11ec2578c6b98b55e665f68e18a97c31bb64",
+          "hash": "53e393bd40c5d6ba21a7ccb9a9d234481d361a9199a0ecfaf0707d1f1ed7d9fb",
           "path": ".github/workflows/ci.yml"
         },
         {
@@ -17,7 +17,7 @@
           "path": ".github/workflows/pages.yml"
         },
         {
-          "hash": "769e1b2e06761386823f6d0edced2d0b7cb864350453769bc20198189edbdc63",
+          "hash": "b42db433d28ff26dc101ca03f9776ffdaa7b5fe4a111ffd2f9a2370331cc9f55",
           "path": ".github/workflows/publish.yml"
         },
         {
@@ -456,7 +456,7 @@
           "path": "site/astro.config.mjs"
         },
         {
-          "hash": "af5d4f54dca60686724d306eb58759fb25b6f5ba4d66559ab84a968112a184e5",
+          "hash": "0607a19c4f60b635244a906c7ad2424359b50e20c4a83bc140f202abce4a941e",
           "path": "site/package-lock.json"
         },
         {
@@ -11716,9 +11716,9 @@
       "to": "src"
     }
   ],
-  "engine": "1.24.0",
+  "engine": "1.26.0",
   "generatedFrom": {
-    "commit": "3c9ba45bf39683f3676dfb6a34267026ede22773",
+    "commit": "dc4e6bcb6b87d8b672c5ffccd892729170a39cb0",
     "tracked": 322
   },
   "landings": [
@@ -11768,6 +11768,17 @@
         }
       ],
       "target": "dogfood/scenarios",
+      "writers": []
+    },
+    {
+      "readers": [
+        {
+          "by": "src/portlight/engine/dogfood_runner.py",
+          "call": "open",
+          "confidence": "ast"
+        }
+      ],
+      "target": "dogfood/scenarios/*.json",
       "writers": []
     },
     {
