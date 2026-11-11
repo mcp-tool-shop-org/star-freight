@@ -1,15 +1,15 @@
 # star-freight: how it works
 
-Mapped at 2026-10-01 from commit 3c9ba45 by Atlas 1.24.0.
+Mapped at 2026-11-11 from commit dc4e6bc by Atlas 1.26.0.
 
 ## What this is
 
 8 parts, mostly Python (207 files), CSS (2), TypeScript (2), Astro (1) and JavaScript (1). Work enters through 5 doors; the busiest is CI, which reaches 2 parts. It publishes to PyPI. It deploys a site to GitHub Pages. People run starfreight.
 
-## What changed since 2026-09-30 (ae33f19)
+## What changed since 2026-10-01 (3c9ba45)
 
-- CI's pull request trigger no longer names `.github/workflows/**`, `atlas/**`, `codecov.yml`, `pyproject.toml`, `site/astro.config.mjs`, `site/package-lock.json`, `site/package.json`, `src/**` and `tests/**`.
-- 1 file changed content, across 1 part.
+- dogfood/scenarios/*.json is now read by src/portlight/engine/dogfood_runner.py.
+- 3 files changed content, across 2 parts.
 
 ## What comes in
 
@@ -75,9 +75,11 @@ People write .github/, design/, the repository root, site/ and world/. Nothing i
 
 ## Where to start
 
-src/portlight/app/cli.py → src/portlight/app/session.py → src/portlight/engine/encounter.py → src/portlight/engine/captain_memory.py → src/portlight/engine/underworld.py → src/portlight/engine/weapon_provenance.py → src/portlight/engine/loot.py
+src/portlight/app/cli.py → src/portlight/app/session.py → src/portlight/content/contracts.py → src/portlight/engine/contracts.py → src/portlight/engine/reputation.py → src/portlight/engine/models.py
 
 Read those in order to follow one run of starfreight end to end. This path follows starfreight (a command people run) from its entry, since CI runs only tests.
+
+Beside the path, src/portlight/app/cli.py also calls src/portlight/engine/encounter.py, src/portlight/engine/captain_memory.py, src/portlight/engine/underworld.py, src/portlight/engine/weapon_provenance.py and 3 more files.
 
 ## What this map cannot see
 
