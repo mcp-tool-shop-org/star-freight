@@ -199,7 +199,7 @@ class TestCasualtySelection:
 class TestSessionCrewManagement:
     def test_hire_sailor(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 500
         err = s.hire_crew(3, "sailor")
         assert err is None
@@ -207,7 +207,7 @@ class TestSessionCrewManagement:
 
     def test_hire_gunner(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 500
         err = s.hire_crew(1, "gunner")
         assert err is None
@@ -215,7 +215,7 @@ class TestSessionCrewManagement:
 
     def test_hire_navigator_limit(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 500
         s.hire_crew(1, "navigator")
         err = s.hire_crew(1, "navigator")
@@ -224,7 +224,7 @@ class TestSessionCrewManagement:
 
     def test_fire_crew(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 500
         s.hire_crew(2, "gunner")
         assert s.captain.ship.roster.gunners == 2
@@ -234,13 +234,13 @@ class TestSessionCrewManagement:
 
     def test_fire_nonexistent_role(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         err = s.fire_crew(role="surgeon")
         assert err is not None
 
     def test_crew_sync_after_hire(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 500
         initial_crew = s.captain.ship.crew
         s.hire_crew(2, "marine")

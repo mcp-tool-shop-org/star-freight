@@ -133,6 +133,27 @@ DataTable {
 }
 
 /* Combat panels */
+#combat-grid {
+    height: auto;
+    padding: 0 1;
+    background: #0a0e1a;
+}
+
+#combat-status {
+    height: auto;
+    padding: 0 1 1 1;
+    background: #12162a;
+    border-top: tall #1a1e2a;
+}
+
+#combat-actions {
+    dock: bottom;
+    height: auto;
+    padding: 0 1;
+    background: #12162a;
+    border-top: tall #1a1e2a;
+}
+
 #combat-you {
     width: 1fr;
     height: auto;

@@ -79,10 +79,10 @@ class TestSaveSlots:
     def test_session_slot_isolation(self, tmp_path: Path):
         """Two GameSession instances with different slots don't collide."""
         s1 = GameSession(tmp_path, slot="player1")
-        s1.new("Player One")
+        s1.new_portlight("Player One")
 
         s2 = GameSession(tmp_path, slot="player2")
-        s2.new("Player Two")
+        s2.new_portlight("Player Two")
 
         # Reload each — should get the right captain
         s1r = GameSession(tmp_path, slot="player1")
@@ -186,7 +186,7 @@ class TestSilverFloor:
     def test_save_clamps_negative_silver(self, tmp_path: Path):
         """Session._save() clamps silver to 0 if it goes negative."""
         s = GameSession(tmp_path)
-        s.new("Broke")
+        s.new_portlight("Broke")
         s.captain.silver = -100
         s._save()
 
@@ -224,14 +224,14 @@ class TestCrewSailPrevention:
 class TestPortDayCosts:
     def test_provisions_decrease_in_port(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Docker")
+        s.new_portlight("Docker")
         initial_provisions = s.captain.provisions
         s.advance()
         assert s.captain.provisions == initial_provisions - 1
 
     def test_wages_paid_in_port(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Docker")
+        s.new_portlight("Docker")
         initial_silver = s.captain.silver
         s.advance()
         # Should have lost at least 1 silver to wages (3 sailors * 1/day = 3)
@@ -239,7 +239,7 @@ class TestPortDayCosts:
 
     def test_no_wages_when_broke(self, tmp_path: Path):
         s = GameSession(tmp_path)
-        s.new("Broke")
+        s.new_portlight("Broke")
         s.captain.silver = 0
         s.advance()
         # Silver stays at 0, no negative
@@ -255,7 +255,7 @@ class TestEncounterBlocksAdvance:
         """If a pending_duel exists in save, advance should detect it."""
         from portlight.engine.models import PendingDuel
         s = GameSession(tmp_path)
-        s.new("Fighter")
+        s.new_portlight("Fighter")
         # Simulate a pending encounter
         s.world.pirates.pending_duel = PendingDuel(
             captain_id="gnaw",

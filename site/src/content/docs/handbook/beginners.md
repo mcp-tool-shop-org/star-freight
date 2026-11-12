@@ -5,7 +5,9 @@ sidebar:
   order: 99
 ---
 
-This guide walks you through your first session as a Star Freight captain. By the end you will have installed the game, created a captain, made your first trade, survived your first route, and understood how crew, combat, and culture shape your captain life.
+This guide walks the **live session** — the Portlight ancestor that `starfreight new` still boots. Porto Novo, grain, and sloop routes are what you can play today. The Star Freight overlay (Meridian Exchange, Communion Relay, crew binding) is proved in simulation and Rich views; it is not yet the live TUI world.
+
+By the end you will have installed the game, created a captain, made your first trade, and survived your first route.
 
 ## 1. Installation
 
@@ -28,7 +30,7 @@ starfreight version
 Start a new game with the `new` command. For your first run, Merchant is the most forgiving class:
 
 ```bash
-starfreight new "Your Name" --type merchant
+starfreight new "Your Name"
 ```
 
 Nine captain classes are available: merchant, smuggler, navigator, privateer, corsair, scholar, merchant_prince, dockhand, and bounty_hunter. There is also a custom builder that lets you distribute 10 skill points. Merchant gives you port fee discounts and steady trade margins -- a good foundation while you learn the systems.

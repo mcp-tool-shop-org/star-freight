@@ -859,7 +859,7 @@ class TestSessionIntegration:
     def test_session_holds_campaign_state(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         assert isinstance(s.campaign, CampaignState)
         assert len(s.campaign.completed) == 0
 
@@ -868,7 +868,7 @@ class TestSessionIntegration:
         from portlight.app.session import GameSession
         from portlight.engine.infrastructure import WarehouseLease, WarehouseTier
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         # Manually add a warehouse
         s.infra.warehouses.append(WarehouseLease(
@@ -888,7 +888,7 @@ class TestSessionIntegration:
         from portlight.app.session import GameSession
         from portlight.engine.infrastructure import WarehouseLease, WarehouseTier
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
 
         s.infra.warehouses.append(WarehouseLease(
             id="wh1", port_id=s.current_port_id, tier=WarehouseTier.DEPOT,
@@ -906,7 +906,7 @@ class TestSessionIntegration:
     def test_build_snapshot(self, tmp_path):
         from portlight.app.session import GameSession
         s = GameSession(base_path=tmp_path)
-        s.new("Tester", captain_type="merchant")
+        s.new_portlight("Tester", captain_type="merchant")
         snap = s._build_snapshot()
         assert snap.captain is s.captain
         assert snap.world is s.world

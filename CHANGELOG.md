@@ -2,6 +2,20 @@
 
 All notable changes to Star Freight are documented here.
 
+## [Unreleased]
+
+### Changed
+- Live `starfreight new` / `starfreight tui` boot Star Freight campaign state at Meridian Exchange (empty crew, credits, overlay stations)
+- CLI status/station/market/buy/sell/crew/hire/routes/sail/repair/refuel/journal/faction/advance use the overlay
+- Ancestor Portlight session is `GameSession.new_portlight()` for tests; ancestor CLI commands refuse a live Star Freight save
+- Player-facing CLI, TUI, and views now tell you to run `starfreight`, not `portlight`
+- README, handbook, and build docs describe the proved overlay vs leftover ancestor modules
+- Print-and-play install hint is `pip install fpdf2` (there is no `printandplay` extra)
+
+### Fixed
+- Missing-save and TUI-empty-save copy pointed at a command that does not exist
+- SHIP_GATE version claim lagged pyproject (1.0.0 vs 1.0.4)
+
 ## [1.0.4] - 2026-03-25
 
 ### Added

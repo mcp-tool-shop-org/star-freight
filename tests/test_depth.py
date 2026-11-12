@@ -153,7 +153,7 @@ class TestShipLadder:
     def test_brigantine_opens_west_africa(self, tmp_path: Path):
         """With brigantine, Porto Novo -> Sun Harbor is accessible."""
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 1000
         s.buy_ship("trade_brigantine")
         route = find_route(s.world, "porto_novo", "sun_harbor")
@@ -163,7 +163,7 @@ class TestShipLadder:
     def test_galleon_opens_long_haul(self, tmp_path: Path):
         """Galleon can attempt the Al-Manar -> Monsoon Reach shortcut."""
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 3000
         s.buy_ship("merchant_galleon")
         route = find_route(s.world, "al_manar", "monsoon_reach")
@@ -173,7 +173,7 @@ class TestShipLadder:
     def test_crew_wages_create_pressure(self, tmp_path: Path):
         """Bigger ship = bigger crew wages = real operating cost."""
         s = GameSession(tmp_path)
-        s.new()
+        s.new_portlight()
         s.captain.silver = 3000
         s.buy_ship("merchant_galleon")
         s.captain.ship.crew = 15  # minimum crew
@@ -218,7 +218,7 @@ class TestBalanceHarness:
         """Run a buy->sail->sell loop multiple times. Returns profit per loop."""
         profits = []
         s = GameSession(tmp_path)
-        s.new("Tester", starting_port=buy_port)
+        s.new_portlight("Tester", starting_port=buy_port)
         s._rng = random.Random(seed)
         s.auto_resolve_duels = True
 
@@ -272,7 +272,7 @@ class TestBalanceHarness:
     def test_spice_route_viable(self, tmp_path: Path):
         """Luxury: Al-Manar spice -> Sun Harbor. Higher margin but need to get there."""
         s = GameSession(tmp_path)
-        s.new("Tester", starting_port="al_manar")
+        s.new_portlight("Tester", starting_port="al_manar")
         buy = s.buy("spice", 10)
         assert isinstance(buy, TradeReceipt)
         # Can't directly sail to Sun Harbor with sloop (brigantine recommended)

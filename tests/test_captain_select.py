@@ -178,7 +178,7 @@ class TestInteractiveSelect:
 
         with tempfile.TemporaryDirectory() as tmp:
             s = GameSession(Path(tmp))
-            s.new("Tester", captain_type="merchant")
+            s.new_portlight("Tester", captain_type="merchant")
             assert s.world is not None
             assert s.world.captain.captain_type == "merchant"
 
@@ -191,6 +191,6 @@ class TestInteractiveSelect:
         for ct in CAPTAIN_ORDER:
             with tempfile.TemporaryDirectory() as tmp:
                 s = GameSession(Path(tmp))
-                s.new("Tester", captain_type=ct.value)
+                s.new_portlight("Tester", captain_type=ct.value)
                 assert s.world is not None, f"{ct.value} failed to create game"
                 assert s.world.captain.captain_type == ct.value
